@@ -1,0 +1,74 @@
+<?php
+
+namespace App\Models;
+
+use \DateTimeInterface;
+use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
+
+class Sample extends Model
+{
+    use SoftDeletes;
+    use HasFactory;
+    protected $connection = 'mysql';
+    public const STATUS_SELECT = [
+        '0' => 'قيد الانتظار',
+        '1' => 'تاكيد الطلب',
+        '2' => 'تم الاستلام',
+    ];
+
+    public $table = 'samples';
+
+    protected $dates = [
+        'end_date',
+        'created_at',
+        'updated_at',
+        'deleted_at',
+    ];
+
+    protected $fillable = [
+        'sample_id',
+        'user_id',
+        'quantity_request',
+        'quantity',
+        'end_date',
+        'stock_available_id',
+        'status',
+        'created_at',
+        'updated_at',
+        'deleted_at',
+        'received_date',
+    ];
+
+    public function sample()
+    {
+        return $this->belongsTo(SampleStock::class, 'sample_id');
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
+
+    public function getEndDateAttribute($value)
+    {
+        return $value ? Carbon::parse($value)->format(config('panel.date_format')) : null;
+    }
+
+    public function setEndDateAttribute($value)
+    {
+        $this->attributes['end_date'] = $value ? Carbon::createFromFormat(config('panel.date_format'), $value)->format('Y-m-d') : null;
+    }
+
+    public function stock_available()
+    {
+        return $this->belongsTo(SampleStock::class, 'stock_available_id');
+    }
+
+    protected function serializeDate(DateTimeInterface $date)
+    {
+        return $date->format('Y-m-d H:i:s');
+    }
+}
