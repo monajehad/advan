@@ -3,17 +3,18 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Foundation\Auth\AuChenticatesUsers;
+use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Log;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 use Jenssegers\Agent\Agent;
 use DB;
 
 class LoginController extends Controller
 {
-    use AuChenticatesUsers;
+    use AuthenticatesUsers;
     public function __construct()
     {
         // parent::__construct();
@@ -21,7 +22,7 @@ class LoginController extends Controller
     ///////////////////////////////////////////
     public function getIndex()
     {
-        return view('admin.login.index');
+        return view('auth.login');
     }
     ///////////////////////////////////////////
     public function postIndex(Request $request)
@@ -51,7 +52,7 @@ class LoginController extends Controller
         if (Auth::attempt($admin, $remember_token))
         {
 
-            $token = \Str::random(64);
+            $token = Str::random(64);
             $user->token = $token;
             $user->save();
             return redirect()->intended('/home');
@@ -73,7 +74,7 @@ class LoginController extends Controller
           if(!$user){
               return redirect('/login');
           }
-          \Auth::loginUsingId($user->id);
+          Auth::loginUsingId($user->id);
            return redirect()->to('/home');
     }
 }

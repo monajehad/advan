@@ -1,0 +1,15 @@
+@font-face {
+    font-family: HelveticaNeueLTArabic;
+    src: url(../fonts/HelveticaNeueLTArabic-Bold.ttf);
+  }
+@font-face {
+    font-family: HelveticaNeueLTArabic-Light;
+    src: url(../fonts/HelveticaNeueLTArabic-Light.ttf);
+}
+@font-face {
+    font-family: HelveticaNeueLTArabic-Roman;
+    src: url(../fonts/HelveticaNeueLTArabic-Roman.ttf);
+}
+body,html{
+    font-family:HelveticaNeueLTArabic-Roman , "sans-serif";
+}

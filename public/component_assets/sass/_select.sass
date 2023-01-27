@@ -1,0 +1,88 @@
+select.select
+  display: none !important
+  
+.select
+  +base-2
+  +trans
+  background-color: transparent
+  box-shadow: 0 0 0 2px $neutrals3 inset
+  padding: 0 40px 0 16px
+  height: 48px
+  border: unset
+  display: flex
+  align-items: center
+  &::after
+    width: 48px
+    height: 48px
+    background-size: 16px auto !important
+  &-fill
+    background-color: $neutrals3
+    +dark
+      background-color: $neutrals6
+  &-wide
+    width: 100%
+    .list
+      max-width: 100%
+      width: 100%
+  &-sm-wide
+    +sm
+      width: 100%
+      .list
+        max-width: 100%
+        width: 100%
+  &-small
+    height: 40px
+    &::after
+      width: 40px
+      height: 40px
+  &-rating
+    &:before
+      content: ''
+      background-image: url("data:image/svg+xml,%3Csvg width='24' height='24' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M10.1359 3.84334C10.7585 2.05222 13.2916 2.05222 13.9142 3.84334L14.8597 6.5635C15.1344 7.35364 15.8717 7.88938 16.7081 7.90642L19.5873 7.9651C21.4831 8.00373 22.2659 10.4128 20.7548 11.5584L18.46 13.2983C17.7934 13.8036 17.5117 14.6705 17.754 15.4712L18.5879 18.2276C19.137 20.0426 17.0877 21.5315 15.5312 20.4484L13.1674 18.8035C12.4808 18.3257 11.5693 18.3257 10.8827 18.8035L8.51887 20.4484C6.96239 21.5315 4.91309 20.0426 5.4622 18.2276L6.29612 15.4712C6.53835 14.6705 6.2567 13.8036 5.5901 13.2983L3.29526 11.5584C1.7842 10.4128 2.56696 8.00373 4.46281 7.9651L7.34201 7.90642C8.17835 7.88938 8.91574 7.35364 9.19039 6.5635L10.1359 3.84334Z' fill='%23FFD88D'/%3E%3C/svg%3E%0A")
+      height: 24px
+      width: 24px
+      margin-right: 12px
+      
+  &::after
+    border: unset
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath d='M12.707 15.707l-.094.083a1 1 0 0 1-1.32-.083h0l-6-6-.083-.094a1 1 0 0 1 1.497-1.32h0L12 13.585l5.293-5.292.094-.083a1 1 0 0 1 1.32 1.497h0l-6 6z' fill='%236f767e'/%3E%3C/svg%3E") no-repeat 50% 50%/24px auto
+    top: 0
+    right: 0
+    bottom: 0
+    transform: rotate(0deg)
+    transform-origin: unset
+    margin-top: 0
+  &.open
+    box-shadow: 0 0 0 2px rgba($p_blue, .3) inset !important
+    &::after
+      transform: rotate(180deg)
+  +dark
+    box-shadow: 0 0 0 2px $neutrals6 inset
+  .current
+    color: $shades1
+  .list
+    box-shadow: 0px 40px 64px -12px rgba(0, 0, 0, 0.08), 0px 0px 14px -4px rgba(0, 0, 0, 0.05), 0px 32px 48px -8px rgba(0, 0, 0, 0.1)
+    min-width: 164px
+    margin-top: 8px
+    left: auto
+    right: 0
+    z-index: 1000
+    +dark
+      background: $neutrals8
+    li.option
+      padding: 12px !important
+      +base-2
+      +trans
+      &.focus
+        background: transparent
+        color: $p_blue
+        font-weight: unset
+      &.selected
+        font-weight: unset
+      &:hover
+        background: $neutrals2
+        color: $neutrals7
+        +dark
+          background: $neutrals6
+          color: $neutrals0
+          
