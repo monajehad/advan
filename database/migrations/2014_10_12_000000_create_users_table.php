@@ -16,7 +16,7 @@ class CreateUsersTable extends Migration
         Schema::connection('mysql_second')->create('users', function (Blueprint $table) {
             $table->charset = 'utf8';
             $table->collation = 'utf8_general_ci';
-           
+
             $table->increments('id');
             $table->string('name',255)->nullable();
             $table->string('username',255)->unique();

@@ -15,7 +15,7 @@
 	</head>
 	<!--end::Head-->
 	<!--begin::Body-->
-	<body id="kt_body" dir="rtl" class="header-fixed header-mobile-fixed subheader-enabled subheader-fixed aside-enabled aside-fixed aside-minimize-hoverable page-loading">
+	<body id="kt_body" class="header-fixed header-mobile-fixed subheader-enabled subheader-fixed aside-enabled aside-fixed aside-minimize-hoverable page-loading">
 		<!--begin::Main-->
 		@include('layouts.cpanel.header')
 
@@ -29,11 +29,10 @@
 				<!--begin::Wrapper-->
 				<div class="d-flex flex-column flex-row-fluid wrapper" id="kt_wrapper">
 					<!--begin::Header-->
-                    @include('layouts.cpanel.header_menu')
 
 					<!--end::Header-->
 					<!--begin::Content-->
-					<div class="content d-flex flex-column pt-0 flex-column-fluid" id="kt_content">
+					<div class="content d-flex flex-column flex-column-fluid" id="kt_content">
 						<!--begin::Subheader-->
 						@yield('subHeader')
 						<!--end::Subheader-->

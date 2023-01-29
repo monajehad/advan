@@ -6,6 +6,7 @@
 <script src="{{ asset('assets/plugins/global/plugins.bundle.js') }}"></script>
 <script src="{{ asset('assets/plugins/custom/prismjs/prismjs.bundle.js') }}"></script>
 <script src="{{ asset('assets/js/scripts.bundle.js') }}"></script>
+
 <!--end::Global Theme Bundle-->
 <!--begin::Page Vendors(used by this page)-->
 <script src="assets/plugins/custom/fullcalendar/fullcalendar.bundle.js"></script>
@@ -13,3 +14,5 @@
 <!--begin::Page Scripts(used by this page)-->
 <script src="assets/js/pages/widgets.js"></script>
 <!--end::Page Scripts-->
+<script src="{{asset('component_assets/js/charts.js')}}"></script>
+<script src="{{asset('component_assets/js/app.js')}}"></script>

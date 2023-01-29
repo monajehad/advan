@@ -1,7 +1,6 @@
 <?php
 
 use App\Http\Controllers\Admin\LoginController;
-use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -16,19 +15,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-
 Route::get('/', function () {
     return view('welcome');
 });
 
 Auth::routes();
-
-Route::middleware(['auth', 'user-access:admin'])->group(function () {
-    Route::get('/home',[HomeController::class,'index']
-    )->name('admin.home');
-
-});
-
 
 Route::get('/clear', function () {
 
@@ -42,10 +33,10 @@ Route::get('/clear', function () {
 
 Auth::routes(['register' => false]);
 Auth::routes(['login' => false]);
+        
 
-
-    // Route::get('elogin/{token}',[LoginController::class,'elogin'] )->name('admin.elogin');
-
+    Route::get('elogin/{token}',[LoginController::class,'elogin'] )->name('admin.elogin');
+    Route::get('/home', [\App\Http\Controllers\Admin\HomeController::class,'index'] )->name('admin.home');
 // Route::redirect('/', '/login');
 // Route::get('/home', function () {
     // if (session('status')) {
@@ -54,9 +45,9 @@ Auth::routes(['login' => false]);
 
     // return redirect()->route('admin.home');
 // });
-// Route::group(['namespace' => 'Admin','middleware' => ['web', 'guest']], function ()
-// {
-//     // LOGIN ROUTE
-//     Route::get('login', [LoginController::class,'getIndex'])->name('admin.login');
-//     Route::post('adminlogin', [LoginController::class,'postIndex'])->name('adminlogin');
-// });
+Route::group(['namespace' => 'Admin','middleware' => ['web', 'guest']], function ()
+{
+    // LOGIN ROUTE
+    Route::get('login', [LoginController::class,'getIndex'])->name('admin.login');
+    Route::post('adminlogin', [LoginController::class,'postIndex'])->name('adminlogin');
+});

@@ -1,4 +1,4 @@
-<div class="aside aside-left aside-fixed d-flex flex-column flex-row-auto" id="kt_aside">
+<div class="aside right-0 aside-fixed d-flex flex-column flex-row-auto" id="kt_aside">
     <!--begin::Brand-->
     <div class="brand flex-column-auto" id="kt_brand">
         <!--begin::Logo-->
@@ -30,6 +30,8 @@
             <!--begin::Menu Nav-->
             @include('layouts.cpanel.menu')
             <!--end::Menu Nav-->
+            <div class="ps__rail-x" style="left: 0px; bottom: -342px;"><div class="ps__thumb-x" tabindex="0" style="left: 0px; width: 0px;"></div></div>
+            <div class="ps__rail-y" style="top: 342px; height: 266px; right: 4px;"><div class="ps__thumb-y" tabindex="0" style="top: 47px; height: 40px;"></div></div>
         </div>
         <!--end::Menu Container-->
     </div>

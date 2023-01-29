@@ -4,13 +4,15 @@ namespace App\Models;
 
 use \DateTimeInterface;
 use Carbon\Carbon;
-use Hash;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Auth\Notifications\ResetPassword;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Passport\HasApiTokens;
+use Illuminate\Database\Eloquent\Casts\Attribute;
+use Laravel\Sanctum\HasApiTokens as SanctumHasApiTokens;
 
 class User extends Authenticatable
 {
@@ -19,9 +21,9 @@ class User extends Authenticatable
     use HasFactory;
     use HasApiTokens;
 
-    protected $connection = 'mysql2';
+
     protected $table = 'users';
-    
+
     public const STATUS_SELECT = [
         '0' => 'غير فغال',
         '1' => 'فعال',
@@ -70,7 +72,12 @@ class User extends Authenticatable
         return $this->roles()->where('id', 1)->exists();
     }
 
-
+    protected function user_type(): Attribute
+    {
+        return new Attribute(
+            get: fn ($value) =>  ["admin", "tender"][$value],
+        );
+    }
     public function userUserAlerts()
     {
         return $this->belongsToMany(UserAlert::class);

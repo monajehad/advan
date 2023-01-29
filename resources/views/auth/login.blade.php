@@ -62,7 +62,7 @@
 						<div class="w-lg-500px p-10 p-lg-15 mx-auto" dir="rtl">
 
 							<!--begin::Form-->
-							<form class="form w-100"  id="kt_sign_in_form" action="{{route('adminlogin')}}" method="post">
+							<form class="form w-100"  id="kt_sign_in_form" action="{{route('login')}}" method="post">
 								@csrf
 								<!--begin::Heading-->
 								<div class="text-center mb-10">
@@ -85,7 +85,7 @@
 									<label class="form-label fs-6 fw-bolder text-dark">رقم الجوال </label>
 									<!--end::Label-->
 									<!--begin::Input-->
-									<input class="form-control form-control-lg form-control-solid" type="text" name="username" placeholder="رقم الجوال" autocomplete="off" />
+									<input class="form-control form-control-lg form-control-solid" type="text" name="email" placeholder="رقم الجوال" autocomplete="off" />
 									<!--end::Input-->
 								</div>
 								<!--end::Input group-->
