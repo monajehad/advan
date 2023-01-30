@@ -9,10 +9,10 @@ use Illuminate\Http\Response;
 
 class StoreClinicsSpecialtyRequest extends FormRequest
 {
-    public function authorize()
-    {
-        return Gate::allows('clinics_specialty_create');
-    }
+    // public function authorize()
+    // {
+    //     return Gate::allows('clinics_specialty_create');
+    // }
 
     public function rules()
     {

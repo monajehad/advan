@@ -9,10 +9,10 @@ use Illuminate\Http\Response;
 
 class UpdateClinicRequest extends FormRequest
 {
-    public function authorize()
-    {
-        return Gate::allows('clinic_edit');
-    }
+    // public function authorize()
+    // {
+    //     return Gate::allows('clinic_edit');
+    // }
 
     public function rules()
     {
@@ -31,7 +31,7 @@ class UpdateClinicRequest extends FormRequest
             ],
             'email' => [
                 'string',
-                'required',
+                // 'required',
             ],
             'phone' => [
                 'string',

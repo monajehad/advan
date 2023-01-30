@@ -9,10 +9,10 @@ use Illuminate\Http\Response;
 
 class UpdateClinicsSpecialtyRequest extends FormRequest
 {
-    public function authorize()
-    {
-        return Gate::allows('clinics_specialty_edit');
-    }
+    // public function authorize()
+    // {
+    //     return Gate::allows('clinics_specialty_edit');
+    // }
 
     public function rules()
     {

@@ -9,10 +9,10 @@ use Illuminate\Http\Response;
 
 class StoreUserRequest extends FormRequest
 {
-    public function authorize()
-    {
-        return Gate::allows('user_create');
-    }
+    // public function authorize()
+    // {
+    //     return Gate::allows('user_create');
+    // }
 
     public function rules()
     {
@@ -23,16 +23,16 @@ class StoreUserRequest extends FormRequest
             ],
             'user_name' => [
                 'string',
-                'required',
+                // 'required',
                 'unique:users',
             ],
             'email' => [
-                'required',
+                // 'required',
                 'unique:users',
             ],
             'phone' => [
                 'string',
-                'required',
+                // 'required',
                 'unique:users',
             ],
             'password' => [
@@ -42,7 +42,7 @@ class StoreUserRequest extends FormRequest
                 'integer',
             ],
             'roles' => [
-                'required',
+                // 'required',
                 'array',
             ],
             'categories.*' => [
@@ -52,7 +52,7 @@ class StoreUserRequest extends FormRequest
                 'array',
             ],
             'status' => [
-                'required',
+                // 'required',
             ],
         ];
     }

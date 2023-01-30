@@ -9,10 +9,10 @@ use Illuminate\Http\Response;
 
 class StoreReportRequest extends FormRequest
 {
-    public function authorize()
-    {
-        return Gate::allows('report_create');
-    }
+    // public function authorize()
+    // {
+    //     return Gate::allows('report_create');
+    // }
 
     public function rules()
     {
