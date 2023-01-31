@@ -9,10 +9,10 @@ use Illuminate\Http\Response;
 
 class StoreHitsTypeRequest extends FormRequest
 {
-    public function authorize()
-    {
-        return Gate::allows('hits_type_create');
-    }
+    // public function authorize()
+    // {
+    //     return Gate::allows('hits_type_create');
+    // }
 
     public function rules()
     {

@@ -9,10 +9,10 @@ use Illuminate\Http\Response;
 
 class UpdateHitRequest extends FormRequest
 {
-    public function authorize()
-    {
-        return Gate::allows('hit_edit');
-    }
+    // public function authorize()
+    // {
+    //     return Gate::allows('hit_edit');
+    // }
 
     public function rules()
     {

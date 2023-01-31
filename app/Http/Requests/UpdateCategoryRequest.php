@@ -9,10 +9,10 @@ use Illuminate\Http\Response;
 
 class UpdateCategoryRequest extends FormRequest
 {
-    public function authorize()
-    {
-        return Gate::allows('category_edit');
-    }
+    // public function authorize()
+    // {
+    //     return Gate::allows('category_edit');
+    // }
 
     public function rules()
     {

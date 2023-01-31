@@ -9,10 +9,10 @@ use Illuminate\Http\Response;
 
 class UpdateAttendanceRequest extends FormRequest
 {
-    public function authorize()
-    {
-        return Gate::allows('attendance_edit');
-    }
+    // public function authorize()
+    // {
+    //     return Gate::allows('attendance_edit');
+    // }
 
     public function rules()
     {

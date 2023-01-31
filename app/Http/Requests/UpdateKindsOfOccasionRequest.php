@@ -9,10 +9,10 @@ use Illuminate\Http\Response;
 
 class UpdateKindsOfOccasionRequest extends FormRequest
 {
-    public function authorize()
-    {
-        return Gate::allows('kinds_of_occasion_edit');
-    }
+    // public function authorize()
+    // {
+    //     return Gate::allows('kinds_of_occasion_edit');
+    // }
 
     public function rules()
     {
