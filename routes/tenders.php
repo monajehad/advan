@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\LoginController;
+use App\Http\Controllers\Tenders\ItemController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -15,39 +16,19 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
-Auth::routes();
-
-Route::get('/clear', function () {
-
-    $exitCode = \Illuminate\Support\Facades\Artisan::call('view:clear');
-    $exitCode = \Illuminate\Support\Facades\Artisan::call('optimize');
-    $exitCode = \Illuminate\Support\Facades\Artisan::call('config:clear');
-    $exitCode = \Illuminate\Support\Facades\Artisan::call('cache:clear');
-    $exitCode = \Illuminate\Support\Facades\Artisan::call('route:clear');
-
-});
-
-Auth::routes(['register' => false]);
-Auth::routes(['login' => false]);
-        
-
-    Route::get('elogin/{token}',[LoginController::class,'elogin'] )->name('admin.elogin');
-    Route::get('/home', [\App\Http\Controllers\Admin\HomeController::class,'index'] )->name('admin.home');
-// Route::redirect('/', '/login');
-// Route::get('/home', function () {
-    // if (session('status')) {
-        // return redirect()->route('admin.home')->with('status', session('status'));
-    // }
-
-    // return redirect()->route('admin.home');
+// Route::get('/', function () {
+//     return view('welcome');
 // });
-Route::group(['namespace' => 'Admin','middleware' => ['web', 'guest']], function ()
-{
-    // LOGIN ROUTE
-    Route::get('login', [LoginController::class,'getIndex'])->name('admin.login');
-    Route::post('adminlogin', [LoginController::class,'postIndex'])->name('adminlogin');
+Route::prefix('item')->name('item.')->group(function(){
+    Route::get('/', [ItemController::class,'index'])->name('index');
+    Route::get('/download/excel', [ItemController::class,'download_excel'])->name('download.excel');
+    Route::get('/data/{id}', [ItemController::class,'get_item'])->name('data');
+    Route::post('/store', [ItemController::class,'store'])->name('store');
+    Route::post('/import/excel', [ItemController::class,'import_excel'])->name('import.excel');
+    Route::post('/update', [ItemController::class,'update'])->name('update');
+    Route::post('/delete', [ItemController::class,'delete'])->name('delete');
+    Route::post('change/status/{id}', [ItemController::class,'change_status'])->name('change.status');
+
+    Route::get('/export/excel', [ItemController::class,'export_excel'])->name('export.excel');
+
 });

@@ -163,6 +163,7 @@ class AuthController extends Controller
 
         return apiResponse(new UserResource($user));
 
+
     }
 
     public function update_profile(Request $request)
