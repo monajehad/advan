@@ -1,5 +1,5 @@
-@extends('admin.layout.master')
-@section('page-css')
+@extends('layouts.cpanel.app')
+@section('style')
 <style>
 
     .scroll_div::-webkit-scrollbar {
@@ -20,7 +20,7 @@
 }
 </style>
 @endsection
-@section('page-title')
+@section('title')
 الأصناف
 @endsection
 @section('breadcrumb')
@@ -29,7 +29,7 @@
     <span class="text-muted font-weight-bold mr-4">الأصناف</span>
 
 @endsection
-@section('page-content')
+@section('content')
 <!--begin::Container-->
 <div class="container">
     <div class="card card-custom gutter-b">
@@ -41,18 +41,18 @@
                 </span>
             </h3>
             <div class="card-toolbar">
-                @can('items-add')
-                    <button  class="btn btn-danger mx-1 font-size-sm" id="add-button"> <i class="fa fa-plus font-weight-bold"></i> إضافة صنف</button>
+                {{-- @can('items-add') --}}
+                    <button  class="btn btn-danger mx-1 font-size-sm"  id="add-button"> <i class="fa fa-plus font-weight-bold"></i> إضافة صنف</button>
                     <button  class="btn btn-success mx-1 font-size-sm" id="import-button"> <i class="fa fa-file-excel-o font-weight-bold"></i> إضافة من إكسل</button>
-                @endcan
-                @can('items-export')
+                {{-- @endcan --}}
+                {{-- @can('items-export') --}}
                     <a  href="{{route('item.export.excel')}}" class="btn btn-info mx-1 font-size-sm" id="export-button"> <i class="fa fa-file-excel-o font-weight-bold"></i> تصدير إكسل</a>
-                @endcan
+                {{-- @endcan --}}
             </div>
         </div>
         <!--end::Header-->
         <!--begin::Body-->
-        
+
         <div class="card-body py-0">
             @if(isset($errors) && $errors->any())
                 <div class="row col-md-12 my-2 alert alert-custom alert-outline-2x alert-outline-danger fade show mb-5" role="alert">
@@ -83,22 +83,22 @@
                 </div>
             </div>
             <!--begin::Table-->
-            <div class="items-table-body"> @includeIf('admin.item.table-data')</div>
-           
+            <div class="items-table-body"> @includeIf('tenders.item.table-data')</div>
+
            <!--End::Table-->
         </div>
         <!--end::Body-->
     </div>
-    @includeIf('admin.item.sub.add')
+    @include('tenders.item.sub.add')
 </div>
 <!--end::Container-->
 @endsection
-@section('page-js')
+@section('script')
 
 <script>
- 
+
     function load_table_data(page=''){
-       
+
         $.ajax({
                 url: '{{url("item/")}}?page='+page ,
                 data:{search:$('#search_input').val()},
@@ -121,9 +121,9 @@
             load_table_data(page)
             // alert(page)
             // load_table_data()
-            
+
         });
-        
+
         $('#import-button').on('click',function(){
             $('#item-import-form').trigger("reset");
             $('#import-item-modal').modal('show');
@@ -176,14 +176,14 @@
                             icon: 'error',
                             title: response.error,
                             confirmButtonText: 'موافق'
-                        }) 
+                        })
                     }
 
                 },
                 error:function(response){
 
                 },
-               
+
             });
         })
         $(document).on('click','.delete-item',function(){
@@ -217,7 +217,7 @@
                                     title: 'خطأ في الحذف',
                                     text: response.error,
                                     confirmButtonText: 'موافق'
-                                }) 
+                                })
                             }
 
                         },
@@ -241,12 +241,12 @@
                     $('#item-form').trigger('reset')
                     $('.names-div').empty()
                     if(response.status==true){
-                        
+
                         $('#name').val(response.item.name)
                         $('#item_no').val(response.item.item_no)
                         $('#unit').val(response.item.unit)
                         $('#shape').val(response.item.pharmaceutical_form)
-                       
+
                         if(response.item.status==1){
                             $('#status').prop('checked', true);
                         }
@@ -261,14 +261,14 @@
                                 added_div.find('#names').val(element)
                             }
                         }
-                       
+
                     }else{
                         Swal.fire({
                             showCloseButton: true,
                             icon: 'error',
                             title: response.error,
                             confirmButtonText: 'موافق'
-                        }) 
+                        })
                     }
 
                 },
@@ -279,7 +279,7 @@
                     $('#add-item').modal('show');
                 }
             });
-        
+
         })
 
          $('#item-form').validate({
@@ -320,7 +320,7 @@
                 file:{
                     required: true,
                 }
-            
+
             },
             messages: {
                 file:{
@@ -349,7 +349,7 @@
                                 text:response.success,
                                 confirmButtonText: 'موافق'
                             })
-                            
+
                             $('#item-import-form').trigger("reset");
                             $('#import-item-modal').modal('hide');
 
@@ -360,7 +360,7 @@
                                 title: '',
                                 text: response.error,
                                 confirmButtonText: 'موافق'
-                                }) 
+                                })
                         }
                     },
                     error:function(response){
@@ -371,6 +371,8 @@
             }
         })
     });
+    // $(document).on('click','#save-item',function(){
+
      function postForm(){
         $.ajaxSetup({
             headers: {
@@ -386,6 +388,8 @@
                 contentType: false,
                 data: new FormData($('#item-form')[0]),
                 success: function( response ) {
+                    console.log('hhhhs');
+
                     if(response.status==true){
                         load_table_data()
                         Swal.fire({
@@ -405,10 +409,11 @@
                             title: 'خطأ في الإضافة',
                             text: response.error,
                             confirmButtonText: 'موافق'
-                        }) 
+                        })
                     }
                 },
                 error:function(response){
+                    console.log('hhh');
 
                 }
             });
@@ -429,7 +434,7 @@
                             text:response.success,
                             confirmButtonText: 'موافق'
                         })
-                        
+
                         $('#item-form').trigger("reset");
                         $('#add-item').modal('hide');
 
@@ -440,7 +445,7 @@
                             title: 'خطأ في التعديل',
                             text: response.error,
                             confirmButtonText: 'موافق'
-                            }) 
+                            })
                     }
                 },
                 error:function(response){
@@ -448,7 +453,7 @@
                 }
             });
         }
-      
+
     }
 </script>
 @endsection

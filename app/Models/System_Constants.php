@@ -4,9 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Auth;
 
 class System_Constants extends Model
 {
+
     use SoftDeletes;
     protected $table = 'system_constants';
     protected $fillable = ['name_ar','user_id','name_en','value','value2','value3','type','order','photo','status','user_id'];
@@ -40,7 +42,7 @@ class System_Constants extends Model
         $this->status = $status;
         $value = $this->where('type',$type)->max('value');
         $this->value = $value + 1;
-        $this->user_id = \Auth::user()->id;
+        $this->user_id = Auth::user()->id;
         $this->save();
         return $this;
     }
@@ -66,7 +68,7 @@ class System_Constants extends Model
     public function deleteConstant($obj){
         return $obj->delete();
     }
-    
+
     public function getBranch($id){
         return $this->where('type','branch')->where('value2',$id)->get(['value as id','name_ar as name']);
     }

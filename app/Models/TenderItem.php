@@ -11,7 +11,6 @@ class TenderItem extends Model
     use HasFactory,SoftDeletes;
 
     protected $table="tender_items";
-    protected $connection = 'mysql_second';
 
     protected $fillable = [
         'item_id','unit','expired_date',

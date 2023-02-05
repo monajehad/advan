@@ -10,13 +10,11 @@ class Item extends Model
 {
     use HasFactory,SoftDeletes;
 
-    protected $connection = 'mysql_second';
-
     protected $fillable=[
         'item_no','name','unit',
         'status','user_id','pharmaceutical_form'
     ];
-
+    
     protected $casts = [
         'created_at' => 'datetime',
         'updated_at' => 'datetime',

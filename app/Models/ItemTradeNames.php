@@ -6,12 +6,13 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class SuppliedTenderItems extends Model
+class ItemTradeNames extends Model
 {
     use HasFactory,SoftDeletes;
 
     protected $fillable=[
-        'tender_id','user_id','quantity','date','item_id'
+        'trade_name','item_id',
+        'user_id'
     ];
     
     protected $casts = [
@@ -20,4 +21,8 @@ class SuppliedTenderItems extends Model
         'deleted_at' => 'datetime',
 
     ];
+    public function item()
+    {
+        return $this->belongsTo(Item::class);
+    }
 }

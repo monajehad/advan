@@ -7,8 +7,9 @@
                     <i aria-hidden="true" class="fa fa-close"></i>
                 </button>
             </div>
-            <form class="form" action="" id="item-form" method="post" enctype="multipart/form-data">
-                <input type="hidden" name="hidden" id="hidden"> 
+            <form class="form"  id="item-form" method="post" enctype="multipart/form-data">
+                {{-- @csrf --}}
+                <input type="hidden" name="hidden" id="hidden">
             <div class="modal-body scroll_div">
                     <div class="form-group row">
                         <div class="col-md-6 col-lg-6 col-sm-12">
@@ -20,8 +21,8 @@
                             <label>الاسم<span class="text-danger">*</span></label>
                             <input type="text" name="name" id="name" class="form-control"/>
                             <label class="form-text text-muted text-danger" id="name-error"></label>
-                        </div>							
-                    </div>    
+                        </div>
+                    </div>
                     <div class="form-group row">
                         <div class="col-md-6 col-lg-6 col-sm-12">
                             <label>الوحدة</label>
@@ -41,9 +42,9 @@
 								    <option value="{{$shape->value}}">{{$shape->name}}</option>
 								@endforeach
 							</select>
-                        </div>							
+                        </div>
                     </div>
-                    
+
                     <div class="form-group row">
                         <div class="col-md-6 col-lg-6 col-sm-12 status-div">
                             <label>الحالة</label>
@@ -53,8 +54,8 @@
                                     <span></span>
                                 </label>
                             </span>
-                        </div>							
-                    </div> 
+                        </div>
+                    </div>
                     <div class="form-group row">
                         <div class="col-md-12 col-lg-12 col-sm-12 h4 my-1 font-weight-bolder">الأسماء التجارية
                             <button class="btn btn-icon btn-xs btn-circle btn-success add-name" title="إضافة اسم تجاري"><i class="fa fa-plus"></i></button>
@@ -63,13 +64,13 @@
                             <div class="separator separator-solid separator-border-1"></div>
                         </div>
                         <div class="col-md-12 col-lg-12 names-div row"></div>
-                        	
-                    </div>          
 
-                
+                    </div>
+
+
             </div>
             <div class="modal-footer">
-                <button type="submit" class="btn btn-primary" id="save-item" name="save-item">حفظ</button>
+                <button type="submit" class="btn btn-primary" form="item-form" id="save-item" name="save-item">حفظ</button>
 
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">إغلاق</button>
             </div>
@@ -88,7 +89,7 @@
                 </button>
             </div>
             <form class="form" id="item-import-form" method="post" enctype="multipart/form-data">
-               
+
             <div class="modal-body">
                     <div class="row">
                         <div class="col-md-12 font-weight-bolder h3">
@@ -117,14 +118,14 @@
                             </ul>
                         </div>
                     </div>
-         
+
                     <div class="form-group row">
-                      
+
                         <div class="col-md-12 col-lg-12 col-sm-12">
                             <label>الملف</label>
                             <input type="file" name="file" id="file" class="form-control"/>
-                            
-                        </div>							
+
+                        </div>
                     </div>
             </div>
             <div class="modal-footer">

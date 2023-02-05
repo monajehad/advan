@@ -14,7 +14,7 @@ class SystemConstant extends Model
         'name','value','type','order','status',
         'value2','value3'
     ];
-    
+
     protected $casts = [
         'created_at' => 'datetime',
         'updated_at' => 'datetime',

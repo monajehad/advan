@@ -23,8 +23,8 @@ class ItemController extends Controller
     {
 
         $data=[];
-        $unit_select=  DB::connection('mysql_second')->table("SystemConstant")->select('id','name','value','type')->where([['status',1],['type','unit']])->orderBy('order')->get();
-        $shape_select= DB::connection('mysql_second')->table("SystemConstant")->select('id','name','value','type')->where([['status',1],['type','pharmaceutical_form']])->orderBy('order')->get();
+        $unit_select=SystemConstant::select('id','name','value','type')->where([['status',1],['type','unit']])->orderBy('order')->get();
+        $shape_select=SystemConstant::select('id','name','value','type')->where([['status',1],['type','pharmaceutical_form']])->orderBy('order')->get();
 
         $items=Item::
         leftJoin('system_constants as unit_constants', function($join) {
@@ -51,6 +51,8 @@ class ItemController extends Controller
         return view('tenders.item.index',compact('data'));
 
     }
+
+
     public function get_item($id)
     {
         $item=Item::where('items.id',$id)
@@ -64,18 +66,19 @@ class ItemController extends Controller
     }
     public function store(Request $request)
     {
-        $validation=Validator::make($request->all(),$this->rules(),$this->messages());
-        if ($validation->fails()) {
-            return response()->json(['status'=>false,'error'=>$validation->errors()->first()]);
-        }
-        $request->status= (isset($request->status))? 1: 0;
+        // $validation=Validator::make($request->all(),$this->rules(),$this->messages());
+        // if ($validation->fails()) {
+        //     return response()->json(['status'=>false,'error'=>$validation->errors()->first()]);
+        // }
+        // // $request->status= (isset($request->status))? 1: 0;
         DB::transaction(function () use ($request){
             $add_arr=[
                 "item_no"=>$request->item_no,
                 "name"=>$request->name,
                 "unit"=>$request->unit,
                 "pharmaceutical_form"=>$request->shape,
-                "user_id"=>Auth::id(),
+                 "user_id"=>'1',
+                // Auth::id(),
                 'status'=>$request->status
             ];
             $item=Item::create($add_arr);
@@ -84,7 +87,8 @@ class ItemController extends Controller
                     ItemTradeNames::create([
                         "trade_name"=>$name,
                         "item_id"=>$item->id,
-                        "user_id"=>Auth::id(),
+                         "user_id"=>'1'
+                        //  Auth::id(),
 
                     ]);
                 }
