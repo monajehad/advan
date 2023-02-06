@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\ClientsSpecialtiesController;
 use App\Http\Controllers\Admin\LoginController;
 use App\Http\Controllers\Tenders\ItemController;
 use Illuminate\Support\Facades\Auth;
@@ -32,3 +33,4 @@ Route::prefix('item')->name('item.')->group(function(){
     Route::get('/export/excel', [ItemController::class,'export_excel'])->name('export.excel');
 
 });
+

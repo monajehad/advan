@@ -3,28 +3,29 @@
 
 <div class="card">
     <div class="card-header">
-        {{ trans('global.create') }} {{ trans('cruds.clinicsSpecialty.title_singular') }}
+        {{ trans('global.edit') }} {{ trans('cruds.clientsSpecialty.title_singular') }}
     </div>
 
     <div class="card-body">
-        <form method="POST" action="{{ route("admin.clinics-specialties.store") }}" enctype="multipart/form-data">
+        <form method="POST" action="{{ route("admin.clients-specialties.update", [$clientsSpecialty->id]) }}" enctype="multipart/form-data">
+            @method('PUT')
             @csrf
             <div class="form-group">
-                <label class="required" for="name">{{ trans('cruds.clinicsSpecialty.fields.name') }}</label>
-                <input class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" type="text" name="name" id="name" value="{{ old('name', '') }}" required>
+                <label class="required" for="name">{{ trans('cruds.clientsSpecialty.fields.name') }}</label>
+                <input class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" type="text" name="name" id="name" value="{{ old('name', $clientsSpecialty->name) }}" required>
                 @if($errors->has('name'))
                     <div class="invalid-feedback">
                         {{ $errors->first('name') }}
                     </div>
                 @endif
-                <span class="help-block">{{ trans('cruds.clinicsSpecialty.fields.name_helper') }}</span>
+                <span class="help-block">{{ trans('cruds.clientsSpecialty.fields.name_helper') }}</span>
             </div>
             <div class="form-group">
-                <label>{{ trans('cruds.clinicsSpecialty.fields.status') }}</label>
+                <label>{{ trans('cruds.clientsSpecialty.fields.status') }}</label>
                 <select class="form-control {{ $errors->has('status') ? 'is-invalid' : '' }}" name="status" id="status">
                     <option value disabled {{ old('status', null) === null ? 'selected' : '' }}>{{ trans('global.pleaseSelect') }}</option>
-                    @foreach(App\Models\ClinicsSpecialty::STATUS_SELECT as $key => $label)
-                        <option value="{{ $key }}" {{ old('status', '1') === (string) $key ? 'selected' : '' }}>{{ $label }}</option>
+                    @foreach(App\Models\ClientsSpecialty::STATUS_SELECT as $key => $label)
+                        <option value="{{ $key }}" {{ old('status', $clientsSpecialty->status) === (string) $key ? 'selected' : '' }}>{{ $label }}</option>
                     @endforeach
                 </select>
                 @if($errors->has('status'))
@@ -32,7 +33,7 @@
                         {{ $errors->first('status') }}
                     </div>
                 @endif
-                <span class="help-block">{{ trans('cruds.clinicsSpecialty.fields.status_helper') }}</span>
+                <span class="help-block">{{ trans('cruds.clientsSpecialty.fields.status_helper') }}</span>
             </div>
             <div class="form-group">
                 <button class="btn btn-danger" type="submit">

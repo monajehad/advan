@@ -3,13 +3,13 @@
 
 <div class="card">
     <div class="card-header">
-        {{ trans('global.show') }} {{ trans('cruds.clinicsSpecialty.title') }}
+        {{ trans('global.show') }} {{ trans('cruds.clientsSpecialty.title') }}
     </div>
 
     <div class="card-body">
         <div class="form-group">
             <div class="form-group">
-                <a class="btn btn-default" href="{{ route('admin.clinics-specialties.index') }}">
+                <a class="btn btn-default" href="{{ route('admin.clients-specialties.index') }}">
                     {{ trans('global.back_to_list') }}
                 </a>
             </div>
@@ -17,32 +17,32 @@
                 <tbody>
                     <tr>
                         <th>
-                            {{ trans('cruds.clinicsSpecialty.fields.id') }}
+                            {{ trans('cruds.clientsSpecialty.fields.id') }}
                         </th>
                         <td>
-                            {{ $clinicsSpecialty->id }}
+                            {{ $clientsSpecialty->id }}
                         </td>
                     </tr>
                     <tr>
                         <th>
-                            {{ trans('cruds.clinicsSpecialty.fields.name') }}
+                            {{ trans('cruds.clientsSpecialty.fields.name') }}
                         </th>
                         <td>
-                            {{ $clinicsSpecialty->name }}
+                            {{ $clientsSpecialty->name }}
                         </td>
                     </tr>
                     <tr>
                         <th>
-                            {{ trans('cruds.clinicsSpecialty.fields.status') }}
+                            {{ trans('cruds.clientsSpecialty.fields.status') }}
                         </th>
                         <td>
-                            {{ App\Models\ClinicsSpecialty::STATUS_SELECT[$clinicsSpecialty->status] ?? '' }}
+                            {{ App\Models\ClientsSpecialty::STATUS_SELECT[$clientsSpecialty->status] ?? '' }}
                         </td>
                     </tr>
                 </tbody>
             </table>
             <div class="form-group">
-                <a class="btn btn-default" href="{{ route('admin.clinics-specialties.index') }}">
+                <a class="btn btn-default" href="{{ route('admin.clients-specialties.index') }}">
                     {{ trans('global.back_to_list') }}
                 </a>
             </div>

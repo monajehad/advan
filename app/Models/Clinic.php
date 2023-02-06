@@ -65,7 +65,7 @@ class Clinic extends Model implements HasMedia
 
     public function specialty()
     {
-        return $this->belongsTo(ClinicsSpecialty::class, 'specialty_id');
+        return $this->belongsTo(ClientsSpecialty::class, 'specialty_id');
     }
 
     public function getImageAttribute()

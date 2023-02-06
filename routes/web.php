@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\AttendanceController;
 use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\ClientsSpecialtiesController;
 use App\Http\Controllers\Admin\ClinicsController;
 use App\Http\Controllers\Admin\ClinicsSpecialtiesController;
 use App\Http\Controllers\Admin\HitsController;
@@ -62,11 +63,11 @@ Route::group([ 'prefix' => 'admin', 'as' => 'admin.']
       Route::post('users/ckmedia', [UsersController::class,'storeCKEditorImages'] )->name('users.storeCKEditorImages');
       Route::resource('users', UsersController::class);
 
-       // Clinics Specialties
-      Route::delete('clinics-specialties/destroy', [ClinicsSpecialtiesController::class,'massDestroy'])->name('clinics-specialties.massDestroy');
-      Route::post('clinics-specialties/parse-csv-import', [ClinicsSpecialtiesController::class,'parseCsvImport'])->name('clinics-specialties.parseCsvImport');
-      Route::post('clinics-specialties/process-csv-import', [ClinicsSpecialtiesController::class,'processCsvImport'])->name('clinics-specialties.processCsvImport');
-      Route::resource('clinics-specialties', ClinicsSpecialtiesController::class);
+       // Clients Specialties
+      Route::delete('clients-specialties/destroy', [ClientsSpecialtiesController::class,'massDestroy'])->name('clients-specialties.massDestroy');
+      Route::post('clients-specialties/parse-csv-import', [ClientsSpecialtiesController::class,'parseCsvImport'])->name('clients-specialties.parseCsvImport');
+      Route::post('clients-specialties/process-csv-import', [ClientsSpecialtiesController::class,'processCsvImport'])->name('clients-specialties.processCsvImport');
+      Route::resource('clients-specialties', ClientsSpecialtiesController::class);
 
       // Clinics
       Route::delete('clinics/destroy', [ClinicsController::class,'classmassDestroy'])->name('clinics.massDestroy');

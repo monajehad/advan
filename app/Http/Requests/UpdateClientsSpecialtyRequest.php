@@ -2,16 +2,16 @@
 
 namespace App\Http\Requests;
 
-use App\Models\ClinicsSpecialty;
+use App\Models\ClientsSpecialty;
 use Gate;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Response;
 
-class StoreClinicsSpecialtyRequest extends FormRequest
+class UpdateClientsSpecialtyRequest extends FormRequest
 {
     // public function authorize()
     // {
-    //     return Gate::allows('clinics_specialty_create');
+    //     return Gate::allows('clinics_specialty_edit');
     // }
 
     public function rules()
