@@ -20,7 +20,7 @@ class CompetitorsItems extends Model
         'awarded',
 
 
-        
+
 
     ];
 
@@ -28,5 +28,6 @@ class CompetitorsItems extends Model
         'created_at' => 'datetime',
         'updated_at' => 'datetime',
         'deleted_at' => 'datetime',
+
     ];
 }

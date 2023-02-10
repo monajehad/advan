@@ -282,39 +282,39 @@
 
         })
 
-         $('#item-form').validate({
-            rules:{
-                item_no:{
-                    required: true,
-                },
-                name:{
-                    required: true,
-                },
-                unit:{
-                    required: true,
-                },
-                shape:{
-                    required: true,
-                },
-            },
-            messages: {
-                item_no:{
-                    required: "يجب إدخال رقم الصنف",
-                },
-                name:{
-                    required: "يجب إدخال اسم الصنف",
-                },
-                unit:{
-                    required: "يجب اختيار وحدة الصنف",
-                },
-                shape:{
-                    required: "يجب اختيار الشكل الصيدلاني",
-                },
-            },
-            submitHandler:function(event){
-                postForm();
-            }
-        })
+        //  $('#item-form').validate({
+        //     rules:{
+        //         item_no:{
+        //             required: true,
+        //         },
+        //         name:{
+        //             required: true,
+        //         },
+        //         unit:{
+        //             required: true,
+        //         },
+        //         shape:{
+        //             required: true,
+        //         },
+        //     },
+        //     messages: {
+        //         item_no:{
+        //             required: "يجب إدخال رقم الصنف",
+        //         },
+        //         name:{
+        //             required: "يجب إدخال اسم الصنف",
+        //         },
+        //         unit:{
+        //             required: "يجب اختيار وحدة الصنف",
+        //         },
+        //         shape:{
+        //             required: "يجب اختيار الشكل الصيدلاني",
+        //         },
+        //     },
+        //     submitHandler:function(event){
+        //         postForm();
+        //     }
+        // })
         $('#item-import-form').validate({
             rules:{
                 file:{
@@ -371,15 +371,15 @@
             }
         })
     });
-    // $(document).on('click','#save-item',function(){
+    $(document).on('click','#save-item',function(){
+        let hidden=$('#hidden').val();
 
-     function postForm(){
+    //  function postForm(){
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
         });
-        let hidden=$('#hidden').val()
         if(hidden==0){
                 $.ajax({
                 url: '{{route("item.store")}}' ,
@@ -454,6 +454,6 @@
             });
         }
 
-    }
+    })
 </script>
 @endsection

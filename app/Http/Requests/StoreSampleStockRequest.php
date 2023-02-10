@@ -9,10 +9,10 @@ use Illuminate\Http\Response;
 
 class StoreSampleStockRequest extends FormRequest
 {
-    public function authorize()
-    {
-        return Gate::allows('sample_stock_create');
-    }
+    // public function authorize()
+    // {
+    //     return Gate::allows('sample_stock_create');
+    // }
 
     public function rules()
     {
@@ -25,16 +25,28 @@ class StoreSampleStockRequest extends FormRequest
                 'string',
                 'required',
             ],
-            'received_date' => [
-                'date_format:' . config('panel.date_format'),
-                'nullable',
+            'received_quantity' => [
+                'string',
+                // 'required',
             ],
-            'end_date' => [
-                'date_format:' . config('panel.date_format'),
-                'nullable',
-            ],
+            // 'received_date' => [
+            //     'date_format:' . config('panel.date_format'),
+            //     'nullable',
+            // ],
+            // 'end_date' => [
+            //     'date_format:' . config('panel.date_format'),
+            //     'nullable',
+            // ],
+            // 'date' => [
+            //     'date_format:' . config('panel.date_format'),
+            //     'nullable',
+            // ],
             'category_id' => [
                 'required',
+                'integer',
+            ],
+            'item_id' => [
+                // 'required',
                 'integer',
             ],
             'status' => [

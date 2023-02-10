@@ -97,42 +97,35 @@ class ItemController extends Controller
         return response()->json(['status'=>true,'success'=>'تم إضافة الصنف بنجاح']);
     }
 
-    public function update(Request $request)
+    public function edit(Request $request)
     {
+
+
         $validation=Validator::make($request->all(),$this->rules($request->hidden),$this->messages());
         if ($validation->fails()) {
             return response()->json(['status'=>false,'error'=>$validation->errors()->first()]);
         }
-        $request->status= (isset($request->status))? 1: 0;
         $item=Item::where('id',$request->hidden)->first();
+        $request->status= (isset($request->status))? 1: 0;
         if(!$item)
             return response()->json(['status'=>false,'error'=>'الصنف غير موجود']);
-
-        DB::transaction(function () use ($request,&$item){
-            $update_arr=[
+            $update=$item->update([
                 "item_no"=>$request->item_no,
                 "name"=>$request->name,
                 "unit"=>$request->unit,
                 "pharmaceutical_form"=>$request->shape,
-                "user_id"=>Auth::id(),
+                // "user_id"=>Auth::id(),
+                "user_id"=>'1',
                 'status'=>$request->status,
                 'updated_at'=>Carbon::now()
-            ];
 
-            $item->update($update_arr);
-            ItemTradeNames::where('item_id',$item->id)->delete();
-            if ($request->names) {
-                foreach ($request->names as $name) {
-                    ItemTradeNames::create([
-                        "trade_name"=>$name,
-                        "item_id"=>$item->id,
-                        "user_id"=>Auth::id(),
-                    ]);
-                }
-            }
-        });
-        return response()->json(['status'=>true,'success'=>'تم تعديل الصنف بنجاح']);
+
+            ]);
+        if(!$update)
+            return response()->json(['status'=>false,'error'=>'لم يتم تعديل الصنف']);
+        return response()->json(['status'=>true,'success'=>'تم تعديل  الصنف']);
     }
+
 
     public function delete(Request $request)
     {

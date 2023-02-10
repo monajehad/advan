@@ -7,8 +7,8 @@
                     <i aria-hidden="true" class="fa fa-close"></i>
                 </button>
             </div>
-            <form class="form"  id="item-form" method="post" enctype="multipart/form-data">
-                {{-- @csrf --}}
+            <form class="form"  id="item-form" >
+                @csrf
                 <input type="hidden" name="hidden" id="hidden">
             <div class="modal-body scroll_div">
                     <div class="form-group row">

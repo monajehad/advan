@@ -1,7 +1,5 @@
 @extends('layouts.cpanel.app')
 @section('content')
-{{-- @can('clinics_specialty_create') --}}
-
 <!--begin::Container-->
 <div class="container">
     <div class="card card-custom gutter-b">
@@ -9,19 +7,19 @@
         <div class="card-header border-1 py-4">
             <h3 class="card-title align-items-start flex-column">
                 <span class="card-label font-weight-bolder text-dark">
-                الموردون
+               مخزون العينات
                 </span>
             </h3>
             <div class="card-toolbar">
                 {{-- @can('suppliers-add') --}}
-                <a class="btn btn-success" href="{{ route('admin.clients-specialties.create') }}">
+                <a class="btn btn-success" href="{{ route('admin.sample-stocks.create') }}">
                     {{ trans('global.add') }} {{ trans('cruds.clientsSpecialty.title_singular') }}
                 </a>                {{-- @endcan --}}
                 {{-- @can('suppliers-export') --}}
                 <button class="btn btn-warning" data-toggle="modal" data-target="#csvImportModal">
                     {{ trans('global.app_csvImport') }}
                 </button>
-                @include('csvImport.modal', ['model' => 'ClientsSpecialty', 'route' => 'admin.clients-specialties.parseCsvImport'])                {{-- @endcan --}}
+                {{-- @include('csvImport.modal', ['model' => 'sample-stocks', 'route' => 'admin.sample-stocks.parseCsvImport'])                @endcan --}}
             </div>
         </div>
         <!--end::Header-->
@@ -37,7 +35,7 @@
         </div>
         <div class="card-body py-0">
             <!--begin::Table-->
-            <div class="suppliers-table-body">  @includeIf('advan.admin.clientsSpecialties.table-data')</div>
+            <div class="sample-stocks-table-body">  @includeIf('advan.admin.sampleStocks.table-data')</div>
 
            <!--End::Table-->
         </div>
@@ -56,7 +54,7 @@
   let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
   let deleteButton = {
     text: deleteButtonTrans,
-    url: "{{ route('admin.clients-specialties.massDestroy') }}",
+    url: "{{ route('admin.sample-stocks.massDestroy') }}",
     className: 'btn-danger',
     action: function (e, dt, node, config) {
       var ids = $.map(dt.rows({ selected: true }).data(), function (entry) {

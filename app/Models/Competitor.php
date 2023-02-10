@@ -18,13 +18,21 @@ class Competitor extends Model
         'address',
         'user_id',
         'status',
-        'color'
+        'color',
+        'created_at',
+        'updated_at',
+        'deleted_at',
     ];
+    // protected $dates = [
+    //     'date_time',
+    //     'created_at',
+    //     'updated_at',
+    //     'deleted_at',
+    // ];
+    // protected $casts = [
+    //     'created_at' => 'datetime',
+    //     'updated_at' => 'datetime',
+    //     'deleted_at' => 'datetime',
 
-    protected $casts = [
-        'created_at' => 'datetime',
-        'updated_at' => 'datetime',
-        'deleted_at' => 'datetime',
-
-    ];
+    // ];
 }

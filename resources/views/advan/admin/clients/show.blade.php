@@ -3,13 +3,13 @@
 
 <div class="card">
     <div class="card-header">
-        {{ trans('global.show') }} {{ trans('cruds.clinic.title') }}
+        {{ trans('global.show') }} {{ trans('cruds.client.title') }}
     </div>
 
     <div class="card-body">
         <div class="form-group">
             <div class="form-group">
-                <a class="btn btn-default" href="{{ route('admin.clinics.index') }}">
+                <a class="btn btn-default" href="{{ route('admin.clients.index') }}">
                     {{ trans('global.back_to_list') }}
                 </a>
             </div>
@@ -17,124 +17,124 @@
                 <tbody>
                     <tr>
                         <th>
-                            {{ trans('cruds.clinic.fields.id') }}
+                            {{ trans('cruds.client.fields.id') }}
                         </th>
                         <td>
-                            {{ $clinic->id }}
+                            {{ $client->id }}
                         </td>
                     </tr>
                     <tr>
                         <th>
-                            {{ trans('cruds.clinic.fields.name') }}
+                            {{ trans('cruds.client.fields.name') }}
                         </th>
                         <td>
-                            {{ $clinic->name }}
+                            {{ $client->name }}
                         </td>
                     </tr>
                     <tr>
                         <th>
-                            {{ trans('cruds.clinic.fields.doctor_name') }}
+                            {{ trans('cruds.client.fields.doctor_name') }}
                         </th>
                         <td>
-                            {{ $clinic->doctor_name }}
+                            {{ $client->doctor_name }}
                         </td>
                     </tr>
                     <tr>
                         <th>
-                            {{ trans('cruds.clinic.fields.specialty') }}
+                            {{ trans('cruds.client.fields.specialty') }}
                         </th>
                         <td>
-                            {{ $clinic->specialty->name ?? '' }}
+                            {{ $client->specialty->name ?? '' }}
                         </td>
                     </tr>
                     <tr>
                         <th>
-                            {{ trans('cruds.clinic.fields.image') }}
+                            {{ trans('cruds.client.fields.image') }}
                         </th>
                         <td>
-                            @if($clinic->image)
-                                <a href="{{ $clinic->image->getUrl() }}" target="_blank" style="display: inline-block">
-                                    <img src="{{ $clinic->image->getUrl('thumb') }}">
+                            @if($client->image)
+                                <a href="{{ $client->image->getUrl() }}" target="_blank" style="display: inline-block">
+                                    <img src="{{ $client->image->getUrl('thumb') }}">
                                 </a>
                             @endif
                         </td>
                     </tr>
                     <tr>
                         <th>
-                            {{ trans('cruds.clinic.fields.email') }}
+                            {{ trans('cruds.client.fields.email') }}
                         </th>
                         <td>
-                            {{ $clinic->email }}
+                            {{ $client->email }}
                         </td>
                     </tr>
                     <tr>
                         <th>
-                            {{ trans('cruds.clinic.fields.phone') }}
+                            {{ trans('cruds.client.fields.phone') }}
                         </th>
                         <td>
-                            {{ $clinic->phone }}
+                            {{ $client->phone }}
                         </td>
                     </tr>
                     <tr>
                         <th>
-                            {{ trans('cruds.clinic.fields.clinic_phone') }}
+                            {{ trans('cruds.client.fields.client_phone') }}
                         </th>
                         <td>
-                            {{ $clinic->clinic_phone }}
+                            {{ $client->client_phone }}
                         </td>
                     </tr>
                     <tr>
                         <th>
-                            {{ trans('cruds.clinic.fields.address_1') }}
+                            {{ trans('cruds.client.fields.address_1') }}
                         </th>
                         <td>
-                            {{ $clinic->address_1 }}
+                            {{ $client->address_1 }}
                         </td>
                     </tr>
                     <tr>
                         <th>
-                            {{ trans('cruds.clinic.fields.address_2') }}
+                            {{ trans('cruds.client.fields.address_2') }}
                         </th>
                         <td>
-                            {{ $clinic->address_2 }}
+                            {{ $client->address_2 }}
                         </td>
                     </tr>
                     <tr>
                         <th>
-                            {{ trans('cruds.clinic.fields.address_3') }}
+                            {{ trans('cruds.client.fields.address_3') }}
                         </th>
                         <td>
-                            {{ $clinic->address_3 }}
+                            {{ $client->address_3 }}
                         </td>
                     </tr>
                     <tr>
                         <th>
-                            {{ trans('cruds.clinic.fields.latitude') }}
+                            {{ trans('cruds.client.fields.latitude') }}
                         </th>
                         <td>
-                            {{ $clinic->latitude }}
+                            {{ $client->latitude }}
                         </td>
                     </tr>
                     <tr>
                         <th>
-                            {{ trans('cruds.clinic.fields.longitude') }}
+                            {{ trans('cruds.client.fields.longitude') }}
                         </th>
                         <td>
-                            {{ $clinic->longitude }}
+                            {{ $client->longitude }}
                         </td>
                     </tr>
                     <tr>
                         <th>
-                            {{ trans('cruds.clinic.fields.status') }}
+                            {{ trans('cruds.client.fields.status') }}
                         </th>
                         <td>
-                            {{ App\Models\Clinic::STATUS_SELECT[$clinic->status] ?? '' }}
+                            {{ App\Models\Client::STATUS_SELECT[$client->status] ?? '' }}
                         </td>
                     </tr>
                 </tbody>
             </table>
             <div class="form-group">
-                <a class="btn btn-default" href="{{ route('admin.clinics.index') }}">
+                <a class="btn btn-default" href="{{ route('admin.clients.index') }}">
                     {{ trans('global.back_to_list') }}
                 </a>
             </div>
@@ -142,22 +142,22 @@
     </div>
 </div>
 
-<div class="card">
+{{-- <div class="card">
     <div class="card-header">
         {{ trans('global.relatedData') }}
     </div>
     <ul class="nav nav-tabs" role="tablist" id="relationship-tabs">
         <li class="nav-item">
-            <a class="nav-link" href="#clinic_hits" role="tab" data-toggle="tab">
+            <a class="nav-link" href="#client_hits" role="tab" data-toggle="tab">
                 {{ trans('cruds.hit.title') }}
             </a>
         </li>
     </ul>
     <div class="tab-content">
-        <div class="tab-pane" role="tabpanel" id="clinic_hits">
-            @includeIf('admin.clinics.relationships.clinicHits', ['hits' => $clinic->clinicHits])
+        <div class="tab-pane" role="tabpanel" id="client_hits">
+            @includeIf('admin.clients.relationships.clientHits', ['hits' => $client->clientHits])
         </div>
     </div>
-</div>
+</div> --}}
 
 @endsection

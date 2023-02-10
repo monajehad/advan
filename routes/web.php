@@ -2,9 +2,9 @@
 
 use App\Http\Controllers\Admin\AttendanceController;
 use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\ClientsController;
 use App\Http\Controllers\Admin\ClientsSpecialtiesController;
-use App\Http\Controllers\Admin\ClinicsController;
-use App\Http\Controllers\Admin\ClinicsSpecialtiesController;
+
 use App\Http\Controllers\Admin\HitsController;
 use App\Http\Controllers\Admin\HitsTypeController;
 use App\Http\Controllers\Admin\KindsOfOccasionsController;
@@ -13,6 +13,7 @@ use App\Http\Controllers\Admin\PermissionsController;
 use App\Http\Controllers\Admin\ReportController;
 use App\Http\Controllers\Admin\ReportTypeController;
 use App\Http\Controllers\Admin\RolesController;
+use App\Http\Controllers\Admin\SampleStockController;
 use App\Http\Controllers\Admin\UsersController;
 use App\Http\Controllers\Admin\VacationRequestController;
 use App\Http\Controllers\HomeController;
@@ -70,12 +71,12 @@ Route::group([ 'prefix' => 'admin', 'as' => 'admin.']
       Route::resource('clients-specialties', ClientsSpecialtiesController::class);
 
       // Clinics
-      Route::delete('clinics/destroy', [ClinicsController::class,'classmassDestroy'])->name('clinics.massDestroy');
-      Route::post('clinics/media', [ClinicsController::class,'storeMedia'])->name('clinics.storeMedia');
-      Route::post('clinics/ckmedia', [ClinicsController::class,'storeCKEditorImages'])->name('clinics.storeCKEditorImages');
-      Route::post('clinics/parse-csv-import', [ClinicsController::class,'parseCsvImport'])->name('clinics.parseCsvImport');
-      Route::post('clinics/process-csv-import', [ClinicsController::class,'processCsvImport'])->name('clinics.processCsvImport');
-      Route::resource('clinics', ClinicsController::class);
+      Route::delete('clients/destroy', [ClientsController::class,'classmassDestroy'])->name('clients.massDestroy');
+      Route::post('clients/media', [ClientsController::class,'storeMedia'])->name('clients.storeMedia');
+      Route::post('clients/ckmedia', [ClientsController::class,'storeCKEditorImages'])->name('clients.storeCKEditorImages');
+      Route::post('clients/parse-csv-import', [ClientsController::class,'parseCsvImport'])->name('clients.parseCsvImport');
+      Route::post('clients/process-csv-import', [ClientsController::class,'processCsvImport'])->name('clients.processCsvImport');
+      Route::resource('clients', ClientsController::class);
 
       // Report Type
       Route::delete('report-types/destroy', [ReportTypeController::class,'massDestroy'])->name('report-types.massDestroy');
@@ -124,6 +125,10 @@ Route::group([ 'prefix' => 'admin', 'as' => 'admin.']
      Route::post('kinds-of-occasions/process-csv-import', [KindsOfOccasionsController::class,'processCsvImport'])->name('kinds-of-occasions.processCsvImport');
      Route::resource('kinds-of-occasions', KindsOfOccasionsController::class);
 
+
+     // Sample Stock
+    Route::delete('sample-stocks/destroy', [SampleStockController::class,'massDestroy'])->name('sample-stocks.massDestroy');
+    Route::resource('sample-stocks', SampleStockController::class);
 });
 
 Route::get('/clear', function () {

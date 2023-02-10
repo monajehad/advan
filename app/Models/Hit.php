@@ -34,7 +34,7 @@ class Hit extends Model
     ];
 
     protected $fillable = [
-        'clinic_id',
+        'client_id',
         'date_time',
         'visit_type_id',
         'duration_visit',
@@ -53,9 +53,9 @@ class Hit extends Model
         'deleted_at',
     ];
 
-    public function clinic()
+    public function client()
     {
-        return $this->belongsTo(Clinic::class, 'clinic_id');
+        return $this->belongsTo(Client::class, 'client_id');
     }
 
 //    public function getDateTimeAttribute($value)

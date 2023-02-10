@@ -15,7 +15,7 @@
 
     <div class="card-body">
         <div class="table-responsive">
-            <table class=" table table-bordered table-striped table-hover datatable datatable-clinicHits">
+            <table class=" table table-bordered table-striped table-hover datatable datatable-clientHits">
                 <thead>
                     <tr>
                         <th width="10">
@@ -25,7 +25,7 @@
                             {{ trans('cruds.hit.fields.id') }}
                         </th>
                         <th>
-                            {{ trans('cruds.hit.fields.clinic') }}
+                            {{ trans('cruds.hit.fields.client') }}
                         </th>
                         <th>
                             {{ trans('cruds.hit.fields.date_time') }}
@@ -57,7 +57,7 @@
                                 {{ $hit->id ?? '' }}
                             </td>
                             <td>
-                                {{ $hit->clinic->name ?? '' }}
+                                {{ $hit->client->name ?? '' }}
                             </td>
                             <td>
                                 {{ $hit->date_time ?? '' }}
@@ -145,7 +145,7 @@
     order: [[ 1, 'desc' ]],
     pageLength: 100,
   });
-  let table = $('.datatable-clinicHits:not(.ajaxTable)').DataTable({ buttons: dtButtons })
+  let table = $('.datatable-clientHits:not(.ajaxTable)').DataTable({ buttons: dtButtons })
   $('a[data-toggle="tab"]').on('shown.bs.tab click', function(e){
       $($.fn.dataTable.tables(true)).DataTable()
           .columns.adjust();
