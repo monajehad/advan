@@ -20,14 +20,14 @@
                     <span class="help-block">{{ trans('cruds.user.fields.name_helper') }}</span>
                 </div>
                 <div class="form-group">
-                    <label class="required" for="user_name">{{ trans('cruds.user.fields.user_name') }}</label>
-                    <input class="form-control {{ $errors->has('user_name') ? 'is-invalid' : '' }}" type="text" name="user_name" id="user_name" value="{{ old('user_name', '') }}" required>
-                    @if($errors->has('user_name'))
+                    <label class="required" for="qualification">{{ trans('cruds.user.fields.qualification') }}</label>
+                    <input class="form-control {{ $errors->has('qualification') ? 'is-invalid' : '' }}" type="text" name="qualification" id="qualification" value="{{ old('qualification', '') }}" required>
+                    @if($errors->has('qualification'))
                         <div class="invalid-feedback">
-                            {{ $errors->first('user_name') }}
+                            {{ $errors->first('qualification') }}
                         </div>
                     @endif
-                    <span class="help-block">{{ trans('cruds.user.fields.user_name_helper') }}</span>
+                    <span class="help-block">{{ trans('cruds.user.fields.qualification_helper') }}</span>
                 </div>
                 <div class="form-group">
                     <label class="required" for="email">{{ trans('cruds.user.fields.email') }}</label>
@@ -40,14 +40,55 @@
                     <span class="help-block">{{ trans('cruds.user.fields.email_helper') }}</span>
                 </div>
                 <div class="form-group">
-                    <label class="required" for="phone">{{ trans('cruds.user.fields.phone') }}</label>
-                    <input class="form-control {{ $errors->has('phone') ? 'is-invalid' : '' }}" type="text" name="phone" id="phone" value="{{ old('phone', '') }}" required>
+                    <label class="" for="phone">{{ trans('cruds.user.fields.phone') }}</label>
+                    <input class="form-control {{ $errors->has('phone') ? 'is-invalid' : '' }}" type="text" name="phone" id="phone" value="{{ old('phone', '') }}" >
                     @if($errors->has('phone'))
                         <div class="invalid-feedback">
                             {{ $errors->first('phone') }}
                         </div>
                     @endif
                     <span class="help-block">{{ trans('cruds.user.fields.phone_helper') }}</span>
+                </div>
+                <div class="form-group">
+                    <label class="required" for="mobile">{{ trans('cruds.user.fields.mobile') }}</label>
+                    <input class="form-control {{ $errors->has('mobile') ? 'is-invalid' : '' }}" type="text" name="mobile" id="mobile" value="{{ old('mobile', '') }}" required>
+                    @if($errors->has('mobile'))
+                        <div class="invalid-feedback">
+                            {{ $errors->first('mobile') }}
+                        </div>
+                    @endif
+                    <span class="help-block">{{ trans('cruds.user.fields.mobile_helper') }}</span>
+                </div>
+                <div class="form-group">
+                    <label class="required" for="whatsapp_phone">{{ trans('cruds.user.fields.whatsapp_phone') }}</label>
+                    <input class="form-control {{ $errors->has('whatsapp_phone') ? 'is-invalid' : '' }}" type="text" name="whatsapp_phone" id="whatsapp_phone" value="{{ old('whatsapp_phone', '') }}" required>
+                    @if($errors->has('whatsapp_phone'))
+                        <div class="invalid-feedback">
+                            {{ $errors->first('whatsapp_phone') }}
+                        </div>
+                    @endif
+                    <span class="help-block">{{ trans('cruds.user.fields.mobile_helper') }}</span>
+                </div>
+
+                <div class="form-group">
+                    <label class="required" for="home_address">{{ trans('cruds.user.fields.home_address') }}</label>
+                    <input class="form-control {{ $errors->has('home_address') ? 'is-invalid' : '' }}" type="text" name="home_address" id="home_address" value="{{ old('home_address', '') }}" required>
+                    @if($errors->has('home_address'))
+                        <div class="invalid-feedback">
+                            {{ $errors->first('home_address') }}
+                        </div>
+                    @endif
+                    <span class="help-block">{{ trans('cruds.user.fields.home_address_helper') }}</span>
+                </div>
+                <div class="form-group">
+                    <label class="required" for="jobId">{{ trans('cruds.user.fields.jobId') }}</label>
+                    <input class="form-control {{ $errors->has('jobId') ? 'is-invalid' : '' }}" type="text" name="jobId" id="jobId" value="{{ old('jobId', '') }}" required>
+                    @if($errors->has('jobId'))
+                        <div class="invalid-feedback">
+                            {{ $errors->first('jobId') }}
+                        </div>
+                    @endif
+                    <span class="help-block">{{ trans('cruds.user.fields.jobId_helper') }}</span>
                 </div>
                 <div class="form-group">
                     <label class="required" for="password">{{ trans('cruds.user.fields.password') }}</label>
@@ -59,24 +100,7 @@
                     @endif
                     <span class="help-block">{{ trans('cruds.user.fields.password_helper') }}</span>
                 </div>
-                <div class="form-group">
-                    <label class="required" for="roles">{{ trans('cruds.user.fields.roles') }}</label>
-                    <div style="padding-bottom: 4px">
-                        <span class="btn btn-info btn-xs select-all" style="border-radius: 0">{{ trans('global.select_all') }}</span>
-                        <span class="btn btn-info btn-xs deselect-all" style="border-radius: 0">{{ trans('global.deselect_all') }}</span>
-                    </div>
-                    {{-- <select class="form-control select2 {{ $errors->has('roles') ? 'is-invalid' : '' }}" name="roles[]" id="roles" multiple required>
-                        @foreach($roles as $id => $role)
-                            <option value="{{ $id }}" {{ in_array($id, old('roles', [])) ? 'selected' : '' }}>{{ $role }}</option>
-                        @endforeach
-                    </select>
-                    @if($errors->has('roles'))
-                        <div class="invalid-feedback">
-                            {{ $errors->first('roles') }}
-                        </div>
-                    @endif --}}
-                    <span class="help-block">{{ trans('cruds.user.fields.roles_helper') }}</span>
-                </div>
+
                 <div class="form-group">
                     <label for="image">{{ trans('cruds.user.fields.image') }}</label>
                         <input type="file" name="image" class="form-control {{ $errors->has('image') ? 'is-invalid' : '' }}">
@@ -88,32 +112,32 @@
                     <span class="help-block">{{ trans('cruds.user.fields.image_helper') }}</span>
                 </div>
                 <div class="form-group">
-                    <label for="categories">{{ trans('cruds.user.fields.category') }}</label>
-                    <div style="padding-bottom: 4px">
-                        <span class="btn btn-info btn-xs select-all" style="border-radius: 0">{{ trans('global.select_all') }}</span>
-                        <span class="btn btn-info btn-xs deselect-all" style="border-radius: 0">{{ trans('global.deselect_all') }}</span>
-                    </div>
-                    {{-- <select class="form-control select2 {{ $errors->has('categories') ? 'is-invalid' : '' }}" name="categories[]" id="categories" multiple>
-                        @foreach($categories as $id => $category)
-                            <option value="{{ $id }}" {{ in_array($id, old('categories', [])) ? 'selected' : '' }}>{{ $category }}</option>
+                    <label class="required" for="category_id">عائلة الصنف</label>
+                    <select class="form-control select2 {{ $errors->has('category') ? 'is-invalid' : '' }}" name="category_id" id="category_id" required>
+                        @foreach($categories as $id => $entry)
+                            <option value="{{ $id }}" {{ old('category_id') == $id ? 'selected' : '' }}>{{ $entry }}</option>
                         @endforeach
                     </select>
-                    @if($errors->has('categories'))
+                    @if($errors->has('category'))
                         <div class="invalid-feedback">
-                            {{ $errors->first('categories') }}
-                        </div>
-                    @endif --}}
-                    <span class="help-block">{{ trans('cruds.user.fields.category_helper') }}</span>
-                </div>
-                <div class="form-group">
-                    <label for="description">{{ trans('cruds.user.fields.description') }}</label>
-                    <textarea class="form-control {{ $errors->has('description') ? 'is-invalid' : '' }}" name="description" id="description">{{ old('description') }}</textarea>
-                    @if($errors->has('description'))
-                        <div class="invalid-feedback">
-                            {{ $errors->first('description') }}
+                            {{ $errors->first('category') }}
                         </div>
                     @endif
-                    <span class="help-block">{{ trans('cruds.user.fields.description_helper') }}</span>
+                    <span class="help-block">{{ trans('cruds.sample.fields.category_helper') }}</span>
+                </div>
+                <div class="form-group">
+                    <label class="required" for="item_id">{{ trans('cruds.sampleStock.fields.item') }}</label>
+                    <select class="form-control select2 {{ $errors->has('item') ? 'is-invalid' : '' }}" name="item_id" id="item_id" required>
+                        @foreach($items as $id => $entry)
+                            <option value="{{ $id }}" {{ old('item_id') == $id ? 'selected' : '' }}>{{ $entry }}</option>
+                        @endforeach
+                    </select>
+                    @if($errors->has('item'))
+                        <div class="invalid-feedback">
+                            {{ $errors->first('item') }}
+                        </div>
+                    @endif
+                    <span class="help-block">{{ trans('cruds.sampleStock.fields.item_helper') }}</span>
                 </div>
                 <div class="form-group">
                     <label class="required">{{ trans('cruds.user.fields.status') }}</label>

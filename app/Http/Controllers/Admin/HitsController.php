@@ -7,6 +7,7 @@ use App\Http\Requests\MassDestroyHitRequest;
 use App\Http\Requests\StoreHitRequest;
 use App\Http\Requests\UpdateHitRequest;
 use App\Models\Category;
+use App\Models\Client;
 use App\Models\Clinic;
 use App\Models\Hit;
 use App\Models\HitsSamples;
@@ -88,7 +89,7 @@ class HitsController extends Controller
             return $table->make(true);
         }
 
-        $clinics            = Clinic::get();
+        $clinics            = Client::get();
         $hits_types         = HitsType::get();
         $users              = User::get();
         $kinds_of_occasions = KindsOfOccasion::get();
@@ -191,7 +192,7 @@ class HitsController extends Controller
             return $table->make(true);
         }
 
-        $clinics            = Clinic::get();
+        $clinics            = Client::get();
         $hits_types         = HitsType::get();
         $users              = User::get();
         $kinds_of_occasions = KindsOfOccasion::get();
@@ -235,7 +236,7 @@ class HitsController extends Controller
     {
         // abort_if(Gate::denies('hit_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $clinics = Clinic::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $clinics = Client::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $visit_types = HitsType::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
@@ -245,7 +246,7 @@ class HitsController extends Controller
 
         $categories = Category::pluck('name', 'id');
 
-        $doctors = Clinic::pluck('doctor_name', 'id');
+        $doctors = Client::pluck('doctor_name', 'id');
 
         return view('advan.admin.hits.create', compact('clinics', 'visit_types', 'users', 'sms', 'categories', 'doctors'));
     }
@@ -263,7 +264,7 @@ class HitsController extends Controller
     {
         // abort_if(Gate::denies('hit_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $clinics = Clinic::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $clinics = Client::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $visit_types = HitsType::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
@@ -273,7 +274,7 @@ class HitsController extends Controller
 
         $categories = Category::pluck('name', 'id');
 
-        $doctors = Clinic::pluck('doctor_name', 'id');
+        $doctors = Client::pluck('doctor_name', 'id');
 
         $hit->load('clinic', 'visit_type', 'user', 'sms', 'categories', 'doctors');
 

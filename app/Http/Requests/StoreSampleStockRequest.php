@@ -29,20 +29,24 @@ class StoreSampleStockRequest extends FormRequest
                 'string',
                 // 'required',
             ],
-            // 'received_date' => [
-            //     'date_format:' . config('panel.date_format'),
-            //     'nullable',
-            // ],
-            // 'end_date' => [
-            //     'date_format:' . config('panel.date_format'),
-            //     'nullable',
-            // ],
+            'available'=>[
+                'string',
+
+            ],
+            'received_date' => [
+                'date_format:' . config('panel.date_format'),
+                'nullable',
+            ],
+            'end_date' => [
+                'date_format:' . config('panel.date_format'),
+                'nullable',
+            ],
             // 'date' => [
             //     'date_format:' . config('panel.date_format'),
             //     'nullable',
             // ],
             'category_id' => [
-                'required',
+                // 'required',
                 'integer',
             ],
             'item_id' => [

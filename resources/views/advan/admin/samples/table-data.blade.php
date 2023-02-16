@@ -7,9 +7,9 @@
                 <th>اسم الصنف</th>
                 <th> العائلة</th>
                 <th> الوحدة</th>
-                <th> كمية المخزون</th>
-                <th> الكمية الموزعة</th>
-                <th> الكمية المتبقية</th>
+                <th>  المندوب</th>
+                <th>  كمية المندوب</th>
+                <th> المخزون </th>
                 <th> شهر/سنة</th>
 
 
@@ -28,13 +28,15 @@
             </tr>
         </thead>
         <tbody class="text-center font-size-sm">
-            @forelse($samples_stock as $sample_stock )
+            @forelse($samples as $sample)
                 <tr class="data-row">
                     <td class="iteration">{{$loop->iteration}}</td>
                     <td class="name">
-                        {{$sample_stock->item ? $sample_stock->item->name : ''}}
+                        {{$sample->sample->name}}
                     </td>
-                    <td class="name">{{$sample_stock->category->name }}</td>
+                    <td class="name">
+                        {{$sample->category->name }}
+                    </td>
                     <td class="unit">
 
                    {{-- @foreach ($items as $item) --}}
@@ -42,34 +44,34 @@
 
                         {{-- @if ($item->id == $item->id) --}}
 
-                           {{$sample_stock->unit_name}}
+                           {{$sample->unit_name}}
 
                         {{-- @endif --}}
                      {{-- @endforeach --}}
                     </td>
 
-                    <td class="name">{{$sample_stock->quantity}}</td>
-                    <td class="name">{{$sample_stock->received_quantity}}</td>
-                    <td class="name">{{$sample_stock->quantity - $sample_stock->received_quantity}}</td>
-                    <td class="name">{{$sample_stock->date}}</td>
+                    <td class="name">{{$sample->user->name}}</td>
+                    <td class="name">{{$sample->quantity_request}}</td>
+                    <td class="name">{{$sample->sample->available}}</td>
+                    <td class="name">{{$sample->date}}</td>
 
                     {{-- <td class="name">{{$sample_stock->clinetHits->id}}</td> --}}
 
                     {{-- @can('suppliers-status') --}}
-                        @if($sample_stock->status==1)
+                        @if($sample->status==1)
                         <td class="status">
                             <button class="btn btn-sm  btn-shadow btn-success change-status"
-                            {{-- data-sample_stock-id="{{$sample_stock->id}}" --}}
+                            {{-- data-sample-id="{{$sample->id}}" --}}
                                  {{-- @cannot('suppliers-status') disabled @endcannot --}}
                                  >
                                 مفعل
                             </button>
                         </td>
-                        @elseif($sample_stock->status==0)
+                        @elseif($sample->status==0)
                         <td class="status">
 
                             <button class="btn btn-sm  btn-shadow btn-danger change-status"
-                            {{-- data-sample_stock-id="{{$sample_stock->id}}" --}}
+                            {{-- data-sample-id="{{$sample->id}}" --}}
                                 {{-- @cannot('suppliers-status') disabled @endcannot --}}
 
                                 >
@@ -80,9 +82,9 @@
                     {{-- @endcan --}}
                     <td>
                         {{-- <button class="" --}}
-                        {{-- data-sample_stock-id="{{$sample_stock->id}}" --}}
+                        {{-- data-sample-id="{{$sample->id}}" --}}
                         {{-- > --}}
-                            <a class="btn btn-sm btn-icon  btn-shadow btn-primary edit-supplier" href="/admin/sample-stocks/{{$sample_stock->id}}">
+                            <a class="btn btn-sm btn-icon  btn-shadow btn-primary edit-supplier" href="/admin/samples/{{$sample->id}}">
                              <i class="fa fa-pencil-square-o text-white font-weight-bold">
                             </i>
 
@@ -93,9 +95,9 @@
                     {{-- @can('suppliers-update') --}}
                     <td>
                         {{-- <button class="btn btn-sm btn-icon  btn-shadow btn-primary edit-supplier" --}}
-                        {{-- data-sample_stock-id="{{$sample_stock->id}}" --}}
+                        {{-- data-sample-id="{{$sample->id}}" --}}
                         {{-- > --}}
-                            <a class="btn btn-sm btn-icon  btn-shadow btn-primary edit-supplier" href="/admin/sample-stocks/{{$sample_stock->id}}/edit">
+                            <a class="btn btn-sm btn-icon  btn-shadow btn-primary edit-supplier" href="/admin/samples/{{$sample->id}}/edit">
                              <i class="fa fa-pencil-square-o text-white font-weight-bold">
                             </i>
 
@@ -107,9 +109,9 @@
                     {{-- @can('suppliers-delete') --}}
                     <td>
                         {{-- <button class="btn btn-sm btn-icon  btn-shadow btn-danger delete-supplier" --}}
-                         {{-- data-sample_stock-id="{{$sample_stock->id}}" --}}
+                         {{-- data-sample-id="{{$sample->id}}" --}}
                          {{-- > --}}
-                            <a class="btn btn-sm btn-icon  btn-shadow btn-danger delete-supplier" href="{{route('admin.sample-stocks.destroy', $sample_stock->id)}}">
+                            <a class="btn btn-sm btn-icon  btn-shadow btn-danger delete-supplier" href="{{route('admin.samples.destroy', $sample->id)}}">
 
                             <i class="fa fa-trash text-white font-weight-bold"></i>
                             {{-- </a> --}}
@@ -127,6 +129,6 @@
     </table>
 </div>
 <div class="paging">
-{!! $samples_stock->links() !!}
+{!! $samples->links() !!}
 </div>
 <!--End::Table-->

@@ -1,6 +1,19 @@
 @extends('layouts.cpanel.app')
 @section('content')
-{{-- @can('user_create') --}}
+
+@section('content')
+<!--begin::Container-->
+<div class="container">
+    <div class="card card-custom gutter-b">
+        <!--begin::Header-->
+        <div class="card-header border-1 py-4">
+            <h3 class="card-title align-items-start flex-column">
+                <span class="card-label font-weight-bolder text-dark">
+               المندوبين
+                </span>
+            </h3>
+            <div class="card-toolbar">
+               {{-- @can('user_create') --}}
     <div style="margin-bottom: 10px;" class="row">
         <div class="col-lg-12">
             <a class="btn btn-success" href="{{ route('admin.users.create') }}">
@@ -9,88 +22,38 @@
         </div>
     </div>
 {{-- @endcan --}}
-<div class="card">
-    <div class="card-header">
-        {{ trans('cruds.user.title_singular') }} {{ trans('global.list') }}
+
+            </div>
+        </div>
+        <!--end::Header-->
+        <!--begin::Body-->
+        <div class="row mt-4">
+            <div class="col-md-4 col-lg-4 ml-8">
+                <form class="form">
+                    <div class="form-group">
+                        <input type="text" class="form-control form-control-sm" id="search_input" name="search_input"  placeholder="الاسم"/>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="card-body py-0">
+            <!--begin::Table-->
+            <div class="users-table-body">  @includeIf('advan.admin.users.table-data')</div>
+
+           <!--End::Table-->
+        </div>
+        <!--end::Body-->
     </div>
 
-    <div class="card-body">
-        <table class=" table table-bordered table-striped table-hover ajaxTable datatable datatable-User">
-            <thead>
-                <tr>
-                    <th width="10">
-
-                    </th>
-                    <th>
-                        {{ trans('cruds.user.fields.id') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.user.fields.name') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.user.fields.user_name') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.user.fields.phone') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.user.fields.roles') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.user.fields.status') }}
-                    </th>
-                    <th>
-                        &nbsp;
-                    </th>
-                </tr>
-                <tr>
-                    <td>
-                    </td>
-                    <td>
-{{--                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">--}}
-                    </td>
-                    <td>
-{{--                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">--}}
-                    </td>
-                    <td>
-{{--                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">--}}
-                    </td>
-                    <td>
-                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                    </td>
-                    <td>
-                        <select class="search">
-                            <option value>{{ trans('global.all') }}</option>
-                            {{-- @foreach($roles as $key => $item)
-                                <option value="{{ $item->title }}">{{ $item->title }}</option>
-                            @endforeach --}}
-                        </select>
-                    </td>
-                    <td>
-                        <select class="search" strict="true">
-                            <option value>{{ trans('global.all') }}</option>
-                            @foreach(App\Models\User::STATUS_SELECT as $key => $item)
-                                <option value="{{ $key }}">{{ $item }}</option>
-                            @endforeach
-                        </select>
-                    </td>
-                    <td>
-                    </td>
-                </tr>
-            </thead>
-        </table>
-    </div>
 </div>
-
-
-
+<!--end::Container-->
 @endsection
-@section('scripts')
+@section('script')
 @parent
 <script>
     $(function () {
   let dtButtons = $.extend(true, [], $.fn.dataTable.defaults.buttons)
-@can('user_delete')
+// @can('users_delete')
   let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
   let deleteButton = {
     text: deleteButtonTrans,
@@ -118,57 +81,56 @@
     }
   }
   dtButtons.push(deleteButton)
-@endcan
+// @endcan
 
-  let dtOverrideGlobals = {
-    buttons: dtButtons,
-    processing: true,
-    serverSide: true,
-    retrieve: true,
-    aaSorting: [],
-    ajax: "{{ route('admin.users.index') }}",
-    columns: [
-      { data: 'placeholder', name: 'placeholder' },
-{ data: 'id', name: 'id' },
-{ data: 'name', name: 'name' },
-{ data: 'user_name', name: 'user_name' },
-{ data: 'phone', name: 'phone' },
-{ data: 'roles', name: 'roles.title' },
-{ data: 'status', name: 'status' },
-{ data: 'actions', name: '{{ trans('global.actions') }}' }
-    ],
-    orderCellsTop: true,
-    order: [[ 1, 'desc' ]],
-    pageLength: 100,
-  };
-  let table = $('.datatable-User').DataTable(dtOverrideGlobals);
-  $('a[data-toggle="tab"]').on('shown.bs.tab click', function(e){
-      $($.fn.dataTable.tables(true)).DataTable()
-          .columns.adjust();
-  });
 
-let visibleColumnsIndexes = null;
-$('.datatable thead').on('input', '.search', function () {
-      let strict = $(this).attr('strict') || false
-      let value = strict && this.value ? "^" + this.value + "$" : this.value
-
-      let index = $(this).parent().index()
-      if (visibleColumnsIndexes !== null) {
-        index = visibleColumnsIndexes[index]
-      }
-
-      table
-        .column(index)
-        .search(value, strict)
-        .draw()
-  });
-table.on('column-visibility.dt', function(e, settings, column, state) {
-      visibleColumnsIndexes = []
-      table.columns(":visible").every(function(colIdx) {
-          visibleColumnsIndexes.push(colIdx);
-      });
-  })
 });
 
+
+$(document).on('click','.delete-user',function(){
+            var id = $(this).data('user-id');
+            Swal.fire({
+                title: 'هل أنت متأكد من حذف المنافس؟',
+                showDenyButton: true,
+                confirmButtonText: 'نعم',
+                denyButtonText: `لا`,
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajaxSetup({
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        }
+                    });
+                    $.ajax({
+                        url: '{{route("admin.users.delete")}}' ,
+                        type: "POST",
+                        data: {id:id},
+                        success: function( response ) {
+                            if(response.status==true){
+                                Swal.fire({
+                                    showCloseButton: true,
+                                    icon: 'success',
+                                    title: 'نجاح الحذف.',
+                                    text:response.success,
+                                    confirmButtonText: 'موافق'
+                                })
+                                load_data_table()
+                            }else{
+                                Swal.fire({
+                                    showCloseButton: true,
+                                    icon: 'error',
+                                    title: 'خطأ في الحذف',
+                                    text: response.error,
+                                    confirmButtonText: 'موافق'
+                                 })
+                            }
+                        },
+                        error:function(response){
+                        }
+                    })
+                }
+            })
+
+        })
 </script>
 @endsection

@@ -21,13 +21,12 @@ class StoreUserRequest extends FormRequest
                 'string',
                 'required',
             ],
-            'user_name' => [
+            'qualification' => [
                 'string',
-                // 'required',
-                'unique:users',
+                'required',
             ],
             'email' => [
-                // 'required',
+                'required',
                 'unique:users',
             ],
             'phone' => [
@@ -35,22 +34,48 @@ class StoreUserRequest extends FormRequest
                 // 'required',
                 'unique:users',
             ],
+            'mobile' => [
+                'string',
+                'required',
+                'unique:users',
+            ],
+            'jobId' => [
+                'string',
+                'required',
+                'unique:users',
+            ],
             'password' => [
                 'required',
             ],
-            'roles.*' => [
-                'integer',
+            'home_address'=> [
+                'string',
+                'nullable',
             ],
-            'roles' => [
-                // 'required',
-                'array',
+            'whatsapp_phone'=> [
+                'string',
+                'nullable',
             ],
-            'categories.*' => [
-                'integer',
+            'item'=> [
+                'string',
+                'nullable',
             ],
-            'categories' => [
-                'array',
+            // 'facebook'=> [
+            //     'string',
+            //     'nullable',
+            // ],
+            // 'instagram'=> [
+            //     'string',
+            //     'nullable',
+            // ],
+            // 'website'=> [
+            //     'string',
+            //     'nullable',
+            // ],
+            'category'=> [
+                'string',
+                'nullable',
             ],
+
             'status' => [
                 // 'required',
             ],

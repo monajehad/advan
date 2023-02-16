@@ -21,7 +21,7 @@ class SampleStock extends Model
     public $table = 'sample_stocks';
 
     protected $dates = [
-        'received_date',
+        // 'received_date',
         'end_date',
         'created_at',
         'updated_at',
@@ -36,6 +36,7 @@ class SampleStock extends Model
         'end_date',
         'category_id',
         'item_id',
+        'unit',
         'date',
         'available',
         'patch_number',

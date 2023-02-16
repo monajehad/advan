@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyReportRequest;
 use App\Http\Requests\StoreReportRequest;
 use App\Http\Requests\UpdateReportRequest;
+use App\Models\Client;
 use App\Models\Clinic;
 use App\Models\Report;
 use App\Models\User;
@@ -81,7 +82,7 @@ class ReportController extends Controller
 
         $users   = User::get();
         $reports = Report::get();
-        $clinics = Clinic::get();
+        $clinics = Client::get();
 
         return view('advan.admin.reports.index', compact('users', 'reports', 'clinics'));
     }
@@ -94,7 +95,7 @@ class ReportController extends Controller
 
         $types = Report::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $clinics = Clinic::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $clinics = Client::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         return view('advan.admin.reports.create', compact('users', 'types', 'clinics'));
     }
@@ -114,7 +115,7 @@ class ReportController extends Controller
 
         $types = Report::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $clinics = Clinic::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $clinics = Client::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $report->load('user', 'type', 'clinic');
 

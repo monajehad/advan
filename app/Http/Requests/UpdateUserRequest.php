@@ -17,37 +17,71 @@ class UpdateUserRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => [
-                'string',
-                'required',
-            ],
-            'user_name' => [
-                'string',
-                'required',
-                'unique:users,user_name,' . request()->route('user')->id,
-            ],
+
             'email' => [
                 'required',
                 'unique:users,email,' . request()->route('user')->id,
             ],
-            'phone' => [
+
+            'name' => [
                 'string',
                 'required',
-                'unique:users,phone,' . request()->route('user')->id,
+                'unique:users,name,' . request()->route('user')->id,
             ],
-            'roles.*' => [
-                'integer',
-            ],
-            'roles' => [
+            'qualification' => [
+                'string',
                 'required',
-                'array',
             ],
-            'categories.*' => [
-                'integer',
+
+            'phone' => [
+                'string',
+                // 'required',
+                'unique:users',
             ],
-            'categories' => [
-                'array',
+            'mobile' => [
+                'string',
+                'required',
+                'unique:users,mobile,' . request()->route('user')->id,
             ],
+            'jobId' => [
+                'string',
+                'required',
+                'unique:users,jobId,' . request()->route('user')->id,
+
+            ],
+            'password' => [
+                'required',
+            ],
+            'home_address'=> [
+                'string',
+                'nullable',
+            ],
+            'whatsapp_phone'=> [
+                'string',
+                'nullable',
+            ],
+            'item'=> [
+                'string',
+                'nullable',
+            ],
+            'facebook'=> [
+                'string',
+                'nullable',
+            ],
+            'instagram'=> [
+                'string',
+                'nullable',
+            ],
+            'website'=> [
+                'string',
+                'nullable',
+            ],
+            'category'=> [
+                'string',
+                'nullable',
+            ],
+
+
             'status' => [
                 'required',
             ],

@@ -49,7 +49,7 @@ Route::get('/user', [AuthController::class,'user']);
  Route::get('categories/{id}/sample-stocks', [CategoryApiController::class,'sample_stock']);
 
  // Samples
- Route::apiResource('samples', SamplesApiController::class)->only(['index', 'store']);
+//  Route::apiResource('samples', SamplesApiController::class)->only(['index', 'store']);
  Route::post('samples/{id}/confirm', [SamplesApiController::class,'confirm']);
  Route::get('/samples/have',[SamplesApiController::class,'have']);
 

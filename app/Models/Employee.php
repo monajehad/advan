@@ -14,7 +14,7 @@ use Laravel\Passport\HasApiTokens;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Laravel\Sanctum\HasApiTokens as SanctumHasApiTokens;
 
-class User extends Authenticatable
+class Employee extends Authenticatable
 {
     use SoftDeletes;
     use Notifiable;
@@ -22,7 +22,7 @@ class User extends Authenticatable
     use HasApiTokens;
 
 
-    protected $table = 'users';
+    protected $table = 'employees';
 
     public const STATUS_SELECT = [
         '0' => 'غير فغال',
@@ -30,7 +30,7 @@ class User extends Authenticatable
     ];
 
     // public $table = 'users';
-    public const DIR_UPLOAD = 'users';
+    public const DIR_UPLOAD = 'employees';
 
     protected $appends = [
         'image_url',
@@ -50,20 +50,11 @@ class User extends Authenticatable
 
     protected $fillable = [
         'name',
-        'qualification',
+        'username',
         'email',
-        'phone',
+        'mobile',
         'email_verified_at',
         'password',
-        'mobile',
-        'jobId',
-        'home_address',
-        'whatsapp_phone',
-        'facebook',
-        'instagram',
-        'website',
-        'category_id',
-        'item_id',
         'remember_token',
         'user_type',
         'fcm_token',
@@ -80,16 +71,6 @@ class User extends Authenticatable
         return $this->roles()->where('id', 1)->exists();
     }
 
-    public function userHits()
-    {
-        return $this->hasMany(Hit::class, 'user_id', 'id');
-    }
-    protected function user_type(): Attribute
-    {
-        return new Attribute(
-            get: fn ($value) =>  ["admin", "tender"][$value],
-        );
-    }
     public function userUserAlerts()
     {
         return $this->belongsToMany(UserAlert::class);
@@ -122,15 +103,10 @@ class User extends Authenticatable
         return $this->belongsToMany(Role::class);
     }
 
-    public function category()
+    public function categories()
     {
-        return $this->belongsTo(Category::class, 'category_id');
+        return $this->belongsToMany(Category::class);
     }
-    public function item()
-    {
-        return $this->belongsTo(Item::class, 'item_id');
-    }
-
 
     protected function serializeDate(DateTimeInterface $date)
     {

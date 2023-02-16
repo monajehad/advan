@@ -9,6 +9,7 @@ use App\Http\Requests\MassDestroyUserRequest;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
 use App\Models\Category;
+use App\Models\Item;
 use App\Models\Role;
 use App\Models\User;
 use Illuminate\Support\Facades\Gate;
@@ -19,89 +20,41 @@ use Yajra\DataTables\Facades\DataTables;
 class UsersController extends Controller
 {
     use MediaUploadingTrait;
+    const PAGINATION_NO=20;
 
     public function index(Request $request)
     {
         // abort_if(Gate::denies('user_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        if ($request->ajax()) {
-            $query = User::with([ 'categories'])->select(sprintf('*', (new User())->table));
-            $table = Datatables::of($query);
+        $users = User::with(['category','item','userHits'])->select('id','name','email','mobile','home_address','jobId');
 
-            $table->addColumn('placeholder', '&nbsp;');
-            $table->addColumn('actions', '&nbsp;');
+            $users=$users->orderBy('id','desc')->paginate(self::PAGINATION_NO);
+            if ($request->ajax()) {
+                $table_data=view('advan.admin.users.table-data',compact('users'))->render();
+                return response()->json(['users'=>$table_data]);
 
-            $table->editColumn('actions', function ($row) {
-                $viewGate = 'user_show';
-                $editGate = 'user_edit';
-                $deleteGate = 'user_delete';
-                $crudRoutePart = 'users';
+             }
 
-            //     return view('partials.datatablesActions', compact(
-            //     'viewGate',
-            //     'editGate',
-            //     'deleteGate',
-            //     'crudRoutePart',
-            //     'row'
-            // ));
-            });
-
-            $table->editColumn('id', function ($row) {
-                return $row->id ? $row->id : '';
-            });
-            $table->editColumn('name', function ($row) {
-                return $row->name ? $row->name : '';
-            });
-            $table->editColumn('user_name', function ($row) {
-                return $row->user_name ? $row->user_name : '';
-            });
-            $table->editColumn('email', function ($row) {
-                return $row->email ? $row->email : '';
-            });
-            $table->editColumn('phone', function ($row) {
-                return $row->phone ? $row->phone : '';
-            });
-            $table->editColumn('roles', function ($row) {
-                $labels = [];
-                foreach ($row->roles as $role) {
-                    $labels[] = sprintf('<span class="label label-info label-many">%s</span>', $role->title);
-                }
-
-                return implode(' ', $labels);
-            });
-            $table->editColumn('status', function ($row) {
-                return $row->status ? User::STATUS_SELECT[$row->status] : '';
-            });
-
-            $table->rawColumns(['actions', 'placeholder', 'roles']);
-
-            return $table->make(true);
-        }
-
-        // $roles      = Role::get();
-        $categories = Category::get();
-
-        return view('advan.admin.users.index', compact('categories'));
+        return view('advan.admin.users.index', compact('users'));
     }
+
 
     public function create()
     {
         // abort_if(Gate::denies('user_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $roles = Role::where('id' , '!=' , 2)->pluck('title', 'id');
 
         $categories = Category::pluck('name', 'id');
+        $items = Item::pluck('name', 'id');
 
-        return view('advan.admin.users.create', compact('roles', 'categories'));
+        return view('advan.admin.users.create', compact('items', 'categories'));
     }
 
     public function store(StoreUserRequest $request)
     {
         $user = User::create($request->all());
-        // $user->roles()->sync($request->input('roles', []));
-        // $user->user_type = $request->input('roles');
-        $user->save();
-        // $user->categories()->sync($request->input('categories', []));
+
+        // $user->save();
 
         if ($request->file('image')) {
             $image = saveOriginalImage($request->file('image'),User::DIR_UPLOAD );
@@ -114,26 +67,19 @@ class UsersController extends Controller
     {
         // abort_if(Gate::denies('user_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        if ($user->user_type == 2)
-        {
-            $roles = Role::where('id' , 2)->pluck('title', 'id');
-
-        }else{
-            $roles = Role::where('id' , '!=' , 2)->pluck('title', 'id');
-        }
 
         $categories = Category::pluck('name', 'id');
+        $items = Item::pluck('name', 'id');
 
-        $user->load('roles', 'categories');
+        $user->load('item', 'category');
 
-        return view('advan.admin.users.edit', compact('roles', 'categories', 'user'));
+        return view('advan.admin.users.edit', compact('items', 'categories', 'user'));
     }
 
     public function update(UpdateUserRequest $request, User $user)
     {
         $user->update($request->all());
-        $user->roles()->sync($request->input('roles', []));
-        $user->categories()->sync($request->input('categories', []));
+
         if ($request->file('image')) {
             $image = saveOriginalImage($request->file('image'),User::DIR_UPLOAD );
             $user->fill(['image' => $image])->save();
@@ -151,13 +97,18 @@ class UsersController extends Controller
         return view('advan.admin.users.show', compact('user'));
     }
 
-    public function destroy(User $user)
+    public function destroy(Request $request)
     {
         // abort_if(Gate::denies('user_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
-        $user->delete();
-
-        return back();
+        if(!$request->id)
+        return response()->json(['status'=>false,'error'=>'لم يتم تحديد المنافس']);
+    $user=User::where('id',$request->id)->first();
+    if(!$user)
+        return response()->json(['status'=>false,'error'=>'المنافس غير موجود']);
+    $delete=$user->delete();
+    if(!$delete)
+        return response()->json(['status'=>false,'error'=>'لم يتم حذف المنافس']);
+    return response()->json(['status'=>true,'success'=>'تم حذف المنافس بنجاح']);
     }
 
     public function massDestroy(MassDestroyUserRequest $request)

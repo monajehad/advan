@@ -38,15 +38,15 @@ class UpdateSampleStockRequest extends FormRequest
                 'nullable',
             ],
             'date' => [
-                'date_format:' . config('panel.date_format'),
+                // 'date_format:' . config('panel.date_format'),
                 'nullable',
             ],
             'category_id' => [
-                'required',
+                // 'required',
                 'integer',
             ],
             'item_id' => [
-                'required',
+                // 'required',
                 'integer',
             ],
             'status' => [

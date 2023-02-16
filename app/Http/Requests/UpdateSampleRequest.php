@@ -9,10 +9,10 @@ use Illuminate\Http\Response;
 
 class UpdateSampleRequest extends FormRequest
 {
-    public function authorize()
-    {
-        return Gate::allows('sample_edit');
-    }
+    // public function authorize()
+    // {
+    //     return Gate::allows('sample_edit');
+    // }
 
     public function rules()
     {
@@ -29,9 +29,21 @@ class UpdateSampleRequest extends FormRequest
                 'string',
                 'nullable',
             ],
-            'quantity' => [
+            'date' => [
                 'string',
-                'required',
+                'nullable',
+            ],
+            // 'quantity' => [
+            //     'string',
+            //     'required',
+            // ],
+            'category_id' => [
+                // 'required',
+                'integer',
+            ],
+            'unit' => [
+                // 'required',
+                'integer',
             ],
             'end_date' => [
                 'date_format:' . config('panel.date_format'),

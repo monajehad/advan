@@ -32,7 +32,10 @@ class Sample extends Model
         'sample_id',
         'user_id',
         'quantity_request',
-        'quantity',
+        'date',
+        'unit',
+        'category_id',
+        'item_id',
         'end_date',
         'stock_available_id',
         'status',
@@ -50,6 +53,16 @@ class Sample extends Model
     public function user()
     {
         return $this->belongsTo(User::class, 'user_id');
+    }
+
+
+    public function category()
+    {
+        return $this->belongsTo(Category::class, 'category_id');
+    }
+    public function item()
+    {
+        return $this->belongsTo(Item::class, 'item_id');
     }
 
     public function getEndDateAttribute($value)

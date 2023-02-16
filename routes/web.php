@@ -4,7 +4,7 @@ use App\Http\Controllers\Admin\AttendanceController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\ClientsController;
 use App\Http\Controllers\Admin\ClientsSpecialtiesController;
-
+use App\Http\Controllers\admin\EmployeeController;
 use App\Http\Controllers\Admin\HitsController;
 use App\Http\Controllers\Admin\HitsTypeController;
 use App\Http\Controllers\Admin\KindsOfOccasionsController;
@@ -13,6 +13,7 @@ use App\Http\Controllers\Admin\PermissionsController;
 use App\Http\Controllers\Admin\ReportController;
 use App\Http\Controllers\Admin\ReportTypeController;
 use App\Http\Controllers\Admin\RolesController;
+use App\Http\Controllers\Admin\SamplesController;
 use App\Http\Controllers\Admin\SampleStockController;
 use App\Http\Controllers\Admin\UsersController;
 use App\Http\Controllers\Admin\VacationRequestController;
@@ -63,7 +64,25 @@ Route::group([ 'prefix' => 'admin', 'as' => 'admin.']
       Route::post('users/media',[UsersController::class,'storeMedia']  )->name('users.storeMedia');
       Route::post('users/ckmedia', [UsersController::class,'storeCKEditorImages'] )->name('users.storeCKEditorImages');
       Route::resource('users', UsersController::class);
+    Route::post('users/delete', [UsersController::class,'destroy'])->name('users.delete');
 
+     // Employees
+    Route::prefix('employee')->name('employee.')->group(function(){
+    Route::get('/',[EmployeeController::class,'index'] )->name('index');
+    Route::get('/profile',[EmployeeController::class,'show'] )->name('show');
+    Route::post('/change/employee/password',[EmployeeController::class,'change_user_password'] )->name('password');
+    Route::post('/store', [EmployeeController::class,'add'])->name('store');
+    Route::get('/data/{id}', [EmployeeController::class,'get_user'])->name('data');
+    Route::post('/update', [EmployeeController::class,'update'])->name('update');
+    Route::post('/delete', [EmployeeController::class,'delete'])->name('delete');
+    Route::post('change/status/{id}', [EmployeeController::class,'change_status'])->name('change.status');
+    Route::post('change/password', [EmployeeController::class,'change_password'])->name('change.password');
+    Route::get('/permissions/{id}', [EmployeeController::class,'get_permissions'])->name('get.permissions');
+    Route::post('grant/permissions', [EmployeeController::class,'grant_employee_permissions'])->name('permissions');
+
+    Route::get('/export/excel', [EmployeeController::class,'export_excel'])->name('export.excel');
+
+  });
        // Clients Specialties
       Route::delete('clients-specialties/destroy', [ClientsSpecialtiesController::class,'massDestroy'])->name('clients-specialties.massDestroy');
       Route::post('clients-specialties/parse-csv-import', [ClientsSpecialtiesController::class,'parseCsvImport'])->name('clients-specialties.parseCsvImport');
@@ -129,7 +148,13 @@ Route::group([ 'prefix' => 'admin', 'as' => 'admin.']
      // Sample Stock
     Route::delete('sample-stocks/destroy', [SampleStockController::class,'massDestroy'])->name('sample-stocks.massDestroy');
     Route::resource('sample-stocks', SampleStockController::class);
+
+     // Samples
+    Route::delete('samples/destroy', [SamplesController::class,'massDestroy'])->name('samples.massDestroy');
+    Route::resource('samples', SamplesController::class);
 });
+
+
 
 Route::get('/clear', function () {
 

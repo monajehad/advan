@@ -12,6 +12,7 @@ use App\Models\HitsSamples;
 use App\Models\Item;
 use App\Models\Sample;
 use App\Models\SampleStock;
+use App\Models\SystemConstant;
 use Gate;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -25,7 +26,15 @@ class SampleStockController extends Controller
     {
 
         // abort_if(Gate::denies('sample_stock_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $samples_stock = SampleStock::with(['category','item'])->select(sprintf('%s.*', (new SampleStock())->table));
+
+        // $samples_stock = SampleStock::with(['category','item'])->select(sprintf('%s.*', (new SampleStock())->table));
+
+        $samples_stock=SampleStock::
+        leftJoin('system_constants as unit_constants', function($join) {
+            $join->on('unit_constants.value', '=', 'sample_stocks.unit')->where('unit_constants.type','unit')->whereNull('unit_constants.deleted_at');
+        })
+        ->select('unit_constants.name as unit_name','sample_stocks.id','sample_stocks.item_id','sample_stocks.unit','sample_stocks.category_id'
+        ,'sample_stocks.quantity','sample_stocks.received_quantity','sample_stocks.date')->with(['category','item']);
 
         $samples_stock=$samples_stock->orderBy('id','desc')->paginate(self::PAGINATION_NO);
         if ($request->ajax()) {
@@ -33,9 +42,8 @@ class SampleStockController extends Controller
             return response()->json(['samples_stock'=>$table_data]);
 
     }
-           $categories = Category::get();
-           $items = Item::get();
-            return view('advan.admin.sampleStocks.index', compact('samples_stock','categories','items'));
+
+            return view('advan.admin.sampleStocks.index', compact('samples_stock'));
 
 
     }
@@ -43,28 +51,39 @@ class SampleStockController extends Controller
     public function create()
     {
         // abort_if(Gate::denies('sample_stock_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        $unit_select=SystemConstant::select('id','name','value','type')->where([['status',1],['type','unit']])->orderBy('order')->get();
+        $data['unit_select']=$unit_select;
 
         $categories = Category::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $items = Item::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        return view('advan.admin.sampleStocks.create', compact('categories'));
+
+        return view('advan.admin.sampleStocks.create', compact('categories','data','items'));
     }
 
-    public function store(StoreSampleStockRequest $request)
-    {
-        $sampleStock = SampleStock::create($request->all());
+    public function store(StoreSampleStockRequest $request) {
+        $request['available']=$request->quantity - $request->received_quantity;
+        $sampleStock = SampleStock::create(
 
+            $request->all()
+
+    );
+
+            // $sampleStock->date->format('m/Y');
         return redirect()->route('admin.sample-stocks.index');
     }
 
     public function edit(SampleStock $sampleStock)
     {
         // abort_if(Gate::denies('sample_stock_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
+        $unit_select=SystemConstant::select('id','name','value','type')->where([['status',1],['type','unit']])->orderBy('order')->get();
+        $data['unit_select']=$unit_select;
         $categories = Category::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $items = Item::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $sampleStock->load('category');
+        $sampleStock->load('category','item');
 
-        return view('advan.admin.sampleStocks.edit', compact('categories', 'sampleStock'));
+        return view('advan.admin.sampleStocks.edit', compact('categories', 'sampleStock','items','data'));
     }
 
     public function update(UpdateSampleStockRequest $request, SampleStock $sampleStock)
