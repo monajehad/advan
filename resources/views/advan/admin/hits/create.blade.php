@@ -11,17 +11,17 @@
             @csrf
             <div class="form-group">
                 <label class="required" for="clinic_id">{{ trans('cruds.hit.fields.clinic') }}</label>
-                <select class="form-control select2 {{ $errors->has('clinic') ? 'is-invalid' : '' }}" name="clinic_id" id="clinic_id" required>
-                    @foreach($clinics as $id => $entry)
-                        <option value="{{ $id }}" {{ old('clinic_id') == $id ? 'selected' : '' }}>{{ $entry }}</option>
+                <select class="form-control select2 {{ $errors->has('client') ? 'is-invalid' : '' }}" name="client_id" id="client_id" required>
+                    @foreach($clients as $id => $entry)
+                        <option value="{{ $id }}" {{ old('client_id') == $id ? 'selected' : '' }}>{{ $entry }}</option>
                     @endforeach
                 </select>
-                @if($errors->has('clinic'))
+                @if($errors->has('client'))
                     <div class="invalid-feedback">
-                        {{ $errors->first('clinic') }}
+                        {{ $errors->first('client') }}
                     </div>
                 @endif
-                <span class="help-block">{{ trans('cruds.hit.fields.clinic_helper') }}</span>
+                <span class="help-block">{{ trans('cruds.hit.fields.client_helper') }}</span>
             </div>
             <div class="form-group">
                 <label for="date_time">{{ trans('cruds.hit.fields.date_time') }}</label>
@@ -178,7 +178,7 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.hit.fields.category_helper') }}</span>
             </div>
-            <div class="form-group">
+            {{-- <div class="form-group">
                 <label for="doctors">{{ trans('cruds.hit.fields.doctors') }}</label>
                 <div style="padding-bottom: 4px">
                     <span class="btn btn-info btn-xs select-all" style="border-radius: 0">{{ trans('global.select_all') }}</span>
@@ -195,7 +195,7 @@
                     </div>
                 @endif
                 <span class="help-block">{{ trans('cruds.hit.fields.doctors_helper') }}</span>
-            </div>
+            </div> --}}
             <div class="form-group">
                 <label>{{ trans('cruds.hit.fields.status') }}</label>
                 <select class="form-control {{ $errors->has('status') ? 'is-invalid' : '' }}" name="status" id="status">

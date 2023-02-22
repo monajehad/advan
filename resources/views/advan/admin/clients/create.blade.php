@@ -66,7 +66,7 @@
             </div>
             <div class="form-group">
                 <label class="required" for="phone">{{ trans('cruds.client.fields.phone') }}</label>
-                <input class="form-control {{ $errors->has('phone') ? 'is-invalid' : '' }}" type="text" name="phone" id="phone" value="{{ old('phone', '') }}" required>
+                <input class="form-control {{ $errors->has('phone') ? 'is-invalid' : '' }}" type="text" name="phone" id="phone" value="{{ old('phone', '') }}" >
                 @if($errors->has('phone'))
                     <div class="invalid-feedback">
                         {{ $errors->first('phone') }}
@@ -75,15 +75,57 @@
                 <span class="help-block">{{ trans('cruds.client.fields.phone_helper') }}</span>
             </div>
             <div class="form-group">
-                <label for="client_phone">{{ trans('cruds.client.fields.client_phone') }}</label>
-                <input class="form-control {{ $errors->has('client_phone') ? 'is-invalid' : '' }}" type="text" name="client_phone" id="client_phone" value="{{ old('client_phone', '') }}">
-                @if($errors->has('client_phone'))
+                <label class="required" for="mobile">{{ trans('cruds.client.fields.mobile') }}</label>
+                <input class="form-control {{ $errors->has('mobile') ? 'is-invalid' : '' }}" type="text" name="mobile" id="mobile" value="{{ old('mobile', '') }}" required>
+                @if($errors->has('mobile'))
                     <div class="invalid-feedback">
-                        {{ $errors->first('client_phone') }}
+                        {{ $errors->first('mobile') }}
                     </div>
                 @endif
-                <span class="help-block">{{ trans('cruds.client.fields.client_phone_helper') }}</span>
+                <span class="help-block">{{ trans('cruds.client.fields.mobile_helper') }}</span>
             </div>
+            <div class="form-group row">
+                <div class="col-md-6 col-lg-6 col-sm-12">
+                    <label>النوع</label>
+                    <select class="form-control" id="category" name="category">
+                        <option value="" disabled selected>التصنيف </option>
+                        @foreach($data['category_select'] as $category)
+                            <option value="{{$category->value}}">  {{$category->name }}	</option>
+
+                        @endforeach
+
+
+                    </select>
+                    <label class="form-text text-muted text-danger" id="unit-error"></label>
+                </div>
+                <div class="form-group row">
+                    <div class="col-md-6 col-lg-6 col-sm-12">
+                        <label>التصنيف</label>
+                        <select class="form-control" id="item" name="item">
+                            <?php    $items=array('A','B','C','D')?>
+                            <option value="" disabled selected>التصنيف </option>
+                            @foreach($items as $item)
+                                <option value="{{$item}}">  {{$item }}	</option>
+
+                            @endforeach
+
+
+                        </select>
+                        <label class="form-text text-muted text-danger" id="unit-error"></label>
+                    </div>
+
+
+                        <div class="form-group row">
+                            <div class="col-md-6 col-lg-6 col-sm-12">
+                                <label>المنطقة</label>
+                                <select class="form-control" id="area_1" name="area_1">
+                                    <option value="" disabled selected> التصنيف</option>
+                                    @foreach($data['area_1_select'] as $area_1)
+                                        <option value="{{$area_1->value}}">{{$area_1->name}}</option>
+                                    @endforeach
+                                </select>
+                                <label class="form-text text-muted text-danger" id="area_1-error"></label>
+                            </div>
             <div class="form-group">
                 <label for="address_1">{{ trans('cruds.client.fields.address_1') }}</label>
                 <input class="form-control {{ $errors->has('address_1') ? 'is-invalid' : '' }}" type="text" name="address_1" id="address_1" value="{{ old('address_1', '') }}">

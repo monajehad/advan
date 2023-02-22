@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Admin\FCMController;
+use App\Http\Controllers\Admin\NotificationController;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\V1\AttendanceApiController;
 use App\Http\Controllers\Api\V1\CategoryApiController;
@@ -87,3 +89,7 @@ Route::group(['prefix' => 'api', 'as' => 'api.'], function () {
     Route::post('/updatePassword', [AuthController::class,'update_passwprd']);
 
 });
+
+
+Route::post('/save-token', [FCMController::class,'index']);
+Route::post('/notification/save-token', [NotificationController::class,'index']);

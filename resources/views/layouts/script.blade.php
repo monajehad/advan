@@ -16,3 +16,9 @@
 <!--end::Page Scripts-->
 <script src="{{asset('component_assets/js/charts.js')}}"></script>
 <script src="{{asset('component_assets/js/app.js')}}"></script>
+{{-- <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-messaging.js"></script> --}}
+
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/axios@1.1.2/dist/axios.min.js"></script>

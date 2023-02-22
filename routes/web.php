@@ -5,19 +5,24 @@ use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\ClientsController;
 use App\Http\Controllers\Admin\ClientsSpecialtiesController;
 use App\Http\Controllers\admin\EmployeeController;
+use App\Http\Controllers\Admin\FCMController;
 use App\Http\Controllers\Admin\HitsController;
 use App\Http\Controllers\Admin\HitsTypeController;
 use App\Http\Controllers\Admin\KindsOfOccasionsController;
 use App\Http\Controllers\Admin\LoginController;
+use App\Http\Controllers\Admin\NotificationController;
 use App\Http\Controllers\Admin\PermissionsController;
 use App\Http\Controllers\Admin\ReportController;
 use App\Http\Controllers\Admin\ReportTypeController;
 use App\Http\Controllers\Admin\RolesController;
 use App\Http\Controllers\Admin\SamplesController;
 use App\Http\Controllers\Admin\SampleStockController;
+use App\Http\Controllers\admin\SystemConstantController;
+use App\Http\Controllers\admin\TenderController;
 use App\Http\Controllers\Admin\UsersController;
 use App\Http\Controllers\Admin\VacationRequestController;
 use App\Http\Controllers\HomeController;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -47,6 +52,13 @@ Auth::routes();
 
 
 // });
+
+    Route::get('/massage',[FCMController::class,'get'] )->middleware('auth');
+    Route::post('/massage',[FCMController::class,'createChat'])->name('createChat')->middleware('auth');
+    Route::get('/notification',[NotificationController::class,'get'] );
+
+    Route::post('/send_notification',[NotificationController::class,'sendNotification'] )->name('send.notification');
+    // Route::post('/save_notification',[NotificationController::class,'createNotification'])->name('createNotificatio')->middleware('auth');
 
 Route::group([ 'prefix' => 'admin', 'as' => 'admin.']
 ,function () {
@@ -132,6 +144,11 @@ Route::group([ 'prefix' => 'admin', 'as' => 'admin.']
       Route::get('hits-map', [HitsController::class,'map'])->name('hits.hitsMap');
       Route::get('note', [HitsController::class,'note'])->name('hits.note');
 
+      Route::get('/online_map', function () {
+        $users = User::where('user_type' , 2)->where('status' , 1)->get();
+        return view('advan.admin.onlineMap' , compact('users'));
+    });
+
        // Category
     Route::delete('categories/destroy', [CategoryController::class,'massDestroy'])->name('categories.massDestroy');
     Route::post('categories/parse-csv-import', [CategoryController::class,'parseCsvImport'])->name('categories.parseCsvImport');
@@ -152,6 +169,75 @@ Route::group([ 'prefix' => 'admin', 'as' => 'admin.']
      // Samples
     Route::delete('samples/destroy', [SamplesController::class,'massDestroy'])->name('samples.massDestroy');
     Route::resource('samples', SamplesController::class);
+
+    //tenders
+    Route::prefix('tenders')->name('tenders.')->group(function(){
+        Route::get('/',[TenderController::class,'index'] )->name('index');
+        // ->middleware('can:tenders-list')
+        Route::get('/clients',[TenderController::class,'get_clients'] )->name('clients');
+        // ->middleware(['can:tenders-add','can:tenders-update']);
+        Route::post('/store', [TenderController::class,'add'])->name('store');
+        // ->middleware('can:tenders-add');
+        Route::get('/items/{id}', [TenderController::class,'get_item'])->name('item.data');
+        // ->middleware(['can:tenders-add','can:tenders-competitor','can:tenders-update']);
+        Route::get('/item/trade_names/{id}', [TenderController::class,'get_item_trade_names'])->name('item.trade.names');
+        // ->middleware(['can:tenders-add','can:tenders-competitor','can:tenders-update']);
+        Route::get('/tender/{id}', [TenderController::class,'get_tender'])->name('tender.data');
+        // ->middleware('can:tenders-update');
+        Route::post('/update', [TenderController::class,'update'])->name('update');
+        // ->middleware('can:tenders-update');
+        Route::get('/competitors/prices/{id}', [TenderController::class,'get_competitors_prices'])->name('competitors.prices');
+        // ->middleware('can:tenders-competitor');
+        Route::post('save/competitors/prices', [TenderController::class,'save_competitors_prices'])->name('competitors.prices.save');
+        // ->middleware('can:tenders-competitor');
+        Route::post('save/accepted/items', [TenderController::class,'save_accepted_items'])->name('accepted.items.save');
+        // ->middleware('can:tenders-accept-items');
+        Route::get('/accepting/items/{id}', [TenderController::class,'get_accepted_items'])->name('accepted.items');
+        // ->middleware('can:tenders-accept-items');
+        Route::post('/delete', [TenderController::class,'delete'])->name('delete');
+        // ->middleware('can:tenders-delete');
+        Route::get('/show/{id}', [TenderController::class,'show_tender'])->name('show');
+        // ->middleware('can:tenders-list');
+        Route::post('/delete_check', [TenderController::class,'delete_check'])->name('delete_check');
+        // ->middleware('can:tenders-delete');
+
+        Route::post('supply/items', [TenderController::class,'save_supplied_items'])->name('supplied.items.save');
+        // ->middleware('can:tenders-supply');
+        Route::get('/supplied/items/{id}', [TenderController::class,'get_supplied_items'])->name('supplied.items');
+        // ->middleware('can:tenders-supply');
+        Route::post('/remove/supplied/item', [TenderController::class,'delete_supplied_item'])->name('delete.supplied.item');
+        // ->middleware('can:tenders-supply');;
+
+        Route::get('/generate/pdf', [TenderController::class,'generate_tender_pdf'])->name('tender.generate.pdf');
+        // ->middleware('can:tenders-print-pdf');
+        Route::get('/for/calender', [TenderController::class,'tenders_for_calender'])->name('calender');
+
+        Route::post('/duplicate/tender', [TenderController::class,'duplicate_tender_to_branch'])->name('duplicate.tender');
+
+        Route::post('/add/trade-name', [TenderController::class,'add_new_trade_name'])->name('trade.name');
+
+
+    });
+    Route::get('/massage',[FCMController::class,'get'] );
+    Route::post('/massage',[FCMController::class,'createChat'])->name('createChat');
+
+
+    Route::prefix('system/constants')->name('system.constants.')->group(function(){
+        Route::get('/',[SystemConstantController::class,'index'] )->name('index');
+        // ->middleware('can:constants-list');
+        Route::post('/store', [SystemConstantController::class,'add'])->name('store');
+        // ->middleware('can:constants-add');
+        Route::get('/data/{id}', [SystemConstantController::class,'get_constant']);
+        // ->name('data')->middleware('can:constants-update');
+        Route::post('/update', [SystemConstantController::class,'update'])->name('update');
+        // ->middleware('can:constants-update');
+        Route::post('/delete', [SystemConstantController::class,'delete'])->name('delete');
+        // ->middleware('can:constants-delete');
+        Route::post('change/status/{id}', [SystemConstantController::class,'change_status'])->name('change.status');
+        // ->middleware('can:constants-status');
+
+    });
+
 });
 
 

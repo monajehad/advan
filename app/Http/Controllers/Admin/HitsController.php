@@ -28,7 +28,7 @@ class HitsController extends Controller
         // abort_if(Gate::denies('hit_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
-            $query = Hit::with(['clinic', 'visit_type', 'user', 'sms', 'categories', 'doctors'])->select(sprintf('%s.*', (new Hit())->table));
+            $query = Hit::with(['clinic', 'visit_type', 'user', 'sms', 'categories'])->select(sprintf('%s.*', (new Hit())->table));
             if ($request->from_date && $request->to_date)
             {
                 $hits  = $query->whereBetween('date_time' , [$request->from_date , $request->to_date]);
@@ -236,7 +236,7 @@ class HitsController extends Controller
     {
         // abort_if(Gate::denies('hit_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $clinics = Client::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $clients = Client::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $visit_types = HitsType::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
@@ -246,9 +246,9 @@ class HitsController extends Controller
 
         $categories = Category::pluck('name', 'id');
 
-        $doctors = Client::pluck('doctor_name', 'id');
+        // $doctors = Client::pluck('doctor_name', 'id');
 
-        return view('advan.admin.hits.create', compact('clinics', 'visit_types', 'users', 'sms', 'categories', 'doctors'));
+        return view('advan.admin.hits.create', compact('clients', 'visit_types', 'users', 'sms', 'categories'));
     }
 
     public function store(StoreHitRequest $request)

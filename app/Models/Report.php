@@ -31,10 +31,10 @@ class Report extends Model
         'user_id',
         'type_id',
         'name',
-        'clinic_id',
+        'client_id',
         'date',
         'time',
-        'clinic_name',
+        'client_name',
         'title',
         'description',
         'note',
@@ -60,9 +60,9 @@ class Report extends Model
         return $this->belongsTo(ReportType::class, 'type_id');
     }
 
-    public function clinic()
+    public function client()
     {
-        return $this->belongsTo(Clinic::class, 'clinic_id');
+        return $this->belongsTo(Client::class, 'client_id');
     }
 
     public function getDateAttribute($value)

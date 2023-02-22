@@ -184,6 +184,8 @@ return [
         Yajra\DataTables\DataTablesServiceProvider::class,
         Spatie\Permission\PermissionServiceProvider::class,
         Maatwebsite\Excel\ExcelServiceProvider::class,
+        Elibyy\TCPDF\ServiceProvider::class,
+        LaravelFCM\FCMServiceProvider::class,
         /*
          * Package Service Providers...
          */
@@ -248,6 +250,11 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
         'Excel' => Maatwebsite\Excel\Facades\Excel::class,
+        'TCPDF' => Elibyy\TCPDF\Facades\TCPDF::class,
+
+	    'FCM'      => LaravelFCM\Facades\FCM::class,
+	    // 'FCMGroup' => LaravelFCM\Facades\FCMGroup::class,
+
         // 'ExampleClass' => App\Example\ExampleClass::class,
     ])->toArray(),
 

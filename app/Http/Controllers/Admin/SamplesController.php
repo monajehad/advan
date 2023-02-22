@@ -94,7 +94,7 @@ class SamplesController extends Controller
 
     public function show(Sample $sample)
     {
-        abort_if(Gate::denies('sample_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        // abort_if(Gate::denies('sample_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $sample->load('sample', 'user', 'stock_available');
 

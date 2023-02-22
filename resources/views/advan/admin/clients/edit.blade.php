@@ -22,7 +22,7 @@
                     @endif
                     <span class="help-block">{{ trans('cruds.client.fields.name_helper') }}</span>
                 </div>
-                {{-- <div class="form-group">
+                <div class="form-group">
                     <label class="" for="qualification">{{ trans('cruds.client.fields.qualification') }}</label>
                     <input class="form-control {{ $errors->has('qualification') ? 'is-invalid' : '' }}" type="text"
                            name="qualification" id="qualification" value="{{ old('qualification', $client->qualification) }}"
@@ -34,8 +34,8 @@
                         </div>
                     @endif
                     <span class="help-block">{{ trans('cruds.client.fields.qualification') }}</span>
-                </div> --}}
-                {{-- <div class="form-group">
+                </div>
+                <div class="form-group">
                     <label class="required" for="specialty_id">{{ trans('cruds.client.fields.specialty') }}</label>
                     <select class="form-control select2 {{ $errors->has('specialty') ? 'is-invalid' : '' }}"
                             name="specialty_id" id="specialty_id" required>
@@ -49,8 +49,8 @@
                             {{ $errors->first('specialty') }}
                         </div>
                     @endif
-                    <span class="help-block">{{ trans('cruds.client.fields.specialty_helper') }}</span> --}}
-                {{-- </div>
+                    <span class="help-block">{{ trans('cruds.client.fields.specialty_helper') }}</span>
+                </div>
                 <div class="form-group">
                     <label for="image">{{ trans('cruds.client.fields.image') }}</label>
                     <div class="needsclick dropzone {{ $errors->has('image') ? 'is-invalid' : '' }}"
@@ -86,17 +86,62 @@
                     <span class="help-block">{{ trans('cruds.client.fields.phone_helper') }}</span>
                 </div>
                 <div class="form-group">
-                    <label for="client_phone">{{ trans('cruds.client.fields.client_phone') }}</label>
-                    <input class="form-control {{ $errors->has('client_phone') ? 'is-invalid' : '' }}" type="text"
-                           name="client_phone" id="client_phone"
-                           value="{{ old('client_phone', $client->client_phone) }}">
-                    @if($errors->has('client_phone'))
+                    <label for="mobile">{{ trans('cruds.client.fields.mobile') }}</label>
+                    <input class="form-control {{ $errors->has('mobile') ? 'is-invalid' : '' }}" type="text"
+                           name="mobile" id="mobile"
+                           value="{{ old('mobile', $client->mobile) }}">
+                    @if($errors->has('mobile'))
                         <div class="invalid-feedback">
-                            {{ $errors->first('client_phone') }}
+                            {{ $errors->first('mobile') }}
                         </div>
                     @endif
-                    <span class="help-block">{{ trans('cruds.client.fields.client_phone_helper') }}</span>
-                </div> --}}
+                    <span class="help-block">{{ trans('cruds.client.fields.mobile_helper') }}</span>
+                </div>
+                <div class="form-group row">
+                    <div class="col-md-6 col-lg-6 col-sm-12">
+                        <label>النوع</label>
+                        <select class="form-control" id="category" name="category">
+                        <?php    $categories=array('طبيب','صيدلية','مستشفى','مركز/جمعية')?>
+                            <option value="" disabled selected>التصنيف </option>
+                            @foreach($categories as $type)
+                                <option value="{{$type}}"{{ ($client->category ??'') == $type ? 'selected':'' }}>  {{$type }}	</option>
+
+                            @endforeach
+
+
+                        </select>
+                        <label class="form-text text-muted text-danger" id="unit-error"></label>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-md-6 col-lg-6 col-sm-12">
+                            <label>التصنيف</label>
+                            <select class="form-control" id="item" name="item">
+                                <?php    $items=array('A','B','C','D')?>
+                                <option value="" disabled selected>التصنيف </option>
+                                @foreach($items as $item1)
+                                    <option value="{{$item1}}" {{ ($client->item ??'') == $item1 ? 'selected':'' }}>  {{$item1 }}	</option>
+
+                                @endforeach
+
+
+                            </select>
+                            <label class="form-text text-muted text-danger" id="unit-error"></label>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-md-6 col-lg-6 col-sm-12">
+                                <label>المنطقة</label>
+                                <select class="form-control" id="area_1" name="area_1">
+                                    <?php    $areas_1=array('الشمال','غزة','الوسطى','الجنوب')?>
+                                    <option value="" disabled selected>التصنيف </option>
+                                    @foreach($areas_1 as $area_1)
+                                        <option value="{{$area_1}}" {{ ($client->area_1 ??'') == $area_1 ? 'selected':'' }}>  {{$area_1 }}	</option>
+
+                                    @endforeach
+
+
+                                </select>
+                                <label class="form-text text-muted text-danger" id="unit-error"></label>
+                            </div>
                 <div class="form-group">
                     <label for="address_1">{{ trans('cruds.client.fields.address_1') }}</label>
                     <input class="form-control {{ $errors->has('address_1') ? 'is-invalid' : '' }}" type="text"

@@ -77,7 +77,7 @@
 
 
 @endsection
-@section('scripts')
+@section('script')
     <script
         src="https://maps.googleapis.com/maps/api/js?sensor=false&libraries=geometry,places&key=AIzaSyDeFvdsmkF_Jxd7Tk0VkxXfMw0IydZiWC4"></script>
     <script>
@@ -105,7 +105,7 @@
 
         var locations = [
                 @foreach($hits as $hit)
-            ['{{$hit->clinic->name}}', '{{$hit->clinic->latitude}}', '{{$hit->clinic->longitude}}', '{{$hit->address}}', users.find(user => user.id === {{$hit->user_id}}).color, '{{$hit->date_time}}']@if(!$loop->last),@endif
+            ['{{$hit->client->name}}', '{{$hit->client->latitude}}', '{{$hit->client->longitude}}', '{{$hit->address}}', users.find(user => user.id === {{$hit->user_id}}).color, '{{$hit->date_time}}']@if(!$loop->last),@endif
             @endforeach
 
         ];

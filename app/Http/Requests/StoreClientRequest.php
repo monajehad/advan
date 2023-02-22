@@ -35,11 +35,13 @@ class StoreClientRequest extends FormRequest
             ],
             'phone' => [
                 'string',
-                'required',
+                'nullable',
+
             ],
             'mobile' => [
                 'string',
-                'nullable',
+                'required',
+
             ],
             'home_address'=> [
                 'string',

@@ -1,13 +1,13 @@
 @extends('layouts.cpanel.app')
 @section('content')
 {{--@can('vacation_request_create')--}}
-{{--    <div style="margin-bottom: 10px;" class="row">--}}
-{{--        <div class="col-lg-12">--}}
-{{--            <a class="btn btn-success" href="{{ route('admin.vacation-requests.create') }}">--}}
-{{--                {{ trans('global.add') }} {{ trans('cruds.vacationRequest.title_singular') }}--}}
-{{--            </a>--}}
-{{--        </div>--}}
-{{--    </div>--}}
+   <div style="margin-bottom: 10px;" class="row">
+       <div class="col-lg-12">
+           <a class="btn btn-success" href="{{ route('admin.vacation-requests.create') }}">
+               {{ trans('global.add') }} {{ trans('cruds.vacationRequest.title_singular') }}
+           </a>
+       </div>
+   </div>
 {{--@endcan--}}
 <div class="card">
     <div class="card-header">

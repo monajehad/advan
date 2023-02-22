@@ -1,11 +1,11 @@
 @extends('layouts.cpanel.app')
 @section('content')
 {{--@can('attendance_create')--}}
-{{--    <div style="margin-bottom: 10px;" class="row">--}}
-{{--        <div class="col-lg-12">--}}
-{{--            <a class="btn btn-success" href="{{ route('admin.attendances.create') }}">--}}
-{{--                {{ trans('global.add') }} {{ trans('cruds.attendance.title_singular') }}--}}
-{{--            </a>--}}
+   <div style="margin-bottom: 10px;" class="row">
+       <div class="col-lg-12">
+           <a class="btn btn-success" href="{{ route('admin.attendances.create') }}">
+               {{ trans('global.add') }} {{ trans('cruds.attendance.title_singular') }}
+           </a>
 {{--            <button class="btn btn-warning" data-toggle="modal" data-target="#csvImportModal">--}}
 {{--                {{ trans('global.app_csvImport') }}--}}
 {{--            </button>--}}
@@ -75,7 +75,7 @@
 
 
 @endsection
-@section('scripts')
+@section('script')
 @parent
 <script>
     $(function () {

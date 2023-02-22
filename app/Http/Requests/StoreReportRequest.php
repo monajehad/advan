@@ -30,11 +30,11 @@ class StoreReportRequest extends FormRequest
                 'required',
             ],
             'date' => [
-                'required',
+                // 'required',
                 'date_format:' . config('panel.date_format'),
             ],
             'time' => [
-                'required',
+                // 'required',
                 'date_format:' . config('panel.time_format'),
             ],
             'clinic_name' => [

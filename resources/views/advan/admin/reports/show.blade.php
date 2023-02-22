@@ -49,10 +49,10 @@
                     </tr>
                     <tr>
                         <th>
-                            {{ trans('cruds.report.fields.clinic') }}
+                            {{ trans('cruds.report.fields.client') }}
                         </th>
                         <td>
-                            {{ $report->clinic->name ?? '' }}
+                            {{ $report->client->name ?? '' }}
                         </td>
                     </tr>
                     <tr>
@@ -73,10 +73,10 @@
                     </tr>
                     <tr>
                         <th>
-                            {{ trans('cruds.report.fields.clinic_name') }}
+                            {{ trans('cruds.report.fields.client_name') }}
                         </th>
                         <td>
-                            {{ $report->clinic_name }}
+                            {{ $report->client_name }}
                         </td>
                     </tr>
                     <tr>

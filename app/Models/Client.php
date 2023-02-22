@@ -58,6 +58,8 @@ class Client extends Model implements HasMedia
         'updated_at',
         'deleted_at',
         'times_work',
+        'latitude',
+        'longitude',
     ];
 
     public function registerMediaConversions(Media $media = null): void

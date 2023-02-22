@@ -28,7 +28,7 @@
             </tr>
         </thead>
         <tbody class="text-center font-size-sm">
-            @forelse($clients as $client)
+            @forelse($data['clients'] as $client)
                 <tr class="data-row">
                     <td class="iteration">{{$loop->iteration}}</td>
                     <td class="name">{{$client->name}}</td>
@@ -37,6 +37,7 @@
                     <td class="name">{{$client->item}}</td>
                     <td class="name">{{$client->area_1}}</td>
                     <td class="name">{{$client->clientHits()->count()}}</td>
+                    {{-- <td class="name">{{$client->clientHits->number_samples->count()}}</td> --}}
 
                     {{-- <td class="name">{{$client->clinetHits->id}}</td> --}}
 
@@ -112,6 +113,6 @@
     </table>
 </div>
 <div class="paging">
-{!! $clients->links() !!}
+{!! $data['clients']->links() !!}
 </div>
 <!--End::Table-->

@@ -9,15 +9,15 @@ use Illuminate\Http\Response;
 
 class StoreHitRequest extends FormRequest
 {
-    public function authorize()
-    {
-        return Gate::allows('hit_create');
-    }
+    // public function authorize()
+    // {
+    //     return Gate::allows('hit_create');
+    // }
 
     public function rules()
     {
         return [
-            'clinic_id' => [
+            'client_id' => [
                 'required',
                 'integer',
             ],

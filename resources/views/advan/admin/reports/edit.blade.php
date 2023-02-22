@@ -49,18 +49,18 @@
                 <span class="help-block">{{ trans('cruds.report.fields.name_helper') }}</span>
             </div>
             <div class="form-group">
-                <label for="clinic_id">{{ trans('cruds.report.fields.clinic') }}</label>
-                <select class="form-control select2 {{ $errors->has('clinic') ? 'is-invalid' : '' }}" name="clinic_id" id="clinic_id">
-                    @foreach($clinics as $id => $entry)
-                        <option value="{{ $id }}" {{ (old('clinic_id') ? old('clinic_id') : $report->clinic->id ?? '') == $id ? 'selected' : '' }}>{{ $entry }}</option>
+                <label for="client_id">{{ trans('cruds.report.fields.client') }}</label>
+                <select class="form-control select2 {{ $errors->has('client') ? 'is-invalid' : '' }}" name="client_id" id="client_id">
+                    @foreach($clients as $id => $entry)
+                        <option value="{{ $id }}" {{ (old('client_id') ? old('client_id') : $report->client->id ?? '') == $id ? 'selected' : '' }}>{{ $entry }}</option>
                     @endforeach
                 </select>
-                @if($errors->has('clinic'))
+                @if($errors->has('client'))
                     <div class="invalid-feedback">
-                        {{ $errors->first('clinic') }}
+                        {{ $errors->first('client') }}
                     </div>
                 @endif
-                <span class="help-block">{{ trans('cruds.report.fields.clinic_helper') }}</span>
+                <span class="help-block">{{ trans('cruds.report.fields.client_helper') }}</span>
             </div>
             <div class="form-group">
                 <label class="required" for="date">{{ trans('cruds.report.fields.date') }}</label>
@@ -83,14 +83,14 @@
                 <span class="help-block">{{ trans('cruds.report.fields.time_helper') }}</span>
             </div>
             <div class="form-group">
-                <label for="clinic_name">{{ trans('cruds.report.fields.clinic_name') }}</label>
-                <input class="form-control {{ $errors->has('clinic_name') ? 'is-invalid' : '' }}" type="text" name="clinic_name" id="clinic_name" value="{{ old('clinic_name', $report->clinic_name) }}">
-                @if($errors->has('clinic_name'))
+                <label for="client_name">{{ trans('cruds.report.fields.client_name') }}</label>
+                <input class="form-control {{ $errors->has('client_name') ? 'is-invalid' : '' }}" type="text" name="client_name" id="client_name" value="{{ old('client_name', $report->client_name) }}">
+                @if($errors->has('client_name'))
                     <div class="invalid-feedback">
-                        {{ $errors->first('clinic_name') }}
+                        {{ $errors->first('client_name') }}
                     </div>
                 @endif
-                <span class="help-block">{{ trans('cruds.report.fields.clinic_name_helper') }}</span>
+                <span class="help-block">{{ trans('cruds.report.fields.client_name_helper') }}</span>
             </div>
             <div class="form-group">
                 <label class="required" for="title">{{ trans('cruds.report.fields.title') }}</label>

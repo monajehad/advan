@@ -61,8 +61,8 @@ class ReportController extends Controller
             $table->editColumn('name', function ($row) {
                 return $row->name ? $row->name : '';
             });
-            $table->addColumn('clinic_name', function ($row) {
-                return $row->clinic ? $row->clinic->name : '';
+            $table->addColumn('client_name', function ($row) {
+                return $row->client ? $row->client->name : '';
             });
 
             $table->editColumn('time', function ($row) {
@@ -75,16 +75,16 @@ class ReportController extends Controller
                 return $row->status ? Report::STATUS_SELECT[$row->status] : '';
             });
 
-            $table->rawColumns(['actions', 'placeholder', 'user', 'type', 'clinic']);
+            $table->rawColumns(['actions', 'placeholder', 'user', 'type', 'client']);
 
             return $table->make(true);
         }
 
         $users   = User::get();
         $reports = Report::get();
-        $clinics = Client::get();
+        $clients = Client::get();
 
-        return view('advan.admin.reports.index', compact('users', 'reports', 'clinics'));
+        return view('advan.admin.reports.index', compact('users', 'reports', 'clients'));
     }
 
     public function create()
@@ -95,9 +95,9 @@ class ReportController extends Controller
 
         $types = Report::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $clinics = Client::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $clients = Client::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        return view('advan.admin.reports.create', compact('users', 'types', 'clinics'));
+        return view('advan.admin.reports.create', compact('users', 'types', 'clients'));
     }
 
     public function store(StoreReportRequest $request)
@@ -115,11 +115,11 @@ class ReportController extends Controller
 
         $types = Report::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $clinics = Client::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $clients = Client::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $report->load('user', 'type', 'clinic');
+        $report->load('user', 'type', 'client');
 
-        return view('advan.admin.reports.edit', compact('users', 'types', 'clinics', 'report'));
+        return view('advan.admin.reports.edit', compact('users', 'types', 'clients', 'report'));
     }
 
     public function update(UpdateReportRequest $request, Report $report)

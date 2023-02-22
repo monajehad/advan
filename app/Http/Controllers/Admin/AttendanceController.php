@@ -71,14 +71,14 @@ class AttendanceController extends Controller
         return view('advan.admin.attendances.index', compact('users'));
     }
 
-    // public function create()
-    // {
-    //     // abort_if(Gate::denies('attendance_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+    public function create()
+    {
+        // abort_if(Gate::denies('attendance_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-    //     $users = User::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $users = User::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-    //     return view('advan.admin.attendances.create', compact('users'));
-    // }
+        return view('advan.admin.attendances.create', compact('users'));
+    }
 
     public function store(StoreAttendanceRequest $request)
     {

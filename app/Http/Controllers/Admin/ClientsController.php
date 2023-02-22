@@ -10,6 +10,7 @@ use App\Http\Requests\StoreClientRequest;
 use App\Http\Requests\UpdateClientRequest;
 use App\Models\Client;
 use App\Models\ClientsSpecialty;
+use App\Models\SystemConstant;
 use Gate;
 use Illuminate\Http\Request;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
@@ -25,32 +26,49 @@ class ClientsController extends Controller
     public function index(Request $request)
     {
         // abort_if(Gate::denies('client_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        $data=[];
+        $category_select=SystemConstant::select('id','name','value','type')->where([['type','category']])->orderBy('order')->get();
+        $area_1_select=SystemConstant::select('id','name','value','type')->where([['type','area_1']])->orderBy('order')->get();
 
-            $clients = Client::with(['specialty','clientHits'])->select('id','name',
-            'area_1','status','item','specialty_id',
-            'category');
+        $clients=Client::
+        leftJoin('system_constants as category_constants', function($join) {
+            $join->on('category_constants.value', '=', 'clients.category')->where('category_constants.type','category')->whereNull('category_constants.deleted_at');
+        })->leftJoin('system_constants as area_1_constants', function($join) {
+            $join->on('area_1_constants.value', '=', 'clients.area_1')->where('area_1_constants.type','area_1')->whereNull('area_1_constants.deleted_at');
+        })
+        ->select('category_constants.name as category_name','area_1_constants.name as area_1_name','clients.id','clients.specialty_id','clients.category','clients.name','clients.item','clients.area_1','clients.status')
+        ->with(['specialty','clientHits']);
 
-            // foreach ($clients as $client) {
-            //     $clientHitsCount = $client->clientHits()->count();
-            // }
-            $clients=$clients->orderBy('id','desc')->paginate(self::PAGINATION_NO);
-            if ($request->ajax()) {
-                $table_data=view('advan.admin.clients.table-data',compact('clients'))->render();
-                return response()->json(['clients'=>$table_data]);
+        $clients=$clients->orderBy('id','desc')->paginate(self::PAGINATION_NO);
 
-        }
-        $clients_specialties = ClientsSpecialty::get();
+        $data['clients']=$clients;
+        $data['category_select']=$category_select;
+        $data['area_1_select']=$area_1_select;
+        if ($request->ajax()) {
+            $table_data=view('advan.admin.clients.table-data',compact('data'))->render();
+            return response()->json(['clients'=>$table_data]);
 
-        return view('advan.admin.clients.index', compact('clients_specialties','clients'));
+    }
+    $clients_specialties = ClientsSpecialty::get();
+
+    return view('advan.admin.clients.index', compact('clients_specialties','data'));
+
+
+
+
     }
 
     public function create()
     {
         // abort_if(Gate::denies('client_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
+        $data=[];
+        $category_select=SystemConstant::select('id','name','value','type')->where([['type','category']])->orderBy('order')->get();
+        $area_1_select=SystemConstant::select('id','name','value','type')->where([['type','area_1']])->orderBy('order')->get();
+        $data['category_select']=$category_select;
+        $data['area_1_select']=$area_1_select;
         $specialties = ClientsSpecialty::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        return view('advan.admin.clients.create', compact('specialties'));
+        return view('advan.admin.clients.create', compact('specialties','data'));
     }
 
     public function store(StoreClientRequest $request)

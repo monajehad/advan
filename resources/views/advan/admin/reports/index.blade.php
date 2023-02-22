@@ -1,13 +1,13 @@
 @extends('layouts.cpanel.app')
 @section('content')
 {{--@can('report_create')--}}
-{{--    <div style="margin-bottom: 10px;" class="row">--}}
-{{--        <div class="col-lg-12">--}}
-{{--            <a class="btn btn-success" href="{{ route('admin.reports.create') }}">--}}
-{{--                {{ trans('global.add') }} {{ trans('cruds.report.title_singular') }}--}}
-{{--            </a>--}}
-{{--        </div>--}}
-{{--    </div>--}}
+   <div style="margin-bottom: 10px;" class="row">
+       <div class="col-lg-12">
+           <a class="btn btn-success" href="{{ route('admin.reports.create') }}">
+               {{ trans('global.add') }} {{ trans('cruds.report.title_singular') }}
+           </a>
+       </div>
+    </div>
 {{--@endcan--}}
 <div class="card">
     <div class="card-header">
@@ -28,7 +28,7 @@
                         {{ trans('cruds.report.fields.user') }}
                     </th>
                     <th>
-                        {{ trans('cruds.report.fields.clinic') }}
+                        {{ trans('cruds.report.fields.client') }}
                     </th>
                     <th>
                         {{ trans('cruds.report.fields.date') }}
@@ -61,7 +61,7 @@
 
 {{--                        <select class="search">--}}
 {{--                            <option value>{{ trans('global.all') }}</option>--}}
-{{--                            @foreach($clinics as $key => $item)--}}
+{{--                            @foreach($clients as $key => $item)--}}
 {{--                                <option value="{{ $item->name }}">{{ $item->name }}</option>--}}
 {{--                            @endforeach--}}
 {{--                        </select>--}}
@@ -91,12 +91,12 @@
 
 
 @endsection
-@section('scripts')
+@section('script')
 @parent
 <script>
     $(function () {
   let dtButtons = $.extend(true, [], $.fn.dataTable.defaults.buttons)
-@can('report_delete')
+// @can('report_delete')
   let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
   let deleteButton = {
     text: deleteButtonTrans,
@@ -124,7 +124,7 @@
     }
   }
   dtButtons.push(deleteButton)
-@endcan
+// @endcan
 
   let dtOverrideGlobals = {
     buttons: dtButtons,
@@ -137,7 +137,7 @@
       { data: 'placeholder', name: 'placeholder' },
 { data: 'id', name: 'id' },
 { data: 'user_name', name: 'user.name' },
-{ data: 'clinic_name', name: 'clinic.name' },
+{ data: 'client_name', name: 'client.name' },
 { data: 'date', name: 'date' },
 { data: 'time', name: 'time' },
 { data: 'hits_id', name: 'hits_id' },
