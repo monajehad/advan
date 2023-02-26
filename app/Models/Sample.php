@@ -34,6 +34,7 @@ class Sample extends Model
         'quantity_request',
         'date',
         'unit',
+        'type',
         'category_id',
         'item_id',
         'end_date',

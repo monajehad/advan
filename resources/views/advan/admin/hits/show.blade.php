@@ -28,7 +28,7 @@
                             {{ trans('cruds.hit.fields.clinic') }}
                         </th>
                         <td>
-                            {{ $hit->clinic->name ?? '' }}
+                            {{ $hit->client->name ?? '' }}
                         </td>
                     </tr>
                     <tr>
@@ -80,6 +80,15 @@
                         </td>
                     </tr>
                     <tr>
+                        <th>
+                            {{ trans('cruds.hit.fields.category') }}
+                        </th>
+                        <td>
+                            {{ $hit->category->name ??'' }}
+                        </td>
+                    </tr>
+                    <tr>
+
                         <th>
                             {{ trans('cruds.hit.fields.report_status') }}
                         </th>
@@ -136,7 +145,7 @@
                             @foreach($sample as $key => $s)
                                 <div class="col-md-3">
                                     <div class="card border-info mx-sm-1 p-3">
-                                        <div class="text-info text-center mt-3"><h4>{{ $s->samples->sample->name }}</h4></div>
+                                        <div class="text-info text-center mt-3"><h4>{{ $s->samples->sample->name}}</h4></div>
                                         <div class="text-info text-center mt-2"><h1>{{ $s->quantity }}</h1></div>
                                     </div>
                                 </div>
@@ -144,7 +153,7 @@
                             </div>
                         </td>
                     </tr>
-                    <tr>
+                    {{-- <tr>
                         <th>
                             {{ trans('cruds.hit.fields.doctors') }}
                         </th>
@@ -153,7 +162,7 @@
                                 <span class="label label-info">{{ $doctors->doctor_name }}</span>
                             @endforeach
                         </td>
-                    </tr>
+                    </tr> --}}
                     <tr>
                         <th>
                             {{ trans('cruds.hit.fields.status') }}

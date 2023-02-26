@@ -89,12 +89,17 @@ class ClientsController extends Controller
     public function edit(Client $client)
     {
         // abort_if(Gate::denies('client_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
+        $area_1_select=SystemConstant::select('id','name','value','type')->where([['status',1],['type','area_1']])->orderBy('order')->get();
+        $data['area_1_select']=$area_1_select;
+        $category_select=SystemConstant::select('id','name','value','type')->where([['status',1],['type','category']])->orderBy('order')->get();
+        $datacat['category_select']=$category_select;
         $specialties = ClientsSpecialty::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+
+
 
         $client->load('specialty');
 
-        return view('advan.admin.clients.edit', compact('specialties', 'client'));
+        return view('advan.admin.clients.edit', compact('specialties', 'client','data','datacat'));
     }
 
     public function update(UpdateClientRequest $request, Client $client)

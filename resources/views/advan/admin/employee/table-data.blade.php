@@ -58,9 +58,9 @@
                         {{-- @endcan --}}
                         {{-- @can('users-update') --}}
                         <td>
-                            <button class="btn btn-sm btn-icon  btn-shadow btn-primary edit-employee" data-employee-id="{{$employee->id}}">
+                            <a class="btn btn-sm btn-icon  btn-shadow btn-primary edit-employee" data-employee-id="{{$employee->id}}">
                                 <i class="fa fa-pencil-square-o text-white font-weight-bold"></i>
-                                </button>
+                            </a>
                         </td>
                         {{-- @endcan --}}
                         {{-- @can('users-password') --}}

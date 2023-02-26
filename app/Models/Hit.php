@@ -47,6 +47,7 @@ class Hit extends Model
         'sms_id',
         'sms_message',
         'type',
+        'category',
         'status',
         'created_at',
         'updated_at',
@@ -93,9 +94,9 @@ class Hit extends Model
         return $this->hasMany(HitsSamples::class , 'hit_id' , 'id');
     }
 
-    public function doctors()
+    public function names()
     {
-        return $this->belongsToMany(Clinic::class);
+        return $this->belongsToMany(Client::class);
     }
 
 //    protected function serializeDate(DateTimeInterface $date)

@@ -86,9 +86,9 @@
             </div>
             <div class="form-group row">
                 <div class="col-md-6 col-lg-6 col-sm-12">
-                    <label>النوع</label>
+                    <label>عميل</label>
                     <select class="form-control" id="category" name="category">
-                        <option value="" disabled selected>التصنيف </option>
+                        <option value="" disabled selected>عميل </option>
                         @foreach($data['category_select'] as $category)
                             <option value="{{$category->value}}">  {{$category->name }}	</option>
 

@@ -72,6 +72,14 @@ class Client extends Model implements HasMedia
     {
         return $this->hasMany(Hit::class, 'client_id', 'id');
     }
+    // public function sampleHits()
+    // {
+    //     return $this->hasMany(Hit::class, 'number_samples');
+    // }
+    // public function clientSamples()
+    // {
+    //     return $this->hasMany(Hit::class, 'sample_id', 'id');
+    // }
     // public function hits()
     // {
     //     return $this->hasMany(Hit::class);

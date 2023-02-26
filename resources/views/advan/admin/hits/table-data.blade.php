@@ -1,16 +1,17 @@
   <!--begin::Table-->
 <div class="table-responsive">
-    <table class="table table-bordered" id="suppliers-table">
+    <table class="table table-bordered" id="sample-stocks-table">
         <thead>
             <tr class="text-center">
                 <th>#</th>
                 <th>اسم العميل</th>
                 <th> النوع</th>
-                <th> التخصص</th>
-                <th> التصنيف</th>
                 <th> المنطقة</th>
-                <th> الزيارات</th>
-                <th> العينات</th>
+                <th>  المندوب</th>
+                <th>  تاريخ الزيارة</th>
+                <th> الوقت </th>
+
+                <th> الملاحظات</th>
 
 
                 {{-- @can('suppliers-status') --}}
@@ -28,34 +29,59 @@
             </tr>
         </thead>
         <tbody class="text-center font-size-sm">
-            @forelse($data['clients'] as $client)
+            @forelse($hits as $hit)
                 <tr class="data-row">
                     <td class="iteration">{{$loop->iteration}}</td>
-                    <td class="name">{{$client->name}}</td>
-                    <td class="name">{{$client->category_name}}</td>
-                    <td class="name">{{$client->specialty->name}}</td>
-                    <td class="name">{{$client->item}}</td>
-                    <td class="name">{{$client->area_1_name}}</td>
-                    <td class="name">{{$client->clientHits()->count()}}</td>
-                    <td class="name">{{$client->clientHits()->get()->sum('number_samples')}}</td>
+                    <td class="name">
+                        {{$hit->client->name}}
+                    </td>
+                    <td class="category">
 
-                    {{-- <td class="name">{{$client->clinetHits->id}}</td> --}}
+                        {{$hit->category_name}}
+
+                    </td>
+                    <td class="unit">
+
+                   {{-- @foreach ($items as $item) --}}
+
+
+                        {{-- @if ($item->id == $item->id) --}}
+
+                           {{$hit->client->address_1 ??''}}
+
+                        {{-- @endif --}}
+                     {{-- @endforeach --}}
+                    </td>
+
+                    <td class="name">{{$hit->user->name ??''}}</td>
+                    <td class="name">{{$hit->date_time}}</td>
+                    <td class="name">{{$hit->date_time}}</td>
+
+
+
+
+                    {{-- <td class="name">{{$hit->sample->sample->name}}</td> --}}
+
+
+                    <td class="name">{{$hit->note}}</td>
+
+                    {{-- <td class="name">{{$hit_stock->clinetHits->id}}</td> --}}
 
                     {{-- @can('suppliers-status') --}}
-                        @if($client->status==1)
+                        @if($hit->status==1)
                         <td class="status">
                             <button class="btn btn-sm  btn-shadow btn-success change-status"
-                            {{-- data-client-id="{{$client->id}}" --}}
+                            {{-- data-hit-id="{{$hit->id}}" --}}
                                  {{-- @cannot('suppliers-status') disabled @endcannot --}}
                                  >
                                 مفعل
                             </button>
                         </td>
-                        @elseif($client->status==0)
+                        @elseif($hit->status==0)
                         <td class="status">
 
                             <button class="btn btn-sm  btn-shadow btn-danger change-status"
-                            {{-- data-client-id="{{$client->id}}" --}}
+                            {{-- data-hit-id="{{$hit->id}}" --}}
                                 {{-- @cannot('suppliers-status') disabled @endcannot --}}
 
                                 >
@@ -66,9 +92,9 @@
                     {{-- @endcan --}}
                     <td>
                         {{-- <button class="" --}}
-                        {{-- data-client-id="{{$client->id}}" --}}
+                        {{-- data-hit-id="{{$hit->id}}" --}}
                         {{-- > --}}
-                            <a class="btn btn-sm btn-icon  btn-shadow btn-primary edit-supplier" href="/admin/clients/{{$client->id}}">
+                            <a class="btn btn-sm btn-icon  btn-shadow btn-primary edit-supplier" href="/admin/hits/{{$hit->id}}">
                              <i class="fa fa-pencil-square-o text-white font-weight-bold">
                             </i>
 
@@ -79,9 +105,9 @@
                     {{-- @can('suppliers-update') --}}
                     <td>
                         {{-- <button class="btn btn-sm btn-icon  btn-shadow btn-primary edit-supplier" --}}
-                        {{-- data-client-id="{{$client->id}}" --}}
+                        {{-- data-hit-id="{{$hit->id}}" --}}
                         {{-- > --}}
-                            <a class="btn btn-sm btn-icon  btn-shadow btn-primary edit-supplier" href="/admin/clients/{{$client->id}}/edit">
+                            <a class="btn btn-sm btn-icon  btn-shadow btn-primary edit-supplier" href="/admin/hits/{{$hit->id}}/edit">
                              <i class="fa fa-pencil-square-o text-white font-weight-bold">
                             </i>
 
@@ -93,9 +119,9 @@
                     {{-- @can('suppliers-delete') --}}
                     <td>
                         {{-- <button class="btn btn-sm btn-icon  btn-shadow btn-danger delete-supplier" --}}
-                         {{-- data-client-id="{{$client->id}}" --}}
+                         {{-- data-hit-id="{{$hit->id}}" --}}
                          {{-- > --}}
-                            <a class="btn btn-sm btn-icon  btn-shadow btn-danger delete-supplier" href="{{route('admin.clients.destroy', $client->id)}}">
+                            <a class="btn btn-sm btn-icon  btn-shadow btn-danger delete-supplier" href="{{route('admin.hits.destroy', $hit->id)}}">
 
                             <i class="fa fa-trash text-white font-weight-bold"></i>
                             {{-- </a> --}}
@@ -113,6 +139,6 @@
     </table>
 </div>
 <div class="paging">
-{!! $data['clients']->links() !!}
+{!! $hits->links() !!}
 </div>
 <!--End::Table-->

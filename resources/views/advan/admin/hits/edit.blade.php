@@ -11,18 +11,18 @@
             @method('PUT')
             @csrf
             <div class="form-group">
-                <label class="required" for="clinic_id">{{ trans('cruds.hit.fields.clinic') }}</label>
-                <select class="form-control select2 {{ $errors->has('clinic') ? 'is-invalid' : '' }}" name="clinic_id" id="clinic_id" required>
-                    @foreach($clinics as $id => $entry)
-                        <option value="{{ $id }}" {{ (old('clinic_id') ? old('clinic_id') : $hit->clinic->id ?? '') == $id ? 'selected' : '' }}>{{ $entry }}</option>
+                <label class="required" for="client_id">{{ trans('cruds.hit.fields.client') }}</label>
+                <select class="form-control select {{ $errors->has('client') ? 'is-invalid' : '' }}" name="client_id" id="client_id" required>
+                    @foreach($clients as $id => $entry)
+                        <option value="{{ $id }}" {{ (old('client_id') ? old('client_id') : $hit->client->id ?? '') == $id ? 'selected' : '' }}>{{ $entry }}</option>
                     @endforeach
                 </select>
-                @if($errors->has('clinic'))
+                @if($errors->has('client'))
                     <div class="invalid-feedback">
-                        {{ $errors->first('clinic') }}
+                        {{ $errors->first('client') }}
                     </div>
                 @endif
-                <span class="help-block">{{ trans('cruds.hit.fields.clinic_helper') }}</span>
+                <span class="help-block">{{ trans('cruds.hit.fields.client_helper') }}</span>
             </div>
             <div class="form-group">
                 <label for="date_time">{{ trans('cruds.hit.fields.date_time') }}</label>
@@ -36,7 +36,7 @@
             </div>
             <div class="form-group">
                 <label class="required" for="visit_type_id">{{ trans('cruds.hit.fields.visit_type') }}</label>
-                <select class="form-control select2 {{ $errors->has('visit_type') ? 'is-invalid' : '' }}" name="visit_type_id" id="visit_type_id" required>
+                <select class="form-control select {{ $errors->has('visit_type') ? 'is-invalid' : '' }}" name="visit_type_id" id="visit_type_id" required>
                     @foreach($visit_types as $id => $entry)
                         <option value="{{ $id }}" {{ (old('visit_type_id') ? old('visit_type_id') : $hit->visit_type->id ?? '') == $id ? 'selected' : '' }}>{{ $entry }}</option>
                     @endforeach
@@ -112,6 +112,20 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.hit.fields.user_helper') }}</span>
             </div>
+            <div class="form-group row">
+                <div class="col-md-6 col-lg-6 col-sm-12">
+                    <label>النوع</label>
+                    <select class="form-control" id="category" name="category">
+                        <option value="" disabled selected>التصنيف </option>
+                        @foreach($data['category_select'] as $category)
+                            <option value="{{$category->value}}"{{ (old('category_id')? old('category_id') : $hit->category ?? '') == $category->value ? 'selected' : '' }}>{{$category->name}}		</option>
+
+                        @endforeach
+
+
+                    </select>
+                    <label class="form-text text-muted text-danger" id="unit-error"></label>
+                </div>
             <div class="form-group">
                 <label for="note">{{ trans('cruds.hit.fields.note') }}</label>
                 <textarea class="form-control {{ $errors->has('note') ? 'is-invalid' : '' }}" name="note" id="note">{{ old('note', $hit->note) }}</textarea>
@@ -179,7 +193,7 @@
 {{--                @endif--}}
 {{--                <span class="help-block">{{ trans('cruds.hit.fields.category_helper') }}</span>--}}
 {{--            </div>--}}
-            <div class="form-group">
+            {{-- <div class="form-group">
                 <label for="doctors">{{ trans('cruds.hit.fields.doctors') }}</label>
                 <div style="padding-bottom: 4px">
                     <span class="btn btn-info btn-xs select-all" style="border-radius: 0">{{ trans('global.select_all') }}</span>
@@ -196,7 +210,7 @@
                     </div>
                 @endif
                 <span class="help-block">{{ trans('cruds.hit.fields.doctors_helper') }}</span>
-            </div>
+            </div> --}}
             <div class="form-group">
                 <label>{{ trans('cruds.hit.fields.status') }}</label>
                 <select class="form-control {{ $errors->has('status') ? 'is-invalid' : '' }}" name="status" id="status">

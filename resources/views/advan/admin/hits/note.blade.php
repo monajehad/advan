@@ -66,7 +66,7 @@
                         {{ trans('cruds.hit.fields.id') }}
                     </th>
                     <th>
-                        {{ trans('cruds.hit.fields.clinic') }}
+                        {{ trans('cruds.hit.fields.client') }}
                     </th>
                     <th>
                         {{ trans('cruds.hit.fields.user') }}
@@ -130,7 +130,7 @@
                 columns: [
                     { data: 'placeholder', name: 'placeholder' },
                     { data: 'id', name: 'id' },
-                    { data: 'clinic_name', name: 'clinic.name' },
+                    { data: 'client_name', name: 'client.name' },
                     { data: 'user_name', name: 'user.name' },
                     { data: 'date', name: 'date' },
                     { data: 'note', name: 'note' },

@@ -88,32 +88,32 @@
             $('#add-constant').modal('show');
             $('#hidden').val(0)
         })
-        $('#constant-form').validate({
-            rules:{
-                name:{
-                    required: true,
-                },
+        // $('#constant-form').validate({
+        //     rules:{
+        //         name:{
+        //             required: true,
+        //         },
 
-                type:{
-                    required:true
-                },
+        //         type:{
+        //             required:true
+        //         },
 
-            },
-            messages: {
-                name:{
-                    required: "يجب إدخال الاسم",
-                },
-                type:{
-                    required:"يجب اختيار نوع الثابت"
-                },
+        //     },
+        //     messages: {
+        //         name:{
+        //             required: "يجب إدخال الاسم",
+        //         },
+        //         type:{
+        //             required:"يجب اختيار نوع الثابت"
+        //         },
 
-            },
+        //     },
 
-        })
+        // })
         $(document).on('click','.edit-constant',function(){
             var id = $(this).data('constant-id');
             $('#hidden').val(id)
-            $('.modal-title').text('تعديل الثابت')
+            $('#add-constant .modal-title').text('تعديل الثابت')
             $.ajax({
                 url: '{{url("admin/system/constants/data/")}}/'+id,
                 type: "get",

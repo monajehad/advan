@@ -21,7 +21,7 @@ class HitsApiController extends Controller
 {
     public function index(Request $request)
     {
-        $hit = Hit::with(['clinic', 'visit_type', 'user', 'sms', 'categories', 'doctors'])
+        $hit = Hit::with(['client', 'visit_type', 'user', 'sms', 'categories', 'doctors'])
             ;
             // ->where('user_id', Auth::id())
         if ($request->date) {
@@ -42,7 +42,7 @@ class HitsApiController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'clinic_id' => 'required|exists:clinics,id',
+            'client_id' => 'required|exists:clinics,id',
             'date_time' => '',
             'visit_type_id' => 'nullable|exists:hits_types,id',
             'duration_visit' => '',
@@ -151,7 +151,7 @@ class HitsApiController extends Controller
 
     public function show(Hit $hit)
     {
-        $data = new HitResource($hit->load(['clinic', 'visit_type', 'user', 'sms', 'categories', 'doctors']));
+        $data = new HitResource($hit->load(['client', 'visit_type', 'user', 'sms', 'categories']));
         return apiResponse($data);
     }
 

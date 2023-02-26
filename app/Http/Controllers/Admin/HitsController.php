@@ -13,6 +13,7 @@ use App\Models\Hit;
 use App\Models\HitsSamples;
 use App\Models\HitsType;
 use App\Models\KindsOfOccasion;
+use App\Models\SystemConstant;
 use App\Models\User;
 use Carbon\Carbon;
 use Gate;
@@ -22,184 +23,101 @@ use Yajra\DataTables\Facades\DataTables;
 
 class HitsController extends Controller
 {
+
+    const PAGINATION_NO=20;
+
     public function index(Request $request)
     {
 
-        // abort_if(Gate::denies('hit_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        $hits=Hit::leftJoin('system_constants as category_constants', function($join) {
+            $join->on('category_constants.value', '=', 'hits.category')->where('category_constants.type','category')->whereNull('category_constants.deleted_at');
+        })
+        ->select('category_constants.name as category_name','hits.id','hits.date_time','hits.note','hits.category','hits.client_id','hits.user_id','hits.status')
+        ->with(['client','user','samples']);
 
+
+        // $sample1 = HitsSamples::where('hit_id', $hit->id)->get();
+
+        // $client_cat=Client::
+        //             leftJoin('system_constants as category_constants', function($join) {
+        //                $join->on('category_constants.value', '=', 'clients.category')->where('category_constants.type','category')->whereNull('category_constants.deleted_at');
+        //                 });
+
+        // if($request->search){
+        //     $competitors=$hits->where('id','like','%'.$request->search.'%');
+        // }
+        $hits=$hits->orderBy('id','desc')->paginate(self::PAGINATION_NO);
         if ($request->ajax()) {
-            $query = Hit::with(['clinic', 'visit_type', 'user', 'sms', 'categories'])->select(sprintf('%s.*', (new Hit())->table));
-            if ($request->from_date && $request->to_date)
-            {
-                $hits  = $query->whereBetween('date_time' , [$request->from_date , $request->to_date]);
-            }
+            $table_data=view('advan.admin.hits.table-data',compact('hits'))->render();
+            return response()->json(['hits'=>$table_data]);
 
-            $table = Datatables::of($query);
-
-            $table->addColumn('placeholder', '&nbsp;');
-            $table->addColumn('actions', '&nbsp;');
-
-            $table->editColumn('actions', function ($row) {
-                $viewGate = 'hit_show';
-                $editGate = 'hit_edit';
-                $deleteGate = 'hit_delete';
-                $crudRoutePart = 'hits';
-
-                return view('partials.datatablesActions', compact(
-                'viewGate',
-                'editGate',
-                'deleteGate',
-                'crudRoutePart',
-                'row'
-            ));
-            });
-
-            $table->editColumn('id', function ($row) {
-                return $row->id ? $row->id : '';
-            });
-            $table->addColumn('clinic_name', function ($row) {
-                return $row->clinic ? $row->clinic->name : '';
-            });
-
-            $table->editColumn('duration_visit', function ($row) {
-                return $row->duration_visit ? $row->duration_visit : '';
-            });
-            $table->addColumn('user_name', function ($row) {
-                return $row->user ? $row->user->name : '';
-            });
-
-            $table->editColumn('type', function ($row) {
-                return $row->type ? Hit::TYPE_SELECT[$row->type] : '';
-            });
-            $table->editColumn('status', function ($row) {
-                return $row->status ? Hit::STATUS_SELECT[$row->status] : '';
-            });
-
-            $table->editColumn('date_time', function ($row) {
-                $d = explode(' ', $row->date_time);
-                if (count($d) > 1) {
-                    return Carbon::parse($row->date_time)->isoFormat('Y-M-D - h:mm A');
-                }else{
-                    return Carbon::parse($row->date_time)->isoFormat('Y-M-D');
-                }
-            });
-
-            $table->rawColumns(['actions', 'placeholder', 'clinic', 'user']);
-
-            return $table->make(true);
         }
-
-        $clinics            = Client::get();
-        $hits_types         = HitsType::get();
+        $clients            = Client::get();
         $users              = User::get();
-        $kinds_of_occasions = KindsOfOccasion::get();
-        $categories         = Category::get();
+        return view('advan.admin.hits.index',compact('hits','clients','users'));
 
-        return view('advan.admin.hits.index', compact('clinics', 'hits_types', 'users', 'kinds_of_occasions', 'categories'));
-    }
+                // $d = explode(' ', $row->date_time);
+                // if (count($d) > 1) {
+                //     return Carbon::parse($row->date_time)->isoFormat('Y-M-D - h:mm A');
+                // }else{
+                //     return Carbon::parse($row->date_time)->isoFormat('Y-M-D');
+                // }
+
+
+           }
 
     public function note(Request $request)
     {
         // abort_if(Gate::denies('hit_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        if ($request->ajax()) {
-            $query = Hit::with(['clinic', 'visit_type', 'user', 'sms', 'categories', 'doctors'])->where('note' , '!=' , null);
-
-            if ($request->y&& $request->m) {
-                $from = Carbon::parse(sprintf(
-                    '%s-%s-01',
-                    request()->query('y', Carbon::now()->year),
-                    request()->query('m', Carbon::now()->month),
-                ));
-                $to      = clone $from;
-
-
-                if ($request->d == 0)
-                {
-                    $to->day = $to->daysInMonth;
-                    $query = $query->whereBetween('date_time', [$from, $to]);
-                }else{
-
-//                    dd($to->addDay($request->d - 1)->format('Y-m-d'));
-                    $query = $query->where('date_time', 'LIKE' , '%'.$to->addDay($request->d - 1)->format('Y-m-d').'%');
-
-                }
+//         if ($request->ajax()) {
+//             $hits = Hit::with(['client',  'user', 'date_time'])->where('note' , '!=' , null);
+//             $hits=$hits->orderBy('id','desc')->paginate(self::PAGINATION_NO);
+//         }
+// //             if ($request->y&& $request->m) {
+//                 $from = Carbon::parse(sprintf(
+//                     '%s-%s-01',
+//                     request()->query('y', Carbon::now()->year),
+//                     request()->query('m', Carbon::now()->month),
+//                 ));
+//                 $to      = clone $from;
 
 
-            }
+//                 if ($request->d == 0)
+//                 {
+//                     $to->day = $to->daysInMonth;
+//                     $query = $query->whereBetween('date_time', [$from, $to]);
+//                 }else{
+
+// //                    dd($to->addDay($request->d - 1)->format('Y-m-d'));
+//                     $query = $query->where('date_time', 'LIKE' , '%'.$to->addDay($request->d - 1)->format('Y-m-d').'%');
+
+//                 }
+
+
+//             }
 
 //            if ($request->start && $request->end) {
 //                $from = Carbon::parse($request->start);
 //                $to      = Carbon::parse($request->end);
 //                $query = $query->whereBetween('date_time', [$from, $to]);
 //            }
-            $query = $query->select(sprintf('%s.*', (new Hit())->table));
+            // $query = $query->select(sprintf('%s.*', (new Hit())->table));
 
 
 
-            $table = Datatables::of($query);
+                // $d = explode(' ', $row->date_time);
+                // if (count($d) > 1) {
+                //     return Carbon::parse($row->date_time)->isoFormat('Y-M-D - h:mm A');
+                // }else{
+                //     return Carbon::parse($row->date_time)->isoFormat('Y-M-D');
+                // }
 
-            $table->addColumn('placeholder', '&nbsp;');
-            $table->addColumn('actions', '&nbsp;');
 
-            $table->editColumn('actions', function ($row) {
-                $viewGate = 'hit_show';
-                $editGate = 'hit_edit';
-                $deleteGate = 'hit_delete';
-                $crudRoutePart = 'hits';
-
-                return view('partials.datatablesActions', compact(
-                'viewGate',
-                'editGate',
-                'deleteGate',
-                'crudRoutePart',
-                'row'
-            ));
-            });
-
-            $table->editColumn('id', function ($row) {
-                return $row->id ? $row->id : '';
-            });
-            $table->addColumn('clinic_name', function ($row) {
-                return $row->clinic ? $row->clinic->name : '';
-            });
-
-            $table->editColumn('duration_visit', function ($row) {
-                return $row->duration_visit ? $row->duration_visit : '';
-            });
-            $table->addColumn('user_name', function ($row) {
-                return $row->user ? $row->user->name : '';
-            });
-
-            $table->editColumn('type', function ($row) {
-                return $row->type ? Hit::TYPE_SELECT[$row->type] : '';
-            });
-            $table->editColumn('status', function ($row) {
-                return $row->status ? Hit::STATUS_SELECT[$row->status] : '';
-            });
-
-            $table->addColumn('date', function ($row) {
-                $d = explode(' ', $row->date_time);
-                if (count($d) > 1) {
-                    return Carbon::parse($row->date_time)->isoFormat('Y-M-D - h:mm A');
-                }else{
-                    return Carbon::parse($row->date_time)->isoFormat('Y-M-D');
-                }
-            });
-
-            $table->rawColumns(['actions', 'placeholder', 'clinic', 'user']);
-
-            return $table->make(true);
+                $clients            = Client::get();
+                $users              = User::get();
+                return view('advan.admin.hits.note',compact('clients','users'));
         }
-
-        $clinics            = Client::get();
-        $hits_types         = HitsType::get();
-        $users              = User::get();
-        $kinds_of_occasions = KindsOfOccasion::get();
-        $categories         = Category::get();
-
-        return view('advan.admin.hits.note', compact('clinics', 'hits_types', 'users', 'kinds_of_occasions', 'categories'));
-    }
 
     public function map(Request $request)
     {
@@ -225,7 +143,7 @@ class HitsController extends Controller
             $user = $user->where('user_id' , $request->user);
         }
 
-        $hits = $hits->get()->unique('clinic_id');
+        $hits = $hits->get()->unique('client_id');
         $user = $user->get()->unique('user_id');
 
 
@@ -235,7 +153,9 @@ class HitsController extends Controller
     public function create()
     {
         // abort_if(Gate::denies('hit_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
+        $data=[];
+        $category_select=SystemConstant::select('id','name','value','type')->where([['type','category']])->orderBy('order')->get();
+        $data['category_select']=$category_select;
         $clients = Client::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $visit_types = HitsType::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
@@ -248,14 +168,14 @@ class HitsController extends Controller
 
         // $doctors = Client::pluck('doctor_name', 'id');
 
-        return view('advan.admin.hits.create', compact('clients', 'visit_types', 'users', 'sms', 'categories'));
+        return view('advan.admin.hits.create', compact('clients', 'visit_types', 'users', 'sms', 'categories','data'));
     }
 
     public function store(StoreHitRequest $request)
     {
         $hit = Hit::create($request->all());
         $hit->categories()->sync($request->input('categories', []));
-        $hit->doctors()->sync($request->input('doctors', []));
+        $hit->names()->sync($request->input('names', []));
 
         return redirect()->route('admin.hits.index');
     }
@@ -263,8 +183,11 @@ class HitsController extends Controller
     public function edit(Hit $hit)
     {
         // abort_if(Gate::denies('hit_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        $data=[];
+        $category_select=SystemConstant::select('id','name','value','type')->where([['type','category']])->orderBy('order')->get();
+        $data['category_select']=$category_select;
 
-        $clinics = Client::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $clients = Client::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $visit_types = HitsType::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
@@ -272,13 +195,10 @@ class HitsController extends Controller
 
         $sms = KindsOfOccasion::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $categories = Category::pluck('name', 'id');
 
-        $doctors = Client::pluck('doctor_name', 'id');
+        $hit->load('client', 'visit_type', 'user', 'sms');
 
-        $hit->load('clinic', 'visit_type', 'user', 'sms', 'categories', 'doctors');
-
-        return view('advan.admin.hits.edit', compact('clinics', 'visit_types', 'users', 'sms', 'categories', 'doctors', 'hit'));
+        return view('advan.admin.hits.edit', compact('clients', 'visit_types', 'users', 'sms', 'data', 'hit'));
     }
 
     public function update(UpdateHitRequest $request, Hit $hit)
@@ -294,7 +214,13 @@ class HitsController extends Controller
     {
         // abort_if(Gate::denies('hit_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $hit->load('clinic', 'visit_type', 'user', 'sms', 'categories', 'doctors');
+        $hit->leftJoin('system_constants as category_constants', function($join) {
+            $join->on('category_constants.value', '=', 'hits.category')->where('category_constants.type','category')->whereNull('category_constants.deleted_at');
+        })
+        ->select('category_constants.name as category_name','hits.id','hits.date_time','hits.note','hits.category','hits.client_id','hits.user_id','hits.status')
+        ->with(['client','user','samples','visit_type','user']);
+
+        // $hit->load('client', 'visit_type', 'user', 'sms');
 
         $sample = HitsSamples::where('hit_id', $hit->id)->get();
         return view('advan.admin.hits.show', compact('hit' , 'sample'));

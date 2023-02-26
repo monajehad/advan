@@ -144,7 +144,7 @@ function load_data_table(page='') {
     $(document).on('click','.edit-employee',function(){
         var id = $(this).data('employee-id');
         $('#hidden').val(id)
-        $('.modal-title').text('تعديل المستخدم')
+        $('#add-user .modal-title').text('تعديل المستخدم')
         $('.password-div').hide()
         $.ajax({
             url: '{{url("admin/employee/data/")}}/'+id,
@@ -229,7 +229,9 @@ function load_data_table(page='') {
         })
 
     })
-    $(document).on('click','.change-status',function(){
+    // $(document).on('click','.change-status',function(){
+function postChangePasswordForm() {
+
         var id = $(this).data('employee-id');
         $.ajaxSetup({
             headers: {
@@ -257,7 +259,7 @@ function load_data_table(page='') {
             },
 
         });
-    })
+    }
 
     //  $('#user-form').validate({
     //         rules:{
@@ -302,31 +304,31 @@ function load_data_table(page='') {
     //             postForm();
     //         }
     // })
-    // $('#change-password-form').validate({
-    //         rules:{
-    //             new_password:{
-    //                 required: true,
-    //             },
-    //             confirm_new_password:{
-    //                 required: true,
-    //                 equalTo:"#new_password"
-    //             },
+    $('#change-password-form').validate({
+            rules:{
+                new_password:{
+                    required: true,
+                },
+                confirm_new_password:{
+                    required: true,
+                    equalTo:"#new_password"
+                },
 
-    //         },
-    //         messages: {
-    //             new_password:{
-    //                 required: "يجب إدخال كلمة السر الجديدة",
-    //             },
-    //             confirm_new_password:{
-    //                 required: "يجب إدخال تأكيد كلمة السر الجديدة",
-    //                 equalTo:"كلمة السر و تأكيدها غير متطابقتان"
+            },
+            messages: {
+                new_password:{
+                    required: "يجب إدخال كلمة السر الجديدة",
+                },
+                confirm_new_password:{
+                    required: "يجب إدخال تأكيد كلمة السر الجديدة",
+                    equalTo:"كلمة السر و تأكيدها غير متطابقتان"
 
-    //             },
-    //         },
-    //         submitHandler:function(event){
-    //             postChangePasswordForm();
-    //         }
-    // })
+                },
+            },
+            submitHandler:function(event){
+                postChangePasswordForm();
+            }
+    })
 
 
 })

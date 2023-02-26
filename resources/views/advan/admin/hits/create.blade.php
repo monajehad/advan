@@ -160,6 +160,20 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.hit.fields.type_helper') }}</span>
             </div>
+            <div class="form-group row">
+                <div class="col-md-6 col-lg-6 col-sm-12">
+                    <label>النوع</label>
+                    <select class="form-control" id="category" name="category">
+                        <option value="" disabled selected>النوع </option>
+                        @foreach($data['category_select'] as $category)
+                            <option value="{{$category->value}}">  {{$category->name }}	</option>
+
+                        @endforeach
+
+
+                    </select>
+                    <label class="form-text text-muted text-danger" id="unit-error"></label>
+                </div>
             <div class="form-group">
                 <label for="categories">{{ trans('cruds.hit.fields.category') }}</label>
                 <div style="padding-bottom: 4px">

@@ -26,82 +26,23 @@
 
     </div>
 
-    <div class="card-body">
-        <table class=" table table-bordered table-striped table-hover ajaxTable datatable datatable-Hit">
-            <thead>
-                <tr>
-                    <th width="10">
-
-                    </th>
-                    <th>
-                        {{ trans('cruds.hit.fields.id') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.hit.fields.clinic') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.hit.fields.date_time') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.hit.fields.user') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.hit.fields.type') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.hit.fields.status') }}
-                    </th>
-                    <th>
-                        &nbsp;
-                    </th>
-                </tr>
-                <tr>
-                    <td>
-                    </td>
-                    <td>
-{{--                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">--}}
-                    </td>
-                    <td>
-{{--                        <select class="search">--}}
-{{--                            <option value>{{ trans('global.all') }}</option>--}}
-{{--                            @foreach($clinics as $key => $item)--}}
-{{--                                <option value="{{ $item->name }}">{{ $item->name }}</option>--}}
-{{--                            @endforeach--}}
-{{--                        </select>--}}
-                    </td>
-                    <td>
-{{--                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">--}}
-                    </td>
-                    <td>
-                        <select class="search">
-                            <option value>{{ trans('global.all') }}</option>
-                            @foreach($users as $key => $item)
-                                <option value="{{ $item->name }}">{{ $item->name }}</option>
-                            @endforeach
-                        </select>
-                    </td>
-                    <td>
-                        <select class="search">
-                            <option value>{{ trans('global.all') }}</option>
-                            @foreach(App\Models\Hit::TYPE_SELECT as $key => $item)
-                                <option value="{{ $key }}">{{ $item }}</option>
-                            @endforeach
-                        </select>
-                    </td>
-                    <td>
-                        <select class="search" >
-                            <option value>{{ trans('global.all') }}</option>
-                            @foreach(App\Models\Hit::STATUS_SELECT as $key => $item)
-                                <option value="{{ $key }}">{{ $item }}</option>
-                            @endforeach
-                        </select>
-                    </td>
-                    <td>
-                    </td>
-                </tr>
-            </thead>
-        </table>
+     <!--begin::Body-->
+     <div class="row mt-4">
+        <div class="col-md-4 col-lg-4 ml-8">
+            <form class="form">
+                <div class="form-group">
+                    <input type="text" class="form-control form-control-sm" id="search_input" name="search_input"  placeholder="الاسم"/>
+                </div>
+            </form>
+        </div>
     </div>
+    <div class="card-body py-0">
+        <!--begin::Table-->
+        <div class="sample-stocks-table-body">  @includeIf('advan.admin.hits.table-data')</div>
+
+       <!--End::Table-->
+    </div>
+    <!--end::Body-->
 </div>
 
 

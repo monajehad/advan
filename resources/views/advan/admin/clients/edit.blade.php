@@ -101,10 +101,9 @@
                     <div class="col-md-6 col-lg-6 col-sm-12">
                         <label>النوع</label>
                         <select class="form-control" id="category" name="category">
-                        <?php    $categories=array('طبيب','صيدلية','مستشفى','مركز/جمعية')?>
                             <option value="" disabled selected>التصنيف </option>
-                            @foreach($categories as $type)
-                                <option value="{{$type}}"{{ ($client->category ??'') == $type ? 'selected':'' }}>  {{$type }}	</option>
+                            @foreach($datacat['category_select'] as $category)
+                                <option value="{{$category->value}}"{{ (old('category_id')? old('category_id') : $client->category ?? '') == $category->value ? 'selected' : '' }}>{{$category->name}}		</option>
 
                             @endforeach
 
@@ -127,14 +126,14 @@
                             </select>
                             <label class="form-text text-muted text-danger" id="unit-error"></label>
                         </div>
+
                         <div class="form-group row">
                             <div class="col-md-6 col-lg-6 col-sm-12">
                                 <label>المنطقة</label>
                                 <select class="form-control" id="area_1" name="area_1">
-                                    <?php    $areas_1=array('الشمال','غزة','الوسطى','الجنوب')?>
                                     <option value="" disabled selected>التصنيف </option>
-                                    @foreach($areas_1 as $area_1)
-                                        <option value="{{$area_1}}" {{ ($client->area_1 ??'') == $area_1 ? 'selected':'' }}>  {{$area_1 }}	</option>
+                                    @foreach($data['area_1_select'] as $area_1)
+                                        <option value="{{$area_1->value}}" {{ (old('area_1_id')? old('area_1_id') : $client->area_1 ?? '') == $area_1->value ? 'selected' : '' }}>{{$area_1->name}}	</option>
 
                                     @endforeach
 

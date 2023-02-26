@@ -72,6 +72,22 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.sample.fields.category_helper') }}</span>
             </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-md-6 col-lg-6 col-sm-12">
+                <label>نوع العينة</label>
+                <select class="form-control" id="type" name="type">
+                    <?php    $types=array('تسويق','توزيع')?>
+                    <option value="" disabled selected>نوع العينة </option>
+                    @foreach($types as $type)
+                        <option value="{{$type}}">  {{$type }}	</option>
+
+                    @endforeach
+
+
+                </select>
+                <label class="form-text text-muted text-danger" id="unit-error"></label>
+            </div>
 
             {{-- <div class="form-group">
                 <label for="end_date">{{ trans('cruds.sample.fields.end_date') }}</label>

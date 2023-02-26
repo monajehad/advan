@@ -72,7 +72,7 @@
             </div>
             <div class="form-group">
                 <label class="required" for="category_id">العائلة</label>
-                <select class="form-control select2 {{ $errors->has('category') ? 'is-invalid' : '' }}" name="category_id" id="category_id" required>
+                <select class="form-control select {{ $errors->has('category') ? 'is-invalid' : '' }}" name="category_id" id="category_id" required>
                     @foreach($categories as $id => $entry)
                         <option value="{{ $id }}" {{ (old('category_id') ? old('category_id') : $sample->category->id ?? '') == $id ? 'selected' : '' }}>{{ $entry }}</option>
                     @endforeach
@@ -84,14 +84,19 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.sampleStock.fields.category_helper') }}</span>
             </div>
+
             <div class="form-group row">
                 <div class="col-md-6 col-lg-6 col-sm-12">
-                    <label>الوحدة</label>
-                    <select class="form-control" id="unit" name="unit">
-                        <option value="" disabled selected>اختر الوحدة</option>
-                        @foreach($data['unit_select'] as $unit)
-                            <option value="{{$unit->value}}"{{ (old('unit_id')? old('unit_id') : $sample->unit ?? '') == $unit->value ? 'selected' : '' }}>{{$unit->name}}</option>
+                    <label>نوع العينة</label>
+                    <select class="form-control" id="type" name="type">
+                        <?php    $types=array('تسويق','توزيع')?>
+                        <option value="" disabled selected>نوع العينة </option>
+                        @foreach($types as $type)
+                            <option value="{{$type}}" {{ ($sample->type ??'') == $type ? 'selected':'' }}>  {{$type }}	</option>
+
                         @endforeach
+
+
                     </select>
                     <label class="form-text text-muted text-danger" id="unit-error"></label>
                 </div>
