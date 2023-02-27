@@ -189,7 +189,7 @@ class TenderController extends Controller
             $search = $request->q;
             $clients =Client::select("id", "name")->with('specialty')
                 ->where('status',1)
-                ->where('ar_name', 'LIKE', "%$search%")
+                ->where('name', 'LIKE', "%$search%")
                 ->get();
         }
         return response()->json($clients);

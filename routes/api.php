@@ -80,7 +80,8 @@ Route::apiResource('hits-types', HitsTypeApiController::class);
   Route::apiResource('reports', ReportApiController::class);
   Route::post('reports/{id}/update',[ReportApiController::class,'update'] );
 
-
+ // Sms Message
+ Route::apiResource('sms-messages', SmsMessageApiController::class);
 
 Route::group(['prefix' => 'api', 'as' => 'api.'], function () {
 
