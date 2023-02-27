@@ -19,7 +19,7 @@ class HitResource extends JsonResource
         }
         return [
             'id' => $this->id,
-            'clinic' => new ClinicResource($this->clinic),
+            'clinic' => new ClientResource($this->clinic),
             'date_time' => $this->date_time,
             'date' => $date,
             'time' => $time,
@@ -31,7 +31,7 @@ class HitResource extends JsonResource
             'status' => Hit::STATUS_SELECT[$this->status],
             'status_id' => $this->status,
             'category' => CategoryResource::collection($this->categories),
-            'doctors' => ClinicResource::collection($this->doctors),
+            'doctors' => ClientResource::collection($this->doctors),
             'samples' => SampleHitResource::collection($this->samples),
             'kinds_of_occasions' => $this->sms,
             'type' => $this->type,

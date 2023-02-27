@@ -4,12 +4,12 @@ namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Traits\MediaUploadingTrait;
-use App\Http\Requests\StoreClinicRequest;
-use App\Http\Requests\UpdateClinicRequest;
-use App\Http\Resources\ClinicResource;
+use App\Http\Requests\StoreClientRequest;
+use App\Http\Requests\UpdateClientRequest;
+use App\Http\Resources\ClientResource;
 use App\Http\Resources\KindsOfOccasionResource;
 use App\Models\Attendance;
-use App\Models\Clinic;
+use App\Models\Client;
 use App\Models\KindsOfOccasion;
 use Gate;
 use Illuminate\Http\Request;
@@ -18,7 +18,7 @@ use Illuminate\Support\Facades\Validator;
 use Symfony\Component\HttpFoundation\Response;
 use App\Models\UserAlert;
 
-class ClinicsApiController extends Controller
+class ClientsApiController extends Controller
 {
     use MediaUploadingTrait;
 
@@ -27,7 +27,7 @@ class ClinicsApiController extends Controller
 
         $search = $request->search ? $request->search : "";
 
-        $data = ClinicResource::collection(Clinic::with(['specialty'])->where('status', 1)->Search($search)->get());
+        $data = ClientResource::collection(Client::with(['specialty'])->where('status', 1)->Search($search)->get());
         return apiResponse($data);
     }
 
@@ -38,12 +38,20 @@ class ClinicsApiController extends Controller
 
         $validator = Validator::make($request->all(), [
             'name' => 'required',
-            'doctor_name' => 'required',
-            'specialty_id' => 'required|exists:clinics_specialties,id',
-            'phone' => 'required',
+            'qualification' => '',
+            'category' => 'required',
+            'item' => 'required',
+            'email' => 'required',
+            'mobile' => 'required',
+            'home_address' => 'required',
+            'whatsapp_phone' => 'required',
+            'specialty_id' => 'required|exists:clients_specialties,id',
+            'phone' => '',
             'times_work' => 'required',
-            'clinic_phone' => 'required',
             'address_1' => '',
+            'area_1' => '',
+            'area_2' => '',
+            'area_3' => '',
             'address_2' => '',
             'address_3' => '',
         ]);;
@@ -53,15 +61,15 @@ class ClinicsApiController extends Controller
             return errorResponse($validator->errors()->first(), $message);
         }
 
-        $clinic = Clinic::create($request->all());
+        $client = Client::create($request->all());
 
         if ($request->input('image', false)) {
-            $clinic->addMedia(storage_path('tmp/uploads/' . basename($request->input('image'))))->toMediaCollection('image');
+            $client->addMedia(storage_path('tmp/uploads/' . basename($request->input('image'))))->toMediaCollection('image');
         }
 
         $userAlert = UserAlert::create([
-            'alert_text' => 'طلب انضمام عيادة جديد',
-            'alert_link' => 'يوجد طلب انضمام عيادة جديدة',
+            'alert_text' => 'طلب انضمام عميل جديد',
+            'alert_link' => 'يوجد طلب انضمام عميل جديدة',
         ]);
         $userAlert->users()->sync(1);
         return apiResponse(true);
