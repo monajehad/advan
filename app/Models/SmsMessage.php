@@ -24,7 +24,7 @@ class SmsMessage extends Model
         'title',
         'message',
         'user_id',
-        'doctor_id',
+        'client_id',
         'status',
         'created_at',
         'updated_at',
@@ -36,9 +36,9 @@ class SmsMessage extends Model
         return $this->belongsTo(User::class, 'user_id');
     }
 
-    public function doctor()
+    public function client()
     {
-        return $this->belongsTo(User::class, 'doctor_id');
+        return $this->belongsTo(Client::class, 'client_id');
     }
 
     protected function serializeDate(DateTimeInterface $date)

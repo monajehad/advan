@@ -305,7 +305,6 @@ legend {
 <!--end::Container-->
 @endsection
 @section('script')
-
 <script>
 
     function load_data_table(page='') {
@@ -891,13 +890,13 @@ legend {
                             `)
 
                             if(response.tender.suppliers_prices_file!=null){
-                            // @can('tenders-view-suppliers-prices')
+                            @can('tenders-view-suppliers-prices')
                             $('.tender_suppliers_prices').html(`
                                 <a data-fancybox="gallery" href="${response.tender.suppliers_prices_file}">
                                     <i class="fa fa-eye text-primary"></i>
                                 </a>
                             `)
-                            // @endcan
+                            @endcan
                             }
                             $('#receipt_date').val(response.tender.notification_receipt_date)
                             let item_name=[];
@@ -1129,13 +1128,13 @@ legend {
                             `)
 
                             if(response.tender.suppliers_prices_file!=null){
-                            // @can('tenders-view-suppliers-prices')
+                            @can('tenders-view-suppliers-prices')
                             $('.tender_suppliers_prices').html(`
                                 <a data-fancybox="gallery" href="${response.tender.suppliers_prices_file}">
                                     <i class="fa fa-eye text-primary"></i>
                                 </a>
                             `)
-                            // @endcan
+                            @endcan
                             }
                             $('#receipt_date').val(response.tender.notification_receipt_date)
                             let item_name=[];
@@ -2093,104 +2092,104 @@ legend {
                     }
                 });
         })
-        $(document).on('click','#add_client_btn',function (e) {
-           add_action()
-        })
-        $('#client-form').validate({
-            rules:{
-                ar_name:{
-                    required: true,
-                },
-                en_name:{
-                    required: true,
-                },
-                email:{
-                    required: true,
-                    email:true
-                },
-                mobile:{
-                    required: true,
-                },
-                phone:{
-                    required: true,
-                },
-                address:{
-                    required: true,
-                },
-                licensed_operating_no:{
-                    required: true,
-                },
+        // $(document).on('click','#add_client_btn',function (e) {
+        //    add_action()
+        // })
+        // $('#client-form').validate({
+        //     rules:{
+        //         ar_name:{
+        //             required: true,
+        //         },
+        //         en_name:{
+        //             required: true,
+        //         },
+        //         email:{
+        //             required: true,
+        //             email:true
+        //         },
+        //         mobile:{
+        //             required: true,
+        //         },
+        //         phone:{
+        //             required: true,
+        //         },
+        //         address:{
+        //             required: true,
+        //         },
+        //         licensed_operating_no:{
+        //             required: true,
+        //         },
 
-            },
-            messages: {
-                ar_name:{
-                    required: "يجب إدخال الاسم بالعربي",
-                },
-                en_name:{
-                    required: "يجب إدخال الاسم بالانجليزي",
-                },
-                email:{
-                    required: "يجب إدخال البريد الالكتروني ",
-                    email:"يجب إدخال بريد الكتروني صحيح"
-                },
-                mobile:{
-                    required: "يجب إدخال رقم الجوال",
-                },
-                phone:{
-                    required: "يجب إدخال رقم الهاتف",
-                },
-                address:{
-                    required: "يجب إدخال العنوان",
-                },
-                licensed_operating_no:{
-                    required: "يجب إدخال رقم التشغيل المرخص",
-                },
-            },
-            submitHandler:function(event){
-                $.ajaxSetup({
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    }
-                });
-                let hidden=$('#add-client #hidden').val();
-                if (hidden==0) {
-            $.ajax({
-                url: '{{route("admin.clients.store")}}' ,
-                type: "POST",
-                data: $('#client-form').serialize(),
-                success: function( response ) {
-                    if(response.status==true){
-                        $("#client").html('').trigger('change');
-                        let client = new Option(`${response.client.name}`, `${response.client.id}`, true, true);
-                        $("#client").append(client).trigger('change');
+        //     },
+        //     messages: {
+        //         ar_name:{
+        //             required: "يجب إدخال الاسم بالعربي",
+        //         },
+        //         en_name:{
+        //             required: "يجب إدخال الاسم بالانجليزي",
+        //         },
+        //         email:{
+        //             required: "يجب إدخال البريد الالكتروني ",
+        //             email:"يجب إدخال بريد الكتروني صحيح"
+        //         },
+        //         mobile:{
+        //             required: "يجب إدخال رقم الجوال",
+        //         },
+        //         phone:{
+        //             required: "يجب إدخال رقم الهاتف",
+        //         },
+        //         address:{
+        //             required: "يجب إدخال العنوان",
+        //         },
+        //         licensed_operating_no:{
+        //             required: "يجب إدخال رقم التشغيل المرخص",
+        //         },
+        //     },
+        //     submitHandler:function(event){
+        //         $.ajaxSetup({
+        //             headers: {
+        //                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        //             }
+        //         });
+        //         let hidden=$('#add-client #hidden').val();
+        //         if (hidden==0) {
+        //     $.ajax({
+        //         url: '{{route("admin.clients.store")}}' ,
+        //         type: "POST",
+        //         data: $('#client-form').serialize(),
+        //         success: function( response ) {
+        //             if(response.status==true){
+        //                 $("#client").html('').trigger('change');
+        //                 let client = new Option(`${response.client.name}`, `${response.client.id}`, true, true);
+        //                 $("#client").append(client).trigger('change');
 
-                        // load_data_table()
-                        Swal.fire({
-                            showCloseButton: true,
-                            icon: 'success',
-                            title: 'نجاح الإضافة.',
-                            text:response.success,
-                            confirmButtonText: 'موافق'
-                        })
-                        $('#client-form').trigger("reset");
-                        $('#add-client').modal('hide');
+        //                 // load_data_table()
+        //                 Swal.fire({
+        //                     showCloseButton: true,
+        //                     icon: 'success',
+        //                     title: 'نجاح الإضافة.',
+        //                     text:response.success,
+        //                     confirmButtonText: 'موافق'
+        //                 })
+        //                 $('#client-form').trigger("reset");
+        //                 $('#add-client').modal('hide');
 
-                    }else{
-                        Swal.fire({
-                            showCloseButton: true,
-                            icon: 'error',
-                            title: 'خطأ في الإضافة',
-                            text: response.error,
-                            confirmButtonText: 'موافق'
-                        })
-                    }
-                },
-                error:function(response){
-                }
-            });
-        }
-            }
-        })
+        //             }else{
+        //                 Swal.fire({
+        //                     showCloseButton: true,
+        //                     icon: 'error',
+        //                     title: 'خطأ في الإضافة',
+        //                     text: response.error,
+        //                     confirmButtonText: 'موافق'
+        //                 })
+        //             }
+        //         },
+        //         error:function(response){
+        //         }
+        //     });
+        // }
+        //     }
+        // })
 
 
     })
@@ -2539,3 +2538,4 @@ $(document).on('change','#item_name',function(e) {
 
 </script>
 @endsection
+

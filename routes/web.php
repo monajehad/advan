@@ -17,6 +17,7 @@ use App\Http\Controllers\Admin\ReportTypeController;
 use App\Http\Controllers\Admin\RolesController;
 use App\Http\Controllers\Admin\SamplesController;
 use App\Http\Controllers\Admin\SampleStockController;
+use App\Http\Controllers\Admin\SmsMessageController;
 use App\Http\Controllers\admin\SystemConstantController;
 use App\Http\Controllers\admin\TenderController;
 use App\Http\Controllers\Admin\UsersController;
@@ -237,6 +238,11 @@ Route::group([ 'prefix' => 'admin', 'as' => 'admin.']
         // ->middleware('can:constants-status');
 
     });
+
+    // Sms Message
+    Route::delete('sms-messages/destroy', [SmsMessageController::class,'classmassDestroy'])->name('sms-messages.massDestroy');
+    Route::resource('sms-messages', SmsMessageController::class);
+
 
 });
 
