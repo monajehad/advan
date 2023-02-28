@@ -34,7 +34,10 @@
             </h3>
             <div class="card-toolbar">
                 {{-- @can('users-add') --}}
-                    <button id="add_button" class="btn btn-danger font-size-sm"> <i class="fa fa-plus font-weight-bolder"></i> إضافة مستخدم</button>
+                    <button id="add_button" class="btn btn-danger font-size-sm">
+                        <i class="fa fa-plus font-weight-bolder"></i>
+                        إضافة مستخدم
+                    </button>
                 {{-- @endcan --}}
                 {{-- @can('users-export') --}}
                 <a  href="{{route('admin.employee.export.excel')}}" class="btn btn-info mx-1 font-size-sm" id="export-button"> <i class="fa fa-file-excel-o font-weight-bold"></i> تصدير إكسل</a>
