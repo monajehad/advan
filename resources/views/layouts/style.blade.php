@@ -83,4 +83,28 @@
 .stock-item {
     width: 200px;
 }
+
+thead, tbody, tfoot, tr, td, th {
+    border-color: #f5f5f5;
+    border-style: solid;
+    border-width: 2px;
+    height: 4.5rem;
+}
+.table-bordered > :not(caption) > * > * {
+    border-width: 0 1px;
+    vertical-align: middle;
+}
+
+.modal-content {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    pointer-events: auto;
+    background-color: #fafafa;
+    background-clip: padding-box;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+    outline: 0;
+}
 </style>
