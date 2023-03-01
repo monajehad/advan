@@ -17,74 +17,27 @@ use Yajra\DataTables\Facades\DataTables;
 
 class ReportController extends Controller
 {
+    const PAGINATION_NO=20;
+
     public function index(Request $request)
     {
+
+
+        $reports=Report::select('id','type_id','hits_id','name','status','user_id','client_id','time','date'
+        ,'title')->with('user','type','client');
+        if($request->search){
+            $reports=$reports->where('name','like','%'.$request->search.'%')
+            ->orWhere('username','like','%'.$request->search.'%');
+        }
+        $reports=$reports->orderBy('id','desc')->paginate(self::PAGINATION_NO);
+        if ($request->ajax()) {
+            $table_data=view('advan.admin.reports.table-data',compact('reports'))->render();
+            return response()->json(['reports'=>$table_data]);
+
+        }
+        return view('advan.admin.reports.index',compact('reports'));
         // abort_if(Gate::denies('report_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        if ($request->ajax()) {
-            $query = Report::with(['user', 'type', 'clinic'])->select(sprintf('%s.*', (new Report())->table));
-            $table = Datatables::of($query);
-
-            $table->addColumn('placeholder', '&nbsp;');
-            $table->addColumn('actions', '&nbsp;');
-
-            $table->editColumn('actions', function ($row) {
-                $viewGate = 'report_show';
-                $editGate = 'report_edit';
-                $deleteGate = 'report_delete';
-                $crudRoutePart = 'reports';
-
-                return view('partials.datatablesActions', compact(
-                'viewGate',
-                'editGate',
-                'deleteGate',
-                'crudRoutePart',
-                'row'
-            ));
-            });
-
-            $table->editColumn('id', function ($row) {
-                return $row->id ? $row->id : '';
-            });
-            $table->addColumn('user_name', function ($row) {
-                return $row->user ? $row->user->name : '';
-            });
-
-            $table->addColumn('type_name', function ($row) {
-                return $row->type ? $row->type->name : '';
-            });
-
-            $table->addColumn('hits_id', function ($row) {
-                return $row->hits_id;
-            });
-
-            $table->editColumn('name', function ($row) {
-                return $row->name ? $row->name : '';
-            });
-            $table->addColumn('client_name', function ($row) {
-                return $row->client ? $row->client->name : '';
-            });
-
-            $table->editColumn('time', function ($row) {
-                return $row->time ? $row->time : '';
-            });
-            $table->editColumn('title', function ($row) {
-                return $row->title ? $row->title : '';
-            });
-            $table->editColumn('status', function ($row) {
-                return $row->status ? Report::STATUS_SELECT[$row->status] : '';
-            });
-
-            $table->rawColumns(['actions', 'placeholder', 'user', 'type', 'client']);
-
-            return $table->make(true);
-        }
-
-        $users   = User::get();
-        $reports = Report::get();
-        $clients = Client::get();
-
-        return view('advan.admin.reports.index', compact('users', 'reports', 'clients'));
     }
 
     public function create()
@@ -133,7 +86,7 @@ class ReportController extends Controller
     {
         // abort_if(Gate::denies('report_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $report->load('user', 'type', 'clinic');
+        $report->load('user', 'type', 'client');
 
         return view('advan.admin.reports.show', compact('report'));
     }

@@ -5,20 +5,12 @@ class="table-responsive datatable datatable-bordered datatable-head-custom datat
     <thead class="datatable-head">
         <tr class="text-center">
             <th>#</th>
-            <th>اسم الصنف</th>
-            <th> العائلة</th>
-            <th> الوحدة</th>
-            <th> كمية المخزون</th>
-            <th> الكمية الموزعة</th>
-            <th> الكمية المتبقية</th>
-            <th> شهر/سنة</th>
-
+            <th>اسم نوع التقرير</th>
 
             {{-- @can('suppliers-status') --}}
             <th>الحالة</th>
             {{-- @endcan --}}
-            <th>التفاصيل</th>
-
+            <th>العرض</th>
 
             {{-- @can('suppliers-update') --}}
             <th>التعديل</th>
@@ -29,58 +21,36 @@ class="table-responsive datatable datatable-bordered datatable-head-custom datat
         </tr>
     </thead>
     <tbody class="text-center font-size-sm">
-        @forelse($samples_stock as $sample_stock )
-        <tr class="data-row">
-            <td class="iteration">{{$loop->iteration}}</td>
-            <td class="name">
-                {{$sample_stock->item ? $sample_stock->item->name : ''}}
-            </td>
-            <td class="name">{{$sample_stock->category->name }}</td>
-            <td class="unit">
+        @forelse($reportTypes as $reportType)
+                <tr class="data-row">
+                    <td class="iteration">{{$loop->iteration}}</td>
+                    <td class="name">{{$reportType->name}}</td>
 
-           {{-- @foreach ($items as $item) --}}
+                    {{-- @can('suppliers-status') --}}
+                        @if($reportType->status==1)
+                        <td class="status">
+                            <button class="btn btn-sm  btn-shadow btn-success change-status"
+                            {{-- data-reportType-id="{{$reportType->id}}" --}}
+                                 {{-- @cannot('suppliers-status') disabled @endcannot --}}
+                                 >
+                                مفعل
+                            </button>
+                        </td>
+                        @elseif($reportType->status==0)
+                        <td class="status">
 
+                            <button class="btn btn-sm  btn-shadow btn-danger change-status"
+                            {{-- data-reportType-id="{{$reportType->id}}" --}}
+                                {{-- @cannot('suppliers-status') disabled @endcannot --}}
 
-                {{-- @if ($item->id == $item->id) --}}
-
-                   {{$sample_stock->unit_name}}
-
-                {{-- @endif --}}
-             {{-- @endforeach --}}
-            </td>
-
-            <td class="name">{{$sample_stock->quantity}}</td>
-            <td class="name">{{$sample_stock->received_quantity}}</td>
-            <td class="name">{{$sample_stock->quantity - $sample_stock->received_quantity}}</td>
-            <td class="name">{{$sample_stock->date}}</td>
-
-            {{-- <td class="name">{{$sample_stock->clinetHits->id}}</td> --}}
-
-            {{-- @can('suppliers-status') --}}
-                @if($sample_stock->status==1)
-                <td class="status">
-                    <button class="btn btn-sm  btn-shadow btn-success change-status"
-                    {{-- data-sample_stock-id="{{$sample_stock->id}}" --}}
-                         {{-- @cannot('suppliers-status') disabled @endcannot --}}
-                         >
-                        مفعل
-                    </button>
-                </td>
-                @elseif($sample_stock->status==0)
-                <td class="status">
-
-                    <button class="btn btn-sm  btn-shadow btn-danger change-status"
-                    {{-- data-sample_stock-id="{{$sample_stock->id}}" --}}
-                        {{-- @cannot('suppliers-status') disabled @endcannot --}}
-
-                        >
-                        غير مفعل
-                    </button>
-                </td>
-                @endif
+                                >
+                                غير مفعل
+                            </button>
+                        </td>
+                        @endif
             {{-- @endcan --}}
             <td>
-                <a class=" edit-category" href="/admin/sample-stocks/{{$sample_stock->id}}/">
+                <a class=" edit-category" href="/admin/report-types/{{$reportType->id}}">
                     <span class="svg-icon svg-icon-md"> <svg xmlns="http://www.w3.org/2000/svg"
                             xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px"
                             viewBox="0 0 24 24" version="1.1">
@@ -99,7 +69,7 @@ class="table-responsive datatable datatable-bordered datatable-head-custom datat
             </td>
             {{-- @can('categories-update') --}}
             <td>
-                <a class=" edit-category" href="/admin/sample-stocks/{{$sample_stock->id}}/edit">
+                <a class=" edit-category" href="/admin/report-types/{{$reportType->id}}/edit">
                     <span class="svg-icon svg-icon-md"> <svg xmlns="http://www.w3.org/2000/svg"
                             xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px"
                             viewBox="0 0 24 24" version="1.1">
@@ -117,9 +87,9 @@ class="table-responsive datatable datatable-bordered datatable-head-custom datat
                 </a>
             </td>
             {{-- @endcan --}}
-            {{-- @can('permission_delete') --}}
+            {{-- @can('reportType_delete') --}}
             <td>
-                <a class=" btn-icon delete" href="{{route('admin.sample-stocks.destroy', $sample_stock->id)}}" method="POST" onsubmit="return confirm('areYouSure');" style="display: inline-block;">
+                <a class=" btn-icon delete"  href="{{route('admin.report-types.destroy', $reportType->id)}}" method="POST" onsubmit="return confirm('areYouSure');" style="display: inline-block;">
 
                     <span class="svg-icon svg-icon-md"> <svg xmlns="http://www.w3.org/2000/svg"
                             xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px"
@@ -140,13 +110,13 @@ class="table-responsive datatable datatable-bordered datatable-head-custom datat
         </tr>
         @empty
         <tr>
-            <td class="text-muted text-center font-size-lg" colspan="10">لا يوجد  مخزون</td>
+            <td class="text-muted text-center font-size-lg" colspan="10">لا يوجد نوع عملاء</td>
         </tr>
         @endforelse
     </tbody>
 </table>
 </div>
 <div class="paging">
-    {{-- {!! $permissions->links() !!} --}}
+    {{-- {!! $reportTypes->links() !!} --}}
 
 </div>

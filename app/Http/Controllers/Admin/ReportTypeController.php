@@ -7,6 +7,7 @@ use App\Http\Controllers\Traits\CsvImportTrait;
 use App\Http\Requests\MassDestroyReportTypeRequest;
 use App\Http\Requests\StoreReportTypeRequest;
 use App\Http\Requests\UpdateReportTypeRequest;
+use App\Models\Report;
 use App\Models\ReportType;
 use Gate;
 use Illuminate\Http\Request;
@@ -21,44 +22,12 @@ class ReportTypeController extends Controller
     {
         // abort_if(Gate::denies('report_type_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        if ($request->ajax()) {
-            $query = ReportType::query()->select(sprintf('%s.*', (new ReportType())->table));
-            $table = Datatables::of($query);
+        $reportTypes = Report::all();
 
-            $table->addColumn('placeholder', '&nbsp;');
-            $table->addColumn('actions', '&nbsp;');
+        return view('advan.admin.reportTypes.index', compact('reportTypes'));
 
-            $table->editColumn('actions', function ($row) {
-                $viewGate = 'report_type_show';
-                $editGate = 'report_type_edit';
-                $deleteGate = 'report_type_delete';
-                $crudRoutePart = 'report-types';
 
-                return view('partials.datatablesActions', compact(
-                'viewGate',
-                'editGate',
-                'deleteGate',
-                'crudRoutePart',
-                'row'
-            ));
-            });
 
-            $table->editColumn('id', function ($row) {
-                return $row->id ? $row->id : '';
-            });
-            $table->editColumn('name', function ($row) {
-                return $row->name ? $row->name : '';
-            });
-            $table->editColumn('status', function ($row) {
-                return $row->status ? ReportType::STATUS_SELECT[$row->status] : '';
-            });
-
-            $table->rawColumns(['actions', 'placeholder']);
-
-            return $table->make(true);
-        }
-
-        return view('advan.admin.reportTypes.index');
     }
 
     public function create()

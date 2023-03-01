@@ -5,20 +5,12 @@ class="table-responsive datatable datatable-bordered datatable-head-custom datat
     <thead class="datatable-head">
         <tr class="text-center">
             <th>#</th>
-            <th>اسم الصنف</th>
-            <th> العائلة</th>
-            <th> الوحدة</th>
-            <th> كمية المخزون</th>
-            <th> الكمية الموزعة</th>
-            <th> الكمية المتبقية</th>
-            <th> شهر/سنة</th>
-
+            <th>اسم المجموعة</th>
 
             {{-- @can('suppliers-status') --}}
             <th>الحالة</th>
             {{-- @endcan --}}
-            <th>التفاصيل</th>
-
+            <th>العرض</th>
 
             {{-- @can('suppliers-update') --}}
             <th>التعديل</th>
@@ -29,77 +21,38 @@ class="table-responsive datatable datatable-bordered datatable-head-custom datat
         </tr>
     </thead>
     <tbody class="text-center font-size-sm">
-        @forelse($samples_stock as $sample_stock )
-        <tr class="data-row">
-            <td class="iteration">{{$loop->iteration}}</td>
-            <td class="name">
-                {{$sample_stock->item ? $sample_stock->item->name : ''}}
-            </td>
-            <td class="name">{{$sample_stock->category->name }}</td>
-            <td class="unit">
+        @forelse($roles as $role)
+                <tr class="data-row">
+                    <td class="iteration">{{$loop->iteration}}</td>
+                    <td class="name">{{$role->title}}</td>
 
-           {{-- @foreach ($items as $item) --}}
+                    {{-- @can('suppliers-status') --}}
+                        @if($role->status==1)
+                        <td class="status">
+                            <button class="btn btn-sm  btn-shadow btn-success change-status"
+                            {{-- data-role-id="{{$role->id}}" --}}
+                                 {{-- @cannot('suppliers-status') disabled @endcannot --}}
+                                 >
+                                مفعل
+                            </button>
+                        </td>
+                        @elseif($role->status==0)
+                        <td class="status">
 
+                            <button class="btn btn-sm  btn-shadow btn-danger change-status"
+                            {{-- data-role-id="{{$role->id}}" --}}
+                                {{-- @cannot('suppliers-status') disabled @endcannot --}}
 
-                {{-- @if ($item->id == $item->id) --}}
-
-                   {{$sample_stock->unit_name}}
-
-                {{-- @endif --}}
-             {{-- @endforeach --}}
-            </td>
-
-            <td class="name">{{$sample_stock->quantity}}</td>
-            <td class="name">{{$sample_stock->received_quantity}}</td>
-            <td class="name">{{$sample_stock->quantity - $sample_stock->received_quantity}}</td>
-            <td class="name">{{$sample_stock->date}}</td>
-
-            {{-- <td class="name">{{$sample_stock->clinetHits->id}}</td> --}}
-
-            {{-- @can('suppliers-status') --}}
-                @if($sample_stock->status==1)
-                <td class="status">
-                    <button class="btn btn-sm  btn-shadow btn-success change-status"
-                    {{-- data-sample_stock-id="{{$sample_stock->id}}" --}}
-                         {{-- @cannot('suppliers-status') disabled @endcannot --}}
-                         >
-                        مفعل
-                    </button>
-                </td>
-                @elseif($sample_stock->status==0)
-                <td class="status">
-
-                    <button class="btn btn-sm  btn-shadow btn-danger change-status"
-                    {{-- data-sample_stock-id="{{$sample_stock->id}}" --}}
-                        {{-- @cannot('suppliers-status') disabled @endcannot --}}
-
-                        >
-                        غير مفعل
-                    </button>
-                </td>
-                @endif
+                                >
+                                غير مفعل
+                            </button>
+                        </td>
+                        @endif
             {{-- @endcan --}}
+            {{-- @can('role_show') --}}
+
             <td>
-                <a class=" edit-category" href="/admin/sample-stocks/{{$sample_stock->id}}/">
-                    <span class="svg-icon svg-icon-md"> <svg xmlns="http://www.w3.org/2000/svg"
-                            xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px"
-                            viewBox="0 0 24 24" version="1.1">
-                            <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                                <rect x="0" y="0" width="24" height="24"></rect>
-                                <path
-                                    d="M8,17.9148182 L8,5.96685884 C8,5.56391781 8.16211443,5.17792052 8.44982609,4.89581508 L10.965708,2.42895648 C11.5426798,1.86322723 12.4640974,1.85620921 13.0496196,2.41308426 L15.5337377,4.77566479 C15.8314604,5.0588212 16,5.45170806 16,5.86258077 L16,17.9148182 C16,18.7432453 15.3284271,19.4148182 14.5,19.4148182 L9.5,19.4148182 C8.67157288,19.4148182 8,18.7432453 8,17.9148182 Z"
-                                    fill="#000000" fill-rule="nonzero"
-                                    transform="translate(12.000000, 10.707409) rotate(-135.000000) translate(-12.000000, -10.707409) ">
-                                </path>
-                                <rect fill="#000000" opacity="0.3" x="5" y="20" width="15" height="2" rx="1">
-                                </rect>
-                            </g>
-                        </svg> </span>
-                </a>
-            </td>
-            {{-- @can('categories-update') --}}
-            <td>
-                <a class=" edit-category" href="/admin/sample-stocks/{{$sample_stock->id}}/edit">
+                <a class=" edit-category" href="/admin/roles/{{$role->id}}">
                     <span class="svg-icon svg-icon-md"> <svg xmlns="http://www.w3.org/2000/svg"
                             xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px"
                             viewBox="0 0 24 24" version="1.1">
@@ -117,9 +70,32 @@ class="table-responsive datatable datatable-bordered datatable-head-custom datat
                 </a>
             </td>
             {{-- @endcan --}}
-            {{-- @can('permission_delete') --}}
+
+            {{-- @can('role_edit') --}}
+
             <td>
-                <a class=" btn-icon delete" href="{{route('admin.sample-stocks.destroy', $sample_stock->id)}}" method="POST" onsubmit="return confirm('areYouSure');" style="display: inline-block;">
+                <a class=" edit-category" href="/admin/roles/{{$role->id}}/edit">
+                    <span class="svg-icon svg-icon-md"> <svg xmlns="http://www.w3.org/2000/svg"
+                            xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px"
+                            viewBox="0 0 24 24" version="1.1">
+                            <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                <rect x="0" y="0" width="24" height="24"></rect>
+                                <path
+                                    d="M8,17.9148182 L8,5.96685884 C8,5.56391781 8.16211443,5.17792052 8.44982609,4.89581508 L10.965708,2.42895648 C11.5426798,1.86322723 12.4640974,1.85620921 13.0496196,2.41308426 L15.5337377,4.77566479 C15.8314604,5.0588212 16,5.45170806 16,5.86258077 L16,17.9148182 C16,18.7432453 15.3284271,19.4148182 14.5,19.4148182 L9.5,19.4148182 C8.67157288,19.4148182 8,18.7432453 8,17.9148182 Z"
+                                    fill="#000000" fill-rule="nonzero"
+                                    transform="translate(12.000000, 10.707409) rotate(-135.000000) translate(-12.000000, -10.707409) ">
+                                </path>
+                                <rect fill="#000000" opacity="0.3" x="5" y="20" width="15" height="2" rx="1">
+                                </rect>
+                            </g>
+                        </svg> </span>
+                </a>
+            </td>
+            {{-- @endcan --}}
+            {{-- @can('role_delete') --}}
+
+            <td>
+                <a class=" btn-icon delete"  href="{{route('admin.roles.destroy', $role->id)}}" method="POST" onsubmit="return confirm('areYouSure');" style="display: inline-block;">
 
                     <span class="svg-icon svg-icon-md"> <svg xmlns="http://www.w3.org/2000/svg"
                             xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px"
@@ -140,13 +116,13 @@ class="table-responsive datatable datatable-bordered datatable-head-custom datat
         </tr>
         @empty
         <tr>
-            <td class="text-muted text-center font-size-lg" colspan="10">لا يوجد  مخزون</td>
+            <td class="text-muted text-center font-size-lg" colspan="10">لا يوجد نوع عملاء</td>
         </tr>
         @endforelse
     </tbody>
 </table>
 </div>
 <div class="paging">
-    {{-- {!! $permissions->links() !!} --}}
+    {{-- {!! $roles->links() !!} --}}
 
 </div>
