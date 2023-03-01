@@ -107,4 +107,36 @@ thead, tbody, tfoot, tr, td, th {
     border-radius: 8px;
     outline: 0;
 }
+
+.card.card-custom > .card-header .card-title, .card.card-custom > .card-header .card-title .card-label {
+    font-weight: 600;
+    font-size: 2.275rem;
+    color: #0a0a0a;
+}
+body{
+    background-color:#f4f4f4 !important;
+}
+.grey-bg{
+    background-color:#f4f4f4;
+}
+.border-1 {
+    border-width: 0px !important;
+}
+
+.modal-header {
+    display: flex;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: space-between;
+    padding: 2rem 2rem;
+    border-bottom: 1px solid #EFEFEF;
+    border-top-left-radius: 7px;
+    border-top-right-radius: 7px;
+}
+
+.modal .modal-header .modal-title {
+    font-weight: 600;
+    font-size: 1.5rem;
+    color: #0a0a0a;
+}
 </style>
