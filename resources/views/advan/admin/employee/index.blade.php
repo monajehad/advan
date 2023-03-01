@@ -17,12 +17,6 @@
 }
 </style>
 @endsection
-@section('breadcrumb')
-<h5 class="text-dark font-weight-bold mt-2 mb-2 mr-5">الرئيسية</h5>
-<div class="subheader-separator subheader-separator-ver mt-2 mb-2 mr-4 bg-gray-200"></div>
-<span class="text-muted font-weight-bold mr-4">المستخدمون</span>
-
-@endsection
 
 @section('content')
 
@@ -30,7 +24,7 @@
 <div class="container">
     <div class="card card-custom gutter-b">
         <!--begin::Header-->
-        <div class="card-header border-1 py-4">
+        <div class="card-header border-1 mx-5 mb-4 py-4">
             <h2 class="card-title align-items-start flex-column">
 
                 جدول المستخدمين
@@ -38,7 +32,7 @@
             </h2>
             <div class="card-toolbar">
                 {{-- @can('users-add') --}}
-                <button id="add_button" class="btn btn-primary font-size-sm">
+                <button id="add_button" class="btn btn-primary font-size-sm ml-3">
                     <span class="svg-icon svg-icon-md svg-icon-2x">
                         <!--begin::Svg Icon | path:C:\wamp64\www\keenthemes\legacy\metronic\theme\html\demo1\dist/../src/media/svg/icons\Code\Plus.svg--><svg
                             xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px"
