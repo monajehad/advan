@@ -65,13 +65,22 @@ class ReportTypeController extends Controller
         return view('advan.admin.reportTypes.show', compact('reportType'));
     }
 
-    public function destroy(ReportType $reportType)
+    public function destroy(Request $request)
     {
-        // abort_if(Gate::denies('report_type_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        if(!$request->id)
+        return response()->json(['status'=>false,'error'=>'لم يتم تحديد نوع التقرير']);
+        $reportType=Report::where('id',$request->id)->first();
+       if(!$reportType)
+        return response()->json(['status'=>false,'error'=>'نوع التقرير غير موجود']);
+       $delete=$reportType->delete();
+       if(!$delete)
+        return response()->json(['status'=>false,'error'=>'لم يتم حذف نوع التقرير']);
+       return response()->json(['status'=>true,'success'=>'تم حذف نوع التقرير بنجاح']);
 
-        $reportType->delete();
 
-        return back();
+       return redirect()->route('admin.report-types.index');
+
+
     }
 
     public function massDestroy(MassDestroyReportTypeRequest $request)

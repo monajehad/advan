@@ -83,7 +83,7 @@
              {{-- @endcan --}}
              {{-- @can('reports-delete') --}}
              <td>
-                 <a class=" btn-icon delete" href="{{route('admin.reports.destroy', $report->id)}}">
+                 <button class=" btn-icon delete-report" data-report-id="{{$report->id}}">
                      <span class="svg-icon svg-icon-md"> <svg xmlns="http://www.w3.org/2000/svg"
                              xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px"
                              viewBox="0 0 24 24" version="1.1">
@@ -97,7 +97,7 @@
                                      fill="#000000" opacity="0.3"></path>
                              </g>
                          </svg> </span>
-                       </a>
+                 </button>
              </td>
              {{-- @endcan --}}
          </tr>

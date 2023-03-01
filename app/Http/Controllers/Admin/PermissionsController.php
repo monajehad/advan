@@ -13,11 +13,14 @@ use Symfony\Component\HttpFoundation\Response;
 
 class PermissionsController extends Controller
 {
+    // const PAGINATION_NO=20;
+
     public function index()
     {
         // abort_if(Gate::denies('permission_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $permissions = Permission::all();
+        // $permissions->orderBy('id','desc')->paginate(self::PAGINATION_NO);
 
         return view('advan.admin.permissions.index', compact('permissions'));
     }
@@ -57,13 +60,22 @@ class PermissionsController extends Controller
         return view('advan.admin.permissions.show', compact('permission'));
     }
 
-    public function destroy(Permission $permission)
+    public function destroy(Request $request)
     {
-        // abort_if(Gate::denies('permission_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        if(!$request->id)
+        return response()->json(['status'=>false,'error'=>'لم يتم تحديد الصلاحية']);
+        $permission=Permission::where('id',$request->id)->first();
+       if(!$permission)
+        return response()->json(['status'=>false,'error'=>'الصلاحية غير موجود']);
+       $delete=$permission->delete();
+       if(!$delete)
+        return response()->json(['status'=>false,'error'=>'لم يتم حذف الصلاحية']);
+       return response()->json(['status'=>true,'success'=>'تم حذف الصلاحية بنجاح']);
 
-        $permission->delete();
 
-        return back();
+       return redirect()->route('admin.permissions.index');
+
+
     }
 
     public function massDestroy(MassDestroyPermissionRequest $request)

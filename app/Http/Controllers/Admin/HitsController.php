@@ -36,16 +36,6 @@ class HitsController extends Controller
         ->with(['client','user','samples']);
 
 
-        // $sample1 = HitsSamples::where('hit_id', $hit->id)->get();
-
-        // $client_cat=Client::
-        //             leftJoin('system_constants as category_constants', function($join) {
-        //                $join->on('category_constants.value', '=', 'clients.category')->where('category_constants.type','category')->whereNull('category_constants.deleted_at');
-        //                 });
-
-        // if($request->search){
-        //     $competitors=$hits->where('id','like','%'.$request->search.'%');
-        // }
         $hits=$hits->orderBy('id','desc')->paginate(self::PAGINATION_NO);
         if ($request->ajax()) {
             $table_data=view('advan.admin.hits.table-data',compact('hits'))->render();
@@ -226,13 +216,22 @@ class HitsController extends Controller
         return view('advan.admin.hits.show', compact('hit' , 'sample'));
     }
 
-    public function destroy(Hit $hit)
+    public function destroy(Request $request)
     {
-        // abort_if(Gate::denies('hit_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        if(!$request->id)
+        return response()->json(['status'=>false,'error'=>'لم يتم تحديد الزيارة']);
+        $hit=hit::where('id',$request->id)->first();
+       if(!$hit)
+        return response()->json(['status'=>false,'error'=>'الزيارة غير موجود']);
+       $delete=$hit->delete();
+       if(!$delete)
+        return response()->json(['status'=>false,'error'=>'لم يتم حذف الزيارة']);
+       return response()->json(['status'=>true,'success'=>'تم حذف الزيارة بنجاح']);
 
-        $hit->delete();
 
-        return back();
+       return redirect()->route('admin.hits.index');
+
+
     }
 
     public function massDestroy(MassDestroyHitRequest $request)

@@ -76,5 +76,55 @@
     @endsection
 
 
+    @section('script')
+    @parent
+    <script>
 
+    $(document).on('click','.delete-type',function(){
+        var id = $(this).data('type-id');
+        Swal.fire({
+            title: 'هل أنت متأكد من حذف نوع التقرير',
+            showDenyButton: true,
+            confirmButtonText: 'نعم',
+            denyButtonText: `لا`,
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+                $.ajax({
+                    url: '{{route("admin.report-types.delete")}}' ,
+                    type: "POST",
+                    data: {id:id},
+                    success: function( response ) {
+                        if(response.status==true){
+                            Swal.fire({
+                                showCloseButton: true,
+                                icon: 'success',
+                                title: 'نجاح الحذف.',
+                                text:response.success,
+                                confirmButtonText: 'موافق'
+                            })
+                            load_data_table()
+                        }else{
+                            Swal.fire({
+                                showCloseButton: true,
+                                icon: 'error',
+                                title: 'خطأ في الحذف',
+                                text: response.error,
+                                confirmButtonText: 'موافق'
+                             })
+                        }
+                    },
+                    error:function(response){
+                    }
+                })
+            }
+        })
 
+    })
+
+</script>
+@endsection

@@ -70,7 +70,7 @@ class="table-responsive datatable datatable-bordered datatable-head-custom datat
             {{-- @endcan --}}
             {{-- @can('categories-delete') --}}
             <td>
-                <a class=" btn-icon delete"  href="{{route('admin.hits-types.destroy', $hit_type->id)}}">
+                <button class=" btn-icon delete-type" data-type-id="{{$hit_type->id}}">
                     <span class="svg-icon svg-icon-md"> <svg xmlns="http://www.w3.org/2000/svg"
                             xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px"
                             viewBox="0 0 24 24" version="1.1">
@@ -84,7 +84,7 @@ class="table-responsive datatable datatable-bordered datatable-head-custom datat
                                     fill="#000000" opacity="0.3"></path>
                             </g>
                         </svg> </span>
-                      </a>
+                </button>
             </td>
             {{-- @endcan --}}
         </tr>

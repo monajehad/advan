@@ -109,6 +109,8 @@ class UsersController extends Controller
     if(!$delete)
         return response()->json(['status'=>false,'error'=>'لم يتم حذف المنافس']);
     return response()->json(['status'=>true,'success'=>'تم حذف المنافس بنجاح']);
+
+
     }
 
     public function massDestroy(MassDestroyUserRequest $request)

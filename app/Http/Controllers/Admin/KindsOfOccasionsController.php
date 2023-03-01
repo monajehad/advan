@@ -71,13 +71,22 @@ class KindsOfOccasionsController extends Controller
         return view('advan.admin.kindsOfOccasions.show', compact('kindsOfOccasion'));
     }
 
-    public function destroy(KindsOfOccasion $kindsOfOccasion)
+    public function destroy(Request $request)
     {
-        // abort_if(Gate::denies('kinds_of_occasion_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        if(!$request->id)
+        return response()->json(['status'=>false,'error'=>'لم يتم تحديد نوع المناسبة']);
+        $kindsOfOccasion=KindsOfOccasion::where('id',$request->id)->first();
+       if(!$kindsOfOccasion)
+        return response()->json(['status'=>false,'error'=>'نوع المناسبة غير موجود']);
+       $delete=$kindsOfOccasion->delete();
+       if(!$delete)
+        return response()->json(['status'=>false,'error'=>'لم يتم حذف نوع المناسبة']);
+       return response()->json(['status'=>true,'success'=>'تم حذف نوع المناسبة بنجاح']);
 
-        $kindsOfOccasion->delete();
 
-        return back();
+       return redirect()->route('admin.kinds-of-occasions.index');
+
+
     }
 
     public function massDestroy(MassDestroyKindsOfOccasionRequest $request)

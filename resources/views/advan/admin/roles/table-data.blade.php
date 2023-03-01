@@ -95,7 +95,7 @@ class="table-responsive datatable datatable-bordered datatable-head-custom datat
             {{-- @can('role_delete') --}}
 
             <td>
-                <a class=" btn-icon delete"  href="{{route('admin.roles.destroy', $role->id)}}" method="POST" onsubmit="return confirm('areYouSure');" style="display: inline-block;">
+                <button class=" btn-icon delete-role" data-role-id="{{$role->id}}">
 
                     <span class="svg-icon svg-icon-md"> <svg xmlns="http://www.w3.org/2000/svg"
                             xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px"
@@ -110,7 +110,7 @@ class="table-responsive datatable datatable-bordered datatable-head-custom datat
                                     fill="#000000" opacity="0.3"></path>
                             </g>
                         </svg> </span>
-                    </a>
+                </button>
             </td>
             {{-- @endcan --}}
         </tr>

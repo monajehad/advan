@@ -91,13 +91,22 @@ class ReportController extends Controller
         return view('advan.admin.reports.show', compact('report'));
     }
 
-    public function destroy(Report $report)
+    public function destroy(Request $request)
     {
-        // abort_if(Gate::denies('report_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        if(!$request->id)
+        return response()->json(['status'=>false,'error'=>'لم يتم تحديد التقرير']);
+        $report=Report::where('id',$request->id)->first();
+       if(!$report)
+        return response()->json(['status'=>false,'error'=>'التقرير غير موجود']);
+       $delete=$report->delete();
+       if(!$delete)
+        return response()->json(['status'=>false,'error'=>'لم يتم حذف التقرير']);
+       return response()->json(['status'=>true,'success'=>'تم حذف التقرير بنجاح']);
 
-        $report->delete();
 
-        return back();
+       return redirect()->route('admin.reports.index');
+
+
     }
 
     public function massDestroy(MassDestroyReportRequest $request)

@@ -72,14 +72,23 @@ class HitsTypeController extends Controller
 
         return view('advan.admin.hitsTypes.show', compact('hitsType'));
     }
-
-    public function destroy(HitsType $hitsType)
+    public function destroy(Request $request)
     {
-        // abort_if(Gate::denies('hits_type_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        if(!$request->id)
+        return response()->json(['status'=>false,'error'=>'لم يتم تحديد نوع الزيارة']);
+        $hitsType=HitsType::where('id',$request->id)->first();
+       if(!$hitsType)
+        return response()->json(['status'=>false,'error'=>'نوع الزيارة غير موجود']);
+       $delete=$hitsType->delete();
+       if(!$delete)
+        return response()->json(['status'=>false,'error'=>'لم يتم حذف نوع الزيارة']);
+       return response()->json(['status'=>true,'success'=>'تم حذف نوع الزيارة بنجاح']);
 
-        $hitsType->delete();
 
-        return back();
+       return redirect()->route('admin.hits-types.index');
+
+
+
     }
 
     public function massDestroy(MassDestroyHitsTypeRequest $request)

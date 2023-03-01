@@ -87,7 +87,7 @@
              {{-- @endcan --}}
              {{-- @can('categories-delete') --}}
              <td>
-                 <a class=" btn-icon delete" href="{{route('admin.clients.destroy', $client->id)}}">
+                 <a class=" btn-icon delete-client" data-client-id="{{$client->id}}" >
                      <span class="svg-icon svg-icon-md"> <svg xmlns="http://www.w3.org/2000/svg"
                              xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px"
                              viewBox="0 0 24 24" version="1.1">

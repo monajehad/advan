@@ -89,7 +89,7 @@ class="table-responsive datatable datatable-bordered datatable-head-custom datat
             {{-- @endcan --}}
             {{-- @can('permission_delete') --}}
             <td>
-                <a class=" btn-icon delete"  href="{{route('admin.permissions.destroy', $permission->id)}}" method="POST" onsubmit="return confirm('areYouSure');" style="display: inline-block;">
+                <a class=" btn-icon delete-permission" data-permission-id="{{$permission->id}}">
 
                     <span class="svg-icon svg-icon-md"> <svg xmlns="http://www.w3.org/2000/svg"
                             xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px"

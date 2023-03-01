@@ -102,15 +102,23 @@ class SampleStockController extends Controller
         return view('advan.admin.sampleStocks.show', compact('sampleStock'));
     }
 
-    public function destroy(SampleStock $sampleStock)
+    public function destroy(Request $request)
     {
-        // abort_if(Gate::denies('sample_stock_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        if(!$request->id)
+        return response()->json(['status'=>false,'error'=>'لم يتم تحديد مخزون العينة']);
+        $sampleStock=SampleStock::where('id',$request->id)->first();
+       if(!$sampleStock)
+        return response()->json(['status'=>false,'error'=>'مخزون العينة غير موجود']);
+       $delete=$sampleStock->delete();
+       if(!$delete)
+        return response()->json(['status'=>false,'error'=>'لم يتم حذف مخزون العينة']);
+       return response()->json(['status'=>true,'success'=>'تم حذف مخزون العينة بنجاح']);
 
-        $sampleStock->delete();
 
-        return back();
+       return redirect()->route('admin.sampleStocks.index');
+
+
     }
-
     public function massDestroy(MassDestroySampleStockRequest $request)
     {
         SampleStock::whereIn('id', request('ids'))->delete();

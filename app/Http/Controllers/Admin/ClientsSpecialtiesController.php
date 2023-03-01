@@ -35,44 +35,7 @@ class ClientsSpecialtiesController extends Controller
         }
         return view('advan.admin.clientsSpecialties.index',compact('clients_specialt'));
 
-        // if ($request->ajax()) {
-        //     $query = ClientsSpecialty::query()->select(sprintf('%s.*', (new ClientsSpecialty())->table));
-        //     $table = Datatables::of($query);
 
-        //     $table->addColumn('placeholder', '&nbsp;');
-        //     $table->addColumn('actions', '&nbsp;');
-
-        //     $table->editColumn('actions', function ($row) {
-        //         $viewGate = 'clients_specialty_show';
-        //         $editGate = 'clients_specialty_edit';
-        //         $deleteGate = 'clients_specialty_delete';
-        //         $crudRoutePart = 'clients-specialties';
-
-        //         return view('partials.datatablesActions', compact(
-        //         'viewGate',
-        //         'editGate',
-        //         'deleteGate',
-        //         'crudRoutePart',
-        //         'row'
-        //     ));
-        //     });
-
-        //     $table->editColumn('id', function ($row) {
-        //         return $row->id ? $row->id : '';
-        //     });
-        //     $table->editColumn('name', function ($row) {
-        //         return $row->name ? $row->name : '';
-        //     });
-        //     $table->editColumn('status', function ($row) {
-        //         return $row->status ? ClientsSpecialty::STATUS_SELECT[$row->status] : '';
-        //     });
-
-        //     $table->rawColumns(['actions', 'placeholder']);
-
-        //     return $table->make(true);
-        // }
-
-        // return view('advan.admin.clientsSpecialties.index');
     }
 
     public function create()
@@ -110,13 +73,23 @@ class ClientsSpecialtiesController extends Controller
         return view('advan.admin.clientsSpecialties.show', compact('clientsSpecialty'));
     }
 
-    public function destroy(ClientsSpecialty $clientsSpecialty)
+    public function destroy(Request $request)
     {
-        // abort_if(Gate::denies('clients_specialty_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        if(!$request->id)
+        return response()->json(['status'=>false,'error'=>'لم يتم تحديد نوع العميل']);
+        $clientsSpecialty=ClientsSpecialty::where('id',$request->id)->first();
+       if(!$clientsSpecialty)
+        return response()->json(['status'=>false,'error'=>'نوع العميل غير موجود']);
+       $delete=$clientsSpecialty->delete();
+       if(!$delete)
+        return response()->json(['status'=>false,'error'=>'لم يتم حذف نوع العميل']);
+       return response()->json(['status'=>true,'success'=>'تم حذف نوع العميل بنجاح']);
 
-        $clientsSpecialty->delete();
 
-        return back();
+    //    return redirect()->route('admin.clients-specialties.index');
+
+
+
     }
 
     public function massDestroy(MassDestroyClientsSpecialtyRequest $request)

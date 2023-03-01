@@ -101,15 +101,23 @@ class SamplesController extends Controller
         return view('admin.samples.show', compact('sample'));
     }
 
-    public function destroy(Sample $sample)
+    public function destroy(Request $request)
     {
-        // abort_if(Gate::denies('sample_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        if(!$request->id)
+        return response()->json(['status'=>false,'error'=>'لم يتم تحديد العينة']);
+        $sample=Sample::where('id',$request->id)->first();
+       if(!$sample)
+        return response()->json(['status'=>false,'error'=>'العينة غير موجود']);
+       $delete=$sample->delete();
+       if(!$delete)
+        return response()->json(['status'=>false,'error'=>'لم يتم حذف العينة']);
+       return response()->json(['status'=>true,'success'=>'تم حذف العينة بنجاح']);
 
-        $sample->delete();
 
-        return back();
+       return redirect()->route('admin.samples.index');
+
+
     }
-
     public function massDestroy(MassDestroySampleRequest $request)
     {
         Sample::whereIn('id', request('ids'))->delete();

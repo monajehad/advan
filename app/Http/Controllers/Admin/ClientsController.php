@@ -129,13 +129,21 @@ class ClientsController extends Controller
         return view('advan.admin.clients.show', compact('client'));
     }
 
-    public function destroy(Client $client)
+    public function destroy(Request $request)
     {
-        // abort_if(Gate::denies('client_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        if(!$request->id)
+        return response()->json(['status'=>false,'error'=>'لم يتم تحديد العميل']);
+        $client=Client::where('id',$request->id)->first();
+       if(!$client)
+        return response()->json(['status'=>false,'error'=>'العميل غير موجود']);
+       $delete=$client->delete();
+       if(!$delete)
+        return response()->json(['status'=>false,'error'=>'لم يتم حذف العميل']);
+       return response()->json(['status'=>true,'success'=>'تم حذف العميل بنجاح']);
 
-        $client->delete();
 
-        return back();
+        return redirect()->route('admin.clients.index');
+
     }
 
     public function massDestroy(MassDestroyClientRequest $request)

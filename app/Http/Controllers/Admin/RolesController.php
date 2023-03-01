@@ -68,13 +68,22 @@ class RolesController extends Controller
         return view('advan.admin.roles.show', compact('role'));
     }
 
-    public function destroy(Role $role)
+    public function destroy(Request $request)
     {
-        // abort_if(Gate::denies('role_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        if(!$request->id)
+        return response()->json(['status'=>false,'error'=>'لم يتم تحديد الدور']);
+        $role=Role::where('id',$request->id)->first();
+       if(!$role)
+        return response()->json(['status'=>false,'error'=>'الدور غير موجود']);
+       $delete=$role->delete();
+       if(!$delete)
+        return response()->json(['status'=>false,'error'=>'لم يتم حذف الدور']);
+       return response()->json(['status'=>true,'success'=>'تم حذف الدور بنجاح']);
 
-        $role->delete();
 
-        return back();
+       return redirect()->route('admin.roles.index');
+
+
     }
 
     public function massDestroy(MassDestroyRoleRequest $request)

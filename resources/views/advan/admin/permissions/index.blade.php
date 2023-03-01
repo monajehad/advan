@@ -2,7 +2,7 @@
 @extends('layouts.cpanel.app')
 
 @section('title')
-الزيارات
+الصلاحيات
 @endsection
 @section('style')
 <style>
@@ -75,6 +75,60 @@
     <!--end::Container-->
     @endsection
 
+
+
+    @section('script')
+    @parent
+    <script>
+
+    $(document).on('click','.delete-permission',function(){
+                var id = $(this).data('permission-id');
+                Swal.fire({
+                    title: 'هل أنت متأكد من حذف الصلاحية',
+                    showDenyButton: true,
+                    confirmButtonText: 'نعم',
+                    denyButtonText: `لا`,
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajaxSetup({
+                            headers: {
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                            }
+                        });
+                        $.ajax({
+                            url: '{{route("admin.permissions.delete")}}' ,
+                            type: "POST",
+                            data: {id:id},
+                            success: function( response ) {
+                                if(response.status==true){
+                                    Swal.fire({
+                                        showCloseButton: true,
+                                        icon: 'success',
+                                        title: 'نجاح الحذف.',
+                                        text:response.success,
+                                        confirmButtonText: 'موافق'
+                                    })
+                                    load_data_table()
+                                }else{
+                                    Swal.fire({
+                                        showCloseButton: true,
+                                        icon: 'error',
+                                        title: 'خطأ في الحذف',
+                                        text: response.error,
+                                        confirmButtonText: 'موافق'
+                                     })
+                                }
+                            },
+                            error:function(response){
+                            }
+                        })
+                    }
+                })
+
+            })
+
+    </script>
+    @endsection
 
 
 

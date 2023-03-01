@@ -73,7 +73,7 @@ class="table-responsive datatable datatable-bordered datatable-head-custom datat
             {{-- @endcan --}}
             {{-- @can('categories-delete') --}}
             <td>
-                <a class=" btn-icon delete"  href="{{route('admin.kinds-of-occasions.destroy', $kind_of_occasion->id)}}">
+                <a class=" btn-icon delete-occasion" data-occasion-id="{{$kind_of_occasion->id}}">
                     <span class="svg-icon svg-icon-md"> <svg xmlns="http://www.w3.org/2000/svg"
                             xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px"
                             viewBox="0 0 24 24" version="1.1">

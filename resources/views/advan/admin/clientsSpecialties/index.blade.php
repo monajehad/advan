@@ -104,50 +104,55 @@
 
     <!--end::Container-->
     @endsection
+    @section('script')
+    @parent
+    <script>
 
+    $(document).on('click','.delete-specialt',function(){
+                var id = $(this).data('specialt-id');
+                Swal.fire({
+                    title: 'هل أنت متأكد من حذف التصنيف',
+                    showDenyButton: true,
+                    confirmButtonText: 'نعم',
+                    denyButtonText: `لا`,
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajaxSetup({
+                            headers: {
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                            }
+                        });
+                        $.ajax({
+                            url: '{{route("admin.clients-specialties.delete")}}' ,
+                            type: "POST",
+                            data: {id:id},
+                            success: function( response ) {
+                                if(response.status==true){
+                                    Swal.fire({
+                                        showCloseButton: true,
+                                        icon: 'success',
+                                        title: 'نجاح الحذف.',
+                                        text:response.success,
+                                        confirmButtonText: 'موافق'
+                                    })
+                                    load_data_table()
+                                }else{
+                                    Swal.fire({
+                                        showCloseButton: true,
+                                        icon: 'error',
+                                        title: 'خطأ في الحذف',
+                                        text: response.error,
+                                        confirmButtonText: 'موافق'
+                                     })
+                                }
+                            },
+                            error:function(response){
+                            }
+                        })
+                    }
+                })
 
-@extends('layouts.cpanel.app')
-@section('content')
-{{-- @can('clinics_specialty_create') --}}
+            })
 
-
-@section('script')
-@parent
-<script>
-    $(function () {
-  let dtButtons = $.extend(true, [], $.fn.dataTable.defaults.buttons)
-// @can('clinics_specialty_delete')
-  let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
-  let deleteButton = {
-    text: deleteButtonTrans,
-    url: "{{ route('admin.clients-specialties.massDestroy') }}",
-    className: 'btn-danger',
-    action: function (e, dt, node, config) {
-      var ids = $.map(dt.rows({ selected: true }).data(), function (entry) {
-          return entry.id
-      });
-
-      if (ids.length === 0) {
-        alert('{{ trans('global.datatables.zero_selected') }}')
-
-        return
-      }
-
-      if (confirm('{{ trans('global.areYouSure') }}')) {
-        $.ajax({
-          headers: {'x-csrf-token': _token},
-          method: 'POST',
-          url: config.url,
-          data: { ids: ids, _method: 'DELETE' }})
-          .done(function () { location.reload() })
-      }
-    }
-  }
-  dtButtons.push(deleteButton)
-// @endcan
-
-
-});
-
-</script>
-@endsection
+    </script>
+    @endsection

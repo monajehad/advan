@@ -72,13 +72,22 @@ class CategoryController extends Controller
         return view('advan.admin.categories.show', compact('category'));
     }
 
-    public function destroy(Category $category)
+    public function destroy(Request $request)
     {
-        // abort_if(Gate::denies('category_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        if(!$request->id)
+        return response()->json(['status'=>false,'error'=>'لم يتم تحديد التصنيف']);
+        $category=Category::where('id',$request->id)->first();
+       if(!$category)
+        return response()->json(['status'=>false,'error'=>'التصنيف غير موجود']);
+       $delete=$category->delete();
+       if(!$delete)
+        return response()->json(['status'=>false,'error'=>'لم يتم حذف التصنيف']);
+       return response()->json(['status'=>true,'success'=>'تم حذف التصنيف بنجاح']);
 
-        $category->delete();
 
-        return back();
+       return redirect()->route('admin.categories.index');
+
+
     }
     public function updateStatus(Request $request)
     {
