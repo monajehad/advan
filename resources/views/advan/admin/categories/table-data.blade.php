@@ -29,20 +29,20 @@
 
                   @if($category->status==1)
                   <td class="status">
-                      <button class="btn btn-sm  btn-shadow btn-success change-status"
-                          data-category-id="{{$category->id}}" {{-- @cannot('categories-status') disabled @endcannot --}}>
+                      <a class="btn btn-sm  btn-shadow btn-success change-status"
+                      href="{{route('admin.categories.updateStatus', $category->id)}}"{{-- @cannot('categories-status') disabled @endcannot --}}>
                           مفعل
-                      </button>
+                  </a>
                   </td>
                   @elseif($category->status==0)
                   <td class="status">
 
-                      <button class="btn btn-sm  btn-shadow btn-danger change-status"
-                          data-category-id="{{$category->id}}" {{-- @cannot('categories-status')
+                      <a class="btn btn-sm  btn-shadow btn-danger change-status"
+                      href="{{route('admin.categories.updateStatus', $category->id)}}" {{-- @cannot('categories-status')
                                   disabled
                                   @endcannot --}}>
                           غير مفعل
-                      </button>
+                  </a>
                   </td>
                   @endif
                   {{-- @endcan --}}
@@ -68,7 +68,7 @@
                   {{-- @endcan --}}
                   {{-- @can('categories-delete') --}}
                   <td>
-                      <button class=" btn-icon delete" href="{{route('admin.categories.destroy', $category->id)}}">
+                      <a class=" btn-icon delete" href="{{route('admin.categories.destroy', $category->id)}}">
                           <span class="svg-icon svg-icon-md"> <svg xmlns="http://www.w3.org/2000/svg"
                                   xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px"
                                   viewBox="0 0 24 24" version="1.1">
@@ -82,7 +82,7 @@
                                           fill="#000000" opacity="0.3"></path>
                                   </g>
                               </svg> </span>
-                      </button>
+                            </a>
                   </td>
                   {{-- @endcan --}}
               </tr>

@@ -80,7 +80,13 @@ class CategoryController extends Controller
 
         return back();
     }
-
+    public function updateStatus(Request $request)
+    {
+        $data = Category::findOrFail($request->id);
+        $data[$request->key] = $request->status ? 1 : 0;
+        $data->save();
+        return redirect()->route('admin.categories.index');
+    }
     public function massDestroy(MassDestroyCategoryRequest $request)
     {
         Category::whereIn('id', request('ids'))->delete();

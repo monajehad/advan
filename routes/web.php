@@ -155,6 +155,7 @@ Route::group([ 'prefix' => 'admin', 'as' => 'admin.']
     Route::post('categories/parse-csv-import', [CategoryController::class,'parseCsvImport'])->name('categories.parseCsvImport');
     Route::post('categories/process-csv-import', [CategoryController::class,'processCsvImport'])->name('categories.processCsvImport');
     Route::resource('categories', CategoryController::class);
+    Route::post('/categories/status/update' , [CategoryController::class , 'updateStatus'])->name('categories.updateStatus');
 
      // Kinds Of Occasions
      Route::delete('kinds-of-occasions/destroy', [KindsOfOccasionsController::class,'massDestroy'])->name('kinds-of-occasions.massDestroy');
