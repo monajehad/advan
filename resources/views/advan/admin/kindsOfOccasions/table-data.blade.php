@@ -5,42 +5,45 @@ class="table-responsive datatable datatable-bordered datatable-head-custom datat
     <thead class="datatable-head">
         <tr class="text-center">
             <th>#</th>
-            <th>اسم التخصص</th>
+            <th>اسم المناسبة</th>
 
-            {{-- @can('suppliers-status') --}}
+            <th>الوصف  </th>
+
+            {{-- @can('kind_of_occasion-status') --}}
             <th>الحالة</th>
             {{-- @endcan --}}
 
-            {{-- @can('suppliers-update') --}}
+            {{-- @can('kind_of_occasion-update') --}}
             <th>التعديل</th>
             {{-- @endcan --}}
-            {{-- @can('suppliers-delete') --}}
+            {{-- @can('kind_of_occasion-delete') --}}
             <th>حذف</th>
             {{-- @endcan --}}
         </tr>
     </thead>
     <tbody class="text-center font-size-sm">
-        @forelse($clients_specialt as $client_specialt)
+        @forelse($kinds_of_occasion as $kind_of_occasion)
                 <tr class="data-row">
                     <td class="iteration">{{$loop->iteration}}</td>
-                    <td class="name">{{$client_specialt->name}}</td>
+                    <td class="name">{{$kind_of_occasion->name}}</td>
+                    <td class="description">{{$kind_of_occasion->description}}</td>
 
-                    {{-- @can('suppliers-status') --}}
-                        @if($client_specialt->status==1)
+                    {{-- @can('kind_of_occasion-status') --}}
+                        @if($kind_of_occasion->status==1)
                         <td class="status">
                             <button class="btn btn-sm  btn-shadow btn-success change-status"
-                            {{-- data-client_specialt-id="{{$client_specialt->id}}" --}}
-                                 {{-- @cannot('suppliers-status') disabled @endcannot --}}
+                            {{-- data-kind_of_occasion-id="{{$kind_of_occasion->id}}" --}}
+                                 {{-- @cannot('kind_of_occasion-status') disabled @endcannot --}}
                                  >
                                 مفعل
                             </button>
                         </td>
-                        @elseif($client_specialt->status==0)
+                        @elseif($kind_of_occasion->status==0)
                         <td class="status">
 
                             <button class="btn btn-sm  btn-shadow btn-danger change-status"
-                            {{-- data-client_specialt-id="{{$client_specialt->id}}" --}}
-                                {{-- @cannot('suppliers-status') disabled @endcannot --}}
+                            {{-- data-kind_of_occasion-id="{{$kind_of_occasion->id}}" --}}
+                                {{-- @cannot('kind_of_occasion-status') disabled @endcannot --}}
 
                                 >
                                 غير مفعل
@@ -50,7 +53,7 @@ class="table-responsive datatable datatable-bordered datatable-head-custom datat
             {{-- @endcan --}}
             {{-- @can('categories-update') --}}
             <td>
-                <a class=" edit-category" href="/admin/clients-specialties/{{$client_specialt->id}}/edit">
+                <a class=" edit-category" href="/admin/kinds-of-occasions/{{$kind_of_occasion->id}}/edit">
                     <span class="svg-icon svg-icon-md"> <svg xmlns="http://www.w3.org/2000/svg"
                             xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px"
                             viewBox="0 0 24 24" version="1.1">
@@ -70,7 +73,7 @@ class="table-responsive datatable datatable-bordered datatable-head-custom datat
             {{-- @endcan --}}
             {{-- @can('categories-delete') --}}
             <td>
-                <a class=" btn-icon delete"  href="{{route('admin.clients-specialties.destroy', $client_specialt->id)}}">
+                <a class=" btn-icon delete"  href="{{route('admin.kinds-of-occasions.destroy', $kind_of_occasion->id)}}">
                     <span class="svg-icon svg-icon-md"> <svg xmlns="http://www.w3.org/2000/svg"
                             xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px"
                             viewBox="0 0 24 24" version="1.1">
@@ -97,6 +100,6 @@ class="table-responsive datatable datatable-bordered datatable-head-custom datat
 </table>
 </div>
 <div class="paging">
-    {!! $clients_specialt->links() !!}
+    {!! $kinds_of_occasion->links() !!}
 
 </div>

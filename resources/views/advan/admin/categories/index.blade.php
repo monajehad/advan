@@ -1,7 +1,7 @@
 @extends('layouts.cpanel.app')
 
 @section('title')
-المستخدمون
+التصنيفات
 @endsection
 @section('style')
 <style>
@@ -74,7 +74,7 @@
                         </svg>
                         <!--end::Svg Icon-->
                     </span>
-                    تصدير إكسل</button>
+                    استيرادCSV </button>
               @include('csvImport.modal', ['model' => 'Category', 'route' => 'admin.categories.parseCsvImport'])
 
                 {{-- @endcan --}}

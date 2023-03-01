@@ -139,4 +139,10 @@ body{
     font-size: 1.5rem;
     color: #0a0a0a;
 }
+
+
+.table-striped tbody tr:nth-of-type(odd) {
+    background-color: #f4f4f4;
+}
+
 </style>

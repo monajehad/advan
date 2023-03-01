@@ -1,6 +1,6 @@
   <!--begin::Table-->
   <div
-      class="table-responsive datatable datatable-bordered datatable-head-custom datatable-default     datatable-primary datatable-loaded">
+      class="table-responsive datatable datatable-bordered datatable-head-custom datatable-default  table-striped table-hover   datatable-primary datatable-loaded">
       <table class="table table-bordered " id="kt-table">
           <thead class="datatable-head">
               <tr class="text-center">
@@ -129,4 +129,3 @@
       {!! $employees->links() !!}
   </div>
 
- 

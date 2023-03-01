@@ -20,26 +20,26 @@ class="table-responsive datatable datatable-bordered datatable-head-custom datat
         </tr>
     </thead>
     <tbody class="text-center font-size-sm">
-        @forelse($clients_specialt as $client_specialt)
+        @forelse($hits_type as $hit_type)
                 <tr class="data-row">
                     <td class="iteration">{{$loop->iteration}}</td>
-                    <td class="name">{{$client_specialt->name}}</td>
+                    <td class="name">{{$hit_type->name}}</td>
 
                     {{-- @can('suppliers-status') --}}
-                        @if($client_specialt->status==1)
+                        @if($hit_type->status==1)
                         <td class="status">
                             <button class="btn btn-sm  btn-shadow btn-success change-status"
-                            {{-- data-client_specialt-id="{{$client_specialt->id}}" --}}
+                            {{-- data-hit_type-id="{{$hit_type->id}}" --}}
                                  {{-- @cannot('suppliers-status') disabled @endcannot --}}
                                  >
                                 مفعل
                             </button>
                         </td>
-                        @elseif($client_specialt->status==0)
+                        @elseif($hit_type->status==0)
                         <td class="status">
 
                             <button class="btn btn-sm  btn-shadow btn-danger change-status"
-                            {{-- data-client_specialt-id="{{$client_specialt->id}}" --}}
+                            {{-- data-hit_type-id="{{$hit_type->id}}" --}}
                                 {{-- @cannot('suppliers-status') disabled @endcannot --}}
 
                                 >
@@ -50,7 +50,7 @@ class="table-responsive datatable datatable-bordered datatable-head-custom datat
             {{-- @endcan --}}
             {{-- @can('categories-update') --}}
             <td>
-                <a class=" edit-category" href="/admin/clients-specialties/{{$client_specialt->id}}/edit">
+                <a class=" edit-category" href="/admin/hits-types/{{$hit_type->id}}/edit">
                     <span class="svg-icon svg-icon-md"> <svg xmlns="http://www.w3.org/2000/svg"
                             xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px"
                             viewBox="0 0 24 24" version="1.1">
@@ -70,7 +70,7 @@ class="table-responsive datatable datatable-bordered datatable-head-custom datat
             {{-- @endcan --}}
             {{-- @can('categories-delete') --}}
             <td>
-                <a class=" btn-icon delete"  href="{{route('admin.clients-specialties.destroy', $client_specialt->id)}}">
+                <a class=" btn-icon delete"  href="{{route('admin.hits-types.destroy', $hit_type->id)}}">
                     <span class="svg-icon svg-icon-md"> <svg xmlns="http://www.w3.org/2000/svg"
                             xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px"
                             viewBox="0 0 24 24" version="1.1">
@@ -97,6 +97,6 @@ class="table-responsive datatable datatable-bordered datatable-head-custom datat
 </table>
 </div>
 <div class="paging">
-    {!! $clients_specialt->links() !!}
+    {!! $hits_type->links() !!}
 
 </div>

@@ -1,131 +1,80 @@
+
 @extends('layouts.cpanel.app')
+
+@section('title')
+الزيارات
+@endsection
+@section('style')
+<style>
+#show-password,
+#show-new-password,
+#show-confirm-new-password {
+    cursor: pointer;
+}
+
+.checkbox-cutom-label {
+    font-size: 15px !important;
+    font-weight: bold !important;
+}
+</style>
+@endsection
+
+
 @section('content')
-{{-- @can('permission_create') --}}
-    <div style="margin-bottom: 10px;" class="row">
-        <div class="col-lg-12">
-            <a class="btn btn-success" href="{{ route('admin.permissions.create') }}">
-                {{ trans('global.add') }} {{ trans('cruds.permission.title_singular') }}
-            </a>
+
+<!--begin::Container-->
+<div class="container">
+    <div class="card card-custom gutter-b">
+        <!--begin::Header-->
+        <div class="card-header border-1 py-4 mx-5 mb-4">
+            <h2 class="card-title align-items-start flex-column">
+
+                  الصلاحيات
+            </h2>
+            <div class="card-toolbar">
+                {{-- @can('hits-add') --}}
+                <a id="add_button" class="btn btn-primary font-size-sm ml-3" href="{{ route('admin.permissions.create') }}">
+                    <span class="svg-icon svg-icon-md svg-icon-2x">
+                        <!--begin::Svg Icon | path:C:\wamp64\www\keenthemes\legacy\metronic\theme\html\demo1\dist/../src/media/svg/icons\Code\Plus.svg--><svg
+                            xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px"
+                            height="24px" viewBox="0 0 24 24" version="1.1">
+                            <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                <rect x="0" y="0" width="24" height="24" />
+                                <circle fill="#000000" opacity="0.3" cx="12" cy="12" r="10" />
+                                <path
+                                    d="M11,11 L11,7 C11,6.44771525 11.4477153,6 12,6 C12.5522847,6 13,6.44771525 13,7 L13,11 L17,11 C17.5522847,11 18,11.4477153 18,12 C18,12.5522847 17.5522847,13 17,13 L13,13 L13,17 C13,17.5522847 12.5522847,18 12,18 C11.4477153,18 11,17.5522847 11,17 L11,13 L7,13 C6.44771525,13 6,12.5522847 6,12 C6,11.4477153 6.44771525,11 7,11 L11,11 Z"
+                                    fill="#000000" />
+                            </g>
+                        </svg>
+                        <!--end::Svg Icon-->
+                    </span>
+                    إضافة صلاحية
+                </a>
+                {{-- @endcan --}}
+
+            </div>
+
         </div>
-    </div>
-{{-- @endcan --}}
-<div class="card">
-    <div class="card-header">
-        {{ trans('cruds.permission.title_singular') }} {{ trans('global.list') }}
-    </div>
+        <!--end::Header-->
+        <!--begin::Body-->
 
-    <div class="card-body">
-        <div class="table-responsive">
-            <table class=" table table-bordered table-striped table-hover datatable datatable-Permission">
-                <thead>
-                    <tr>
-                        <th width="10">
+        <div class="card-body py-0">
+            <!--begin::Table-->
+            <div class="user-table-body">
 
-                        </th>
-                        <th>
-                            {{ trans('cruds.permission.fields.id') }}
-                        </th>
-                        <th>
-                            {{ trans('cruds.permission.fields.name') }}
-                        </th>
-                        <th>
-                            &nbsp;
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach($permissions as $key => $permission)
-                        <tr data-entry-id="{{ $permission->id }}">
-                            <td>
+                 @includeIf('advan.admin.permissions.table-data')
 
-                            </td>
-                            <td>
-                                {{ $permission->id ?? '' }}
-                            </td>
-                            <td>
-                                {{ $permission->name ?? '' }}
-                            </td>
-                            <td>
-                                @can('permission_show')
-                                    <a class="btn btn-xs btn-primary" href="{{ route('admin.permissions.show', $permission->id) }}">
-                                        {{ trans('global.view') }}
-                                    </a>
-                                @endcan
+            </div>
 
-                                @can('permission_edit')
-                                    <a class="btn btn-xs btn-info" href="{{ route('admin.permissions.edit', $permission->id) }}">
-                                        {{ trans('global.edit') }}
-                                    </a>
-                                @endcan
-
-                                @can('permission_delete')
-                                    <form action="{{ route('admin.permissions.destroy', $permission->id) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
-                                        <input type="hidden" name="_method" value="DELETE">
-                                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                                        <input type="submit" class="btn btn-xs btn-danger" value="{{ trans('global.delete') }}">
-                                    </form>
-                                @endcan
-
-                            </td>
-
-                        </tr>
-                    @endforeach
-                </tbody>
-            </table>
+            <!--End::Table-->
         </div>
+        <!--end::Body-->
     </div>
 </div>
 
+    <!--end::Container-->
+    @endsection
 
 
-@endsection
-@section('scripts')
-@parent
-<script>
-    $(function () {
-  let dtButtons = $.extend(true, [], $.fn.dataTable.defaults.buttons)
-@can('permission_delete')
-  let deleteButtonTrans = '{{ trans('global.datatables.delete') }}'
-  let deleteButton = {
-    text: deleteButtonTrans,
-    url: "{{ route('admin.permissions.massDestroy') }}",
-    className: 'btn-danger',
-    action: function (e, dt, node, config) {
-      var ids = $.map(dt.rows({ selected: true }).nodes(), function (entry) {
-          return $(entry).data('entry-id')
-      });
 
-      if (ids.length === 0) {
-        alert('{{ trans('global.datatables.zero_selected') }}')
 
-        return
-      }
-
-      if (confirm('{{ trans('global.areYouSure') }}')) {
-        $.ajax({
-          headers: {'x-csrf-token': _token},
-          method: 'POST',
-          url: config.url,
-          data: { ids: ids, _method: 'DELETE' }})
-          .done(function () { location.reload() })
-      }
-    }
-  }
-  dtButtons.push(deleteButton)
-@endcan
-
-  $.extend(true, $.fn.dataTable.defaults, {
-    orderCellsTop: true,
-    order: [[ 1, 'desc' ]],
-    pageLength: 100,
-  });
-  let table = $('.datatable-Permission:not(.ajaxTable)').DataTable({ buttons: dtButtons })
-  $('a[data-toggle="tab"]').on('shown.bs.tab click', function(e){
-      $($.fn.dataTable.tables(true)).DataTable()
-          .columns.adjust();
-  });
-
-})
-
-</script>
-@endsection

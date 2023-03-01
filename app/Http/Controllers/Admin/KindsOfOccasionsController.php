@@ -16,52 +16,24 @@ use Yajra\DataTables\Facades\DataTables;
 class KindsOfOccasionsController extends Controller
 {
     use CsvImportTrait;
+    const PAGINATION_NO=20;
 
     public function index(Request $request)
     {
+
+        $kinds_of_occasion=KindsOfOccasion::select('id','name','description','status');
+        if($request->search){
+            $kinds_of_occasion=$kinds_of_occasion->where('name','like','%'.$request->search.'%');
+        }
+        $kinds_of_occasion=$kinds_of_occasion->orderBy('id','desc')->paginate(self::PAGINATION_NO);
+        if ($request->ajax()) {
+            $table_data=view('advan.admin.KindsOfOccasions.table-data',compact('kinds_of_occasion'))->render();
+            return response()->json(['kinds_of_occasion'=>$table_data]);
+
+        }
+        return view('advan.admin.KindsOfOccasions.index',compact('kinds_of_occasion'));
         // abort_if(Gate::denies('kinds_of_occasion_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        if ($request->ajax()) {
-            $query = KindsOfOccasion::query()->select(sprintf('%s.*', (new KindsOfOccasion())->table));
-            $table = Datatables::of($query);
-
-            $table->addColumn('placeholder', '&nbsp;');
-            $table->addColumn('actions', '&nbsp;');
-
-            $table->editColumn('actions', function ($row) {
-                $viewGate = 'kinds_of_occasion_show';
-                $editGate = 'kinds_of_occasion_edit';
-                $deleteGate = 'kinds_of_occasion_delete';
-                $crudRoutePart = 'kinds-of-occasions';
-
-                return view('partials.datatablesActions', compact(
-                'viewGate',
-                'editGate',
-                'deleteGate',
-                'crudRoutePart',
-                'row'
-            ));
-            });
-
-            $table->editColumn('id', function ($row) {
-                return $row->id ? $row->id : '';
-            });
-            $table->editColumn('name', function ($row) {
-                return $row->name ? $row->name : '';
-            });
-            $table->editColumn('description', function ($row) {
-                return $row->description ? $row->description : '';
-            });
-            $table->editColumn('status', function ($row) {
-                return $row->status ? KindsOfOccasion::STATUS_SELECT[$row->status] : '';
-            });
-
-            $table->rawColumns(['actions', 'placeholder']);
-
-            return $table->make(true);
-        }
-
-        return view('advan.admin.kindsOfOccasions.index');
     }
 
     public function create()
