@@ -16,49 +16,25 @@ use Yajra\DataTables\Facades\DataTables;
 class CategoryController extends Controller
 {
     use CsvImportTrait;
+    const PAGINATION_NO=20;
 
     public function index(Request $request)
     {
         // abort_if(Gate::denies('category_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
-        if ($request->ajax()) {
-            $query = Category::query()->select(sprintf('%s.*', (new Category())->table));
-            $table = Datatables::of($query);
-
-            $table->addColumn('placeholder', '&nbsp;');
-            $table->addColumn('actions', '&nbsp;');
-
-            $table->editColumn('actions', function ($row) {
-                $viewGate = 'category_show';
-                $editGate = 'category_edit';
-                $deleteGate = 'category_delete';
-                $crudRoutePart = 'categories';
-
-                return view('partials.datatablesActions', compact(
-                'viewGate',
-                'editGate',
-                'deleteGate',
-                'crudRoutePart',
-                'row'
-            ));
-            });
-
-            $table->editColumn('id', function ($row) {
-                return $row->id ? $row->id : '';
-            });
-            $table->editColumn('name', function ($row) {
-                return $row->name ? $row->name : '';
-            });
-            $table->editColumn('status', function ($row) {
-                return $row->status ? Category::STATUS_SELECT[$row->status] : '';
-            });
-
-            $table->rawColumns(['actions', 'placeholder']);
-
-            return $table->make(true);
+        $categories=Category::select('id','name','status');
+        if($request->search){
+            $categories=$categories->where('name','like','%'.$request->search.'%')
+            ->orWhere('username','like','%'.$request->search.'%');
         }
+        $categories=$categories->orderBy('id','desc')->paginate(self::PAGINATION_NO);
+        if ($request->ajax()) {
+            $table_data=view('advan.admin.categories.table-data',compact('categories'))->render();
+            return response()->json(['categories'=>$table_data]);
 
-        return view('advan.admin.categories.index');
+        }
+        return view('advan.admin.categories.index',compact('categories'));
+
+
     }
 
     public function create()

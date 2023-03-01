@@ -5,8 +5,8 @@ use App\Http\Controllers\Admin\NotificationController;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\V1\AttendanceApiController;
 use App\Http\Controllers\Api\V1\CategoryApiController;
-use App\Http\Controllers\Api\V1\ClinicsApiController;
-use App\Http\Controllers\Api\V1\ClinicsSpecialtiesApiController;
+use App\Http\Controllers\Api\V1\ClientsApiController;
+use App\Http\Controllers\Api\V1\ClientsSpecialtiesApiController;
 use App\Http\Controllers\Api\V1\HitsApiController;
 use App\Http\Controllers\Api\V1\HitsTypeApiController;
 use App\Http\Controllers\Api\V1\KindsOfOccasionsApiController;
@@ -57,7 +57,7 @@ Route::get('/user', [AuthController::class,'user']);
 
 
     // Clinics Specialties
-Route::apiResource('clinics-specialties', ClinicsSpecialtiesApiController::class);
+Route::apiResource('clients-specialties', ClientsSpecialtiesApiController::class);
 
     // Kinds Of Occasions
 Route::apiResource('kinds-of-occasions', KindsOfOccasionsApiController::class);
@@ -73,8 +73,8 @@ Route::apiResource('hits-types', HitsTypeApiController::class);
  Route::post('hits/{id}/update',[HitsApiController::class,'update'] );
 
  // Clinics
- Route::post('clinics/media', [ClinicsApiController::class,'storeMedia'])->name('clinics.storeMedia');
- Route::apiResource('clinics', ClinicsApiController::class);
+ Route::post('clinics/media', [ClientsApiController::class,'storeMedia'])->name('clinics.storeMedia');
+ Route::apiResource('clinics', ClientsApiController::class);
 
   // Report
   Route::apiResource('reports', ReportApiController::class);
