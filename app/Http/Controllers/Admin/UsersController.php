@@ -101,14 +101,14 @@ class UsersController extends Controller
     {
         // abort_if(Gate::denies('user_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         if(!$request->id)
-        return response()->json(['status'=>false,'error'=>'لم يتم تحديد المنافس']);
+        return response()->json(['status'=>false,'error'=>'لم يتم تحديد المندوب']);
     $user=User::where('id',$request->id)->first();
     if(!$user)
-        return response()->json(['status'=>false,'error'=>'المنافس غير موجود']);
+        return response()->json(['status'=>false,'error'=>'المندوب غير موجود']);
     $delete=$user->delete();
     if(!$delete)
-        return response()->json(['status'=>false,'error'=>'لم يتم حذف المنافس']);
-    return response()->json(['status'=>true,'success'=>'تم حذف المنافس بنجاح']);
+        return response()->json(['status'=>false,'error'=>'لم يتم حذف المندوب']);
+    return response()->json(['status'=>true,'success'=>'تم حذف المندوب بنجاح']);
 
 
     }

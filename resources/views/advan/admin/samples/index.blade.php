@@ -59,7 +59,7 @@
 
         <div class="card-body py-0">
             <!--begin::Table-->
-            <div class="user-table-body">
+            <div class="samples-table-body">
 
                @includeIf('advan.admin.samples.table-data')
 
@@ -127,7 +127,21 @@
          @section('script')
          @parent
          <script>
+         function load_data_table(page = '') {
+        $.ajax({
+            url: '{{url("admin/samples/")}}?page=' + page,
+            data: {
+                search: $('#search_input').val()
+            },
+            type: "get",
+            success: function(response) {
+                $('.samples-table-body').html(response.samples)
 
+            },
+            error: function(response) {}
+
+        })
+    }
          $(document).on('click','.delete-sample',function(){
              var id = $(this).data('sample-id');
              Swal.fire({

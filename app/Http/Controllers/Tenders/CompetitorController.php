@@ -86,7 +86,7 @@ class CompetitorController extends Controller
                 'phone'=>$request->phone,
                 'color'=>$request->color,
                 // "user_id"=>Auth::id(),
-            "user_id"=>'1',
+                  "user_id"=>'1',
 
                 'status'=>$request->status,
                 'updated_at'=>Carbon::now()

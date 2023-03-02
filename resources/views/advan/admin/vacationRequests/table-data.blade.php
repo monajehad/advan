@@ -4,13 +4,12 @@
  <table class="table table-bordered " id="kt-table">
      <thead class="datatable-head">
          <tr class="text-center">
-            <th>#</th>
-                <th>اسم الثلاثي</th>
-                <th> البريد الالكتروني</th>
-                <th> الجوال</th>
-                <th> السكن</th>
-                <th> الرقم الوظيفي</th>
-                <th> الزيارات</th>
+             <th>#</th>
+                <th>اسم المندوب</th>
+                <th> مدة الاجازة</th>
+                <th> بداية الاجازة</th>
+                <th> نهاية الاجازة</th>
+                <th> السبب</th>
 
 
 
@@ -29,44 +28,44 @@
          </tr>
      </thead>
      <tbody class="text-center font-size-sm">
-        @forelse($users as $user)
-                <tr class="data-row">
-                    <td class="iteration">{{$loop->iteration}}</td>
-                    <td class="name">{{$user->name}}</td>
-                    <td class="name">{{$user->email}}</td>
-                    <td class="name">{{$user->mobile}}</td>
-                    <td class="name">{{$user->home_address}}</td>
-                    <td class="name">{{$user->jobId}}</td>
-                    <td class="name">{{$user->userHits()->count()}}</td>
+        @forelse($vacationRequests as $vacationRequest)
+        <tr class="data-row">
+            <td class="iteration">{{$loop->iteration}}</td>
+            <td class="name">{{$vacationRequest->user->name ??''}}</td>
+            <td class="name">{{$vacationRequest->days}}</td>
+            <td class="name">{{$vacationRequest->start_date}}</td>
+            <td class="name">{{$vacationRequest->end_date}}</td>
+            <td class="name">{{$vacationRequest->reason}}</td>
 
-                    {{-- <td class="name">{{$user->clinetHits->id}}</td> --}}
 
-                    {{-- @can('user-status') --}}
-                        @if($user->status==1)
-                        <td class="status">
-                            <button class="btn btn-sm  btn-shadow btn-success change-status"
-                            {{-- data-user-id="{{$user->id}}" --}}
-                                 {{-- @cannot('user-status') disabled @endcannot --}}
-                                 >
-                                مفعل
-                            </button>
-                        </td>
-                        @elseif($user->status==0)
-                        <td class="status">
+            {{-- <td class="name">{{$client->clinetHits->id}}</td> --}}
 
-                            <button class="btn btn-sm  btn-shadow btn-danger change-status"
-                            {{-- data-user-id="{{$user->id}}" --}}
-                                {{-- @cannot('user-status') disabled @endcannot --}}
+            {{-- @can('suppliers-status') --}}
+                @if($vacationRequest->status==1)
+                <td class="status">
+                    <button class="btn btn-sm  btn-shadow btn-success change-status"
+                    {{-- data-vacationRequest-id="{{$vacationRequest->id}}" --}}
+                         {{-- @cannot('suppliers-status') disabled @endcannot --}}
+                         >
+                        مفعل
+                    </button>
+                </td>
+                @elseif($vacationRequest->status==0)
+                <td class="status">
 
-                                >
-                                غير مفعل
-                            </button>
-                        </td>
-                        @endif
-                    {{-- @endcan --}}
-             {{-- @can('categories-update') --}}
+                    <button class="btn btn-sm  btn-shadow btn-danger change-status"
+                    {{-- data-vacationRequest-id="{{$vacationRequest->id}}" --}}
+                        {{-- @cannot('suppliers-status') disabled @endcannot --}}
+
+                        >
+                        غير مفعل
+                    </button>
+                </td>
+                @endif
+             {{-- @endcan --}}
+             {{-- @can('vacationRequests-update') --}}
              <td>
-                 <a class=" edit-category" href="/admin/users/{{$user->id}}/edit">
+                 <a class=" edit-vacationRequests" href="/admin/vacation-requests/{{$vacationRequest->id}}/edit">
                      <span class="svg-icon svg-icon-md"> <svg xmlns="http://www.w3.org/2000/svg"
                              xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px"
                              viewBox="0 0 24 24" version="1.1">
@@ -84,9 +83,9 @@
                  </a>
              </td>
              {{-- @endcan --}}
-             {{-- @can('categories-delete') --}}
+             {{-- @can('vacationRequests-delete') --}}
              <td>
-                 <a class=" btn-icon delete-user" data-user-id="{{$user->id}}" >
+                 <a class=" btn-icon delete-vacation" data-vacation-id="{{$vacationRequest->id}}" >
                      <span class="svg-icon svg-icon-md"> <svg xmlns="http://www.w3.org/2000/svg"
                              xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px"
                              viewBox="0 0 24 24" version="1.1">
@@ -106,15 +105,14 @@
          </tr>
          @empty
          <tr>
-             <td class="text-muted text-center font-size-lg" colspan="10">لا يوجد مندوبين</td>
+             <td class="text-muted text-center font-size-lg" colspan="10">لا يوجد عملاء</td>
          </tr>
          @endforelse
      </tbody>
  </table>
 </div>
 <div class="paging">
- {!! $users->links() !!}
+ {!! $vacationRequests->links() !!}
 </div>
-
 
 

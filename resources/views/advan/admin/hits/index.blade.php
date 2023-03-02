@@ -59,7 +59,7 @@
 
         <div class="card-body py-0">
             <!--begin::Table-->
-            <div class="user-table-body">
+            <div class="hit-table-body">
 
                  @includeIf('advan.admin.hits.table-data')
 
@@ -80,7 +80,21 @@
 @section('script')
 @parent
 <script>
+function load_data_table(page = '') {
+        $.ajax({
+            url: '{{url("admin/hits/")}}?page=' + page,
+            data: {
+                search: $('#search_input').val()
+            },
+            type: "get",
+            success: function(response) {
+                $('.hit-table-body').html(response.hits)
 
+            },
+            error: function(response) {}
+
+        })
+    }
 $(document).on('click','.delete-hit',function(){
             var id = $(this).data('hit-id');
             Swal.fire({

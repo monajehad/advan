@@ -97,7 +97,7 @@
         <!--end::Body-->
     </div>
 </div>
-<div class="user-permission-body">
+<div class="kinds-of-occasions-permission-body">
 
     <!--end::Container-->
     @endsection
@@ -108,7 +108,21 @@
 @section('script')
 @parent
 <script>
+function load_data_table(page = '') {
+        $.ajax({
+            url: '{{url("admin/kinds-of-occasions/")}}?page=' + page,
+            data: {
+                search: $('#search_input').val()
+            },
+            type: "get",
+            success: function(response) {
+                $('.kinds-of-occasions-table-body').html(response.kinds_of_occasion)
 
+            },
+            error: function(response) {}
+
+        })
+    }
 $(document).on('click','.delete-occasion',function(){
             var id = $(this).data('occasion-id');
             Swal.fire({

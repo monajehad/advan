@@ -60,7 +60,7 @@
 
         <div class="card-body py-0">
             <!--begin::Table-->
-            <div class="user-table-body">
+            <div class="reports-table-body">
 
                @includeIf('advan.admin.reports.table-data')
 
@@ -85,7 +85,21 @@
     @section('script')
     @parent
     <script>
+function load_data_table(page = '') {
+        $.ajax({
+            url: '{{url("admin/reports/")}}?page=' + page,
+            data: {
+                search: $('#search_input').val()
+            },
+            type: "get",
+            success: function(response) {
+                $('.reports-table-body').html(response.reports)
 
+            },
+            error: function(response) {}
+
+        })
+    }
     $(document).on('click','.delete-report',function(){
                 var id = $(this).data('report-id');
                 Swal.fire({

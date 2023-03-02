@@ -4,24 +4,15 @@
  <table class="table table-bordered " id="kt-table">
      <thead class="datatable-head">
          <tr class="text-center">
-            <th>#</th>
-                <th>اسم الثلاثي</th>
-                <th> البريد الالكتروني</th>
-                <th> الجوال</th>
-                <th> السكن</th>
-                <th> الرقم الوظيفي</th>
-                <th> الزيارات</th>
-
-
-
-                {{-- @can('suppliers-status') --}}
-                <th>الحالة</th>
-                {{-- @endcan --}}
-
+             <th>#</th>
+                <th>اسم المندوب</th>
+                <th>  التاريخ</th>
+                <th>  وقت الدخول</th>
+                <th>  وقت الانصراف</th>
+                <th>التتبع</th>
                 {{-- @can('suppliers-update') --}}
                 <th>التعديل</th>
                 {{-- @endcan --}}
-
                 {{-- @can('suppliers-delete') --}}
                 <th>حذف</th>
                 {{-- @endcan --}}
@@ -29,44 +20,41 @@
          </tr>
      </thead>
      <tbody class="text-center font-size-sm">
-        @forelse($users as $user)
-                <tr class="data-row">
-                    <td class="iteration">{{$loop->iteration}}</td>
-                    <td class="name">{{$user->name}}</td>
-                    <td class="name">{{$user->email}}</td>
-                    <td class="name">{{$user->mobile}}</td>
-                    <td class="name">{{$user->home_address}}</td>
-                    <td class="name">{{$user->jobId}}</td>
-                    <td class="name">{{$user->userHits()->count()}}</td>
+        @forelse($attendances as $attendance)
+        <tr class="data-row">
+            <td class="iteration">{{$loop->iteration}}</td>
+            <td class="name">{{$attendance->user->name ??''}}</td>
+            <td class="name">{{$attendance->date}}</td>
+            <td class="name">{{$attendance->start_time}}</td>
+            <td class="name">{{$attendance->end_time}}</td>
 
-                    {{-- <td class="name">{{$user->clinetHits->id}}</td> --}}
 
-                    {{-- @can('user-status') --}}
-                        @if($user->status==1)
-                        <td class="status">
-                            <button class="btn btn-sm  btn-shadow btn-success change-status"
-                            {{-- data-user-id="{{$user->id}}" --}}
-                                 {{-- @cannot('user-status') disabled @endcannot --}}
-                                 >
-                                مفعل
-                            </button>
-                        </td>
-                        @elseif($user->status==0)
-                        <td class="status">
+            {{-- <td class="name">{{$client->clinetHits->id}}</td> --}}
 
-                            <button class="btn btn-sm  btn-shadow btn-danger change-status"
-                            {{-- data-user-id="{{$user->id}}" --}}
-                                {{-- @cannot('user-status') disabled @endcannot --}}
 
-                                >
-                                غير مفعل
-                            </button>
-                        </td>
-                        @endif
-                    {{-- @endcan --}}
-             {{-- @can('categories-update') --}}
+               {{-- @can('attendances-update') --}}
+               <td>
+                <a class=" edit-attendance" href="/admin/attendances/{{$attendance->id}}/track">
+                    <span class="svg-icon svg-icon-md"> <svg xmlns="http://www.w3.org/2000/svg"
+                            xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px"
+                            viewBox="0 0 24 24" version="1.1">
+                            <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                <rect x="0" y="0" width="24" height="24"></rect>
+                                <path
+                                    d="M8,17.9148182 L8,5.96685884 C8,5.56391781 8.16211443,5.17792052 8.44982609,4.89581508 L10.965708,2.42895648 C11.5426798,1.86322723 12.4640974,1.85620921 13.0496196,2.41308426 L15.5337377,4.77566479 C15.8314604,5.0588212 16,5.45170806 16,5.86258077 L16,17.9148182 C16,18.7432453 15.3284271,19.4148182 14.5,19.4148182 L9.5,19.4148182 C8.67157288,19.4148182 8,18.7432453 8,17.9148182 Z"
+                                    fill="#000000" fill-rule="nonzero"
+                                    transform="translate(12.000000, 10.707409) rotate(-135.000000) translate(-12.000000, -10.707409) ">
+                                </path>
+                                <rect fill="#000000" opacity="0.3" x="5" y="20" width="15" height="2" rx="1">
+                                </rect>
+                            </g>
+                        </svg> </span>
+                </a>
+            </td>
+            {{-- @endcan --}}
+             {{-- @can('attendances-update') --}}
              <td>
-                 <a class=" edit-category" href="/admin/users/{{$user->id}}/edit">
+                 <a class=" edit-attendance" href="/admin/attendances/{{$attendance->id}}/edit">
                      <span class="svg-icon svg-icon-md"> <svg xmlns="http://www.w3.org/2000/svg"
                              xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px"
                              viewBox="0 0 24 24" version="1.1">
@@ -84,9 +72,9 @@
                  </a>
              </td>
              {{-- @endcan --}}
-             {{-- @can('categories-delete') --}}
+             {{-- @can('attendances-delete') --}}
              <td>
-                 <a class=" btn-icon delete-user" data-user-id="{{$user->id}}" >
+                 <a class=" btn-icon delete-attendance" data-attendance-id="{{$attendance->id}}" >
                      <span class="svg-icon svg-icon-md"> <svg xmlns="http://www.w3.org/2000/svg"
                              xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px"
                              viewBox="0 0 24 24" version="1.1">
@@ -106,15 +94,14 @@
          </tr>
          @empty
          <tr>
-             <td class="text-muted text-center font-size-lg" colspan="10">لا يوجد مندوبين</td>
+             <td class="text-muted text-center font-size-lg" colspan="10">لا يوجد حضور</td>
          </tr>
          @endforelse
      </tbody>
  </table>
 </div>
 <div class="paging">
- {!! $users->links() !!}
+ {!! $attendances->links() !!}
 </div>
-
 
 

@@ -83,7 +83,7 @@
 
         <div class="card-body py-0">
             <!--begin::Table-->
-            <div class="user-table-body">
+            <div class="employee-table-body">
 
                 @includeIf('advan.admin.employee.table-data')
             </div>
@@ -110,7 +110,7 @@
             },
             type: "get",
             success: function(response) {
-                $('.user-table-body').html(response.users)
+                $('.employee-table-body').html(response.employees)
 
             },
             error: function(response) {}
@@ -260,8 +260,8 @@
             })
 
         })
-        // $(document).on('click','.change-status',function(){
-        function postChangePasswordForm() {
+        $(document).on('click','.change-status',function(){
+        // function postChangePasswordForm() {
 
             var id = $(this).data('employee-id');
             $.ajaxSetup({
@@ -290,7 +290,7 @@
                 },
 
             });
-        }
+        })
 
         //  $('#user-form').validate({
         //         rules:{

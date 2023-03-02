@@ -62,7 +62,8 @@
             <!--begin::Table-->
             <div class="user-table-body">
 
-               @includeIf('advan.admin.users.table-data')
+                @includeIf('advan.admin.users.table-data')
+
 
             </div>
 
@@ -80,46 +81,9 @@
     @endsection
 
 
-
-
 @section('script')
 @parent
 <script>
-    $(function () {
-  let dtButtons = $.extend(true, [], $.fn.dataTable.defaults.buttons)
-// @can('users_delete')
-  let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
-  let deleteButton = {
-    text: deleteButtonTrans,
-    url: "{{ route('admin.users.massDestroy') }}",
-    className: 'btn-danger',
-    action: function (e, dt, node, config) {
-      var ids = $.map(dt.rows({ selected: true }).data(), function (entry) {
-          return entry.id
-      });
-
-      if (ids.length === 0) {
-        alert('{{ trans('global.datatables.zero_selected') }}')
-
-        return
-      }
-
-      if (confirm('{{ trans('global.areYouSure') }}')) {
-        $.ajax({
-          headers: {'x-csrf-token': _token},
-          method: 'POST',
-          url: config.url,
-          data: { ids: ids, _method: 'DELETE' }})
-          .done(function () { location.reload() })
-      }
-    }
-  }
-  dtButtons.push(deleteButton)
-// @endcan
-
-
-});
-
 
 $(document).on('click','.delete-user',function(){
             var id = $(this).data('user-id');

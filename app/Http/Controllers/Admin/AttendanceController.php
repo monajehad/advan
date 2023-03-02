@@ -18,57 +18,28 @@ use Yajra\DataTables\Facades\DataTables;
 class AttendanceController extends Controller
 {
     use CsvImportTrait;
+    const PAGINATION_NO=20;
 
     public function index(Request $request)
     {
         // abort_if(Gate::denies('attendance_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
-        if ($request->ajax()) {
-            $query = Attendance::with(['user'])->select(sprintf('%s.*', (new Attendance())->table));
-            $table = Datatables::of($query);
-
-            $table->addColumn('placeholder', '&nbsp;');
-            $table->addColumn('actions', '&nbsp;');
-
-            $table->editColumn('actions', function ($row) {
-                $viewGate = 'attendance_show';
-                $trackGate = 'attendance_track';
-                $editGate = 'attendance_edit';
-                $deleteGate = 'attendance_delete';
-                $crudRoutePart = 'attendances';
-
-                return view('partials.datatablesActions', compact(
-                'viewGate',
-                'editGate',
-                'deleteGate',
-                'crudRoutePart',
-                'row',
-                'trackGate',
-            ));
-            });
-
-            $table->editColumn('id', function ($row) {
-                return $row->id ? $row->id : '';
-            });
-            $table->addColumn('user_name', function ($row) {
-                return $row->user ? $row->user->name : '';
-            });
-
-            $table->editColumn('start_time', function ($row) {
-                return $row->start_time ? $row->start_time : '';
-            });
-            $table->editColumn('end_date', function ($row) {
-                return $row->end_date ? $row->end_date : '';
-            });
-
-            $table->rawColumns(['actions', 'placeholder', 'user']);
-
-            return $table->make(true);
+        $attendances=Attendance::with('user')->select('id','user_id','start_time','end_time','date','tracking_array');
+        if($request->search){
+            $attendances=$attendances->where('name','like','%'.$request->search.'%')
+            ->orWhere('username','like','%'.$request->search.'%');
         }
+        $attendances=$attendances->orderBy('id','desc')->paginate(self::PAGINATION_NO);
+        if ($request->ajax()) {
+            $table_data=view('advan.admin.attendances.table-data',compact('attendances'))->render();
+            return response()->json(['attendances'=>$table_data]);
 
+        }
         $users = User::where('user_type' , 2)->get();
 
-        return view('advan.admin.attendances.index', compact('users'));
+        return view('advan.admin.attendances.index',compact('attendances','users'));
+
+
+
     }
 
     public function create()
@@ -132,13 +103,22 @@ class AttendanceController extends Controller
         return view('advan.admin.attendances.track', compact('attendance' , 'hit'));
     }
 
-    public function destroy(Attendance $attendance)
+    public function destroy(Request $request)
     {
-        // abort_if(Gate::denies('attendance_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        if(!$request->id)
+        return response()->json(['status'=>false,'error'=>'لم يتم تحديد الحضور']);
+        $attendance=Attendance::where('id',$request->id)->first();
+       if(!$attendance)
+        return response()->json(['status'=>false,'error'=>'الحضور غير موجود']);
+       $delete=$attendance->delete();
+       if(!$delete)
+        return response()->json(['status'=>false,'error'=>'لم يتم حذف الحضور']);
+       return response()->json(['status'=>true,'success'=>'تم حذف الحضور بنجاح']);
 
-        $attendance->delete();
 
-        return back();
+       return redirect()->route('admin.categories.index');
+
+
     }
 
     public function massDestroy(MassDestroyAttendanceRequest $request)

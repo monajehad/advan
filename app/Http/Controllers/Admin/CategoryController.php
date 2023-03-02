@@ -89,11 +89,15 @@ class CategoryController extends Controller
 
 
     }
-    public function updateStatus(Request $request)
+    public function updateStatus($id)
     {
-        $data = Category::findOrFail($request->id);
-        $data[$request->key] = $request->status ? 1 : 0;
-        $data->save();
+        $data = Category::findOrFail($id);
+        if($data->status==1)
+            $data->status=0;
+        else if($data->status==0)
+            $data->status=1;
+
+        $data->update();
         return redirect()->route('admin.categories.index');
     }
     public function massDestroy(MassDestroyCategoryRequest $request)

@@ -86,7 +86,7 @@
 
         <div class="card-body py-0">
             <!--begin::Table-->
-            <div class="user-table-body">
+            <div class="category-table-body">
 
                 @includeIf('advan.admin.categories.table-data')
             </div>
@@ -106,7 +106,21 @@
  @section('script')
 @parent
 <script>
+ function load_data_table(page = '') {
+        $.ajax({
+            url: '{{url("admin/categories/")}}?page=' + page,
+            data: {
+                search: $('#search_input').val()
+            },
+            type: "get",
+            success: function(response) {
+                $('.category-table-body').html(response.categories)
 
+            },
+            error: function(response) {}
+
+        })
+    }
 $(document).on('click','.delete-category',function(){
             var id = $(this).data('category-id');
             Swal.fire({

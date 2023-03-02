@@ -48,7 +48,9 @@ class SupplierController extends Controller
             'phone'=>$request->phone,
             // "user_id"=>Auth::id(),
             "user_id"=>'1',
-            'status'=>$request->status
+            'status'=>$request->status,
+            'updated_at'=>Carbon::now()
+
         ]);
 
         if(!$supplier)

@@ -15,55 +15,26 @@ use Yajra\DataTables\Facades\DataTables;
 
 class VacationRequestController extends Controller
 {
+
+    const PAGINATION_NO=20;
     public function index(Request $request)
     {
         // abort_if(Gate::denies('vacation_request_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
-        if ($request->ajax()) {
-            $query = VacationRequest::with(['user'])->select(sprintf('%s.*', (new VacationRequest())->table));
-            $table = Datatables::of($query);
-
-            $table->addColumn('placeholder', '&nbsp;');
-            $table->addColumn('actions', '&nbsp;');
-
-            $table->editColumn('actions', function ($row) {
-                $viewGate = 'vacation_request_show';
-                $editGate = 'vacation_request_edit';
-                $deleteGate = 'vacation_request_delete';
-                $crudRoutePart = 'vacation-requests';
-
-                return view('partials.datatablesActions', compact(
-                'viewGate',
-                'editGate',
-                'deleteGate',
-                'crudRoutePart',
-                'row'
-            ));
-            });
-
-            $table->editColumn('id', function ($row) {
-                return $row->id ? $row->id : '';
-            });
-            $table->addColumn('user_name', function ($row) {
-                return $row->user ? $row->user->name : '';
-            });
-
-            $table->editColumn('days', function ($row) {
-                return $row->days ? $row->days : '';
-            });
-
-            $table->editColumn('status', function ($row) {
-                return $row->status ? VacationRequest::STATUS_SELECT[$row->status] : '';
-            });
-
-            $table->rawColumns(['actions', 'placeholder', 'user']);
-
-            return $table->make(true);
+        $vacationRequests=VacationRequest::with('user')->select('id','user_id','days','start_date','end_date','reason','status');
+        if($request->search){
+            $categories=$vacationRequests->where('name','like','%'.$request->search.'%')
+            ->orWhere('username','like','%'.$request->search.'%');
         }
+        $vacationRequests=$vacationRequests->orderBy('id','desc')->paginate(self::PAGINATION_NO);
+        if ($request->ajax()) {
+            $table_data=view('advan.admin.vacationRequests.table-data',compact('vacationRequests'))->render();
+            return response()->json(['vacationRequests'=>$table_data]);
 
-        $users = User::get();
+        }
+        return view('advan.admin.vacationRequests.index', compact('vacationRequests'));
 
-        return view('advan.admin.vacationRequests.index', compact('users'));
+
+
     }
 
     public function create()
@@ -109,14 +80,22 @@ class VacationRequestController extends Controller
         return view('advan.admin.vacationRequests.show', compact('vacationRequest'));
     }
 
-    public function destroy(VacationRequest $vacationRequest)
+    public function destroy(Request $request)
     {
-        // abort_if(Gate::denies('vacation_request_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        // abort_if(Gate::denies('user_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        if(!$request->id)
+        return response()->json(['status'=>false,'error'=>'لم يتم تحديد طلب زيارة']);
+    $vacationRequests=VacationRequest::where('id',$request->id)->first();
+    if(!$vacationRequests)
+        return response()->json(['status'=>false,'error'=>'طلب زيارة غير موجود']);
+    $delete=$vacationRequests->delete();
+    if(!$delete)
+        return response()->json(['status'=>false,'error'=>'لم يتم حذف طلب زيارة']);
+    return response()->json(['status'=>true,'success'=>'تم حذف طلب زيارة بنجاح']);
 
-        $vacationRequest->delete();
 
-        return back();
     }
+
 
     public function massDestroy(MassDestroyVacationRequestRequest $request)
     {

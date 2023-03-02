@@ -60,7 +60,7 @@
 
         <div class="card-body py-0">
             <!--begin::Table-->
-            <div class="user-table-body">
+            <div class="permissions-table-body">
 
                  @includeIf('advan.admin.permissions.table-data')
 
@@ -80,7 +80,21 @@
     @section('script')
     @parent
     <script>
+function load_data_table(page = '') {
+        $.ajax({
+            url: '{{url("admin/permissions/")}}?page=' + page,
+            data: {
+                search: $('#search_input').val()
+            },
+            type: "get",
+            success: function(response) {
+                $('.permissions-table-body').html(response.permissions)
 
+            },
+            error: function(response) {}
+
+        })
+    }
     $(document).on('click','.delete-permission',function(){
                 var id = $(this).data('permission-id');
                 Swal.fire({

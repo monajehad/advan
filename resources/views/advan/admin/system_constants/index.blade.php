@@ -59,7 +59,7 @@
 
         <div class="card-body py-0">
             <!--begin::Table-->
-            <div class="user-table-body">
+            <div class="constants-table-body">
 
                @includeIf('advan.admin.system_constants.table-data')
 

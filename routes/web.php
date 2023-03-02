@@ -130,6 +130,7 @@ Route::group([ 'prefix' => 'admin', 'as' => 'admin.']
          // Vacation Request
       Route::delete('vacation-requests/destroy', [VacationRequestController::class,'massDestroy'])->name('vacation-requests.massDestroy');
       Route::resource('vacation-requests', VacationRequestController::class);
+      Route::post('vacation-requests/delete', [VacationRequestController::class,'destroy'])->name('vacation-requests.delete');
 
 
       // Attendance
@@ -138,6 +139,7 @@ Route::group([ 'prefix' => 'admin', 'as' => 'admin.']
        Route::post('attendances/process-csv-import', [AttendanceController::class,'processCsvImport'])->name('attendances.processCsvImport');
        Route::resource('attendances', AttendanceController::class);
        Route::get('attendances/{id}/track', [AttendanceController::class,'track'])->name('attendances.track');
+       Route::post('attendances/delete', [AttendanceController::class,'destroy'])->name('attendances.delete');
 
          // Hits Type
        Route::delete('hits-types/destroy', [HitsTypeController::class,'massDestroy'])->name('hits-types.massDestroy');
@@ -163,7 +165,7 @@ Route::group([ 'prefix' => 'admin', 'as' => 'admin.']
     Route::post('categories/parse-csv-import', [CategoryController::class,'parseCsvImport'])->name('categories.parseCsvImport');
     Route::post('categories/process-csv-import', [CategoryController::class,'processCsvImport'])->name('categories.processCsvImport');
     Route::resource('categories', CategoryController::class);
-    Route::post('/categories/status/update' , [CategoryController::class , 'updateStatus'])->name('categories.updateStatus');
+    Route::post('/categories/status/update/{id}' , [CategoryController::class , 'updateStatus'])->name('categories.updateStatus');
     Route::post('categories/delete', [CategoryController::class,'destroy'])->name('categories.delete');
 
      // Kinds Of Occasions

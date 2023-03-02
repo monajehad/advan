@@ -60,7 +60,7 @@
 
         <div class="card-body py-0">
             <!--begin::Table-->
-            <div class="user-table-body">
+            <div class="roles-table-body">
 
                  @includeIf('advan.admin.roles.table-data')
 
@@ -79,7 +79,21 @@
     @section('script')
     @parent
     <script>
+ function load_data_table(page = '') {
+        $.ajax({
+            url: '{{url("admin/roles/")}}?page=' + page,
+            data: {
+                search: $('#search_input').val()
+            },
+            type: "get",
+            success: function(response) {
+                $('.roles-table-body').html(response.roles)
 
+            },
+            error: function(response) {}
+
+        })
+    }
     $(document).on('click','.delete-role',function(){
         var id = $(this).data('role-id');
         Swal.fire({
