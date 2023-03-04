@@ -36,20 +36,21 @@
 
                   @if($employee->status==1)
                   <td class="status">
-                      <button class="btn btn-sm  btn-shadow btn-success change-status"
+                    <span class="badge badge-pill badge-success">فعال</span>
+                      <!-- <button class="btn btn-sm  btn-shadow btn-success change-status"
                           data-employee-id="{{$employee->id}}" {{-- @cannot('users-status') disabled @endcannot --}}>
                           مفعل
-                      </button>
+                      </button> -->
                   </td>
                   @elseif($employee->status==0)
                   <td class="status">
-
-                      <button class="btn btn-sm  btn-shadow btn-danger change-status"
+                    <span class="badge badge-pill badge-warning">غير فعال</span>
+                      <!-- <button class="btn btn-sm  btn-shadow btn-danger change-status"
                           data-employee-id="{{$employee->id}}" {{-- @cannot('users-status')
                                   disabled
                                   @endcannot --}}>
                           غير مفعل
-                      </button>
+                      </button> -->
                   </td>
                   @endif
                   {{-- @endcan --}}
