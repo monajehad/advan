@@ -33,7 +33,7 @@
             </h2>
             <div class="card-toolbar">
                 {{-- @can('users-add') --}}
-                <a id="add_button" class="btn btn-primary font-size-sm ml-3" href="{{ route('admin.categories.create') }}">
+                <a  data-toggle="modal" data-target="#add_button" class="btn btn-primary font-size-sm ml-3">
                     <span class="svg-icon svg-icon-md svg-icon-2x">
                         <!--begin::Svg Icon | path:C:\wamp64\www\keenthemes\legacy\metronic\theme\html\demo1\dist/../src/media/svg/icons\Code\Plus.svg--><svg
                             xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px"
@@ -95,6 +95,8 @@
         </div>
         <!--end::Body-->
     </div>
+    @includeIf('advan.admin.categories.create')
+    @includeIf('advan.admin.categories.edit')
 
 
 
@@ -166,6 +168,84 @@ $(document).on('click','.delete-category',function(){
             })
 
         })
+        $(document).on('click','.edit-category',function(){
+                 var id = $(this).data('category-id');
 
+                $.ajax({
+                    url: '{{url("admin/categories/data/")}}/'+id,
+                    type: "get",
+                    success: function( response ) {
+                        if(response.status==true){
+                            $('#name').val(response.category.name)
+                                if(response.category.status==1){
+                                    $('#status').prop('checked', true);
+                                }
+                                else if(response.category.status==0){
+                                    $('#status').prop('checked', false);
+                                }
+
+                        }else{
+                            Swal.fire({
+                                showCloseButton: true,
+                                icon: 'error',
+                                title: response.error,
+                                confirmButtonText: 'موافق'
+                            })
+                        }
+
+                    },
+                    error:function(response){
+
+                    },
+                    complete:function(response){
+                        $('#edit-category').modal('show');
+                    }
+                });
+            })
+
+
+            $(document).on('click','#save',function(){
+            //   let hidden=$('#hidden').val();
+             $.ajaxSetup({
+               headers: {
+               'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+              }
+              });
+      $.ajax({
+        url: '{{route("admin.categoryUpdate")}}' ,
+        type: "POST",
+        data: $('#category-form').serialize(),
+        success: function( response ) {
+            if(response.status==true){
+                load_data_table()
+                Swal.fire({
+                    showCloseButton: true,
+                    icon: 'success',
+                    title: 'نجاح التعديل.',
+                    text:response.success,
+                    confirmButtonText: 'موافق'
+                })
+
+                $('#category-form').trigger("reset");
+                $('#edit-category').modal('hide');
+
+            }else{
+                Swal.fire({
+                    showCloseButton: true,
+                    icon: 'error',
+                    title: 'خطأ في التعديل',
+                    text: response.error,
+                    confirmButtonText: 'موافق'
+                    })
+            }
+        },
+        error:function(response){
+
+        }
+    });
+
+
+
+})
 </script>
 @endsection

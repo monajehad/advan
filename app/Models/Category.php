@@ -12,10 +12,7 @@ class Category extends Model
     use SoftDeletes;
     use HasFactory;
     protected $connection = 'mysql';
-    public const STATUS_SELECT = [
-        '0' => 'غير فعال',
-        '1' => 'فعال',
-    ];
+
 
     public $table = 'categories';
 

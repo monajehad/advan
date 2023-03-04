@@ -74,7 +74,7 @@ class EmployeeController extends Controller
         //     $employee->fill(['image' => $image])->save();
         // }
         $employee->roles()->sync($request->input('roles', []));
-        $employee->save();
+        // $employee->save();
 
 
         if(!$employee)

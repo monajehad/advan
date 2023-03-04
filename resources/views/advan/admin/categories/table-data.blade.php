@@ -29,26 +29,27 @@
 
                   @if($category->status==1)
                   <td class="status">
-                      <a class="btn btn-sm  btn-shadow btn-success change-status"
-                      href="{{route('admin.categories.updateStatus', $category->id)}}"{{-- @cannot('categories-status') disabled @endcannot --}}>
+                    <span class="badge badge-pill badge-success">فعال</span>
+                      <!-- <button class="btn btn-sm  btn-shadow btn-success change-status"
+                          data-category-id="{{$category->id}}" {{-- @cannot('users-status') disabled @endcannot --}}>
                           مفعل
-                  </a>
+                      </button> -->
                   </td>
                   @elseif($category->status==0)
                   <td class="status">
-
-                      <a class="btn btn-sm  btn-shadow btn-danger change-status"
-                      href="{{route('admin.categories.updateStatus', $category->id)}}" {{-- @cannot('categories-status')
+                    <span class="badge badge-pill badge-warning">غير فعال</span>
+                      <!-- <button class="btn btn-sm  btn-shadow btn-danger change-status"
+                          data-category-id="{{$category->id}}" {{-- @cannot('users-status')
                                   disabled
                                   @endcannot --}}>
                           غير مفعل
-                  </a>
+                      </button> -->
                   </td>
                   @endif
                   {{-- @endcan --}}
                   {{-- @can('categories-update') --}}
                   <td>
-                      <a class=" edit-category" href="/admin/categories/{{$category->id}}/edit">
+                      <button class=" edit-category"  data-category-id="{{ $category->id }}">
                           <span class="svg-icon svg-icon-md"> <svg xmlns="http://www.w3.org/2000/svg"
                                   xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px"
                                   viewBox="0 0 24 24" version="1.1">
@@ -63,7 +64,7 @@
                                       </rect>
                                   </g>
                               </svg> </span>
-                      </a>
+                      </button>
                   </td>
                   {{-- @endcan --}}
                   {{-- @can('categories-delete') --}}

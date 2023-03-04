@@ -76,7 +76,7 @@
                   {{-- @endcan --}}
                   {{-- @can('users-password') --}}
                   <td>
-                      <button class="  change-password" data-employee-id="{{$employee->id}}">
+                      <button class="change-password" data-employee-id="{{$employee->id}}">
                           <span class="svg-icon svg-icon-md svg-icon-2x">
                               <!--begin::Svg Icon | path:C:\wamp64\www\keenthemes\legacy\metronic\theme\html\demo1\dist/../src/media/svg/icons\General\Lock.svg--><svg
                                   xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"

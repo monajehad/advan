@@ -8,8 +8,10 @@ use App\Http\Requests\MassDestroyCategoryRequest;
 use App\Http\Requests\StoreCategoryRequest;
 use App\Http\Requests\UpdateCategoryRequest;
 use App\Models\Category;
+use Illuminate\Support\Facades\Validator;
 use Gate;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 use Symfony\Component\HttpFoundation\Response;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -37,32 +39,59 @@ class CategoryController extends Controller
 
     }
 
-    public function create()
+    public function get_category($id)
     {
-        // abort_if(Gate::denies('category_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        $category=Category::where('id',$id)
+        ->select('id','name','status')
+        ->first();
 
-        return view('advan.admin.categories.create');
+        if(!$category)
+            return response()->json(['status'=>false,'error'=>'المورد غير موجود']);
+
+        return response()->json(['status'=>true,'category'=>$category]);
     }
 
     public function store(StoreCategoryRequest $request)
     {
-        $category = Category::create($request->all());
+        $request->status= (isset($request->status))? 1: 0;
+        $category=Category::create([
+            'name'=>$request->name,
+
+             'status'=>$request->status,
+             'updated_at'=>Carbon::now()
+
+        ]);
+        // $category = Category::create($request->all());
 
         return redirect()->route('admin.categories.index');
     }
 
-    public function edit(Category $category)
+
+    public function updateCategory(UpdateCategoryRequest $request)
     {
-        // abort_if(Gate::denies('category_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        // $validation=Validator::make($request->all(),$this->rules($request->hidden),$this->messages());
+        // if ($validation->fails()) {
+        //     return response()->json(['status'=>false,'error'=>$validation->errors()->first()]);
+        // }
+        $category=Category::where('id',$request->hidden)->first();
 
-        return view('advan.admin.categories.edit', compact('category'));
-    }
+        $request->status= (isset($request->status))? 1: 0;
+        // $category=Category::where('id',$request->hidden)->first();
+        if(!$category)
+            return response()->json(['status'=>false,'error'=>'التصنيف غير موجود']);
+            $update=$category->update([
+                'name'=>$request->name,
+                'status'=>$request->status,
 
-    public function update(UpdateCategoryRequest $request, Category $category)
-    {
-        $category->update($request->all());
 
-        return redirect()->route('admin.categories.index');
+            ]);
+        if(!$update)
+            return response()->json(['status'=>false,'error'=>'لم يتم تعديل التصنيف']);
+        return response()->json(['status'=>true,'success'=>'تم تعديل التصنيف بنجاح']);
+
+        // $category->update($request->all());
+
+        // return redirect()->route('admin.categories.index');
     }
 
     public function show(Category $category)

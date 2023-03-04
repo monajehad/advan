@@ -169,7 +169,19 @@ class HitsController extends Controller
 
         return redirect()->route('admin.hits.index');
     }
+    public function get_hit($id)
+    {
+        $hit=Hit::where('hits.id',$id)
+        ->select('hits.id','hits.client_id',
+        'hits.date_time','hits.visit_type_id','hits.duration_visit','hits.number_samples'
+        ,'hits.address','hits.report_type','hits.report_status','hits.user_id','hits.note','hits.type','hits.category','hits.status'
+        )
+        ->first();
+        if(!$hit)
+            return response()->json(['status'=>false,'error'=>'الصنف غير موجود']);
 
+        return response()->json(['status'=>true,'hit'=>$hit]);
+    }
     public function edit(Hit $hit)
     {
         // abort_if(Gate::denies('hit_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');

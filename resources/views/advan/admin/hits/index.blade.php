@@ -70,7 +70,8 @@
         <!--end::Body-->
     </div>
 </div>
-<div class="user-permission-body">
+{{-- <div class="user-permission-body"> --}}
+    @includeIf('advan.admin.hits.edit')
 
     <!--end::Container-->
     @endsection
@@ -141,5 +142,43 @@ $(document).on('click','.delete-hit',function(){
 
         })
 
+
+ // })
+ $(document).on('click','.edit-hit',function(){
+            var id = $(this).data('hit-id');
+            $('#hidden').val(id)
+            $.ajax({
+                url: '{{url("admin/hit/data/")}}/'+id,
+                type: "get",
+                success: function( response ) {
+                    if(response.status==true){
+                        // $('#client_id').val(response.hit.client_id)
+                        // $('#type').val(response.hit.type)
+                            if(response.hit.status==1){
+                                $('#status').prop('checked', true);
+                            }
+                            else if(response.hit.status==0){
+                                $('#status').prop('checked', false);
+                            }
+
+                    }else{
+                        Swal.fire({
+                            showCloseButton: true,
+                            icon: 'error',
+                            title: response.error,
+                            confirmButtonText: 'موافق'
+                        })
+                    }
+
+                },
+                error:function(response){
+
+                },
+                complete:function(response){
+                    $('#edit-hit').modal('show');
+                }
+            });
+
+        })
 </script>
 @endsection

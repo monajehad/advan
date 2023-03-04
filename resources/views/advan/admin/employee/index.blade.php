@@ -96,7 +96,7 @@
     @includeIf('advan.admin.employee.sub.add')
 
 </div>
-<div class="user-permission-body">
+{{-- <div class="user-permission-body"> --}}
 
     <!--end::Container-->
     @endsection
@@ -483,3 +483,4 @@
     })
     </script>
     @endsection
+

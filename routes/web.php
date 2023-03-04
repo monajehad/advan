@@ -154,6 +154,7 @@ Route::group([ 'prefix' => 'admin', 'as' => 'admin.']
       Route::get('hits-map', [HitsController::class,'map'])->name('hits.hitsMap');
       Route::get('note', [HitsController::class,'note'])->name('hits.note');
       Route::post('hits/delete', [HitsController::class,'destroy'])->name('hits.delete');
+      Route::get('hits/data/{id}', [HitsController::class,'get_hit'])->name('hits.data');
 
       Route::get('/online_map', function () {
         $users = User::where('user_type' , 2)->where('status' , 1)->get();
@@ -167,6 +168,8 @@ Route::group([ 'prefix' => 'admin', 'as' => 'admin.']
     Route::resource('categories', CategoryController::class);
     Route::post('/categories/status/update/{id}' , [CategoryController::class , 'updateStatus'])->name('categories.updateStatus');
     Route::post('categories/delete', [CategoryController::class,'destroy'])->name('categories.delete');
+    Route::get('categories/data/{id}', [CategoryController::class,'get_category'])->name('data');
+    Route::post('categoriesUpdate', [CategoryController::class,'updateCategory'])->name('categoryUpdate');
 
      // Kinds Of Occasions
      Route::delete('kinds-of-occasions/destroy', [KindsOfOccasionsController::class,'massDestroy'])->name('kinds-of-occasions.massDestroy');
