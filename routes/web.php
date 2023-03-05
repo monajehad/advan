@@ -159,7 +159,7 @@ Route::group([ 'prefix' => 'admin', 'as' => 'admin.']
       Route::get('/online_map', function () {
         $users = User::where('user_type' , 2)->where('status' , 1)->get();
         return view('advan.admin.onlineMap' , compact('users'));
-    });
+    })->name('online_map');
 
        // Category
     Route::delete('categories/destroy', [CategoryController::class,'massDestroy'])->name('categories.massDestroy');

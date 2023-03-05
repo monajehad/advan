@@ -22,18 +22,24 @@ class FCMController extends Controller
 
 
          $user = User::findOrFail($user_id);
-
         $user->fcm_token = $fcm_token;
         $user->save();
+
         return response()->json([
             'success'=>true,
             'message'=>'User token updated successfully.'
-        ]);
+       ]);
      }
      public function get(){
         $chats=Chat::all();
+        $users=User::all();
+        // if($req->search){
+            $users=$users->where('name','like','%'.$req->search.'%')
+            ->orWhere('users.name','like','%'.$req->search.'%');
+        // }
        return view('advan.admin.fcm.index',[
         'chats' =>$chats,
+        'users'=>$users,
        ]);
      }
 

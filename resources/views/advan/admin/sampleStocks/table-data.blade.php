@@ -35,7 +35,7 @@ class="table-responsive datatable datatable-bordered datatable-head-custom datat
             <td class="name">
                 {{$sample_stock->item ? $sample_stock->item->name : ''}}
             </td>
-            <td class="name">{{$sample_stock->category->name }}</td>
+            <td class="name">{{$sample_stock->category->name ??'' }}</td>
             <td class="unit">
 
            {{-- @foreach ($items as $item) --}}
