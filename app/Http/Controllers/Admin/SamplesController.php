@@ -41,28 +41,33 @@ class SamplesController extends Controller
     }
 
 
-        $sample_stocks = SampleStock::where('status' , 1)->get();
+        // $sample_stocks = SampleStock::where('status' , 1)->get();
         $users         = User::where('status' , 1)->get();
-        return view('advan.admin.samples.index', compact('samples','sample_stocks', 'users'));
+        $unit_select=SystemConstant::select('id','name','value','type')->where([['status',1],['type','unit']])->orderBy('order')->get();
+        $data['unit_select']=$unit_select;
+
+        $categories = Category::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $sample_stocks = SampleStock::where('status', 1)->get()->pluck('name', 'id','status');
+
+        $users = User::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        return view('advan.admin.samples.index', compact('samples','sample_stocks', 'users',,'data','categories'));
 
     }
 
     public function create()
     {
         // abort_if(Gate::denies('sample_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $unit_select=SystemConstant::select('id','name','value','type')->where([['status',1],['type','unit']])->orderBy('order')->get();
-        $data['unit_select']=$unit_select;
 
-        $categories = Category::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
-        $samples = SampleStock::where('status', 1)->get()->pluck('name', 'id','status');
 
-        $users = User::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
-
-        return view('advan.admin.samples.create', compact('samples', 'users','data','categories'));
+        // return view('advan.admin.samples.create', compact('samples', 'users','data','categories'));
     }
 
     public function store(StoreSampleRequest $request)
     {
+        if($request->status == 'on'){
+            $request['status']='1';
+
+      }
         $sample = Sample::create($request->all());
 
         return redirect()->route('admin.samples.index');
@@ -87,6 +92,10 @@ class SamplesController extends Controller
 
     public function update(UpdateSampleRequest $request, Sample $sample)
     {
+        if($request->status == 'on'){
+            $request['status']='1';
+
+      }
         $sample->update($request->all());
 
         return redirect()->route('admin.samples.index');

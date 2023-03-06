@@ -28,7 +28,6 @@ class SampleStockController extends Controller
         // abort_if(Gate::denies('sample_stock_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         // $samples_stock = SampleStock::with(['category','item'])->select(sprintf('%s.*', (new SampleStock())->table));
-
         $samples_stock=SampleStock::
         leftJoin('system_constants as unit_constants', function($join) {
             $join->on('unit_constants.value', '=', 'sample_stocks.unit')->where('unit_constants.type','unit')->whereNull('unit_constants.deleted_at');
