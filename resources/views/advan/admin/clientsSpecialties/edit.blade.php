@@ -1,43 +1,47 @@
+
 @extends('layouts.cpanel.app')
 @section('content')
 
-<div class="card">
-    <div class="card-header">
-        {{ trans('global.edit') }} {{ trans('cruds.clientsSpecialty.title_singular') }}
-    </div>
+<div class="card w-50 mr-10 overflow-auto " style="height: 370px">
+    <div class="card-header py-5 h3">
+        تعديل نوع العميل    </div>
 
     <div class="card-body">
         <form method="POST" action="{{ route("admin.clients-specialties.update", [$clientsSpecialty->id]) }}" enctype="multipart/form-data">
             @method('PUT')
             @csrf
             <div class="form-group">
-                <label class="required" for="name">{{ trans('cruds.clientsSpecialty.fields.name') }}</label>
+                <label class="required" for="name">اسم نوع العميل</label>
                 <input class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" type="text" name="name" id="name" value="{{ old('name', $clientsSpecialty->name) }}" required>
                 @if($errors->has('name'))
                     <div class="invalid-feedback">
                         {{ $errors->first('name') }}
                     </div>
                 @endif
-                <span class="help-block">{{ trans('cruds.clientsSpecialty.fields.name_helper') }}</span>
             </div>
             <div class="form-group">
-                <label>{{ trans('cruds.clientsSpecialty.fields.status') }}</label>
-                <select class="form-control {{ $errors->has('status') ? 'is-invalid' : '' }}" name="status" id="status">
-                    <option value disabled {{ old('status', null) === null ? 'selected' : '' }}>{{ trans('global.pleaseSelect') }}</option>
-                    @foreach(App\Models\ClientsSpecialty::STATUS_SELECT as $key => $label)
-                        <option value="{{ $key }}" {{ old('status', $clientsSpecialty->status) === (string) $key ? 'selected' : '' }}>{{ $label }}</option>
-                    @endforeach
-                </select>
+                <?php if($clientsSpecialty->status=='1')
+                $clientsSpecialty->status='on';
+                ?>
+                <div class="col-md-6 col-lg-6 col-sm-12 status-div">
+                    <label>الحالة</label>
+                    <span class="switch">
+                        <label>
+                            <input type="checkbox"   {{$clientsSpecialty->status ? 'checked' : ''}} name="status" id="status">
+                            <span></span>
+                        </label>
+                    </span>
+                </div>
+
                 @if($errors->has('status'))
                     <div class="invalid-feedback">
                         {{ $errors->first('status') }}
                     </div>
                 @endif
-                <span class="help-block">{{ trans('cruds.clientsSpecialty.fields.status_helper') }}</span>
             </div>
-            <div class="form-group">
-                <button class="btn btn-danger" type="submit">
-                    {{ trans('global.save') }}
+            <div class="form-group text-left">
+                <button class="btn btn-primary w-50" type="submit">
+                    حفظ
                 </button>
             </div>
         </form>

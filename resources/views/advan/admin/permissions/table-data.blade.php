@@ -7,8 +7,6 @@ class="table-responsive datatable datatable-bordered datatable-head-custom datat
             <th>#</th>
             <th>اسم الصلاحية</th>
 
-            {{-- @can('suppliers-status') --}}
-            <th>الحالة</th>
             {{-- @endcan --}}
             <th>العرض</th>
 
@@ -26,28 +24,7 @@ class="table-responsive datatable datatable-bordered datatable-head-custom datat
                     <td class="iteration">{{$loop->iteration}}</td>
                     <td class="name">{{$permission->name}}</td>
 
-                    {{-- @can('suppliers-status') --}}
-                        @if($permission->status==1)
-                        <td class="status">
-                            <button class="btn btn-sm  btn-shadow btn-success change-status"
-                            {{-- data-permission-id="{{$permission->id}}" --}}
-                                 {{-- @cannot('suppliers-status') disabled @endcannot --}}
-                                 >
-                                مفعل
-                            </button>
-                        </td>
-                        @elseif($permission->status==0)
-                        <td class="status">
 
-                            <button class="btn btn-sm  btn-shadow btn-danger change-status"
-                            {{-- data-permission-id="{{$permission->id}}" --}}
-                                {{-- @cannot('suppliers-status') disabled @endcannot --}}
-
-                                >
-                                غير مفعل
-                            </button>
-                        </td>
-                        @endif
             {{-- @endcan --}}
             <td>
                 <a class=" edit-category" href="/admin/permissions/{{$permission->id}}">

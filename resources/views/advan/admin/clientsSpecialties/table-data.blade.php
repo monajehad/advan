@@ -28,7 +28,7 @@ class="table-responsive datatable datatable-bordered datatable-head-custom datat
                     {{-- @can('suppliers-status') --}}
                         @if($client_specialt->status==1)
                         <td class="status">
-                            <button class="btn btn-sm  btn-shadow btn-success change-status"
+                            <button class="badge badge-pill badge-success "
                             {{-- data-client_specialt-id="{{$client_specialt->id}}" --}}
                                  {{-- @cannot('suppliers-status') disabled @endcannot --}}
                                  >
@@ -38,7 +38,7 @@ class="table-responsive datatable datatable-bordered datatable-head-custom datat
                         @elseif($client_specialt->status==0)
                         <td class="status">
 
-                            <button class="btn btn-sm  btn-shadow btn-danger change-status"
+                            <button class="badge badge-pill badge-warning"
                             {{-- data-client_specialt-id="{{$client_specialt->id}}" --}}
                                 {{-- @cannot('suppliers-status') disabled @endcannot --}}
 

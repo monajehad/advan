@@ -30,16 +30,18 @@ class FCMController extends Controller
             'message'=>'User token updated successfully.'
        ]);
      }
-     public function get(){
+     public function get(Request $req){
         $chats=Chat::all();
         $users=User::all();
-        // if($req->search){
-            $users=$users->where('name','like','%'.$req->search.'%')
-            ->orWhere('users.name','like','%'.$req->search.'%');
-        // }
+        $userName=User::all();
+        if($req->search){
+            $userName=$userName->where('name','like','%'.$req->search.'%');
+        }
        return view('advan.admin.fcm.index',[
         'chats' =>$chats,
         'users'=>$users,
+        'userName'=>$userName,
+
        ]);
      }
 

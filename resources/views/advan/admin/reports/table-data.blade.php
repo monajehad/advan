@@ -41,7 +41,7 @@
             {{-- @can('suppliers-status') --}}
                 @if($report->status==1)
                 <td class="status">
-                    <button class="btn btn-sm  btn-shadow btn-success change-status"
+                    <button class="badge badge-pill badge-success"
                     {{-- data-report-id="{{$report->id}}" --}}
                          {{-- @cannot('suppliers-status') disabled @endcannot --}}
                          >
@@ -51,7 +51,7 @@
                 @elseif($report->status==0)
                 <td class="status">
 
-                    <button class="btn btn-sm  btn-shadow btn-danger change-status"
+                    <button class="badge badge-pill badge-warning"
                     {{-- data-report-id="{{$report->id}}" --}}
                         {{-- @cannot('suppliers-status') disabled @endcannot --}}
 

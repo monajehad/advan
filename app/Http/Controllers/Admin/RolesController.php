@@ -19,17 +19,18 @@ class RolesController extends Controller
         // abort_if(Gate::denies('role_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $roles = Role::with(['permissions'])->get();
+        $permissions = Permission::pluck('name', 'id');
 
-        return view('advan.admin.roles.index', compact('roles'));
+        return view('advan.admin.roles.index', compact('roles','permissions'));
     }
 
     public function create()
     {
         // abort_if(Gate::denies('role_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $permissions = Permission::pluck('name', 'id');
+        // $permissions = Permission::pluck('name', 'id');
 
-        return view('advan.admin.roles.create', compact('permissions'));
+        // return view('advan.admin.roles.create', compact('permissions'));
     }
 
     public function store(StoreRoleRequest $request)

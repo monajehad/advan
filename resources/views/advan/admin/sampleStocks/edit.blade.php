@@ -1,24 +1,23 @@
+
 @extends('layouts.cpanel.app')
 @section('content')
 
-<div class="card">
-    <div class="card-header">
-        {{ trans('global.edit') }} {{ trans('cruds.sampleStock.title_singular') }}
-    </div>
+<div class="card w-50 mr-10">
+    <div class="card-header py-5 h3">
+        تعديل مخزون العينة    </div>
 
     <div class="card-body">
         <form method="POST" action="{{ route("admin.sample-stocks.update", [$sampleStock->id]) }}" enctype="multipart/form-data">
             @method('PUT')
             @csrf
             <div class="form-group">
-                <label class="required" for="name">{{ trans('cruds.sampleStock.fields.name') }}</label>
+                <label class="required" for="name">اسم العينة</label>
                 <input class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" type="text" name="name" id="name" value="{{ old('name', $sampleStock->name) }}" required>
                 @if($errors->has('name'))
                     <div class="invalid-feedback">
                         {{ $errors->first('name') }}
                     </div>
                 @endif
-                <span class="help-block">{{ trans('cruds.sampleStock.fields.name_helper') }}</span>
             </div>
             <div class="form-group">
                 <label class="required" for="name">رقم الباتش</label>
@@ -31,14 +30,22 @@
                 <span class="help-block"></span>
             </div>
             <div class="form-group">
-                <label class="required" for="quantity">{{ trans('cruds.sampleStock.fields.quantity') }}</label>
+                <label class="required" for="quantity">الكمية</label>
                 <input class="form-control {{ $errors->has('quantity') ? 'is-invalid' : '' }}" type="text" name="quantity" id="quantity" value="{{ old('quantity', $sampleStock->quantity) }}" required>
                 @if($errors->has('quantity'))
                     <div class="invalid-feedback">
                         {{ $errors->first('quantity') }}
                     </div>
                 @endif
-                <span class="help-block">{{ trans('cruds.sampleStock.fields.quantity_helper') }}</span>
+            </div>
+            <div class="form-group">
+                <label class="required" for="received_quantity">الكمية المستلمة</label>
+                <input class="form-control {{ $errors->has('received_quantity') ? 'is-invalid' : '' }}" type="text" name="received_quantity" id="received_quantity" value="{{ old('received_quantity', $sampleStock->received_quantity) }}" required>
+                @if($errors->has('received_quantity'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('received_quantity') }}
+                    </div>
+                @endif
             </div>
             {{-- <div class="form-group">
                 <label for="received_date">{{ trans('cruds.sampleStock.fields.received_date') }}</label>
@@ -61,17 +68,16 @@
                 <span class="help-block">{{ trans('cruds.sampleStock.fields.end_date_helper') }}</span>
             </div> --}}
             <div class="form-group">
-                <label for="date">{{ trans('cruds.sampleStock.fields.date') }}</label>
+                <label for="date">التاريخ</label>
                 <input class="form-control  {{ $errors->has('date') ? 'is-invalid' : '' }}" type="text" name="date" id="date" value="{{ old('date', $sampleStock->date) }}">
                 @if($errors->has('date'))
                     <div class="invalid-feedback">
                         {{ $errors->first('date') }}
                     </div>
                 @endif
-                <span class="help-block">{{ trans('cruds.sampleStock.fields.date_helper') }}</span>
             </div>
             <div class="form-group">
-                <label class="required" for="category_id">{{ trans('cruds.sampleStock.fields.category') }}</label>
+                <label class="required" for="category_id">التصنيف</label>
                 <select class="form-control select2 {{ $errors->has('category') ? 'is-invalid' : '' }}" name="category_id" id="category_id" required>
                     @foreach($categories as $id => $entry)
                         <option value="{{ $id }}" {{ (old('category_id') ? old('category_id') : $sampleStock->category->id ?? '') == $id ? 'selected' : '' }}>{{ $entry }}</option>
@@ -82,10 +88,9 @@
                         {{ $errors->first('category') }}
                     </div>
                 @endif
-                <span class="help-block">{{ trans('cruds.sampleStock.fields.category_helper') }}</span>
             </div>
             <div class="form-group">
-                <label class="required" for="item_id">{{ trans('cruds.sampleStock.fields.item') }}</label>
+                <label class="required" for="item_id">الصنف</label>
                 <select class="form-control select2 {{ $errors->has('item') ? 'is-invalid' : '' }}" name="item_id" id="item_id" required>
                     @foreach($items as $id => $entry)
                         <option value="{{ $id }}" {{ (old('item_id')? old('item_id') : $sampleStock->item->id ?? '') == $id ? 'selected' : '' }}>{{ $entry }}</option>
@@ -96,7 +101,6 @@
                         {{ $errors->first('item') }}
                     </div>
                 @endif
-                <span class="help-block">{{ trans('cruds.sampleStock.fields.item_helper') }}</span>
             </div>
             <div class="form-group row">
                 <div class="col-md-6 col-lg-6 col-sm-12">
@@ -109,30 +113,32 @@
                     </select>
                     <label class="form-text text-muted text-danger" id="unit-error"></label>
                 </div>
-            <div class="form-group">
-                <label class="required">{{ trans('cruds.sampleStock.fields.status') }}</label>
-                <select class="form-control {{ $errors->has('status') ? 'is-invalid' : '' }}" name="status" id="status" required>
-                    <option value disabled {{ old('status', null) === null ? 'selected' : '' }}>{{ trans('global.pleaseSelect') }}</option>
-                    @foreach(App\Models\SampleStock::STATUS_SELECT as $key => $label)
-                        <option value="{{ $key }}" {{ old('status', $sampleStock->status) === (string) $key ? 'selected' : '' }}>{{ $label }}</option>
-                    @endforeach
-                </select>
+                <div class="col-md-6 col-lg-6 col-sm-12 status-div">
+                    <label>الحالة</label>
+                    <span class="switch">
+                        <label>
+                            <input type="checkbox"   {{$sampleStock->status ? 'checked' : ''}} name="status" id="status">
+                            <span></span>
+                        </label>
+                    </span>
+                </div>
+
                 @if($errors->has('status'))
                     <div class="invalid-feedback">
                         {{ $errors->first('status') }}
                     </div>
                 @endif
-                <span class="help-block">{{ trans('cruds.sampleStock.fields.status_helper') }}</span>
             </div>
-
+{{--
             <h2>تاريخ العينة </h2>
 
             <h4>تاريخ الاضافة للمخزون :  {{ $sampleStock->received_date }}</h4>
             <h4>تاريخ النفاذ للمخزون :  {{ $sampleStock->end_date }}</h4>
 
-            <div class="form-group">
-                <button class="btn btn-danger" type="submit">
-                    {{ trans('global.save') }}
+                --}}
+            <div class="form-group text-left">
+                <button class="btn btn-primary w-50" type="submit">
+                    حفظ
                 </button>
             </div>
         </form>

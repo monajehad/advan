@@ -47,7 +47,17 @@ class ClientsSpecialtiesController extends Controller
 
     public function store(StoreClientsSpecialtyRequest $request)
     {
-        $clientsSpecialty = ClientsSpecialty::create($request->all());
+
+        if($request->status == 'on'){
+            $request->status='1';
+      }
+      // dd($request->status);
+      $clientsSpecialty=clientsSpecialty::create([
+          'name'=>$request->name,
+          'status'=>$request->status,
+
+
+      ]);
 
         return redirect()->route('admin.clients-specialties.index');
     }
@@ -61,7 +71,13 @@ class ClientsSpecialtiesController extends Controller
 
     public function update(UpdateClientsSpecialtyRequest $request, ClientsSpecialty $clientsSpecialty)
     {
-        $clientsSpecialty->update($request->all());
+        if($request->status == 'on'){
+            $request->status='1';
+      }
+        $clientsSpecialty->update([
+            'name'=>$request->name,
+        'status'=>$request->status,
+]);
 
         return redirect()->route('admin.clients-specialties.index');
     }

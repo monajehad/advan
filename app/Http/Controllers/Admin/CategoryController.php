@@ -53,12 +53,13 @@ class CategoryController extends Controller
 
     public function store(StoreCategoryRequest $request)
     {
-        $request->status= (isset($request->status))? 1: 0;
+        if($request->status == 'on'){
+            $request->status='1';
+      }
         $category=Category::create([
             'name'=>$request->name,
-
              'status'=>$request->status,
-             'updated_at'=>Carbon::now()
+
 
         ]);
         // $category = Category::create($request->all());

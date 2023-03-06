@@ -33,7 +33,7 @@
             </h2>
             <div class="card-toolbar">
                 {{-- @can('users-add') --}}
-                <a id="add_button" class="btn btn-primary font-size-sm ml-3" href="{{ route('admin.clients-specialties.create') }}">
+                <a data-toggle="modal" data-target="#add_button" class="btn btn-primary font-size-sm ml-3" >
                     <span class="svg-icon svg-icon-md svg-icon-2x">
                         <!--begin::Svg Icon | path:C:\wamp64\www\keenthemes\legacy\metronic\theme\html\demo1\dist/../src/media/svg/icons\Code\Plus.svg--><svg
                             xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px"
@@ -86,17 +86,17 @@
 
         <div class="card-body py-0">
             <!--begin::Table-->
-            <div class="user-table-body">
+            {{-- <div class="user-table-body"> --}}
 
-                <div class="suppliers-table-body">  @includeIf('advan.admin.clientsSpecialties.table-data')</div>
+                <div class="client-specialt-table-body">  @includeIf('advan.admin.clientsSpecialties.table-data')</div>
 
-            </div>
+            {{-- </div> --}}
 
             <!--End::Table-->
         </div>
         <!--end::Body-->
     </div>
-
+    @includeIf('advan.admin.clientsSpecialties.create')
 
 
 </div>
@@ -107,6 +107,21 @@
     @section('script')
     @parent
     <script>
+        function load_data_table(page = '') {
+        $.ajax({
+            url: '{{url("admin/clients-specialties/")}}?page=' + page,
+            data: {
+                search: $('#search_input').val()
+            },
+            type: "get",
+            success: function(response) {
+                $('.client-specialt-table-body').html(response.clients_specialt)
+
+            },
+            error: function(response) {}
+
+        })
+    }
 
     $(document).on('click','.delete-specialt',function(){
                 var id = $(this).data('specialt-id');

@@ -35,7 +35,12 @@ class ReportController extends Controller
             return response()->json(['reports'=>$table_data]);
 
         }
-        return view('advan.admin.reports.index',compact('reports'));
+        $users = User::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+
+        $types = Report::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+
+        $clients = Client::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        return view('advan.admin.reports.index',compact('reports','users', 'types', 'clients'));
         // abort_if(Gate::denies('report_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
     }
@@ -44,17 +49,33 @@ class ReportController extends Controller
     {
         // abort_if(Gate::denies('report_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $users = User::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        // $users = User::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $types = Report::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        // $types = Report::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $clients = Client::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        // $clients = Client::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        return view('advan.admin.reports.create', compact('users', 'types', 'clients'));
+        // return view('advan.admin.reports.create', compact('users', 'types', 'clients'));
     }
 
     public function store(StoreReportRequest $request)
     {
+        if($request->status == 'on'){
+            $request->status='1';
+      }
+      // dd($request->status);
+      $report=Report::create([
+          'name'=>$request->name,
+          'user_id'=>$request->user_id,
+          'client_id'=>$request->client_id,
+          'note'=>$request->note,
+          'time'=>$request->time,
+          'date'=>$request->date,
+          'description'=>$request->description,
+          'status'=>$request->status,
+
+
+      ]);
         $report = Report::create($request->all());
 
         return redirect()->route('admin.reports.index');
@@ -77,7 +98,22 @@ class ReportController extends Controller
 
     public function update(UpdateReportRequest $request, Report $report)
     {
-        $report->update($request->all());
+        if($request->status == 'on'){
+            $request->status='1';
+      }
+      // dd($request->status);
+          $report->update([
+          'name'=>$request->name,
+          'user_id'=>$request->user_id,
+          'client_id'=>$request->client_id,
+          'note'=>$request->note,
+          'time'=>$request->time,
+          'date'=>$request->date,
+          'description'=>$request->description,
+          'status'=>$request->status,
+
+
+      ]);
 
         return redirect()->route('admin.reports.index');
     }

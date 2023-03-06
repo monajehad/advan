@@ -44,9 +44,18 @@ class KindsOfOccasionsController extends Controller
     }
 
     public function store(StoreKindsOfOccasionRequest $request)
-    {
-        $kindsOfOccasion = KindsOfOccasion::create($request->all());
+    {    if($request->status == 'on'){
+          $request->status='1';
+    }
+    // dd($request->status);
+    $kindsOfOccasion=KindsOfOccasion::create([
+        'name'=>$request->name,
+        'description'=>$request->description,
+        'status'=>$request->status,
 
+
+    ]);
+        // $kindsOfOccasion = KindsOfOccasion::create($request->all());
         return redirect()->route('admin.kinds-of-occasions.index');
     }
 
@@ -59,7 +68,14 @@ class KindsOfOccasionsController extends Controller
 
     public function update(UpdateKindsOfOccasionRequest $request, KindsOfOccasion $kindsOfOccasion)
     {
-        $kindsOfOccasion->update($request->all());
+        if($request->status == 'on'){
+            $request->status='1';
+      }
+        $kindsOfOccasion->update([
+            'name'=>$request->name,
+        'description'=>$request->description,
+        'status'=>$request->status,
+]);
 
         return redirect()->route('admin.kinds-of-occasions.index');
     }

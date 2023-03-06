@@ -39,7 +39,16 @@ class ReportTypeController extends Controller
 
     public function store(StoreReportTypeRequest $request)
     {
-        $reportType = ReportType::create($request->all());
+        if($request->status == 'on'){
+            $request->status='1';
+      }
+      // dd($request->status);
+      $reportType=ReportType::create([
+          'name'=>$request->name,
+          'status'=>$request->status,
+
+
+      ]);
 
         return redirect()->route('admin.report-types.index');
     }
@@ -53,7 +62,17 @@ class ReportTypeController extends Controller
 
     public function update(UpdateReportTypeRequest $request, ReportType $reportType)
     {
-        $reportType->update($request->all());
+
+        if($request->status == 'on'){
+            $request->status='1';
+      }
+      // dd($request->status);
+      $reportType->update([
+          'name'=>$request->name,
+          'status'=>$request->status,
+
+
+      ]);
 
         return redirect()->route('admin.report-types.index');
     }

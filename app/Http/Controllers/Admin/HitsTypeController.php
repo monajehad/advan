@@ -47,7 +47,16 @@ class HitsTypeController extends Controller
 
     public function store(StoreHitsTypeRequest $request)
     {
-        $hitsType = HitsType::create($request->all());
+        if($request->status == 'on'){
+            $request->status='1';
+      }
+      // dd($request->status);
+      $hitsType=HitsType::create([
+          'name'=>$request->name,
+          'status'=>$request->status,
+
+
+      ]);
 
         return redirect()->route('admin.hits-types.index');
     }
@@ -61,7 +70,17 @@ class HitsTypeController extends Controller
 
     public function update(UpdateHitsTypeRequest $request, HitsType $hitsType)
     {
-        $hitsType->update($request->all());
+
+        if($request->status == 'on'){
+            $request->status='1';
+      }
+      // dd($request->status);
+      $hitsType->update([
+          'name'=>$request->name,
+          'status'=>$request->status,
+
+
+      ]);
 
         return redirect()->route('admin.hits-types.index');
     }

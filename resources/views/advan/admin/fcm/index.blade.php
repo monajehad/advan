@@ -41,7 +41,6 @@
                     <div class="card card-custom">
                         <!--begin::Body-->
                         <div class="card-body">
-
                             <!--begin:Search-->
                             <div class="input-group input-group-solid" >
                                 <div class="input-group-prepend">
@@ -59,14 +58,15 @@
                                         </span>
                                     </span>
                                 </div>
-                                <input type="text" class="form-control py-4 h-auto" placeholder="ايميل">
+                                <form class="form">
+                                    <input type="text" class="form-control py-4 h-auto" id="search_input" name="search_input" placeholder="اسم المندوب">
+
+                                </form>
                             </div>
                             <!--end:Search-->
                             <!--begin:Users-->
-                            <div class="mt-7 scroll scroll-pull ps ps--active-y" style="height: 55px; overflow: hidden;">
-                              @foreach ( $users as $user)
-
-
+                            <div class="mt-7 scroll scroll-pull ps ps--active-y" style="height: auto; overflow: hidden;">
+                            @foreach ( $users as $user)
                                 <!--begin:User-->
                                 <div class="d-flex align-items-center justify-content-between mb-5">
                                     <div class="d-flex align-items-center">
@@ -83,26 +83,7 @@
                                 </div>
                                 <!--end:User-->
                                 @endforeach
-                                @foreach ( $users as $user)
 
-
-                                <!--begin:User-->
-                                <div class="d-flex align-items-center justify-content-between mb-5">
-                                    <div class="d-flex align-items-center">
-                                        <div class="symbol symbol-circle symbol-50 mr-3">
-                                            <img alt="Pic" src="assets/media/users/300_12.jpg">
-                                        </div>
-                                        <div class="d-flex flex-column">
-                                            <a href="#" class="text-dark-75 text-hover-primary font-weight-bold font-size-lg">{{$user->name}}</a>
-                                        </div>
-                                    </div>
-                                    <div class="d-flex flex-column align-items-end">
-                                        <span class="text-muted font-weight-bold font-size-sm">35 mins</span>
-                                    </div>
-                                </div>
-                                <!--end:User-->
-                                @endforeach
-                                <!--end:User-->
                             <div class="ps__rail-x" style="left: 0px; bottom: 0px;"><div class="ps__thumb-x" tabindex="0" style="left: 0px; width: 0px;"></div></div><div class="ps__rail-y" style="top: 0px; height: 55px; right: -2px;"><div class="ps__thumb-y" tabindex="0" style="top: 0px; height: 40px;"></div></div></div>
                             <!--end:Users-->
                         </div>
@@ -120,10 +101,10 @@
 
                             <div class="text-right pr-6 flex-grow-1">
                                 <div class="text-dark-75 font-weight-bold font-size-h5">Matt Pears</div>
-                                <div>
+
 
                             </div>
-
+<hr>
                         </div>
                         <!--end::Header-->
                         <!--begin::Body-->
@@ -318,6 +299,26 @@
 @endsection --}}
 
 @section('script')
+<script>
+    function load_data_table(page='') {
+        $.ajax({
+            url: '{{url("message/")}}' ,
+            data:{search:$('#search_input').val()},
+            type: "get",
+            success: function( response ) {
+                $('.users').html(response.userName)
+
+            },
+            error:function(response){
+             }
+
+        })
+    }
+
+    $('#search_input').keyup(function(){
+            load_data_table()
+        })
+</script>
 {{-- <script src="https://www.gstatic.com/firebasejs/9.17.1/firebase-messaging.js"></script> --}}
 <script type="module">
     // Import the functions you need from the SDKs you need

@@ -8,7 +8,6 @@ class="table-responsive datatable datatable-bordered datatable-head-custom datat
             <th>اسم المجموعة</th>
 
             {{-- @can('suppliers-status') --}}
-            <th>الحالة</th>
             {{-- @endcan --}}
             <th>العرض</th>
 
@@ -26,28 +25,7 @@ class="table-responsive datatable datatable-bordered datatable-head-custom datat
                     <td class="iteration">{{$loop->iteration}}</td>
                     <td class="name">{{$role->title}}</td>
 
-                    {{-- @can('suppliers-status') --}}
-                        @if($role->status==1)
-                        <td class="status">
-                            <button class="btn btn-sm  btn-shadow btn-success change-status"
-                            {{-- data-role-id="{{$role->id}}" --}}
-                                 {{-- @cannot('suppliers-status') disabled @endcannot --}}
-                                 >
-                                مفعل
-                            </button>
-                        </td>
-                        @elseif($role->status==0)
-                        <td class="status">
 
-                            <button class="btn btn-sm  btn-shadow btn-danger change-status"
-                            {{-- data-role-id="{{$role->id}}" --}}
-                                {{-- @cannot('suppliers-status') disabled @endcannot --}}
-
-                                >
-                                غير مفعل
-                            </button>
-                        </td>
-                        @endif
             {{-- @endcan --}}
             {{-- @can('role_show') --}}
 

@@ -34,7 +34,7 @@ class SampleStockController extends Controller
             $join->on('unit_constants.value', '=', 'sample_stocks.unit')->where('unit_constants.type','unit')->whereNull('unit_constants.deleted_at');
         })
         ->select('unit_constants.name as unit_name','sample_stocks.id','sample_stocks.item_id','sample_stocks.unit','sample_stocks.category_id'
-        ,'sample_stocks.quantity','sample_stocks.received_quantity','sample_stocks.date')->with(['category','item']);
+        ,'sample_stocks.quantity','sample_stocks.status','sample_stocks.received_quantity','sample_stocks.date')->with(['category','item']);
 
         $samples_stock=$samples_stock->orderBy('id','desc')->paginate(self::PAGINATION_NO);
         if ($request->ajax()) {
@@ -43,7 +43,14 @@ class SampleStockController extends Controller
 
     }
 
-            return view('advan.admin.sampleStocks.index', compact('samples_stock'));
+    $unit_select=SystemConstant::select('id','name','value','type')->where([['status',1],['type','unit']])->orderBy('order')->get();
+    $data['unit_select']=$unit_select;
+
+    $categories = Category::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+    $items = Item::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+
+
+            return view('advan.admin.sampleStocks.index', compact('samples_stock','categories','data','items'));
 
 
     }
@@ -51,17 +58,22 @@ class SampleStockController extends Controller
     public function create()
     {
         // abort_if(Gate::denies('sample_stock_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $unit_select=SystemConstant::select('id','name','value','type')->where([['status',1],['type','unit']])->orderBy('order')->get();
-        $data['unit_select']=$unit_select;
+        // $unit_select=SystemConstant::select('id','name','value','type')->where([['status',1],['type','unit']])->orderBy('order')->get();
+        // $data['unit_select']=$unit_select;
 
-        $categories = Category::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
-        $items = Item::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        // $categories = Category::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        // $items = Item::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
 
-        return view('advan.admin.sampleStocks.create', compact('categories','data','items'));
+        // return view('advan.admin.sampleStocks.create', compact('categories','data','items'));
     }
 
     public function store(StoreSampleStockRequest $request) {
+        if($request->status == 'on'){
+            $request['status']='1';
+
+      }
+
         $request['available']=$request->quantity - $request->received_quantity;
         $sampleStock = SampleStock::create(
 
@@ -88,6 +100,11 @@ class SampleStockController extends Controller
 
     public function update(UpdateSampleStockRequest $request, SampleStock $sampleStock)
     {
+        if($request->status == 'on'){
+            $request->status='1';
+      }
+      $request['status']='1';
+
         $sampleStock->update($request->all());
 
         return redirect()->route('admin.sample-stocks.index');

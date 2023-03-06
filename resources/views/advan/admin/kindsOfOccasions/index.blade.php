@@ -33,7 +33,7 @@
             </h2>
             <div class="card-toolbar">
                 {{-- @can('hits-add') --}}
-                <a id="add_button" class="btn btn-primary font-size-sm ml-3"  href="{{ route('admin.kinds-of-occasions.create') }}">
+                <button data-toggle="modal" data-target="#add_button" class="btn btn-primary font-size-sm ml-3"  >
                     <span class="svg-icon svg-icon-md svg-icon-2x">
                         <!--begin::Svg Icon | path:C:\wamp64\www\keenthemes\legacy\metronic\theme\html\demo1\dist/../src/media/svg/icons\Code\Plus.svg--><svg
                             xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px"
@@ -49,7 +49,7 @@
                         <!--end::Svg Icon-->
                     </span>
                     إضافة نوع المناسبة
-                </a>
+                </button>
                 {{-- @endcan --}}
                 <button data-toggle="modal" data-target="#csvImportModal" class="btn btn-info mx-1 font-size-sm "
                 id="export-button">
@@ -86,7 +86,7 @@
 
         <div class="card-body py-0">
             <!--begin::Table-->
-            <div class="user-table-body">
+            <div class="kinds-of-occasions-table-body">
 
                  @includeIf('advan.admin.kindsOfOccasions.table-data')
 
@@ -97,7 +97,7 @@
         <!--end::Body-->
     </div>
 </div>
-<div class="kinds-of-occasions-permission-body">
+    @includeIf('advan.admin.kindsOfOccasions.create')
 
     <!--end::Container-->
     @endsection

@@ -114,8 +114,8 @@
     {{-- @endcan --}}
              {{-- @can('hits-update') --}}
              <td>
-                 <a class=" edit-hit" data-hit-id="{{$hit->id}}"
-                 {{-- href="/admin/hits/{{$hit->id}}/edit" --}}
+                 <a class=" edit-hit"
+                 href="/admin/hits/{{$hit->id}}/edit"
                  >
                      <span class="svg-icon svg-icon-md"> <svg xmlns="http://www.w3.org/2000/svg"
                              xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px"

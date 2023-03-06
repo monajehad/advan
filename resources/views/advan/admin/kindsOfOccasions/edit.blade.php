@@ -1,9 +1,9 @@
 @extends('layouts.cpanel.app')
 @section('content')
 
-<div class="card">
-    <div class="card-header">
-        {{ trans('global.edit') }} {{ trans('cruds.kindsOfOccasion.title_singular') }}
+<div class="card w-50 mr-10">
+    <div class="card-header py-5 h3">
+        تعديل نوع المناسبة
     </div>
 
     <div class="card-body">
@@ -11,43 +11,46 @@
             @method('PUT')
             @csrf
             <div class="form-group">
-                <label class="required" for="name">{{ trans('cruds.kindsOfOccasion.fields.name') }}</label>
+                <label class="required" for="name">اسم نوع المناسبة</label>
                 <input class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" type="text" name="name" id="name" value="{{ old('name', $kindsOfOccasion->name) }}" required>
                 @if($errors->has('name'))
                     <div class="invalid-feedback">
                         {{ $errors->first('name') }}
                     </div>
                 @endif
-                <span class="help-block">{{ trans('cruds.kindsOfOccasion.fields.name_helper') }}</span>
             </div>
             <div class="form-group">
-                <label class="required" for="description">{{ trans('cruds.kindsOfOccasion.fields.description') }}</label>
+                <label class="required" for="description">الوصف</label>
                 <textarea class="form-control {{ $errors->has('description') ? 'is-invalid' : '' }}" name="description" id="description" required>{{ old('description', $kindsOfOccasion->description) }}</textarea>
                 @if($errors->has('description'))
                     <div class="invalid-feedback">
                         {{ $errors->first('description') }}
                     </div>
                 @endif
-                <span class="help-block">{{ trans('cruds.kindsOfOccasion.fields.description_helper') }}</span>
             </div>
             <div class="form-group">
-                <label>{{ trans('cruds.kindsOfOccasion.fields.status') }}</label>
-                <select class="form-control {{ $errors->has('status') ? 'is-invalid' : '' }}" name="status" id="status">
-                    <option value disabled {{ old('status', null) === null ? 'selected' : '' }}>{{ trans('global.pleaseSelect') }}</option>
-                    @foreach(App\Models\KindsOfOccasion::STATUS_SELECT as $key => $label)
-                        <option value="{{ $key }}" {{ old('status', $kindsOfOccasion->status) === (string) $key ? 'selected' : '' }}>{{ $label }}</option>
-                    @endforeach
-                </select>
+                <?php if($kindsOfOccasion->status=='1')
+                $kindsOfOccasion->status='on';
+                ?>
+                <div class="col-md-6 col-lg-6 col-sm-12 status-div">
+                    <label>الحالة</label>
+                    <span class="switch">
+                        <label>
+                            <input type="checkbox"   {{$kindsOfOccasion->status ? 'checked' : ''}} name="status" id="status">
+                            <span></span>
+                        </label>
+                    </span>
+                </div>
+
                 @if($errors->has('status'))
                     <div class="invalid-feedback">
                         {{ $errors->first('status') }}
                     </div>
                 @endif
-                <span class="help-block">{{ trans('cruds.kindsOfOccasion.fields.status_helper') }}</span>
             </div>
-            <div class="form-group">
-                <button class="btn btn-danger" type="submit">
-                    {{ trans('global.save') }}
+            <div class="form-group text-left">
+                <button class="btn btn-primary w-50" type="submit">
+                    حفظ
                 </button>
             </div>
         </form>
