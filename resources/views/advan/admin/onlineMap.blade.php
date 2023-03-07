@@ -48,11 +48,11 @@
                         {{ trans('global.back_to_list') }}
                     </a>
                 </div>
-                <div style="background-color: #f8d576;height: 42px;">
+                <div style="background-color: #f5f5f5;height: 60px;border-top-left-radius: 25px;border-top-right-radius: 25px;">
                     <div id="data" class="row">
                     </div>
                 </div>
-                <div id="map_canvas" style="width:100%; height:450px; border: 2px solid #3872ac;"></div>
+                <div id="map_canvas" style="width:100%; height:70vh;width: 75vw;"></div>
                 <div class="form-group">
                     <a class="btn btn-default" href="{{ route('admin.hits.index') }}">
                         {{ trans('global.back_to_list') }}
