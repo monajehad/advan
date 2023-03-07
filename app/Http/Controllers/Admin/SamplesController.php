@@ -31,7 +31,7 @@ class SamplesController extends Controller
             $join->on('unit_constants.value', '=', 'samples.unit')->where('unit_constants.type','unit')->whereNull('unit_constants.deleted_at');
         })
         ->select('unit_constants.name as unit_name','samples.id','samples.sample_id','samples.unit','samples.category_id'
-        ,'samples.user_id','samples.quantity_request', 'samples.stock_available_id','samples.date')->with(['category','item','sample', 'user', 'stock_available']);
+        ,'samples.user_id','samples.quantity_request', 'samples.stock_available_id','samples.date','samples.status')->with(['category','item','sample', 'user', 'stock_available']);
 
         $samples=$samples->orderBy('id','desc')->paginate(self::PAGINATION_NO);
         if ($request->ajax()) {
@@ -40,9 +40,8 @@ class SamplesController extends Controller
 
     }
 
-
         // $sample_stocks = SampleStock::where('status' , 1)->get();
-        $users         = User::where('status' , 1)->get();
+        // $users         = User::where('status' , 1)->get();
         $unit_select=SystemConstant::select('id','name','value','type')->where([['status',1],['type','unit']])->orderBy('order')->get();
         $data['unit_select']=$unit_select;
 
@@ -50,10 +49,9 @@ class SamplesController extends Controller
         $sample_stocks = SampleStock::where('status', 1)->get()->pluck('name', 'id','status');
 
         $users = User::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
-        return view('advan.admin.samples.index', compact('samples','sample_stocks', 'users',,'data','categories'));
+        return view('advan.admin.samples.index', compact('sample_stocks','categories','data','users','samples'));
 
     }
-
     public function create()
     {
         // abort_if(Gate::denies('sample_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
@@ -96,6 +94,7 @@ class SamplesController extends Controller
             $request['status']='1';
 
       }
+      dd($request);
         $sample->update($request->all());
 
         return redirect()->route('admin.samples.index');

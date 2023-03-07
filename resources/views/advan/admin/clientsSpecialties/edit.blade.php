@@ -3,8 +3,17 @@
 @section('content')
 
 <div class="card w-50 mr-10 overflow-auto " style="height: 370px">
-    <div class="card-header py-5 h3">
-        تعديل نوع العميل    </div>
+    <div class="card-header  d-flex justify-content-between ">
+        <div class="py-5 h3">تعديل  نوع العميل </div>
+        <div class="form-group text-left  mb-0 py-3">
+            <a href="{{route("admin.clients-specialties.index")}}"
+                class="btn btn-primary " type="submit">
+                الرجوع
+        </a>
+        </div>
+    </div>
+
+
 
     <div class="card-body">
         <form method="POST" action="{{ route("admin.clients-specialties.update", [$clientsSpecialty->id]) }}" enctype="multipart/form-data">

@@ -66,6 +66,7 @@ class VacationRequestController extends Controller
 
     public function update(UpdateVacationRequestRequest $request, VacationRequest $vacationRequest)
     {
+
         $vacationRequest->update($request->all());
 
         return redirect()->route('admin.vacation-requests.index');

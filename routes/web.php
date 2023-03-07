@@ -168,8 +168,6 @@ Route::group([ 'prefix' => 'admin', 'as' => 'admin.']
     Route::resource('categories', CategoryController::class);
     Route::post('/categories/status/update/{id}' , [CategoryController::class , 'updateStatus'])->name('categories.updateStatus');
     Route::post('categories/delete', [CategoryController::class,'destroy'])->name('categories.delete');
-    Route::get('categories/data/{id}', [CategoryController::class,'get_category'])->name('data');
-    Route::post('categoriesUpdate', [CategoryController::class,'updateCategory'])->name('categoryUpdate');
 
      // Kinds Of Occasions
      Route::delete('kinds-of-occasions/destroy', [KindsOfOccasionsController::class,'massDestroy'])->name('kinds-of-occasions.massDestroy');

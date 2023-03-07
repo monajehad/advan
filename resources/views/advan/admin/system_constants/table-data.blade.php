@@ -31,7 +31,7 @@ class="table-responsive datatable datatable-bordered datatable-head-custom datat
 
             @if($constant->status==1)
             <td class="status">
-                <button class="btn btn-sm  btn-shadow btn-success change-status" data-constant-id="{{$constant->id}}"
+                <button class="badge badge-pill badge-success " data-constant-id="{{$constant->id}}"
                      {{-- @cannot('constants-status') disabled @endcannot --}}
                      >
                      مفعل
@@ -40,7 +40,7 @@ class="table-responsive datatable datatable-bordered datatable-head-custom datat
             @elseif($constant->status==0)
             <td class="status">
 
-                <button class="btn btn-sm  btn-shadow btn-danger change-status" data-constant-id="{{$constant->id}}"
+                <button class="badge badge-pill badge-warning" data-constant-id="{{$constant->id}}"
                      {{-- @cannot('constants-status') disabled @endcannot --}}
                      >
                      غير مفعل

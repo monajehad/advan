@@ -3,9 +3,14 @@
 @section('content')
 
 <div class="card w-50 mr-10">
-    <div class="card-header py-5 h3">
-        تعديل مخزون العينة    </div>
-
+        <div class="card-header  d-flex justify-content-between ">
+            <div class="py-5 h3"> تعديل مخزون العينة</div>
+            <div class="form-group text-left  mb-0 py-3">
+                <a href="{{route("admin.sample-stocks.index")}}" class="btn btn-primary " type="submit">
+                    الرجوع
+                </a>
+            </div>
+        </div>
     <div class="card-body">
         <form method="POST" action="{{ route("admin.sample-stocks.update", [$sampleStock->id]) }}" enctype="multipart/form-data">
             @method('PUT')
@@ -78,7 +83,7 @@
             </div>
             <div class="form-group">
                 <label class="required" for="category_id">التصنيف</label>
-                <select class="form-control select2 {{ $errors->has('category') ? 'is-invalid' : '' }}" name="category_id" id="category_id" required>
+                <select class="form-control selectpicker {{ $errors->has('category') ? 'is-invalid' : '' }}" name="category_id" id="category_id" required>
                     @foreach($categories as $id => $entry)
                         <option value="{{ $id }}" {{ (old('category_id') ? old('category_id') : $sampleStock->category->id ?? '') == $id ? 'selected' : '' }}>{{ $entry }}</option>
                     @endforeach
@@ -91,7 +96,7 @@
             </div>
             <div class="form-group">
                 <label class="required" for="item_id">الصنف</label>
-                <select class="form-control select2 {{ $errors->has('item') ? 'is-invalid' : '' }}" name="item_id" id="item_id" required>
+                <select class="form-control selectpicker {{ $errors->has('item') ? 'is-invalid' : '' }}" name="item_id" id="item_id" required>
                     @foreach($items as $id => $entry)
                         <option value="{{ $id }}" {{ (old('item_id')? old('item_id') : $sampleStock->item->id ?? '') == $id ? 'selected' : '' }}>{{ $entry }}</option>
                     @endforeach
@@ -105,7 +110,7 @@
             <div class="form-group row">
                 <div class="col-md-6 col-lg-6 col-sm-12">
                     <label>الوحدة</label>
-                    <select class="form-control" id="unit" name="unit">
+                    <select class="form-control selectpicker" id="unit" name="unit">
                         <option value="" disabled selected>اختر الوحدة</option>
                         @foreach($data['unit_select'] as $unit)
                             <option value="{{$unit->value}}"{{ (old('unit_id')? old('unit_id') : $sampleStock->unit ?? '') == $unit->value ? 'selected' : '' }}>{{$unit->name}}</option>

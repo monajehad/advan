@@ -45,10 +45,10 @@ class UpdateSampleRequest extends FormRequest
                 // 'required',
                 'integer',
             ],
-            'end_date' => [
-                'date_format:' . config('panel.date_format'),
-                'nullable',
-            ],
+            // 'end_date' => [
+            //     'date_format:' . config('panel.date_format'),
+            //     'nullable',
+            // ],
             'status' => [
                 'required',
             ],

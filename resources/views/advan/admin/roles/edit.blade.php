@@ -2,10 +2,15 @@
 @section('content')
 
 <div class="card w-50  mr-10">
-    <div class="card-header py-5 h3">
-       تعديل الصلاحية
-    </div>
 
+    <div class="card-header  d-flex justify-content-between ">
+        <div class="py-5 h3">تعديل المجموعة </div>
+        <div class="form-group text-left  mb-0 py-3">
+            <a href="{{route("admin.roles.index")}}" class="btn btn-primary " type="submit">
+                الرجوع
+            </a>
+        </div>
+    </div>
     <div class="card-body">
         <form method="POST" action="{{ route("admin.roles.update", [$role->id]) }}" enctype="multipart/form-data">
             @method('PUT')

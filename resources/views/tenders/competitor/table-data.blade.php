@@ -34,7 +34,7 @@ class="table-responsive datatable datatable-bordered datatable-head-custom datat
             {{-- @can('delegators-status') --}}
                 @if($competitor->status==1)
                 <td class="status">
-                    <button class="btn btn-sm  btn-shadow btn-success change-status" data-competitor-id="{{$competitor->id}}"
+                    <button class="badge badge-pill badge-success "
                         {{-- @cannot('competitors-status') disabled @endcannot --}}
                         >
                         مفعل
@@ -43,7 +43,7 @@ class="table-responsive datatable datatable-bordered datatable-head-custom datat
                 @elseif($competitor->status==0)
                 <td class="status">
 
-                    <button class="btn btn-sm  btn-shadow btn-danger change-status" data-competitor-id="{{$competitor->id}}"
+                    <button class="badge badge-pill badge-warning"
                         {{-- @cannot('competitors-status') disabled @endcannot --}}
                         >
                         غير مفعل

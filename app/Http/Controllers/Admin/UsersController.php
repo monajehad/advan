@@ -51,7 +51,10 @@ class UsersController extends Controller
     }
 
     public function store(StoreUserRequest $request)
-    {
+    {   if($request->status == 'on'){
+        $request['status']='1';
+
+         }
         $user = User::create($request->all());
 
         // $user->save();
@@ -78,6 +81,10 @@ class UsersController extends Controller
 
     public function update(UpdateUserRequest $request, User $user)
     {
+        if($request->status == 'on'){
+            $request['status']='1';
+
+      }
         $user->update($request->all());
 
         if ($request->file('image')) {

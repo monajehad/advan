@@ -2,10 +2,14 @@
 @section('content')
 
 <div class="card">
-    <div class="card-header">
-        {{ trans('global.edit') }} {{ trans('cruds.user.title_singular') }}
+    <div class="card-header  d-flex justify-content-between ">
+        <div class="py-5 h3"> تعديل  المندوب</div>
+        <div class="form-group text-left  mb-0 py-3">
+            <a href="{{route("admin.users.index")}}" class="btn btn-primary " type="submit">
+                الرجوع
+            </a>
+        </div>
     </div>
-
     <div class="card-body">
         <form method="POST" action="{{ route("admin.users.update", [$user->id]) }}" enctype="multipart/form-data">
             @method('PUT')

@@ -1,9 +1,14 @@
 @extends('layouts.cpanel.app')
 @section('content')
 
-<div class="card">
-    <div class="card-header">
-        {{ trans('global.edit') }} {{ trans('cruds.attendance.title_singular') }}
+<div class="card w-50 mr-10">
+    <div class="card-header  d-flex justify-content-between ">
+        <div class="py-5 h3">تعديل  الحضور</div>
+        <div class="form-group text-left  mb-0 py-3">
+            <a href="{{route("admin.attendances.index")}}" class="btn btn-primary " type="submit">
+                الرجوع
+            </a>
+        </div>
     </div>
 
     <div class="card-body">
@@ -11,8 +16,8 @@
             @method('PUT')
             @csrf
             <div class="form-group">
-                <label class="required" for="user_id">{{ trans('cruds.attendance.fields.user') }}</label>
-                <select class="form-control select2 {{ $errors->has('user') ? 'is-invalid' : '' }}" name="user_id" id="user_id" required>
+                <label class="required" for="user_id">المندوب</label>
+                <select class="form-control  {{ $errors->has('user') ? 'is-invalid' : '' }}" name="user_id" id="user_id" required>
                     @foreach($users as $id => $entry)
                         <option value="{{ $id }}" {{ (old('user_id') ? old('user_id') : $attendance->user->id ?? '') == $id ? 'selected' : '' }}>{{ $entry }}</option>
                     @endforeach
@@ -22,41 +27,37 @@
                         {{ $errors->first('user') }}
                     </div>
                 @endif
-                <span class="help-block">{{ trans('cruds.attendance.fields.user_helper') }}</span>
             </div>
             <div class="form-group">
-                <label class="required" for="date">{{ trans('cruds.attendance.fields.date') }}</label>
+                <label class="required" for="date">التاريخ</label>
                 <input class="form-control date {{ $errors->has('date') ? 'is-invalid' : '' }}" type="text" name="date" id="date" value="{{ old('date', $attendance->date) }}" required>
                 @if($errors->has('date'))
                     <div class="invalid-feedback">
                         {{ $errors->first('date') }}
                     </div>
                 @endif
-                <span class="help-block">{{ trans('cruds.attendance.fields.date_helper') }}</span>
             </div>
             <div class="form-group">
-                <label class="required" for="start_time">{{ trans('cruds.attendance.fields.start_time') }}</label>
+                <label class="required" for="start_time">بداية الوقت</label>
                 <input class="form-control timepicker {{ $errors->has('start_time') ? 'is-invalid' : '' }}" type="text" name="start_time" id="start_time" value="{{ old('start_time', $attendance->start_time) }}" required>
                 @if($errors->has('start_time'))
                     <div class="invalid-feedback">
                         {{ $errors->first('start_time') }}
                     </div>
                 @endif
-                <span class="help-block">{{ trans('cruds.attendance.fields.start_time_helper') }}</span>
             </div>
             <div class="form-group">
-                <label for="end_date">{{ trans('cruds.attendance.fields.end_date') }}</label>
+                <label for="end_date">نهاية التاريخ</label>
                 <input class="form-control timepicker {{ $errors->has('end_date') ? 'is-invalid' : '' }}" type="text" name="end_date" id="end_date" value="{{ old('end_date', $attendance->end_date) }}">
                 @if($errors->has('end_date'))
                     <div class="invalid-feedback">
                         {{ $errors->first('end_date') }}
                     </div>
                 @endif
-                <span class="help-block">{{ trans('cruds.attendance.fields.end_date_helper') }}</span>
             </div>
-            <div class="form-group">
-                <button class="btn btn-danger" type="submit">
-                    {{ trans('global.save') }}
+            <div class="form-group text-left">
+                <button class="btn btn-primary w-50" type="submit">
+                    حفظ
                 </button>
             </div>
         </form>

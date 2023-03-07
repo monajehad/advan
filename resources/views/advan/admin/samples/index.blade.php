@@ -73,8 +73,7 @@
 
 
 </div>
-<div class="user-permission-body">
-
+@includeIf('advan.admin.samples.create')
     <!--end::Container-->
     @endsection
 

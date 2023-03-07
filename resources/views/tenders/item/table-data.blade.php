@@ -35,7 +35,7 @@ class="table-responsive datatable datatable-bordered datatable-head-custom datat
                     {{-- @can('items-status') --}}
                         @if($item->status==1)
                         <td class="status">
-                            <button class="btn btn-sm  btn-shadow btn-success change-status" data-item-id="{{$item->id}}"
+                            <button class="badge badge-pill badge-success "
                                 {{-- @cannot('items-status') disabled @endcannot --}}
                                 >
                                 مفعل
@@ -44,7 +44,7 @@ class="table-responsive datatable datatable-bordered datatable-head-custom datat
                         @elseif($item->status==0)
                         <td class="status">
 
-                            <button class="btn btn-sm  btn-shadow btn-danger change-status" data-item-id="{{$item->id}}"
+                            <button class="badge badge-pill badge-warning"
                                  {{-- @cannot('items-status') disabled @endcannot --}}
                                  >
                                 غير مفعل

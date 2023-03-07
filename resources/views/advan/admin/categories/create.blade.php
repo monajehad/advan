@@ -42,7 +42,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">إضافة مستخدم</h5>
+                <h5 class="modal-title">إضافة تصنيف</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span class="svg-icon svg-icon-primary svg-icon-2x">
                         <!--begin::Svg Icon | path:C:\wamp64\www\keenthemes\legacy\metronic\theme\html\demo1\dist/../src/media/svg/icons\Navigation\Close.svg--><svg

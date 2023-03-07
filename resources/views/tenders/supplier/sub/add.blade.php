@@ -1,4 +1,44 @@
-<div class="modal fade" id="add-supplier" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdrop" aria-hidden="true">
+
+<style>
+    .modal-content {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    width: 480px !important;
+
+    top: -20px;
+    pointer-events: auto;
+    background-color: #fafafa;
+    background-clip: padding-box;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    border-radius: 0;
+    outline: 0;
+}
+
+.image-input .image-input-wrapper {
+    width: 100px;
+    height: 100px;
+    margin-bottom: 15px;
+    border-radius: 0.42rem;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.modal {
+    position: fixed;
+    top: 0;
+    left: -122px;
+    z-index: 1055;
+    display: none;
+    width: 100%;
+    height: 100%;
+    overflow-x: hidden;
+    overflow-y: auto;
+    outline: 0;
+}
+</style>
+
+<div class="modal fade modal-lg" id="add-supplier" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdrop" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -16,7 +56,7 @@
               @csrf
                 <input type="hidden" name="hidden" id="hidden">
 
-            <div class="modal-body">
+            <div class="card-body  scroll_div">
                     <div class="form-group row">
                         <div class="col-md-6 col-lg-6 col-sm-12">
                             <label>الاسم بالعربي</label>
@@ -61,7 +101,7 @@
 
 
             </div>
-            <div class="modal-footer">
+            <div class="card-footer">
                 <button type="submit" class="btn btn-primary" name="save" id="save">حفظ</button>
 
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">إغلاق</button>
@@ -70,3 +110,5 @@
         </div>
     </div>
 </div>
+
+

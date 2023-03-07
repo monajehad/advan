@@ -9,10 +9,10 @@ use Illuminate\Http\Response;
 
 class UpdateVacationRequestRequest extends FormRequest
 {
-    public function authorize()
-    {
-        return Gate::allows('vacation_request_edit');
-    }
+    // public function authorize()
+    // {
+    //     return Gate::allows('vacation_request_edit');
+    // }
 
     public function rules()
     {

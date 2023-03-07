@@ -33,7 +33,7 @@
             </h2>
             <div class="card-toolbar">
                 {{-- @can('users-add') --}}
-                <a id="add_button" class="btn btn-primary font-size-sm ml-3" href="{{ route('admin.users.create') }}">
+                <a data-toggle="modal" data-target="#add_button" class="btn btn-primary font-size-sm ml-3" >
                     <span class="svg-icon svg-icon-md svg-icon-2x">
                         <!--begin::Svg Icon | path:C:\wamp64\www\keenthemes\legacy\metronic\theme\html\demo1\dist/../src/media/svg/icons\Code\Plus.svg--><svg
                             xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px"
@@ -75,7 +75,7 @@
 
 
 </div>
-<div class="user-permission-body">
+@includeIf('advan.admin.users.create')
 
     <!--end::Container-->
     @endsection

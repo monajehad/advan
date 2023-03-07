@@ -41,27 +41,28 @@
             {{-- <td class="name">{{$client->clinetHits->id}}</td> --}}
 
             {{-- @can('suppliers-status') --}}
-                @if($vacationRequest->status==1)
+                {{-- @if($vacationRequest->status==1) --}}
                 <td class="status">
-                    <button class="btn btn-sm  btn-shadow btn-success change-status"
+                    <button class="badge badge-pill badge-success "
                     {{-- data-vacationRequest-id="{{$vacationRequest->id}}" --}}
                          {{-- @cannot('suppliers-status') disabled @endcannot --}}
                          >
-                        مفعل
+                         {{-- {{$vacationRequest->status}} --}}
+                         {{App\Models\VacationRequest::STATUS_SELECT[$vacationRequest->status] }}
                     </button>
                 </td>
-                @elseif($vacationRequest->status==0)
-                <td class="status">
+                {{-- @elseif($vacationRequest->status==0) --}}
+                {{-- <td class="status">
 
-                    <button class="btn btn-sm  btn-shadow btn-danger change-status"
+                    <button class="badge badge-pill badge-warning" --}}
                     {{-- data-vacationRequest-id="{{$vacationRequest->id}}" --}}
                         {{-- @cannot('suppliers-status') disabled @endcannot --}}
 
-                        >
+                        {{-- >
                         غير مفعل
                     </button>
-                </td>
-                @endif
+                </td> --}}
+                {{-- @endif --}}
              {{-- @endcan --}}
              {{-- @can('vacationRequests-update') --}}
              <td>

@@ -39,17 +39,13 @@ class CategoryController extends Controller
 
     }
 
-    public function get_category($id)
+    public function edit(Category $category)
     {
-        $category=Category::where('id',$id)
-        ->select('id','name','status')
-        ->first();
+        // abort_if(Gate::denies('hits_type_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        if(!$category)
-            return response()->json(['status'=>false,'error'=>'المورد غير موجود']);
-
-        return response()->json(['status'=>true,'category'=>$category]);
+        return view('advan.admin.categories.edit', compact('category'));
     }
+
 
     public function store(StoreCategoryRequest $request)
     {
@@ -57,10 +53,7 @@ class CategoryController extends Controller
             $request->status='1';
       }
         $category=Category::create([
-            'name'=>$request->name,
-             'status'=>$request->status,
-
-
+            $request->all()
         ]);
         // $category = Category::create($request->all());
 
@@ -68,31 +61,23 @@ class CategoryController extends Controller
     }
 
 
-    public function updateCategory(UpdateCategoryRequest $request)
+    public function update(UpdateCategoryRequest $request, Category $category)
     {
-        // $validation=Validator::make($request->all(),$this->rules($request->hidden),$this->messages());
-        // if ($validation->fails()) {
-        //     return response()->json(['status'=>false,'error'=>$validation->errors()->first()]);
-        // }
-        $category=Category::where('id',$request->hidden)->first();
 
-        $request->status= (isset($request->status))? 1: 0;
-        // $category=Category::where('id',$request->hidden)->first();
-        if(!$category)
-            return response()->json(['status'=>false,'error'=>'التصنيف غير موجود']);
-            $update=$category->update([
-                'name'=>$request->name,
-                'status'=>$request->status,
+        if($request->status == 'on'){
+            $request->status='1';
+      }
+    //   dd($request->status);
+      $category->update([
+        'name'=>$request->name,
+       'status'=>$request->status,
+]);
+    //   dd($request->status);
+
+    //   $category->update($request->all());
 
 
-            ]);
-        if(!$update)
-            return response()->json(['status'=>false,'error'=>'لم يتم تعديل التصنيف']);
-        return response()->json(['status'=>true,'success'=>'تم تعديل التصنيف بنجاح']);
-
-        // $category->update($request->all());
-
-        // return redirect()->route('admin.categories.index');
+        return redirect()->route('admin.categories.index');
     }
 
     public function show(Category $category)

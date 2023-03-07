@@ -30,26 +30,18 @@
                   @if($category->status==1)
                   <td class="status">
                     <span class="badge badge-pill badge-success">فعال</span>
-                      <!-- <button class="btn btn-sm  btn-shadow btn-success change-status"
-                          data-category-id="{{$category->id}}" {{-- @cannot('users-status') disabled @endcannot --}}>
-                          مفعل
-                      </button> -->
+
                   </td>
                   @elseif($category->status==0)
                   <td class="status">
                     <span class="badge badge-pill badge-warning">غير فعال</span>
-                      <!-- <button class="btn btn-sm  btn-shadow btn-danger change-status"
-                          data-category-id="{{$category->id}}" {{-- @cannot('users-status')
-                                  disabled
-                                  @endcannot --}}>
-                          غير مفعل
-                      </button> -->
+
                   </td>
                   @endif
                   {{-- @endcan --}}
                   {{-- @can('categories-update') --}}
                   <td>
-                      <button class=" edit-category"  data-category-id="{{ $category->id }}">
+                      <a class=" edit-category"  href="/admin/categories/{{$category->id}}/edit">
                           <span class="svg-icon svg-icon-md"> <svg xmlns="http://www.w3.org/2000/svg"
                                   xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px"
                                   viewBox="0 0 24 24" version="1.1">
@@ -64,7 +56,7 @@
                                       </rect>
                                   </g>
                               </svg> </span>
-                      </button>
+                            </a>
                   </td>
                   {{-- @endcan --}}
                   {{-- @can('categories-delete') --}}
