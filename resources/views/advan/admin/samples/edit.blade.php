@@ -141,7 +141,7 @@
             <h4>تاريخ النفاذ للمخزون :  {{ $sampleStock->end_date }}</h4>
 
                 --}}
-            <div class="form-group text-left">
+            <div class="form-group text-center">
                 <button class="btn btn-primary w-50" type="submit">
                     حفظ
                 </button>

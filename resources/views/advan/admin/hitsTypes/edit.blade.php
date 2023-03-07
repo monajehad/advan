@@ -43,7 +43,7 @@
                     </div>
                 @endif
             </div>
-            <div class="form-group text-left">
+            <div class="form-group text-center">
                 <button class="btn btn-primary w-50" type="submit">
                     حفظ
                 </button>

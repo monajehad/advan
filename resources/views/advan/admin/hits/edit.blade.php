@@ -277,11 +277,11 @@
                         @endif
                     </div>
                 </div>
-                    <div class="card-footer">
-                        <button type="submit" id="save" class="btn btn-primary">حفظ</button>
-
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">إغلاق</button>
-                    </div>
+                <div class="form-group text-center">
+                    <button class="btn btn-primary w-50" type="submit">
+                        حفظ
+                    </button>
+                </div>
 
 
 

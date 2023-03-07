@@ -26,7 +26,15 @@ class UsersController extends Controller
     {
         // abort_if(Gate::denies('user_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $users = User::with(['category','item','userHits'])->select('id','name','email','mobile','home_address','jobId');
+        $users = User::with(['category','item','userHits'])->select('id','name','email','mobile','home_address','jobId','status',
+        'mobile',
+        'home_address',
+        'whatsapp_phone',
+        'facebook',
+        'instagram',
+        'website',
+        'category_id',
+        'item_id');
 
             $users=$users->orderBy('id','desc')->paginate(self::PAGINATION_NO);
             if ($request->ajax()) {
@@ -34,8 +42,9 @@ class UsersController extends Controller
                 return response()->json(['users'=>$table_data]);
 
              }
-
-        return view('advan.admin.users.index', compact('users'));
+             $categories = Category::pluck('name', 'id');
+             $items = Item::pluck('name', 'id');
+        return view('advan.admin.users.index', compact('users','items', 'categories'));
     }
 
 
@@ -44,10 +53,10 @@ class UsersController extends Controller
         // abort_if(Gate::denies('user_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
 
-        $categories = Category::pluck('name', 'id');
-        $items = Item::pluck('name', 'id');
+        // $categories = Category::pluck('name', 'id');
+        // $items = Item::pluck('name', 'id');
 
-        return view('advan.admin.users.create', compact('items', 'categories'));
+        // return view('advan.admin.users.create', compact('items', 'categories'));
     }
 
     public function store(StoreUserRequest $request)

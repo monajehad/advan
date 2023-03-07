@@ -1,7 +1,7 @@
 @extends('layouts.cpanel.app')
 @section('content')
 
-<div class="card">
+<div class="card w-50 mr-10">
     <div class="card-header  d-flex justify-content-between ">
         <div class="py-5 h3"> تعديل  المندوب</div>
         <div class="form-group text-left  mb-0 py-3">
@@ -15,98 +15,108 @@
             @method('PUT')
             @csrf
             <div class="form-group">
-                <label class="required" for="name">{{ trans('cruds.user.fields.name') }}</label>
+                <label class="required" for="name">الاسم الثلاثي</label>
                 <input class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" type="text" name="name" id="name" value="{{ old('name', $user->name) }}" required>
                 @if($errors->has('name'))
                     <div class="invalid-feedback">
                         {{ $errors->first('name') }}
                     </div>
                 @endif
-                <span class="help-block">{{ trans('cruds.user.fields.name_helper') }}</span>
             </div>
             <div class="form-group">
-                <label class="required" for="qualification">{{ trans('cruds.user.fields.qualification') }}</label>
+                <label class="required" for="qualification">المؤهل</label>
                 <input class="form-control {{ $errors->has('qualification') ? 'is-invalid' : '' }}" type="text" name="qualification" id="qualification" value="{{ old('qualification', $user->qualification) }}" required>
                 @if($errors->has('qualification'))
                     <div class="invalid-feedback">
                         {{ $errors->first('qualification') }}
                     </div>
                 @endif
-                <span class="help-block">{{ trans('cruds.user.fields.user_name_helper') }}</span>
             </div>
             <div class="form-group">
-                <label class="required" for="email">{{ trans('cruds.user.fields.email') }}</label>
-                <input class="form-control {{ $errors->has('email') ? 'is-invalid' : '' }}" type="email" name="email" id="email" value="{{ old('email', $user->email) }}" required>
-                @if($errors->has('email'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('email') }}
-                    </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.user.fields.email_helper') }}</span>
-            </div>
-            <div class="form-group">
-                <label class="required" for="phone">{{ trans('cruds.user.fields.phone') }}</label>
-                <input class="form-control {{ $errors->has('phone') ? 'is-invalid' : '' }}" type="text" name="phone" id="phone" value="{{ old('phone', $user->phone) }}" required>
-                @if($errors->has('phone'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('phone') }}
-                    </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.user.fields.phone_helper') }}</span>
-            </div>
-            <div class="form-group">
-                <label class="required" for="mobile">{{ trans('cruds.user.fields.mobile') }}</label>
-                <input class="form-control {{ $errors->has('mobile') ? 'is-invalid' : '' }}" type="text" name="mobile" id="mobile" value="{{ old('mobile', $user->mobile) }}" required>
-                @if($errors->has('mobile'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('mobile') }}
-                    </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.user.fields.mobile_helper') }}</span>
-            </div>
-            <div class="form-group">
-                <label class="required" for="password">{{ trans('cruds.user.fields.password') }}</label>
-                <input class="form-control {{ $errors->has('password') ? 'is-invalid' : '' }}" type="password" name="password" id="password">
-                @if($errors->has('password'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('password') }}
-                    </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.user.fields.password_helper') }}</span>
-            </div>
-
-            <div class="form-group">
-                <label class="required" for="whatsapp_phone">{{ trans('cruds.user.fields.whatsapp_phone') }}</label>
-                <input class="form-control {{ $errors->has('whatsapp_phone') ? 'is-invalid' : '' }}" type="text" name="whatsapp_phone" id="whatsapp_phone" value="{{ old('whatsapp_phone', $user->whatsapp_phone) }}" required>
-                @if($errors->has('whatsapp_phone'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('whatsapp_phone') }}
-                    </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.user.fields.whatsapp_phone_helper') }}</span>
-            </div>
-            <div class="form-group">
-                <label class="required" for="home_address">{{ trans('cruds.user.fields.home_address') }}</label>
+                <label class="required" for="home_address">عنوان السكن</label>
                 <input class="form-control {{ $errors->has('home_address') ? 'is-invalid' : '' }}" type="text" name="home_address" id="home_address" value="{{ old('home_address', $user->home_address) }}" required>
                 @if($errors->has('home_address'))
                     <div class="invalid-feedback">
                         {{ $errors->first('home_address') }}
                     </div>
                 @endif
-                <span class="help-block">{{ trans('cruds.user.fields.home_address_helper') }}</span>
             </div>
             <div class="form-group">
-                <label class="required" for="jobId">{{ trans('cruds.user.fields.jobId') }}</label>
+                <label class="required" for="jobId">الرقم الوظيفي</label>
                 <input class="form-control {{ $errors->has('jobId') ? 'is-invalid' : '' }}" type="text" name="jobId" id="jobId" value="{{ old('jobId', $user->jobId) }}" required>
                 @if($errors->has('jobId'))
                     <div class="invalid-feedback">
                         {{ $errors->first('jobId') }}
                     </div>
                 @endif
-                <span class="help-block">{{ trans('cruds.user.fields.jobId_helper') }}</span>
             </div>
             <div class="form-group">
-                <label class="required" for="category_id">{{ trans('cruds.user.fields.category') }}</label>
+                <label class="required" for="email">البريد الالكتروني</label>
+                <input class="form-control {{ $errors->has('email') ? 'is-invalid' : '' }}" type="email" name="email" id="email" value="{{ old('email', $user->email) }}" required>
+                @if($errors->has('email'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('email') }}
+                    </div>
+                @endif
+            </div>
+            <div class="form-group">
+                <label class="required" for="password">كلمة السر</label>
+                <input class="form-control {{ $errors->has('password') ? 'is-invalid' : '' }}" type="password" name="password" id="password">
+                @if($errors->has('password'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('password') }}
+                    </div>
+                @endif
+            </div>
+            <div class="form-group">
+                <label class="required" for="mobile">الجوال</label>
+                <input class="form-control {{ $errors->has('mobile') ? 'is-invalid' : '' }}" type="text" name="mobile" id="mobile" value="{{ old('mobile', $user->mobile) }}" required>
+                @if($errors->has('mobile'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('mobile') }}
+                    </div>
+                @endif
+            </div>
+            <div class="form-group">
+                <label class="required" for="phone">الهاتف</label>
+                <input class="form-control {{ $errors->has('phone') ? 'is-invalid' : '' }}" type="text" name="phone" id="phone" value="{{ old('phone', $user->phone) }}" required>
+                @if($errors->has('phone'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('phone') }}
+                    </div>
+                @endif
+            </div>
+            <div class="form-group">
+                <label class="required" for="facebook">فيسبوك</label>
+                <input class="form-control {{ $errors->has('facebook') ? 'is-invalid' : '' }}" type="text" name="facebook" id="facebook" value="{{ old('facebook', $user->facebook) }}" required>
+                @if($errors->has('facebook'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('facebook') }}
+                    </div>
+                @endif
+            </div>
+            <div class="form-group">
+                <label class="required" for="instagram">انستجرام</label>
+                <input class="form-control {{ $errors->has('instagram') ? 'is-invalid' : '' }}" type="text" name="instagram" id="instagram" value="{{ old('instagram', $user->instagram) }}" required>
+                @if($errors->has('instagram'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('instagram') }}
+                    </div>
+                @endif
+            </div>
+            <div class="form-group">
+                <label class="required" for="website">موقع ويب</label>
+                <input class="form-control {{ $errors->has('website') ? 'is-invalid' : '' }}" type="text" name="website" id="website" value="{{ old('website', $user->website) }}" required>
+                @if($errors->has('website'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('website') }}
+                    </div>
+                @endif
+            </div>
+
+
+            <div class="form-group">
+                <label class="required" for="category_id">عائلة الصنف</label>
                 <select class="form-control select {{ $errors->has('category') ? 'is-invalid' : '' }}" name="category_id" id="category_id" required>
                     @foreach($categories as $id => $entry)
                         <option value="{{ $id }}" {{ (old('category_id') ? old('category_id') : $user->category->id ?? '') == $id ? 'selected' : '' }}>{{ $entry }}</option>
@@ -117,10 +127,9 @@
                         {{ $errors->first('category') }}
                     </div>
                 @endif
-                <span class="help-block">{{ trans('cruds.user.fields.category_helper') }}</span>
             </div>
             <div class="form-group">
-                <label class="required" for="item_id">{{ trans('cruds.user.fields.item') }}</label>
+                <label class="required" for="item_id">الصنف</label>
                 <select class="form-control select {{ $errors->has('item') ? 'is-invalid' : '' }}" name="item_id" id="item_id" required>
                     @foreach($items as $id => $entry)
                         <option value="{{ $id }}" {{ (old('item_id')? old('item_id') : $user->item->id ?? '') == $id ? 'selected' : '' }}>{{ $entry }}</option>
@@ -131,9 +140,8 @@
                         {{ $errors->first('item') }}
                     </div>
                 @endif
-                <span class="help-block">{{ trans('cruds.user.fields.item_helper') }}</span>
             </div>
-            <div class="form-group">
+            {{-- <div class="form-group">
                 <label for="image">{{ trans('cruds.user.fields.image') }}</label>
                 @if($user->image)
                     <a href="{{ $user->image_url }}" target="_blank">
@@ -148,29 +156,33 @@
                     </div>
                 @endif
                 <span class="help-block">{{ trans('cruds.user.fields.image_helper') }}</span>
-            </div>
-
+            </div> --}}
 
             <div class="form-group">
-                <label class="required">{{ trans('cruds.user.fields.status') }}</label>
-                <select class="form-control {{ $errors->has('status') ? 'is-invalid' : '' }}" name="status" id="status" required>
-                    <option value disabled {{ old('status', null) === null ? 'selected' : '' }}>{{ trans('global.pleaseSelect') }}</option>
-                    @foreach(App\Models\User::STATUS_SELECT as $key => $label)
-                        <option value="{{ $key }}" {{ old('status', $user->status) === (string) $key ? 'selected' : '' }}>{{ $label }}</option>
-                    @endforeach
-                </select>
-                @if($errors->has('status'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('status') }}
-                    </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.user.fields.status_helper') }}</span>
+                <?php if($user->status=='1')
+                $user->status='on';
+                ?>
+            <div class="col-md-6 col-lg-6 col-sm-12 status-div">
+                <label>الحالة</label>
+                <span class="switch">
+                    <label>
+                        <input type="checkbox"   {{$user->status ? 'checked' : ''}} name="status" id="status">
+                        <span></span>
+                    </label>
+                </span>
             </div>
-            <div class="form-group">
-                <button class="btn btn-danger" type="submit">
-                    {{ trans('global.save') }}
-                </button>
-            </div>
+
+            @if($errors->has('status'))
+                <div class="invalid-feedback">
+                    {{ $errors->first('status') }}
+                </div>
+            @endif
+        </div>
+        <div class="form-group text-center">
+            <button class="btn btn-primary w-50" type="submit">
+                حفظ
+            </button>
+        </div>
         </form>
     </div>
 </div>

@@ -69,7 +69,7 @@
                 <div class="card-body">
 
                     <div class="form-group">
-                        <label>اسم التصنيف <span class="text-danger">*</span></label>
+                        <label>اسم نوع المناسبة <span class="text-danger">*</span></label>
                         <input class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" type="text" name="name" id="name" value="{{ old('name', '') }}" required>
                         @if($errors->has('name'))
                             <div class="invalid-feedback">

@@ -44,7 +44,7 @@
                     {{-- @can('user-status') --}}
                         @if($user->status==1)
                         <td class="status">
-                            <button class="btn btn-sm  btn-shadow btn-success change-status"
+                            <button class="badge badge-pill badge-success "
                             {{-- data-user-id="{{$user->id}}" --}}
                                  {{-- @cannot('user-status') disabled @endcannot --}}
                                  >
@@ -54,7 +54,7 @@
                         @elseif($user->status==0)
                         <td class="status">
 
-                            <button class="btn btn-sm  btn-shadow btn-danger change-status"
+                            <button class="badge badge-pill badge-warning"
                             {{-- data-user-id="{{$user->id}}" --}}
                                 {{-- @cannot('user-status') disabled @endcannot --}}
 

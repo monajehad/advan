@@ -42,9 +42,9 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.role.fields.permissions_helper') }}</span>
             </div>
-            <div class="form-group text-left ">
+            <div class="form-group text-center ">
                 <button class="btn btn-primary w-50" type="submit">
-                    {{ trans('global.save') }}
+                    حفظ
                 </button>
             </div>
         </form>
