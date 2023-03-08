@@ -4,4 +4,5 @@ return [
     'error login' => 'خطأ في بيانات الدخول',
     'required all' => 'كل الحقول مطلوبة',
     'success register' => 'تم التسجيل بنجاح',    'user_not_active' => 'المستخدم غير فعال',    'required all' => 'required all',    'required all' => 'required all',    'required all' => 'required all',    'required all' => 'required all',    'required all' => 'required all',    'required all' => 'required all',    'required all' => 'required all',
+    'required all' => 'required all',    'required all' => 'required all',    'required all' => 'required all',    'required all' => 'required all',    'required all' => 'required all',    'required all' => 'required all',    'required all' => 'required all',    'required all' => 'required all',    'required all' => 'required all',    'required all' => 'required all',    'required all' => 'required all',
 ];

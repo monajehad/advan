@@ -26,7 +26,7 @@ class UsersController extends Controller
     {
         // abort_if(Gate::denies('user_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $users = User::with(['category','item','userHits'])->select('id','name','email','mobile','home_address','jobId','status',
+        $users = User::with(['category','item','userHits','roles'])->select('id','name','email','mobile','home_address','jobId','status',
         'mobile',
         'home_address',
         'whatsapp_phone',
@@ -44,7 +44,9 @@ class UsersController extends Controller
              }
              $categories = Category::pluck('name', 'id');
              $items = Item::pluck('name', 'id');
-        return view('advan.admin.users.index', compact('users','items', 'categories'));
+        $roles = Role::pluck('title', 'id');
+
+        return view('advan.admin.users.index', compact('users','items', 'categories','roles'));
     }
 
 
@@ -65,13 +67,16 @@ class UsersController extends Controller
 
          }
         $user = User::create($request->all());
-
+        $user->roles()->sync($request->input('roles', []));
+        $user->user_type = $request->input('roles');
+        $user->save();
         // $user->save();
 
         if ($request->file('image')) {
             $image = saveOriginalImage($request->file('image'),User::DIR_UPLOAD );
             $user->fill(['image' => $image])->save();
         }
+
         return redirect()->route('admin.users.index');
     }
 
@@ -79,13 +84,14 @@ class UsersController extends Controller
     {
         // abort_if(Gate::denies('user_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
+        $roles = Role::pluck('title', 'id');
 
         $categories = Category::pluck('name', 'id');
         $items = Item::pluck('name', 'id');
 
         $user->load('item', 'category');
 
-        return view('advan.admin.users.edit', compact('items', 'categories', 'user'));
+        return view('advan.admin.users.edit', compact('items', 'categories','roles', 'user'));
     }
 
     public function update(UpdateUserRequest $request, User $user)

@@ -28,12 +28,11 @@ class NotificationController extends Controller
         ]);
      }
        public function get(){
-        $notifications=Notification::all();
+        $notifications=Notification::with('user')->select('id','title','body','user_id');
+        // dd($notifications);
         $users = User::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        return view('advan.admin.notification.index',[
-        'notifications' =>$notifications,
-       ] ,compact('users'));
+        return view('advan.admin.notifications.index',compact('users','notifications'));
 
      }
 

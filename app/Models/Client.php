@@ -115,7 +115,8 @@ class Client extends Model implements HasMedia
         $query->where(function ($query) use ($value) {
             $query
                 ->where('name', 'LIKE' , '%'.$value.'%')
-                ->orWhere('doctor_name', 'LIKE' , '%'.$value.'%');
+                // ->orWhere('doctor_name', 'LIKE' , '%'.$value.'%')
+                ;
         });
     }
 

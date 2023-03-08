@@ -28,17 +28,23 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+// Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+//     return $request->user();
+// });
 
 
 // Route::group(['prefix' => 'v1', 'namespace' => 'Api'], function () {
 //     Route::post('/login', [AuthController::class,'logoin']);
 //     Route::post('/register',[AuthController::class,'register'] );
+// Route::group(['prefix' => 'api', 'as' => 'api.'], function () {
+
+// });
 
 
 // });
+Route::post('/register',[AuthController::class,'register'] );
+Route::post('/login', [AuthController::class,'logoin']);
+
     // Attendance
 Route::apiResource('/attendances', AttendanceApiController::class);
 Route::get('/user', [AuthController::class,'user']);
@@ -51,7 +57,7 @@ Route::get('/user', [AuthController::class,'user']);
  Route::get('categories/{id}/sample-stocks', [CategoryApiController::class,'sample_stock']);
 
  // Samples
-//  Route::apiResource('samples', SamplesApiController::class)->only(['index', 'store']);
+ Route::apiResource('samples', SamplesApiController::class)->only(['index', 'store']);
  Route::post('samples/{id}/confirm', [SamplesApiController::class,'confirm']);
  Route::get('/samples/have',[SamplesApiController::class,'have']);
 
@@ -73,8 +79,8 @@ Route::apiResource('hits-types', HitsTypeApiController::class);
  Route::post('hits/{id}/update',[HitsApiController::class,'update'] );
 
  // Clinics
- Route::post('clinics/media', [ClientsApiController::class,'storeMedia'])->name('clinics.storeMedia');
- Route::apiResource('clinics', ClientsApiController::class);
+ Route::post('clients/media', [ClientsApiController::class,'storeMedia'])->name('clients.storeMedia');
+ Route::apiResource('clients', ClientsApiController::class);
 
   // Report
   Route::apiResource('reports', ReportApiController::class);
@@ -93,4 +99,4 @@ Route::group(['prefix' => 'api', 'as' => 'api.'], function () {
 
 
 Route::post('/save-token', [FCMController::class,'index']);
-Route::post('/notification/save-token', [NotificationController::class,'index']);
+Route::post('/notification/save-token', [NotificationController::class,'index'])->name('notification.save-token');

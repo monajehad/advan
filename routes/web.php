@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\AttendanceController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\ClientsController;
 use App\Http\Controllers\Admin\ClientsSpecialtiesController;
+use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\admin\EmployeeController;
 use App\Http\Controllers\Admin\FCMController;
 use App\Http\Controllers\Admin\HitsController;
@@ -63,6 +64,7 @@ Auth::routes();
 
 Route::group([ 'prefix' => 'admin', 'as' => 'admin.']
 ,function () {
+    Route::get('/home',[DashboardController::class,'index'] )->name('home');
 
       // Roles
       Route::delete('roles/destroy',[RolesController::class,'massDestroy'] )->name('roles.massDestroy');

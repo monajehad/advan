@@ -87,7 +87,7 @@ class User extends Authenticatable
     protected function user_type(): Attribute
     {
         return new Attribute(
-            get: fn ($value) =>  ["admin", "tender"][$value],
+            get: fn ($value) =>  ["1", "2"][$value],
         );
     }
     public function userUserAlerts()

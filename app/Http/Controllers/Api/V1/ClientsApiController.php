@@ -39,8 +39,8 @@ class ClientsApiController extends Controller
         $validator = Validator::make($request->all(), [
             'name' => 'required',
             'qualification' => '',
-            'category' => 'required',
-            'item' => 'required',
+            'category' => '',
+            'item' => '',
             'email' => 'required',
             'mobile' => 'required',
             'home_address' => 'required',

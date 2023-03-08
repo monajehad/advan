@@ -29,14 +29,14 @@ class AuthController extends Controller
             $message = api('required all');
             return errorResponse($validator->errors()->first(), $message);
         }
-        $user = User::where('user_name' , $request->user_name)->first();
+        $user = User::where('name' , $request->name)->first();
         if ($user && $user->status != 1) {
 
             $message = api('user_not_active');
             return errorResponse($message);
         }
 
-        $credentials = request(['user_name', 'password']);
+        $credentials = request(['name', 'password']);
         if (!Auth::attempt($credentials)) {
             $message = api('error login');
             return errorResponse(null, $message, UNAUTHORIZED);
@@ -64,7 +64,7 @@ class AuthController extends Controller
     private function Loginvalidator(Request $request)
     {
         return Validator::make($request->all(), [
-            'user_name' => 'required|string',
+            'name' => 'required|string',
             'password' => 'required|string',
             'remember_me' => 'boolean',
         ]);
@@ -98,7 +98,7 @@ class AuthController extends Controller
         $data = [
             'code' => $user->code,
             'name' => $user->name,
-            'user_name' => $user->user_name,
+            // 'user_name' => $user->user_name,
             'phone' => $user->phone,
         ];
 
@@ -116,8 +116,8 @@ class AuthController extends Controller
     {
         return Validator::make($request->all(), [
             'email' => 'required|string|email|unique:users|max:255',
-            'phone' => 'required|string|unique:users',
-            'user_name' => 'required|string|unique:users',
+            'mobile' => 'required|string|unique:users',
+            // 'user_name' => 'required|string|unique:users',
             'name' => 'required|string',
             'password' => 'required|string|confirmed',
         ]);
@@ -127,7 +127,7 @@ class AuthController extends Controller
     {
         $user = new User([
             'name' => $request->name,
-            'user_name' => $request->user_name,
+            // 'user_name' => $request->user_name,
             'email' => $request->email,
             'phone' => $request->phone,
             'password' => $request->password,
