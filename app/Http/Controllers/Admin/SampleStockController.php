@@ -112,10 +112,14 @@ class SampleStockController extends Controller
     public function show(SampleStock $sampleStock)
     {
         // abort_if(Gate::denies('sample_stock_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        $unit_select=SystemConstant::select('id','name','value','type')->where([['status',1],['type','unit']])->orderBy('order')->get();
+        $data['unit_select']=$unit_select;
+        $categories = Category::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $items = Item::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $sampleStock->load('category');
 
-        return view('advan.admin.sampleStocks.show', compact('sampleStock'));
+        return view('advan.admin.sampleStocks.show', compact('categories', 'sampleStock','items','data'));
     }
 
     public function destroy(Request $request)
