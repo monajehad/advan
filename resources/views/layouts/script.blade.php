@@ -17,6 +17,7 @@
 <!--end::Page Scripts-->
 <script src="{{asset('component_assets/js/charts.js')}}"></script>
 <script src="{{asset('component_assets/js/app.js')}}"></script>
+<script src="{{asset('assets/js/wizard-3.js')}}"></script>
 {{-- <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-messaging.js"></script> --}}
 
 
