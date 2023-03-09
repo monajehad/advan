@@ -164,13 +164,13 @@
                             <div class="d-flex ">
                               <div class="stock-details">
                                 <div class="stock-caption caption d-flex align-items-center mb-1">
-                                  <div class="info-tooltip ps-1 text-gray-600" data-bs-toggle="tooltip" title="Small description">متوسط الزيارات
+                                  <div class="info-tooltip ps-1 text-gray-600" data-bs-toggle="tooltip" title="Small description"> اجمالي التصنيفات
                                     <svg class="icon icon-info">
                                       <use xlink:href="#icon-info"></use>
                                     </svg>
                                   </div>
                                 </div>
-                                {{-- <div class="counter h1">{{ (\App\Models\Hit::all()->count()) }}</div> --}}
+                                <div class="counter h1">{{ (\App\Models\Category::all()->count()) }}</div>
 
                               </div>
                               <div class="stock-chart ms-auto">

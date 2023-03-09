@@ -178,8 +178,8 @@ function load_data_table(page = '') {
                 });
 
                 $.ajax({
-                    url: '{{ route("notification.save-token") }}',
-                    type: 'POST',
+                    url: '{{ route("notification.fcmToken") }}',
+                    type: 'PTCH',
                     data: {
                         token: token
                     },

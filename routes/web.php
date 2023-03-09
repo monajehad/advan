@@ -57,8 +57,8 @@ Auth::routes();
 
     Route::get('/massage',[FCMController::class,'get'] )->middleware('auth');
     Route::post('/massage',[FCMController::class,'createChat'])->name('createChat')->middleware('auth');
-    Route::get('/notification',[NotificationController::class,'get'] );
-
+    Route::get('/notification',[NotificationController::class,'get'] )->name('notification');
+    Route::patch('/fcm-token', [HomeController::class, 'updateToken'])->name('notification.fcmToken');
     Route::post('/send_notification',[NotificationController::class,'sendNotification'] )->name('send.notification');
     // Route::post('/save_notification',[NotificationController::class,'createNotification'])->name('createNotificatio')->middleware('auth');
 
