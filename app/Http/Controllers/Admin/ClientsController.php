@@ -50,8 +50,9 @@ class ClientsController extends Controller
 
     }
     $clients_specialties = ClientsSpecialty::get();
+    $specialties = ClientsSpecialty::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-    return view('advan.admin.clients.index', compact('clients_specialties','data'));
+    return view('advan.admin.clients.index', compact('clients_specialties','data','specialties'));
 
 
 
