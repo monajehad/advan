@@ -3096,6 +3096,7 @@ select.selectpicker {
 
 .bootstrap-select .dropdown-toggle .filter-option-inner-inner {
   overflow: hidden;
+  text-align: right;
 }
 
 .bootstrap-select .dropdown-toggle .filter-expand {
@@ -3160,6 +3161,7 @@ select.selectpicker {
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
+  text-align: right;
 }
 
 .bootstrap-select .dropdown-menu li a.opt {

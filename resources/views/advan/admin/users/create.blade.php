@@ -35,9 +35,28 @@
     z-index: 1055;
     display: none;
     width: 100%;
-    height: 100%;
+    height: 100vh;
     overflow-x: hidden;
     overflow-y: auto;
+    outline: 0;
+}
+.modal.show .modal-dialog {
+    -webkit-transform: none;
+    transform: none;
+    height: 100vh;
+}
+.modal-content {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    width: 600px !important;
+    height: 100vh;
+    top: -20px;
+    pointer-events: auto;
+    background-color: #fafafa;
+    background-clip: padding-box;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    border-radius: 0;
     outline: 0;
 }
 </style>
@@ -397,11 +416,11 @@
                                     <!--begin: Wizard Actions-->
                                     <div class="d-flex justify-content-between border-top mt-5 pt-10">
                                         <div class="mr-2">
-                                            <button type="button" class="btn btn-light-primary font-weight-bolder text-uppercase px-9 py-4" data-wizard-type="action-prev">Previous</button>
+                                            <button type="button" class="btn btn-light-primary font-weight-bolder text-uppercase px-9 py-4" data-wizard-type="action-prev">السابق</button>
                                         </div>
                                         <div>
-                                            <button type="submit" class="btn btn-success font-weight-bolder text-uppercase px-9 py-4" data-wizard-type="action-submit">Submit</button>
-                                            <button type="button" class="btn btn-primary font-weight-bolder text-uppercase px-9 py-4" data-wizard-type="action-next">Next</button>
+                                            <button type="submit" class="btn btn-success font-weight-bolder text-uppercase px-9 py-4" data-wizard-type="action-submit">إعتماد</button>
+                                            <button type="button" class="btn btn-primary font-weight-bolder text-uppercase px-9 py-4" data-wizard-type="action-next">التالي</button>
                                         </div>
                                     </div>
                                     <!--end: Wizard Actions-->

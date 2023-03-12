@@ -2525,9 +2525,9 @@ progress {
 .form-control {
     display: block;
     width: 100%;
-    padding: 0.75rem 1rem;
+    padding: 8px 8px !important;
     font-size: 1.1rem;
-    font-weight: 500;
+    font-weight: 600;
     line-height: 1.5;
     color: #181C32;
     background-color: #ffffff;
@@ -56710,3 +56710,17 @@ body.swal2-height-auto {
 }
 
 /*# sourceMappingURL=style.bundle.css.map*/
+
+/*Custom*/
+
+.input-group>.input-group-append>.btn,
+.input-group>.input-group-append>.input-group-text,
+.input-group>.input-group-prepend:not(:first-child)>.btn,
+.input-group>.input-group-prepend:not(:first-child)>.input-group-text,
+.input-group>.input-group-prepend:first-child>.btn:not(:first-child),
+.input-group>.input-group-prepend:first-child>.input-group-text:not(:first-child) {
+    border-top-right-radius: 0 !important;
+    border-bottom-right-radius: 0 !important;
+    height: 44px !important;
+    top: -2px !important;
+}

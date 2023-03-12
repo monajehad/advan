@@ -192,18 +192,18 @@
                     <div class="card mb-2 p-4 p-sm-5">
                       <div class="card-head d-flex align-items-center justify-content-between mb-5 mb-sm-6">
                         <div class="title title-color yellow">
-                            <h3 class="section-title" style="margin-right: 20px ">اجمالي العينات</h3>
+                            <h3 class="section-title" style="margin-right: 20px;font-size: 18px;">اجمالي العينات</h3>
                         </div>
 
                         <div class="d-flex">
-                            <div class="title title-color red title-custom area"  >
-                                <div class=" me-2" style="margin-right: 20px !important"> جميع المندوبين </div>
+                            <div class="title title-color red title-custom area">
+                                <div class="me-2" style="margin-right: 20px !important"> جميع المندوبين </div>
                             </div>
                         <select class="select select-small d-sm-inline-flex area">
 
                           <option>
                             <div class="title title-color red title-custom"  >
-                                <div class=" me-2" style="margin-right: 20px !important">خالد وليد يونس</div>
+                                <div class="me-2" style="margin-right: 20px !important">خالد وليد يونس</div>
                             </div></option>
                           <option>عبدالشكور  </option>
                           <option>عبدالكريم</option>

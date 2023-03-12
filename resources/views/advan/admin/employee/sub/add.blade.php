@@ -5,7 +5,7 @@
     display: flex;
     flex-direction: column;
     width: 480px !important;
-
+    height:100vh;
     top: -20px;
     pointer-events: auto;
     background-color: #fafafa;
@@ -31,11 +31,19 @@
     z-index: 1055;
     display: none;
     width: 100%;
-    height: 100%;
+    height: 100vh;
     overflow-x: hidden;
     overflow-y: auto;
     outline: 0;
 }
+
+.modal.show .modal-dialog {
+    -webkit-transform: none;
+    transform: none;
+    height: 100vh;
+}
+
+
 </style>
 
 
@@ -136,7 +144,7 @@
                         <label for="exampleSelect1">الصلاحيات <span class="text-danger">*</span></label>
 
                         <select class="form-control"  {{ $errors->has('roles') ? 'is-invalid' : '' }}
-                            name="roles[]" id="roles" multiple required >
+                            name="roles[]" id="roles " multiple required >
                       @foreach($roles as $id => $role)
                             <option value="{{ $id }}" {{ in_array($id, old('roles', [])) ? 'selected' : '' }}>
                                 {{ $role  }}</option>
