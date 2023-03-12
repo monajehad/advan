@@ -126,7 +126,7 @@
                     </div> --}}
                     <div class="form-group">
                         <label class="required" for="category_id">التصنيف</label>
-                        <select class="form-control selectpicker {{ $errors->has('category') ? 'is-invalid' : '' }}" name="category_id" id="category_id" required>
+                        <select class="form-control  {{ $errors->has('category') ? 'is-invalid' : '' }}" name="category_id" id="category_id" required>
                             @foreach($categories as $id => $entry)
                                 <option value="{{ $id }}" {{ old('category_id') == $id ? 'selected' : '' }}>{{ $entry }}</option>
                             @endforeach
@@ -139,7 +139,7 @@
                     </div>
                     <div class="form-group">
                         <label class="required" for="item_id">الصنف</label>
-                        <select class="form-control selectpicker {{ $errors->has('item') ? 'is-invalid' : '' }}" name="item_id" id="item_id" required>
+                        <select class="form-control  {{ $errors->has('item') ? 'is-invalid' : '' }}" name="item_id" id="item_id" required>
                             @foreach($items as $id => $entry)
                                 <option value="{{ $id }}" {{ old('item_id') == $id ? 'selected' : '' }}>{{ $entry }}</option>
                             @endforeach

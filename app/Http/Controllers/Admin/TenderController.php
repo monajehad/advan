@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\View;
 use App\Models\SystemConstant;
+use App\Models\ClientsSpecialty;
 use App\Models\Tender;
 use App\Models\Client;
 use App\Models\Supplier;
@@ -160,6 +161,9 @@ class TenderController extends Controller
             $table_data=view('admin.tender.table-data',compact('data'))->render();
             return response()->json(['tenders'=>$table_data]);
         }
+        $category_select=SystemConstant::select('id','name','value','type')->where([['type','category']])->orderBy('order')->get();
+        $area_1_select=SystemConstant::select('id','name','value','type')->where([['type','area_1']])->orderBy('order')->get();
+
         $data['competitors']=$competitors;
         // $data['clients']=$clients;
         $data['items']=$items;
@@ -173,13 +177,15 @@ class TenderController extends Controller
         $data['order_tenders_select']=$order_tenders_select;
         $data['order_type_select']=$order_type_select;
         $data['users']=$users;
-
+        $data['category_select']=$category_select;
+        $data['area_1_select']=$area_1_select;
 
         // $items_data['items']=$items;
 
        // $data['durations_select']=$durations_select;
+       $specialties = ClientsSpecialty::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        return view('advan.admin.tender.index',compact('data','items'));
+        return view('advan.admin.tender.index',compact('data','items','specialties'));
     }
 
     public function get_clients(Request $request)

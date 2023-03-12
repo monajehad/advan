@@ -36,8 +36,8 @@
 
         </div>
         <div class="card-body">
-            <div class="tab-content"></div>
-                <div class="tab-pane fade show " id="kt_tab_pane_4_1" role="tabpanel" aria-labelledby="kt_tab_pane_4_1">
+            <div class="tab-content">
+                <div class="tab-pane fade show active" id="kt_tab_pane_4_1" role="tabpanel" aria-labelledby="kt_tab_pane_4_1">
                     <form >
                         <h3>تفاصيل العينة </h3>
 
@@ -198,6 +198,6 @@
         </div>
     </div>
 
-
+</div>
 
 @endsection

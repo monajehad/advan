@@ -69,7 +69,7 @@
                 <div class="card-body">
                     <div class="form-group">
                         <label class="required" for="user_id">اسم المندوب</label>
-                        <select class="form-control  selectpicker {{ $errors->has('user') ? 'is-invalid' : '' }}" name="user_id" id="user_id" required>
+                        <select class="form-control   {{ $errors->has('user') ? 'is-invalid' : '' }}" name="user_id" id="user_id" required>
                             @foreach($users as $id => $entry)
                                 <option class="text-right" value="{{ $id }}" {{ old('user_id') == $id ? 'selected' : '' }}>{{ $entry }}</option>
                             @endforeach
@@ -82,7 +82,7 @@
                     </div>
                     <div class="form-group">
                         <label class="required" for="type_id">نوع التقرير</label>
-                        <select class="form-control selectpicker {{ $errors->has('type') ? 'is-invalid' : '' }}" name="type_id" id="type_id" required>
+                        <select class="form-control  {{ $errors->has('type') ? 'is-invalid' : '' }}" name="type_id" id="type_id" required>
                             @foreach($types as $id => $entry)
                                 <option class="text-right" value="{{ $id }}" {{ old('type_id') == $id ? 'selected' : '' }}>{{ $entry }}</option>
                             @endforeach
@@ -104,7 +104,7 @@
                     </div>
                     <div class="form-group">
                         <label for="client_id">العميل</label>
-                        <select class="form-control selectpicker {{ $errors->has('client') ? 'is-invalid' : '' }}" name="client_id" id="client_id">
+                        <select class="form-control  {{ $errors->has('client') ? 'is-invalid' : '' }}" name="client_id" id="client_id">
                             @foreach($clients as $id => $entry)
                                 <option class="text-right" value="{{ $id }}" {{ old('client_id') == $id ? 'selected' : '' }}>{{ $entry }}</option>
                             @endforeach

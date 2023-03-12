@@ -19,7 +19,7 @@
             @csrf
             <div class="form-group">
                 <label class="required" for="sample_id">الاصناف</label>
-                <select class="form-control selectpicker {{ $errors->has('sample') ? 'is-invalid' : '' }}" name="sample_id" id="sample_id" required>
+                <select class="form-control  {{ $errors->has('sample') ? 'is-invalid' : '' }}" name="sample_id" id="sample_id" required>
                     @foreach($samples as $id => $entry)
                         <option value="{{ $id }}" {{ (old('sample_id') ? old('sample_id') : $sample->sample->id ?? '') == $id ? 'selected' : '' }}>{{ $entry }}</option>
                     @endforeach
@@ -33,7 +33,7 @@
             </div>
             <div class="form-group">
                 <label class="required" for="user_id">{{ trans('cruds.sample.fields.user') }}</label>
-                <select class="form-control selectpicker {{ $errors->has('user') ? 'is-invalid' : '' }}" name="user_id" id="user_id" required>
+                <select class="form-control  {{ $errors->has('user') ? 'is-invalid' : '' }}" name="user_id" id="user_id" required>
                     @foreach($users as $id => $entry)
                         <option value="{{ $id }}" {{ (old('user_id') ? old('user_id') : $sample->user->id ?? '') == $id ? 'selected' : '' }}>{{ $entry }}</option>
                     @endforeach
@@ -75,7 +75,7 @@
             </div>
             <div class="form-group">
                 <label class="required" for="category_id">العائلة</label>
-                <select class="form-control selectpicker {{ $errors->has('category') ? 'is-invalid' : '' }}" name="category_id" id="category_id" required>
+                <select class="form-control  {{ $errors->has('category') ? 'is-invalid' : '' }}" name="category_id" id="category_id" required>
                     @foreach($categories as $id => $entry)
                         <option value="{{ $id }}" {{ (old('category_id') ? old('category_id') : $sample->category->id ?? '') == $id ? 'selected' : '' }}>{{ $entry }}</option>
                     @endforeach
@@ -90,7 +90,7 @@
             <div class="form-group row">
                 <div class="col-md-6 col-lg-6 col-sm-12">
                     <label>نوع العينة</label>
-                    <select class="form-control selectpicker" id="type" name="type">
+                    <select class="form-control " id="type" name="type">
                         <?php    $types=array('تسويق','توزيع')?>
                         <option value="" disabled selected>نوع العينة </option>
                         @foreach($types as $type)
@@ -105,7 +105,7 @@
                 <div class="form-group row">
                     <div class="col-md-6 col-lg-6 col-sm-12">
                         <label>الوحدة</label>
-                        <select class="form-control selectpicker" id="unit" name="unit">
+                        <select class="form-control " id="unit" name="unit">
                             <option value="" disabled selected>اختر الوحدة</option>
                             @foreach($data['unit_select'] as $unit)
                                 <option value="{{$unit->value}}"{{ (old('unit_id')? old('unit_id') : $sample->unit ?? '') == $unit->value ? 'selected' : '' }}>{{$unit->name}}</option>

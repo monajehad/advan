@@ -256,7 +256,7 @@ legend {
                                             </select>
                                             <div class="input-group-append">
                                                 <span class="input-group-text">
-                                                    <a id="add_client_btn" class=""
+                                                    <a data-toggle="modal" data-target="#add_button" class=""
                                                         style="cursor:pointer;line-height: 10px;">
 
                                                         <span class="svg-icon svg-icon-info svg-icon-2x">
@@ -316,7 +316,7 @@ legend {
                                         <div class="input-group">
                                             <input type="text" class="form-control" name="guarantee_rate"
                                                 id="guarantee_rate" />
-                                           
+
                                         </div>
                                     </div>
                                     <div class="col-md-4 col-lg-4">
@@ -337,7 +337,7 @@ legend {
                                         <div class="input-group date">
                                             <input type="text" class="form-control datepicker"
                                                 name="representation_date" id="representation_date" readonly="readonly">
-                                           
+
                                         </div>
                                     </div>
                                     <div class="col-md-4 col-lg-4">
@@ -362,7 +362,7 @@ legend {
                                         <div class="input-group">
                                             <input type="file" name="tender_file" id="tender_file"
                                                 accept=".doc,.docx,.pdf,.odt,.dot" class="form-control">
-                                           
+
                                         </div>
                                     </div>
 
@@ -371,7 +371,7 @@ legend {
                                         <div class="input-group">
                                             <input type="file" name="referral_file" id="referral_file"
                                                 accept=".doc,.docx,.pdf,.odt,.dot" class="form-control">
-                                           
+
                                             </div>
                                         </div>
                                     </div>

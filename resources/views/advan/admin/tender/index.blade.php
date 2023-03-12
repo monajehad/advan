@@ -297,7 +297,7 @@ legend {
     @includeIf('advan.admin.tender.sub.accepting-items')
 </div>
 @include('advan.admin.tender.sub.add')
-    {{-- @includeIf('advan.admin.clients.create') --}}
+    @includeIf('advan.admin.clients.create')
 </div>
 
 @include('advan.admin.tender.sub.accepting-items')
@@ -399,7 +399,7 @@ legend {
                 return {
                     results: $.map(data, function (item) {
                         return {
-                            text: item.ar_name,
+                            text: item.name,
                             id: item.id
                         }
                     })
