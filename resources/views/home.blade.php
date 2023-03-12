@@ -1,6 +1,25 @@
 @extends('layouts.cpanel.app')
+@section('style')
+<style>
+	::before {
 
+    right: 0 !important;
+
+}
+.stock-icon.ic2.p-3.rounded-circle.d-inline-block.mb-4 {
+	background-color:  rgba(255, 165, 0, 0.15) !important;
+}
+
+.title.title-color.red.title-custom::before {
+	width: 10px !important;
+    height: 10px !important;
+    border-radius: 50% !important;
+	background-color:rgba(42, 133, 255, 0.85) !important;
+}
+</style>
+@endsection
 @section('content')
+
 <div class="page  pb-4  px-sm-5 pt-xl-7 px-xl-7 w-100">
     <div class="page-head">
       <h2 class=" mb-4 mb-xl-5">لوحة تحكم مندوبي الدعاية</h2>
@@ -339,4 +358,57 @@
     </div>
 
   </div>
+@endsection
+
+@section('script')
+	<script>
+var data = {
+
+    datasets: [
+      {
+        data: [300, 50],
+        backgroundColor: [
+          "#FFA500",
+          "#EFEFEF",
+
+        ],
+
+      }]
+  };
+
+  Chart.pluginService.register({
+    beforeDraw: function(chart) {
+      var width = chart.chart.width,
+          height = chart.chart.height,
+          ctx = chart.chart.ctx;
+
+      ctx.restore();
+      var fontSize = (height / 114).toFixed(2);
+      ctx.font = fontSize + "em sans-serif";
+      ctx.textBaseline = "middle";
+
+      var text = "75%",
+          textX = Math.round((width - ctx.measureText(text).width) / 2),
+          textY = height / 2;
+
+      ctx.fillText(text, textX, textY);
+      ctx.save();
+    }
+  });
+
+  var chart = new Chart(document.getElementsByClassName('myChart'), {
+    type: 'doughnut',
+    data: data,
+    options: {
+        responsive: true,
+      legend: {
+        display: false
+      }
+    }
+  });
+
+      </script>
+      <script>
+          var myOffcanvas = document.getElementById('myOffcanvas')
+  var bsOffcanvas = new bootstrap.Offcanvas(myOffcanvas)
 @endsection
