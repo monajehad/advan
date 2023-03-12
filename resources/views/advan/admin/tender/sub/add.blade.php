@@ -67,7 +67,7 @@ legend {
     white-space: normal;
     float: none;
 }
-
+ 
 .input-group>.input-group-append>.btn,
 .input-group>.input-group-append>.input-group-text,
 .input-group>.input-group-prepend:not(:first-child)>.btn,
