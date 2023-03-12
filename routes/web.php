@@ -63,7 +63,8 @@ Route::get('/', function () {
     Route::post('/send_notification',[NotificationController::class,'sendNotification'] )->name('send.notification');
     // Route::post('/save_notification',[NotificationController::class,'createNotification'])->name('createNotificatio')->middleware('auth');
 
-Route::group([ 'prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth']]
+Route::group([ 'prefix' => 'admin', 'as' => 'admin.']
+// , 'middleware' => ['auth']
 ,function () {
     Route::get('/home',[DashboardController::class,'index'] )->name('home');
 
