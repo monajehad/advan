@@ -56,8 +56,8 @@
             </td>
 
             <td class="name">{{$hit->user->name ??''}}</td>
-            <td class="name">{{$hit->date_time}}</td>
-            <td class="name">{{$hit->date_time}}</td>
+            <td class="name">{{$hit->date}}</td>
+            <td class="name">{{$hit->time}}</td>
 
 
 

@@ -31,13 +31,13 @@ class UpdateReportRequest extends FormRequest
             ],
             'date' => [
                 'required',
-                'date_format:' . config('panel.date_format'),
+                'date_format:' . 'Y-m-d',
             ],
             'time' => [
                 'required',
-                'date_format:' . config('panel.time_format'),
+                // 'date_format:' . config('panel.time_format'),
             ],
-            'clinic_name' => [
+            'client_name' => [
                 'string',
                 'nullable',
             ],

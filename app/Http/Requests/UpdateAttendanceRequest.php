@@ -23,14 +23,14 @@ class UpdateAttendanceRequest extends FormRequest
             ],
             'date' => [
                 'required',
-                'date_format:' . config('panel.date_format'),
+                'date_format:' . ('Y-m-d'),
             ],
             'start_time' => [
                 'required',
-                'date_format:' . config('panel.time_format'),
+                // 'date_format:' . config('panel.time_format'),
             ],
-            'end_date' => [
-                'date_format:' . config('panel.time_format'),
+            'end_time' => [
+                // 'date_format:' . config('panel.time_format'),
                 'nullable',
             ],
         ];

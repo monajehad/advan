@@ -34,7 +34,7 @@
             <td class="name">{{$report->client->name}}</td>
             <td class="name">{{$report->date}}</td>
             <td class="name">{{$report->time}}</td>
-            <td class="name">{{$report->type->name}}</td>
+            <td class="name">{{$report->type->name ?? ''}}</td>
 
             {{-- <td class="name">{{$report->clinetHits->id}}</td> --}}
 

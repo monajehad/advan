@@ -44,12 +44,12 @@ class Attendance extends Model
 
     public function getDateAttribute($value)
     {
-        return $value ? Carbon::parse($value)->format(config('panel.date_format')) : null;
+        return Carbon::parse($value)->format('Y-m-d');
     }
 
     public function setDateAttribute($value)
     {
-        $this->attributes['date'] = $value ? Carbon::createFromFormat(config('panel.date_format'), $value)->format('Y-m-d') : null;
+        $this->attributes['date'] = $value ? Carbon::createFromFormat('Y-m-d', $value)->format('Y-m-d') : null;
     }
 
     protected function serializeDate(DateTimeInterface $date)

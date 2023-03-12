@@ -30,16 +30,19 @@
             </div>
             <div class="form-group">
                 <label class="required" for="date">التاريخ</label>
-                <input class="form-control date {{ $errors->has('date') ? 'is-invalid' : '' }}" type="text" name="date" id="date" value="{{ old('date', $attendance->date) }}" required>
+                <input class="form-control  {{ $errors->has('date') ? 'is-invalid' : '' }}" type="text" name="date" id="kt_datepicker_1" value="{{ old('date', $attendance->date) }}" required>
                 @if($errors->has('date'))
                     <div class="invalid-feedback">
                         {{ $errors->first('date') }}
                     </div>
                 @endif
             </div>
+            {{-- <div class="col-lg-4 col-md-9 col-sm-12">
+                <input type="text" class="form-control" id="kt_datepicker_1" readonly="readonly" placeholder="Select date">
+            </div> --}}
             <div class="form-group">
                 <label class="required" for="start_time">بداية الوقت</label>
-                <input class="form-control timepicker {{ $errors->has('start_time') ? 'is-invalid' : '' }}" type="text" name="start_time" id="start_time" value="{{ old('start_time', $attendance->start_time) }}" required>
+                <input class="form-control timepicker {{ $errors->has('start_time') ? 'is-invalid' : '' }}" type="text" name="start_time" id="kt_timepicker_3" value="{{ old('start_time', $attendance->start_time) }}" required>
                 @if($errors->has('start_time'))
                     <div class="invalid-feedback">
                         {{ $errors->first('start_time') }}
@@ -47,11 +50,11 @@
                 @endif
             </div>
             <div class="form-group">
-                <label for="end_date">نهاية التاريخ</label>
-                <input class="form-control timepicker {{ $errors->has('end_date') ? 'is-invalid' : '' }}" type="text" name="end_date" id="end_date" value="{{ old('end_date', $attendance->end_date) }}">
-                @if($errors->has('end_date'))
+                <label for="end_date">نهاية الوقت</label>
+                <input class="form-control timepicker {{ $errors->has('end_time') ? 'is-invalid' : '' }}" type="text" name="end_time" id="kt_timepicker_2" value="{{ old('end_time', $attendance->end_time) }}">
+                @if($errors->has('end_time'))
                     <div class="invalid-feedback">
-                        {{ $errors->first('end_date') }}
+                        {{ $errors->first('end_time') }}
                     </div>
                 @endif
             </div>

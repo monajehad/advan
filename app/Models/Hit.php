@@ -27,7 +27,7 @@ class Hit extends Model
     public $table = 'hits';
 
     protected $dates = [
-        'date_time',
+        'date',
         'created_at',
         'updated_at',
         'deleted_at',
@@ -35,7 +35,8 @@ class Hit extends Model
 
     protected $fillable = [
         'client_id',
-        'date_time',
+        'date',
+        'time',
         'visit_type_id',
         'duration_visit',
         'number_samples',
@@ -59,15 +60,15 @@ class Hit extends Model
         return $this->belongsTo(Client::class, 'client_id');
     }
 
-//    public function getDateTimeAttribute($value)
-//    {
-//        return $value ? Carbon::createFromFormat('Y-m-d H:i:s', $value)->format(config('panel.date_format') . ' ' . config('panel.time_format')) : null;
-//    }
+   public function getDateAttribute($value)
+   {
+       return  Carbon::parse( $value)->format('Y-m-d');
+   }
 
-//    public function setDateTimeAttribute($value)
-//    {
-//        $this->attributes['date_time'] = $value ? Carbon::createFromFormat(config('panel.date_format') . ' ' . config('panel.time_format'), $value)->format('Y-m-d H:i:s') : null;
-//    }
+   public function setDateAttribute($value)
+   {
+       $this->attributes['date'] = $value ? Carbon::createFromFormat('Y-m-d',$value)->format('Y-m-d') : null;
+   }
 
     public function visit_type()
     {

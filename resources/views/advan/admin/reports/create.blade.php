@@ -103,6 +103,15 @@
                         @endif
                     </div>
                     <div class="form-group">
+                        <label class="required" for="title">عنوان التقرير</label>
+                        <input class="form-control {{ $errors->has('title') ? 'is-invalid' : '' }}" type="text" name="title" id="title" value="{{ old('title', '') }}" required>
+                        @if($errors->has('title'))
+                            <div class="invalid-feedback">
+                                {{ $errors->first('title') }}
+                            </div>
+                        @endif
+                    </div>
+                    <div class="form-group">
                         <label for="client_id">العميل</label>
                         <select class="form-control  {{ $errors->has('client') ? 'is-invalid' : '' }}" name="client_id" id="client_id">
                             @foreach($clients as $id => $entry)
@@ -117,7 +126,7 @@
                     </div>
                     <div class="form-group">
                         <label class="required" for="date">التاريخ</label>
-                        <input class="form-control  {{ $errors->has('date') ? 'is-invalid' : '' }}" placeholder="2023-01-01" type="text" name="date" id="date" value="{{ old('date') }}" required>
+                        <input class="form-control datepicker {{ $errors->has('date') ? 'is-invalid' : '' }}" placeholder="2023-01-01" type="text" name="date" id="kt_datepicker_1" value="{{ old('date') }}" required>
                         @if($errors->has('date'))
                             <div class="invalid-feedback">
                                 {{ $errors->first('date') }}
@@ -132,7 +141,7 @@
                                     <i class="la la-clock-o"></i>
                                 </span>
                             </div>
-                            <input id="kt_timepicker_3" placeholder="17:49:00Am" class="form-control timepicker {{ $errors->has('time') ? 'is-invalid' : '' }}" type="text" name="time"  value="{{ old('time') }}" required>
+                            <input id="kt_timepicker_2" placeholder="17:49:00" class="form-control timepicker {{ $errors->has('time') ? 'is-invalid' : '' }}" type="text" name="time"  value="{{ old('time') }}" required>
                             @if($errors->has('time'))
                                 <div class="invalid-feedback">
                                     {{ $errors->first('time') }}

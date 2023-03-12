@@ -32,7 +32,7 @@ class HitsController extends Controller
         $hits=Hit::leftJoin('system_constants as category_constants', function($join) {
             $join->on('category_constants.value', '=', 'hits.category')->where('category_constants.type','category')->whereNull('category_constants.deleted_at');
         })
-        ->select('category_constants.name as category_name','hits.id','hits.date_time','hits.note','hits.category','hits.client_id','hits.user_id','hits.status')
+        ->select('category_constants.name as category_name','hits.id','hits.date','hits.time','hits.note','hits.category','hits.client_id','hits.user_id','hits.status')
         ->with(['client','user','samples']);
 
 
@@ -120,11 +120,11 @@ class HitsController extends Controller
 
         if ($request->from_date && $request->to_date)
         {
-            $hits  = $hits->whereBetween('date_time' , [$request->from_date , $request->to_date]);
-            $user = $user->whereBetween('date_time' , [$request->from_date , $request->to_date]);
+            $hits  = $hits->whereBetween('date' , [$request->from_date , $request->to_date]);
+            $user = $user->whereBetween('date' , [$request->from_date , $request->to_date]);
         }else{
-            $hits =$hits->whereDate('date_time', Carbon::today());
-            $user = $user->whereDate('date_time', Carbon::today());
+            $hits =$hits->whereDate('date', Carbon::today());
+            $user = $user->whereDate('date', Carbon::today());
         }
 
         if ($request->user && $request->user != '')
@@ -207,7 +207,7 @@ class HitsController extends Controller
     {
         $hit->update($request->all());
         $hit->categories()->sync($request->input('categories', []));
-        $hit->doctors()->sync($request->input('doctors', []));
+        // $hit->doctors()->sync($request->input('doctors', []));
 
         return redirect()->route('admin.hits.index');
     }

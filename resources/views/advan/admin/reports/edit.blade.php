@@ -66,7 +66,7 @@
             </div>
             <div class="form-group">
                 <label class="required" for="date">التاريخ</label>
-                <input class="form-control date {{ $errors->has('date') ? 'is-invalid' : '' }}" type="text" name="date" id="date"  value="{{ old('date', $report->date) }}" required>
+                <input class="form-control datepicker {{ $errors->has('date') ? 'is-invalid' : '' }}" type="text" name="date" id="kt_datepicker_1"  value="{{ old('date', $report->date) }}" required>
                 @if($errors->has('date'))
                     <div class="invalid-feedback">
                         {{ $errors->first('date') }}
@@ -75,7 +75,7 @@
             </div>
             <div class="form-group">
                 <label class="required" for="time">الوقت</label>
-                <input class="form-control timepicker {{ $errors->has('time') ? 'is-invalid' : '' }}" type="text" name="time" id="time"  value="{{ old('time', $report->time) }}" required>
+                <input class="form-control timepicker {{ $errors->has('time') ? 'is-invalid' : '' }}" type="text" name="time" id="kt_timepicker_2"  value="{{ old('time', $report->time) }}" required>
                 @if($errors->has('time'))
                     <div class="invalid-feedback">
                         {{ $errors->first('time') }}

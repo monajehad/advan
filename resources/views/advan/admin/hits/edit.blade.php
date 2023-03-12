@@ -67,7 +67,7 @@
             </div>
 
             <form class="form"
-            method="POST" action="{{ route("admin.hits.update") }}" enctype="multipart/form-data">
+            method="POST" action="{{ route("admin.hits.update", [$hit->id]) }}" enctype="multipart/form-data">
             @method('PUT')
             @csrf
 
@@ -87,11 +87,20 @@
                         @endif
                     </div>
                     <div class="form-group">
-                        <label for="date_time">{{ trans('cruds.hit.fields.date_time') }}</label>
-                        <input class="form-control datetime {{ $errors->has('date_time') ? 'is-invalid' : '' }}" type="text" name="date_time" id="date_time" value="{{ old('date_time', $hit->date_time) }}">
-                        @if($errors->has('date_time'))
+                        <label for="date">{{ trans('cruds.hit.fields.date_time') }}</label>
+                        <input class="form-control datepiker {{ $errors->has('date') ? 'is-invalid' : '' }}" type="text" name="date" id="kt_datepicker_1" value="{{ old('date', $hit->date) }}">
+                        @if($errors->has('date'))
                             <div class="invalid-feedback">
-                                {{ $errors->first('date_time') }}
+                                {{ $errors->first('date') }}
+                            </div>
+                        @endif
+                    </div>
+                    <div class="form-group">
+                        <label for="time">{{ trans('cruds.hit.fields.time_time') }}</label>
+                        <input class="form-control timepiker {{ $errors->has('time') ? 'is-invalid' : '' }}" type="text" name="time" id="kt_timepicker_2" value="{{ old('time', $hit->time) }}">
+                        @if($errors->has('time'))
+                            <div class="invalid-feedback">
+                                {{ $errors->first('time') }}
                             </div>
                         @endif
                     </div>

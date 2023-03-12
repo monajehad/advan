@@ -21,9 +21,13 @@ class StoreHitRequest extends FormRequest
                 'required',
                 'integer',
             ],
-            'date_time' => [
-                'date_format:' . config('panel.date_format') . ' ' . config('panel.time_format'),
-                'nullable',
+            'date' => [
+                'required',
+                'date_format:' . ('Y-m-d'),
+            ],
+            'start_time' => [
+                'required',
+                // 'date_format:' . config('panel.time_format'),
             ],
             'visit_type_id' => [
                 'required',
