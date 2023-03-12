@@ -238,9 +238,9 @@
                                                         <span class="btn btn-info btn-xs select-all" style="border-radius: 0">{{ trans('global.select_all') }}</span>
                                                         <span class="btn btn-info btn-xs deselect-all" style="border-radius: 0">{{ trans('global.deselect_all') }}</span>
                                                     </div>
-                                                    <select class="form-control  {{ $errors->has('roles') ? 'is-invalid' : '' }}" name="roles[]" id="roles" multiple required>
+                                                    <select class="form-control  {{ $errors->has('roles') ? 'is-invalid' : '' }}" name="roles" id="roles"  required>
                                                         @foreach($roles as $id => $role)
-                                                            <option value="{{ $id }}" {{ in_array($id, old('roles', [])) ? 'selected' : '' }}>{{ $role }}</option>
+                                                            <option value="{{ $id }}" >{{ $role }}</option>
                                                         @endforeach
                                                     </select>
                                                     @if($errors->has('roles'))
@@ -304,51 +304,7 @@
                                             <span class="help-block">{{ trans('cruds.user.fields.password_helper') }}</span>
                                         </div>
 
-                                        <div class="form-group">
-                                            <label class="required" for="jobId">الرقم الوظيفي</label>
-                                            <input class="form-control {{ $errors->has('jobId') ? 'is-invalid' : '' }}" type="text" name="jobId" id="jobId" value="" required>
-                                            @if($errors->has('jobId'))
-                                                <div class="invalid-feedback">
-                                                    {{ $errors->first('jobId') }}
-                                                </div>
-                                            @endif
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="required" for="email">البريد الالكتروني</label>
-                                            <input class="form-control {{ $errors->has('email') ? 'is-invalid' : '' }}" type="email" name="email" id="email" value="" required>
-                                            @if($errors->has('email'))
-                                                <div class="invalid-feedback">
-                                                    {{ $errors->first('email') }}
-                                                </div>
-                                            @endif
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="required" for="password">كلمة السر</label>
-                                            <input class="form-control {{ $errors->has('password') ? 'is-invalid' : '' }}" type="password" name="password" id="password">
-                                            @if($errors->has('password'))
-                                                <div class="invalid-feedback">
-                                                    {{ $errors->first('password') }}
-                                                </div>
-                                            @endif
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="required" for="mobile">الجوال</label>
-                                            <input class="form-control {{ $errors->has('mobile') ? 'is-invalid' : '' }}" type="text" name="mobile" id="mobile" value="" required>
-                                            @if($errors->has('mobile'))
-                                                <div class="invalid-feedback">
-                                                    {{ $errors->first('mobile') }}
-                                                </div>
-                                            @endif
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="required" for="phone">الهاتف</label>
-                                            <input class="form-control {{ $errors->has('phone') ? 'is-invalid' : '' }}" type="text" name="phone" id="phone" value="" required>
-                                            @if($errors->has('phone'))
-                                                <div class="invalid-feedback">
-                                                    {{ $errors->first('phone') }}
-                                                </div>
-                                            @endif
-                                        </div>
+                                   
                                         <div class="form-group">
                                             <label class="required" for="facebook">فيسبوك</label>
                                             <input class="form-control {{ $errors->has('facebook') ? 'is-invalid' : '' }}" type="text" name="facebook" id="facebook" value="" required>

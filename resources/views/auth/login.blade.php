@@ -82,11 +82,16 @@
 								<!--begin::Input group-->
 								<div class="fv-row mb-10">
 									<!--begin::Label-->
-									<label class="form-label fs-6 fw-bolder text-dark">رقم الجوال </label>
+									<label class="form-label fs-6 fw-bolder text-dark">البريد الالكتروني  </label>
 									<!--end::Label-->
 									<!--begin::Input-->
-									<input class="form-control form-control-lg form-control-solid" type="text" name="email" placeholder="رقم الجوال" autocomplete="off" />
+									<input class="form-control form-control-lg form-control-solid" type="text" name="email" placeholder=" البريد الالكتروني" autocomplete="off" />
 									<!--end::Input-->
+                                    @error('email')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
 								</div>
 								<!--end::Input group-->
 								<!--begin::Input group-->
@@ -104,6 +109,11 @@
 									<!--begin::Input-->
 									<input class="form-control form-control-lg form-control-solid" type="password"placeholder="كلمة السر" name="password"  />
 									<!--end::Input-->
+                                    @error('password')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
 								</div>
 								<!--end::Input group-->
 								<!--begin::Actions-->
@@ -115,8 +125,6 @@
 
 									</button>
 									<!--end::Submit button-->
-									<div class="text-gray-700 mt-4 fw-bold fs-4" >ليس لديك حساب؟
-										<a href="authentication/flows/aside/sign-up.html" class="link-dark fw-bolder" >انشاء حساب جديد</a></div>
 								</div>
 								<!--end::Actions-->
 							</form>

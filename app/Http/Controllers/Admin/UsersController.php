@@ -67,7 +67,7 @@ class UsersController extends Controller
 
          }
         $user = User::create($request->all());
-        $user->roles()->sync($request->input('roles', []));
+        // $user->roles()->sync($request->input('roles', []));
         $user->user_type = $request->input('roles');
         $user->save();
         // $user->save();

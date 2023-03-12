@@ -56423,7 +56423,7 @@ body.swal2-height-auto {
     background-color: #F5F8FA;
     color: #5E6278;
     opacity: 0.75 !important;
-    padding: 1.25rem 1.25rem 1.25rem 4.5rem !important;
+    padding: 1.25rem 1.25rem 1.25rem 4.5rem  !important;
 }
 
 .toast:hover {

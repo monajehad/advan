@@ -40,9 +40,8 @@ use Illuminate\Support\Facades\Route;
 */
 
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', [DashboardController::class,'index'] )->middleware('auth')->name('home');
+
 
 Auth::routes();
 
@@ -51,7 +50,9 @@ Auth::routes();
 //     Route::get('/home',[HomeController::class,'index'])->name('admin.home');
 
 
-
+Route::get('/', function () {
+    return view('auth.login');
+});
 
 // });
 
@@ -62,7 +63,7 @@ Auth::routes();
     Route::post('/send_notification',[NotificationController::class,'sendNotification'] )->name('send.notification');
     // Route::post('/save_notification',[NotificationController::class,'createNotification'])->name('createNotificatio')->middleware('auth');
 
-Route::group([ 'prefix' => 'admin', 'as' => 'admin.']
+Route::group([ 'prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth']]
 ,function () {
     Route::get('/home',[DashboardController::class,'index'] )->name('home');
 

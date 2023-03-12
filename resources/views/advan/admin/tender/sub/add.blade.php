@@ -67,7 +67,7 @@ legend {
     white-space: normal;
     float: none;
 }
- 
+
 .input-group>.input-group-append>.btn,
 .input-group>.input-group-append>.input-group-text,
 .input-group>.input-group-prepend:not(:first-child)>.btn,
@@ -250,7 +250,7 @@ legend {
                                     <div class="col-md-4 col-lg-4 client-select">
                                         <label class="font-weight-bolder">العميل </label>
                                         <div class="input-group">
-                                            <select class="form-control select2" name="client" id="client"
+                                            <select class="form-control select2 " name="client" id="client"
                                                 multiple="multiple">
 
                                             </select>

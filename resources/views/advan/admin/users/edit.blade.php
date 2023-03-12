@@ -41,6 +41,7 @@
                     </div>
                 @endif
             </div>
+
             <div class="form-group">
                 <label class="required" for="jobId">الرقم الوظيفي</label>
                 <input class="form-control {{ $errors->has('jobId') ? 'is-invalid' : '' }}" type="text" name="jobId" id="jobId" value="{{ old('jobId', $user->jobId) }}" required>
@@ -49,6 +50,25 @@
                         {{ $errors->first('jobId') }}
                     </div>
                 @endif
+            </div>
+            <div class="col-xl-6">
+                <div class="form-group">
+                    <label class="required" for="roles">المجموعة</label>
+                    <div style="padding-bottom: 4px">
+                        <span class="btn btn-info btn-xs select-all" style="border-radius: 0">{{ trans('global.select_all') }}</span>
+                        <span class="btn btn-info btn-xs deselect-all" style="border-radius: 0">{{ trans('global.deselect_all') }}</span>
+                    </div>
+                    <select class="form-control  {{ $errors->has('roles') ? 'is-invalid' : '' }}" name="roles" id="roles"  required>
+                        @foreach($roles as $id => $role)
+                            <option value="{{ (old('role')? old('role') : $user->role->id ?? '') == $id ? 'selected' : '' }}">{{ $role }}</option>
+                        @endforeach
+                    </select>
+                    @if($errors->has('roles'))
+                        <div class="invalid-feedback">
+                            {{ $errors->first('roles') }}
+                        </div>
+                    @endif
+                </div>
             </div>
             <div class="form-group">
                 <label class="required" for="email">البريد الالكتروني</label>
