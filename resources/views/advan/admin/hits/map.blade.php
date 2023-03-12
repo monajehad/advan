@@ -79,7 +79,7 @@
 @endsection
 @section('script')
     <script
-        src="https://maps.googleapis.com/maps/api/js?sensor=false&libraries=geometry,places&key=AIzaSyDeFvdsmkF_Jxd7Tk0VkxXfMw0IydZiWC4"></script>
+        src="https://maps.googleapis.com/maps/api/js?sensor=false&libraries=geometry,places&key=AIzaSyD45sZgAyRbOuURb4fAry_AnqGpo9xTO4U"></script>
     <script>
 
         function getRandomColor() {
@@ -118,7 +118,7 @@
 
             map = new google.maps.Map(
                 document.getElementById("map_canvas"), {
-                    center: new google.maps.LatLng(31.416665, 34.333332),
+                    center: new google.maps.LatLng(31.5016934,34.4489271),
                     zoom: 2,
                     mapTypeId: google.maps.MapTypeId.ROADMAP
                 });

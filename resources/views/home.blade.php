@@ -17,6 +17,7 @@
 	background-color:rgba(42, 133, 255, 0.85) !important;
 }
 </style>
+
 @endsection
 @section('content')
 
@@ -30,8 +31,8 @@
                 <div class="col-12">
                   <div class="card mb-2 p-4 p-sm-5">
                     <div class="card-head d-flex align-items-center justify-content-between mb-5 mb-sm-6" >
-                      <div class="title title-color purple"  >
-                        <h3 class="section-title" style="margin-right: 20px">احصائيات عامة</h3>
+                      <div class="title title-color purple">
+                        <h3 class="section-title" style="margin-right: 20px"> إحصائيات عامة</h3>
                     </div>
 
 
@@ -359,7 +360,7 @@
 
   </div>
 @endsection
-
+<!-- 
 @section('script')
 	<script>
 var data = {
@@ -411,4 +412,4 @@ var data = {
       <script>
           var myOffcanvas = document.getElementById('myOffcanvas')
   var bsOffcanvas = new bootstrap.Offcanvas(myOffcanvas)
-@endsection
+@endsection -->

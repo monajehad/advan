@@ -42,7 +42,7 @@
 </style>
 
 
-<div class="modal fade modal-lg" id="add_button" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade modal-lg" id="add_button" tabindex="1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -431,11 +431,7 @@
                                                     </select>
                                                     <label class="form-text text-muted text-danger" id="unit-error"></label>
                                                 </div>
-                                    </div>
-                                    <!--end: Wizard Step 3-->
-                                    <!--begin: Wizard Step 4-->
-
-                                    <!--begin: Wizard Actions-->
+                                                  <!--begin: Wizard Actions-->
                                     <div class="d-flex justify-content-between border-top mt-5 pt-10">
                                         <div class="mr-2">
                                             <button type="button" class="btn btn-light-primary font-weight-bolder text-uppercase px-9 py-4" data-wizard-type="action-prev">Previous</button>
@@ -446,6 +442,11 @@
                                         </div>
                                     </div>
                                     <!--end: Wizard Actions-->
+                                    </div>
+                                    <!--end: Wizard Step 3-->
+                                    <!--begin: Wizard Step 4-->
+
+                                  
                                 </form>
                                 <!--end: Wizard Form-->
                             </div>
