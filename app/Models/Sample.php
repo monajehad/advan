@@ -37,7 +37,7 @@ class Sample extends Model
         'type',
         'category_id',
         'item_id',
-        'end_date',
+        // 'end_date',
         'stock_available_id',
         'status',
         'created_at',
@@ -66,14 +66,14 @@ class Sample extends Model
         return $this->belongsTo(Item::class, 'item_id');
     }
 
-    public function getEndDateAttribute($value)
+    public function getDateAttribute($value)
     {
-        return $value ? Carbon::parse($value)->format(config('panel.date_format')) : null;
+        return Carbon::parse($value)->format('Y-m') ;
     }
 
-    public function setEndDateAttribute($value)
+    public function setDateAttribute($value)
     {
-        $this->attributes['end_date'] = $value ? Carbon::createFromFormat(config('panel.date_format'), $value)->format('Y-m-d') : null;
+        $this->attributes['date'] = $value ? Carbon::createFromFormat(('Y-m'), $value)->format('Y-m') : null;
     }
 
     public function stock_available()

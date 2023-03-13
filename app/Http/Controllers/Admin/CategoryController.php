@@ -53,7 +53,8 @@ class CategoryController extends Controller
             $request->status='1';
       }
         $category=Category::create([
-            $request->all()
+            'name'=>$request->name,
+       'status'=>$request->status,
         ]);
         // $category = Category::create($request->all());
 

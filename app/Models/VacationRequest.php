@@ -48,22 +48,22 @@ class VacationRequest extends Model
 
     public function getStartDateAttribute($value)
     {
-        return $value ? Carbon::parse($value)->format(config('panel.date_format')) : null;
+        return $value ? Carbon::parse($value)->format('Y-m-d') : null;
     }
 
     public function setStartDateAttribute($value)
     {
-        $this->attributes['start_date'] = $value ? Carbon::createFromFormat(config('panel.date_format'), $value)->format('Y-m-d') : null;
+        $this->attributes['start_date'] = $value ? Carbon::createFromFormat('Y-m-d', $value)->format('Y-m-d') : null;
     }
 
     public function getEndDateAttribute($value)
     {
-        return $value ? Carbon::parse($value)->format(config('panel.date_format')) : null;
+        return $value ? Carbon::parse($value)->format('Y-m-d') : null;
     }
 
     public function setEndDateAttribute($value)
     {
-        $this->attributes['end_date'] = $value ? Carbon::createFromFormat(config('panel.date_format'), $value)->format('Y-m-d') : null;
+        $this->attributes['end_date'] = $value ? Carbon::createFromFormat('Y-m-d', $value)->format('Y-m-d') : null;
     }
 
     protected function serializeDate(DateTimeInterface $date)

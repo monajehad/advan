@@ -9,6 +9,7 @@ use App\Http\Requests\UpdateReportRequest;
 use App\Models\Client;
 use App\Models\Clinic;
 use App\Models\Report;
+use App\Models\ReportType;
 use App\Models\User;
 use Gate;
 use Illuminate\Http\Request;
@@ -37,7 +38,7 @@ class ReportController extends Controller
         }
         $users = User::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $types = Report::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $types = ReportType::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $clients = Client::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
         return view('advan.admin.reports.index',compact('reports','users', 'types', 'clients'));
@@ -63,7 +64,7 @@ class ReportController extends Controller
         if($request->status == 'on'){
             $request->status='1';
       }
-      // dd($request->status);
+    //   dd($request->status);
       $report=Report::create([
           'name'=>$request->name,
           'user_id'=>$request->user_id,
@@ -78,7 +79,7 @@ class ReportController extends Controller
 
 
       ]);
-        $report = Report::create($request->all());
+        // $report = Report::create($request->all());
 
         return redirect()->route('admin.reports.index');
     }

@@ -66,7 +66,7 @@
             </div> --}}
             <div class="form-group">
                 <label for="date">شهر/سنة</label>
-                <input class="form-control {{ $errors->has('date') ? 'is-invalid' : '' }}" type="text" name="date" id="date" value="{{ old('date', $sample->date) }}">
+                <input class="form-control {{ $errors->has('date') ? 'is-invalid' : '' }}" type="text" name="date" id="kt_datepicker_3" value="{{ old('date', $sample->date) }}">
                 @if($errors->has('date'))
                     <div class="invalid-feedback">
                         {{ $errors->first('date') }}

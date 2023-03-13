@@ -38,8 +38,8 @@
                 @endif
             </div>
             <div class="form-group">
-                <label class="required" for="start_time">وقت البداية</label>
-                <input class="form-control date {{ $errors->has('start_date') ? 'is-invalid' : '' }}" type="text" name="start_date" id="start_date" value="{{ old('start_date', $vacationRequest->start_date) }}" required>
+                <label class="required" for="start_time"> تاريخ بداية الاجازة</label>
+                <input class="form-control date {{ $errors->has('start_date') ? 'is-invalid' : '' }}" type="text" name="start_date" id="kt_datepicker_2" value="{{ old('start_date', $vacationRequest->start_date) }}" required>
                 @if($errors->has('start_date'))
                     <div class="invalid-feedback">
                         {{ $errors->first('start_date') }}
@@ -47,8 +47,8 @@
                 @endif
             </div>
             <div class="form-group">
-                <label for="end_date">تاريخ الانتهاء</label>
-                <input class="form-control date {{ $errors->has('end_date') ? 'is-invalid' : '' }}" type="text" name="end_date" id="end_date" value="{{ old('end_date', $vacationRequest->end_date) }}">
+                <label for="end_date">تاريخ انتهاء الاجازة</label>
+                <input class="form-control date {{ $errors->has('end_date') ? 'is-invalid' : '' }}" type="text" name="end_date" id="kt_datepicker_1" value="{{ old('end_date', $vacationRequest->end_date) }}">
                 @if($errors->has('end_date'))
                     <div class="invalid-feedback">
                         {{ $errors->first('end_date') }}

@@ -64,8 +64,8 @@ class SamplesController extends Controller
     {
         if($request->status == 'on'){
             $request['status']='1';
-
       }
+        dd($request->all());
         $sample = Sample::create($request->all());
 
         return redirect()->route('admin.samples.index');
@@ -94,7 +94,7 @@ class SamplesController extends Controller
             $request['status']='1';
 
       }
-      dd($request);
+    //   dd($request);
         $sample->update($request->all());
 
         return redirect()->route('admin.samples.index');

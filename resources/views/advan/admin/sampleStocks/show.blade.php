@@ -170,10 +170,10 @@
 
                         <div class="form-group">
                             <label class="required" for="name"> تاريخ الاضافة للمخزون</label>
-                            <input class="form-control {{ $errors->has('received_date') ? 'is-invalid' : '' }}" type="text" name="received_date" id="received_date" value="{{ old('received_date', $sampleStock->received_date) }}" required>
-                            @if($errors->has('received_date'))
+                            <input class="form-control {{ $errors->has('date') ? 'is-invalid' : '' }}" type="text" name="date" id="date" value="{{ old('date', $sampleStock->date) }}" required>
+                            @if($errors->has('date'))
                                 <div class="invalid-feedback">
-                                    {{ $errors->first('received_date') }}
+                                    {{ $errors->first('date') }}
                                 </div>
                             @endif
                         </div>

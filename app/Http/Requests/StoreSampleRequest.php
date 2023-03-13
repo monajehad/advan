@@ -30,8 +30,8 @@ class StoreSampleRequest extends FormRequest
                 'nullable',
             ],
             'date' => [
-                'string',
-                'nullable',
+                'required',
+                'date_format:' . 'Y-m',
             ],
             // 'quantity' => [
             //     'string',
@@ -45,10 +45,10 @@ class StoreSampleRequest extends FormRequest
                 // 'required',
                 'integer',
             ],
-            'end_date' => [
-                'date_format:' . config('panel.date_format'),
-                'nullable',
-            ],
+            // 'end_date' => [
+            //     'date_format:' . config('panel.date_format'),
+            //     'nullable',
+            // ],
             'status' => [
                 'required',
             ],

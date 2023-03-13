@@ -27,10 +27,10 @@ class StoreVacationRequestRequest extends FormRequest
             ],
             'start_date' => [
                 'required',
-                'date_format:' . config('panel.date_format'),
+                'date_format:' . 'Y-m-d',
             ],
             'end_date' => [
-                'date_format:' . config('panel.date_format'),
+                'date_format:' . 'Y-m-d',
                 'nullable',
             ],
             'reason' => [

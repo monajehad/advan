@@ -106,24 +106,23 @@
                         @endif
                     </div>
                     <div class="form-group">
-                        <label for="date">التاريخ</label>
-                        <input class="form-control date {{ $errors->has('date') ? 'is-invalid' : '' }}" type="text" name="date" id="date" value="{{ old('date') }}">
+                        <label for="date">تاريخ البداية</label>
+                        <input class="form-control date {{ $errors->has('date') ? 'is-invalid' : '' }}" type="text" name="date" id="kt_datepicker_2" value="{{ old('date') }}">
                         @if($errors->has('date'))
                             <div class="invalid-feedback">
                                 {{ $errors->first('date') }}
                             </div>
                         @endif
                     </div>
-                    {{-- <div class="form-group">
-                        <label for="end_date">{{ trans('cruds.sampleStock.fields.end_date') }}</label>
-                        <input class="form-control date {{ $errors->has('end_date') ? 'is-invalid' : '' }}" type="text" name="end_date" id="end_date" value="{{ old('end_date') }}">
+                    <div class="form-group">
+                        <label for="end_date">تاريخ الانتهاء</label>
+                        <input class="form-control date {{ $errors->has('end_date') ? 'is-invalid' : '' }}" type="text" name="end_date" id="kt_datepicker_1" value="{{ old('end_date') }}">
                         @if($errors->has('end_date'))
                             <div class="invalid-feedback">
                                 {{ $errors->first('end_date') }}
                             </div>
                         @endif
-                        <span class="help-block">{{ trans('cruds.sampleStock.fields.end_date_helper') }}</span>
-                    </div> --}}
+                    </div>
                     <div class="form-group">
                         <label class="required" for="category_id">التصنيف</label>
                         <select class="form-control  {{ $errors->has('category') ? 'is-invalid' : '' }}" name="category_id" id="category_id" required>

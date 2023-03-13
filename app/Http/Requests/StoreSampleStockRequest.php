@@ -33,18 +33,18 @@ class StoreSampleStockRequest extends FormRequest
                 'string',
 
             ],
-            'received_date' => [
-                'date_format:' . config('panel.date_format'),
-                'nullable',
-            ],
-            'end_date' => [
-                'date_format:' . config('panel.date_format'),
-                'nullable',
-            ],
-            // 'date' => [
+            // 'received_date' => [
             //     'date_format:' . config('panel.date_format'),
             //     'nullable',
             // ],
+            'end_date' => [
+                'date_format:' . 'Y-m-d',
+                'nullable',
+            ],
+            'date' => [
+                'date_format:' . 'Y-m-d',
+                'nullable',
+            ],
             'category_id' => [
                 // 'required',
                 'integer',

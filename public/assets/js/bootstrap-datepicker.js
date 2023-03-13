@@ -39,7 +39,9 @@ var KTBootstrapDatepicker = function () {
             rtl: KTUtil.isRTL(),
             todayHighlight: true,
             orientation: "bottom left",
-            templates: arrows
+            templates: arrows,
+            format: 'yyyy-mm-dd'
+
         });
 
         // input group layout for modal demo
@@ -53,10 +55,10 @@ var KTBootstrapDatepicker = function () {
         // enable clear button
         $('#kt_datepicker_3, #kt_datepicker_3_validate').datepicker({
             rtl: KTUtil.isRTL(),
-            todayBtn: "linked",
-            clearBtn: true,
             todayHighlight: true,
-            templates: arrows
+            orientation: "bottom left",
+            templates: arrows,
+            format: 'yyyy-mm'
         });
 
         // enable clear button for modal demo

@@ -32,7 +32,7 @@ class SampleStock extends Model
         'name',
         'quantity',
         'received_quantity',
-        'received_date',
+        // 'received_date',
         'end_date',
         'category_id',
         'item_id',
@@ -56,24 +56,24 @@ class SampleStock extends Model
     //     $this->attributes['received_date'] = $value ? Carbon::createFromFormat(config('panel.date_format'), $value)->format('Y-m-d') : null;
     // }
 
-    // public function getEndDateAttribute($value)
-    // {
-    //     return $value ? Carbon::parse($value)->format(config('panel.date_format')) : null;
-    // }
+    public function getEndDateAttribute($value)
+    {
+        return $value ? Carbon::parse($value)->format(('Y-m-d')) : null;
+    }
 
-    // public function setDateAttribute($value)
-    // {
-    //     $this->attributes['date'] = $value ? Carbon::createFromFormat(config('panel.date_format'), $value)->format('Y-m') : null;
-    // }
-    // public function getDateAttribute($value)
-    // {
-    //     return $value ? Carbon::parse($value)->format(config('panel.date_format')) : null;
-    // }
+    public function setDateAttribute($value)
+    {
+        $this->attributes['date'] = $value ? Carbon::createFromFormat(('Y-m-d'), $value)->format('Y-m-d'): null;
+    }
+    public function getDateAttribute($value)
+    {
+        return $value ? Carbon::parse($value)->format('Y-m-d') : null;
+    }
 
-    // public function setEndDateAttribute($value)
-    // {
-    //     $this->attributes['end_date'] = $value ? Carbon::createFromFormat(config('panel.date_format'), $value)->format('Y-m-d') : null;
-    // }
+    public function setEndDateAttribute($value)
+    {
+        $this->attributes['end_date'] = $value ? Carbon::createFromFormat(('Y-m-d'), $value)->format('Y-m-d'): null;
+    }
     public function category()
     {
         return $this->belongsTo(Category::class, 'category_id');

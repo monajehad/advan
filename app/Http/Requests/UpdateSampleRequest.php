@@ -30,8 +30,8 @@ class UpdateSampleRequest extends FormRequest
                 'nullable',
             ],
             'date' => [
-                'string',
-                'nullable',
+                'required',
+                'date_format:' . 'Y-m',
             ],
             // 'quantity' => [
             //     'string',

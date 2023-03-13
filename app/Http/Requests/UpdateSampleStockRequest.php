@@ -29,16 +29,16 @@ class UpdateSampleStockRequest extends FormRequest
                 'string',
                 // 'required',
             ],
-            'received_date' => [
-                'date_format:' . config('panel.date_format'),
-                'nullable',
-            ],
+            // 'received_date' => [
+            //     'date_format:' . config('panel.date_format'),
+            //     'nullable',
+            // ],
             'end_date' => [
-                'date_format:' . config('panel.date_format'),
+                'date_format:' . 'Y-m-d',
                 'nullable',
             ],
             'date' => [
-                // 'date_format:' . config('panel.date_format'),
+                'date_format:' . 'Y-m-d',
                 'nullable',
             ],
             'category_id' => [

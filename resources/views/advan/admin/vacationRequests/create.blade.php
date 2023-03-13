@@ -34,24 +34,24 @@
                 <span class="help-block">{{ trans('cruds.vacationRequest.fields.days_helper') }}</span>
             </div>
             <div class="form-group">
-                <label class="required" for="start_time">{{ trans('cruds.vacationRequest.fields.start_time') }}</label>
-                <input class="form-control date {{ $errors->has('start_date') ? 'is-invalid' : '' }}" type="text" name="start_date" id="start_date" value="{{ old('start_date') }}" required>
+                <label class="required" for="start_date"> تاريخ بداية الاجازة</label>
+                <input class="form-control date {{ $errors->has('start_date') ? 'is-invalid' : '' }}" type="text" name="start_date" id="kt_datepicker_2" value="{{ old('start_date') }}" required>
                 @if($errors->has('start_date'))
                     <div class="invalid-feedback">
                         {{ $errors->first('start_date') }}
                     </div>
                 @endif
-                <span class="help-block">{{ trans('cruds.vacationRequest.fields.start_time_helper') }}</span>
+                {{-- <span class="help-block">{{ trans('cruds.vacationRequest.fields.start_date_helper') }}</span> --}}
             </div>
             <div class="form-group">
-                <label for="end_date">{{ trans('cruds.vacationRequest.fields.end_date') }}</label>
-                <input class="form-control date {{ $errors->has('end_date') ? 'is-invalid' : '' }}" type="text" name="end_date" id="end_date" value="{{ old('end_date') }}">
+                <label for="end_date">تاريخ نهاية الاجازات</label>
+                <input class="form-control date {{ $errors->has('end_date') ? 'is-invalid' : '' }}" type="text" name="end_date" id="kt_datepicker_1" value="{{ old('end_date') }}">
                 @if($errors->has('end_date'))
                     <div class="invalid-feedback">
                         {{ $errors->first('end_date') }}
                     </div>
                 @endif
-                <span class="help-block">{{ trans('cruds.vacationRequest.fields.end_date_helper') }}</span>
+                {{-- <span class="help-block">{{ trans('cruds.vacationRequest.fields.end_date_helper') }}</span> --}}
             </div>
             <div class="form-group">
                 <label class="required" for="reason">{{ trans('cruds.vacationRequest.fields.reason') }}</label>

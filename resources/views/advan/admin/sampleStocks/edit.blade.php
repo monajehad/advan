@@ -74,10 +74,19 @@
             </div> --}}
             <div class="form-group">
                 <label for="date">التاريخ</label>
-                <input class="form-control  {{ $errors->has('date') ? 'is-invalid' : '' }}" type="text" name="date" id="date" value="{{ old('date', $sampleStock->date) }}">
+                <input class="form-control  {{ $errors->has('date') ? 'is-invalid' : '' }}" type="text" name="date" id="kt_datepicker_1" value="{{ old('date', $sampleStock->date) }}">
                 @if($errors->has('date'))
                     <div class="invalid-feedback">
                         {{ $errors->first('date') }}
+                    </div>
+                @endif
+            </div>
+            <div class="form-group">
+                <label for="end_date">تاريخ الانتهاء</label>
+                <input class="form-control date {{ $errors->has('end_date') ? 'is-invalid' : '' }}" type="text" name="end_date" id="kt_datepicker_2" value="{{ old('date', $sampleStock->end_date) }}">
+                @if($errors->has('end_date'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('end_date') }}
                     </div>
                 @endif
             </div>
