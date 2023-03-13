@@ -26,7 +26,7 @@ class CategoryController extends Controller
         $categories=Category::select('id','name','status');
         if($request->search){
             $categories=$categories->where('name','like','%'.$request->search.'%')
-            ->orWhere('username','like','%'.$request->search.'%');
+            ;
         }
         $categories=$categories->orderBy('id','desc')->paginate(self::PAGINATION_NO);
         if ($request->ajax()) {

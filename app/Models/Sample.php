@@ -20,7 +20,9 @@ class Sample extends Model
     ];
 
     public $table = 'samples';
-
+    protected $filters = [
+        UserFilter::class,
+    ];
     protected $dates = [
         'end_date',
         'created_at',

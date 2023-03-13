@@ -37,7 +37,6 @@ class ItemController extends Controller
         if($request->search){
             $items = $items->where('items.name','like','%'.$request->search.'%');
         }
-
         $items = $items->orderBy('id','desc')->paginate(self::PAGINATION_NO);
 
         $data['items']=$items;
