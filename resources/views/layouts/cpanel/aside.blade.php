@@ -3,12 +3,12 @@
     <div class="brand flex-column-auto" id="kt_brand">
         <!--begin::Logo-->
         <a href="index.html" class="brand-logo">
-            <img alt="Logo" src="{{asset('assets/images/logo.png')}}" />
+            <img alt="Logo" src="{{asset('assets/images/logo.png')}}" width="95%" />
         </a>
         <!--end::Logo-->
         <!--begin::Toggle-->
-        <button class="brand-toggle btn-icon btn-bg-light btn-icon-success btn-hover-success px-0" id="kt_aside_toggle">
-            <span class="svg-icon svg-icon-primary svg-icon-2x">
+        <button class="brand-toggle btn-icon btn-bg-light btn-icon-dark btn-hover-dark px-0" id="kt_aside_toggle">
+            <span class="svg-icon svg-icon-dark svg-icon-2x">
                 <!--begin::Svg Icon | path:C:\wamp64\www\keenthemes\legacy\metronic\theme\html\demo1\dist/../src/media/svg/icons\Text\Menu.svg--><svg
                     xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px"
                     height="24px" viewBox="0 0 24 24" version="1.1">
