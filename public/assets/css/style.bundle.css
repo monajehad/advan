@@ -16,8 +16,8 @@
     --bs-gray-dark: #3F4254;
     --bs-white: #ffffff;
     --bs-light: #F5F8FA;
-    --bs-primary: #3F67B9;
-    --bs-secondary: #FFA500;
+    --bs-primary: #FFA500;
+    --bs-secondary: #3F67B9;
     --bs-success: #50CD89;
     --bs-info: #7239EA;
     --bs-warning: #FFC700;
@@ -56704,8 +56704,7 @@ body.swal2-height-auto {
 }
 
 .leaflet-container .leaflet-popup-content-wrapper .leaflet-popup-content {
-    font-family: 'Cairo',
-        sans-serif;
+    font-family: 'Cairo', sans-serif;
     font-size: 1rem;
 }
 
