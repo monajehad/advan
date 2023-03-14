@@ -400,7 +400,15 @@
 
 @section('script')
 @parent
+
 <script>
+       $('#kt_datatable_search_user').on('change', function() {
+            $('.samples-table-body').search($(this).val().toLowerCase(), 'user_id');
+        });
+</script>
+
+<script>
+
 function load_data_table(page = '') {
     $.ajax({
         url: '{{url("admin/samples/")}}?page=' + page,
@@ -416,6 +424,7 @@ function load_data_table(page = '') {
 
     })
 }
+
 $(function () {
 
 $('#kt_datatable_search_user').keyup(function(){
