@@ -165,4 +165,14 @@ $(document).on('click','.delete-vacation',function(){
         })
 
 </script>
+<script>
+    $(document).ready(function() {
+    $('#table-vacation-requests').DataTable( {
+        dom: 'Bfrtip',
+        buttons: [
+             'csv', 'excel', 'pdf', 'print'
+        ]
+    } );
+} );
+</script>
 @endsection

@@ -82,6 +82,12 @@
             </div>
 
         </div>
+        <select>
+            @foreach ($clients as $client )
+            <option value="">{{$client->name}}</option>
+
+            @endforeach
+        </select>
         <!--end::Header-->
         <!--begin::Body-->
 

@@ -134,6 +134,12 @@
                 <!--end::Dropdown-->
             </div>
         </div>
+        <select >
+            @foreach($users as $id => $entry)
+
+            <option id="kt_datatable_search_user" value="{{$id}}">{{$entry}}</option>
+            @endforeach
+        </select>
 
         <div class="card-body py-0">
 
@@ -142,191 +148,24 @@
                     <div class="col-lg-9 col-xl-8">
                         <div class="row align-items-center">
 
-                            <div class="col-md-3 my-2 my-md-0">
+                            <div class="col-md-4 my-2 my-md-0">
                                 <div class="d-flex align-items-center">
-                                    <div class="dropdown bootstrap-select form-control">
-                                         <select class="form-control"
-                                            id="kt_datatable_search_user" tabindex="null">
-                                            @foreach($users as $id => $entry)
+                                    <form class="form">
+                                        <div class="form-group row">
+                                            <label class="col-form-label text-right col-lg-2 col-sm-12">البحث</label>
+                                          <div class="col-lg-9 pr-0 col-md-9 col-sm-12">
+                                            <input type="text" class="form-control form-control-sm" id="search_input" name="search_input"  placeholder="الاسم"/>
+                                          </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="col-md-4 my-2 my-md-0">
+                                <div class="d-flex align-items-center">
 
-                                            <option value="{{$id}}">{{$entry}}</option>
-                                           @endforeach
-                                        </select>
-                                        <button type="button" tabindex="-1"
-                                            class="btn dropdown-toggle btn-light bs-placeholder" data-toggle="dropdown"
-                                            role="combobox" aria-owns="bs-select-1" aria-haspopup="listbox"
-                                            aria-expanded="false" data-id="kt_datatable_search_status" title="All">
-                                            <div class="filter-option">
-                                                <div class="filter-option-inner">
-                                                    <div class="filter-option-inner-inner">مندوب</div>
-                                                </div>
-                                            </div>
-                                        </button>
-                                        <div class="dropdown-menu"
-                                            style="max-height: 571.188px; overflow: hidden; min-height: 133px;">
-                                            <div class="inner show" role="listbox" id="bs-select-1" tabindex="-1"
-                                                aria-activedescendant="bs-select-1-0"
-                                                style="max-height: 559.188px; overflow-y: auto; min-height: 121px;">
-                                                <ul class="dropdown-menu inner show" role="presentation"
-                                                    style="margin-top: 0px; margin-bottom: 0px;">
-                                               @foreach($users as $id => $entry)
-                                                    <li class=" "><a role="option"
-                                                            class="dropdown-item  " id="bs-select-1-0"
-                                                            tabindex="0" aria-setsize="7" aria-posinset="1"
-                                                            aria-selected="true"><span class="text">{{$entry}}</span></a></li>
+                                </div>
+                            </div>
 
-                                                @endforeach
-                                                        </ul>
-
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-3 my-2 my-md-0">
-                                <div class="d-flex align-items-center">
-                                    <div class="dropdown bootstrap-select form-control">
-                                        <!-- <select class="form-control"
-                                            id="kt_datatable_search_type">
-                                            <option value="">عائلة الصنف</option>
-                                            <option value="1">Online</option>
-                                            <option value="2">Retail</option>
-                                            <option value="3">Direct</option>
-                                        </select> -->
-                                        <button type="button" tabindex="-1"
-                                            class="btn dropdown-toggle btn-light bs-placeholder" data-toggle="dropdown"
-                                            role="combobox" aria-owns="bs-select-2" aria-haspopup="listbox"
-                                            aria-expanded="false" data-id="kt_datatable_search_type" title="All">
-                                            <div class="filter-option">
-                                                <div class="filter-option-inner">
-                                                    <div class="filter-option-inner-inner">عائلة الصنف</div>
-                                                </div>
-                                            </div>
-                                        </button>
-                                        <div class="dropdown-menu ">
-                                            <div class="inner show" role="listbox" id="bs-select-2" tabindex="-1">
-                                                <ul class="dropdown-menu inner show" role="presentation">
-                                                     <li class="selected active"><a role="option"
-                                                            class="dropdown-item active selected" id="bs-select-1-0"
-                                                            tabindex="0" aria-setsize="7" aria-posinset="1"
-                                                            aria-selected="true"><span class="text">All</span></a></li>
-                                                    <li><a role="option" class="dropdown-item" id="bs-select-1-1"
-                                                            tabindex="0" aria-setsize="7" aria-posinset="2"><span
-                                                                class="text">Pending</span></a></li>
-                                                    <li><a role="option" class="dropdown-item" id="bs-select-1-2"
-                                                            tabindex="0" aria-setsize="7" aria-posinset="3"><span
-                                                                class="text">Delivered</span></a></li>
-                                                    <li><a role="option" class="dropdown-item" id="bs-select-1-3"
-                                                            tabindex="0" aria-setsize="7" aria-posinset="4"><span
-                                                                class="text">Canceled</span></a></li>
-                                                    <li><a role="option" class="dropdown-item" id="bs-select-1-4"
-                                                            tabindex="0"><span class="text">Success</span></a></li>
-                                                    <li><a role="option" class="dropdown-item" id="bs-select-1-5"
-                                                            tabindex="0"><span class="text">Info</span></a></li>
-                                                    <li><a role="option" class="dropdown-item" id="bs-select-1-6"
-                                                            tabindex="0"><span class="text">Danger</span></a></li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-3 my-2 my-md-0">
-                                <div class="d-flex align-items-center">
-                                    <div class="dropdown bootstrap-select form-control">
-                                        <!-- <select class="form-control"
-                                            id="kt_datatable_search_type">
-                                            <option value="">شهر</option>
-                                            <option value="1">Online</option>
-                                            <option value="2">Retail</option>
-                                            <option value="3">Direct</option>
-                                        </select> -->
-                                        <button type="button" tabindex="-1"
-                                            class="btn dropdown-toggle btn-light bs-placeholder" data-toggle="dropdown"
-                                            role="combobox" aria-owns="bs-select-2" aria-haspopup="listbox"
-                                            aria-expanded="false" data-id="kt_datatable_search_type" title="All">
-                                            <div class="filter-option">
-                                                <div class="filter-option-inner">
-                                                    <div class="filter-option-inner-inner">شهر</div>
-                                                </div>
-                                            </div>
-                                        </button>
-                                        <div class="dropdown-menu ">
-                                            <div class="inner show" role="listbox" id="bs-select-2" tabindex="-1">
-                                                <ul class="dropdown-menu inner show" role="presentation">
-                                                    <li class="selected active"><a role="option"
-                                                            class="dropdown-item active selected" id="bs-select-1-0"
-                                                            tabindex="0" aria-setsize="7" aria-posinset="1"
-                                                            aria-selected="true"><span class="text">All</span></a></li>
-                                                    <li><a role="option" class="dropdown-item" id="bs-select-1-1"
-                                                            tabindex="0" aria-setsize="7" aria-posinset="2"><span
-                                                                class="text">Pending</span></a></li>
-                                                    <li><a role="option" class="dropdown-item" id="bs-select-1-2"
-                                                            tabindex="0" aria-setsize="7" aria-posinset="3"><span
-                                                                class="text">Delivered</span></a></li>
-                                                    <li><a role="option" class="dropdown-item" id="bs-select-1-3"
-                                                            tabindex="0" aria-setsize="7" aria-posinset="4"><span
-                                                                class="text">Canceled</span></a></li>
-                                                    <li><a role="option" class="dropdown-item" id="bs-select-1-4"
-                                                            tabindex="0"><span class="text">Success</span></a></li>
-                                                    <li><a role="option" class="dropdown-item" id="bs-select-1-5"
-                                                            tabindex="0"><span class="text">Info</span></a></li>
-                                                    <li><a role="option" class="dropdown-item" id="bs-select-1-6"
-                                                            tabindex="0"><span class="text">Danger</span></a></li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-3 my-2 my-md-0">
-                                <div class="d-flex align-items-center">
-                                    <div class="dropdown bootstrap-select form-control">
-                                        <!-- <select class="form-control"
-                                            id="kt_datatable_search_type">
-                                            <option value="">سنة</option>
-                                            <option value="1">Online</option>
-                                            <option value="2">Retail</option>
-                                            <option value="3">Direct</option>
-                                        </select> -->
-                                        <button type="button" tabindex="-1"
-                                            class="btn dropdown-toggle btn-light bs-placeholder" data-toggle="dropdown"
-                                            role="combobox" aria-owns="bs-select-2" aria-haspopup="listbox"
-                                            aria-expanded="false" data-id="kt_datatable_search_type" title="All">
-                                            <div class="filter-option">
-                                                <div class="filter-option-inner">
-                                                    <div class="filter-option-inner-inner">سنة</div>
-                                                </div>
-                                            </div>
-                                        </button>
-                                        <div class="dropdown-menu ">
-                                            <div class="inner show" role="listbox" id="bs-select-2" tabindex="-1">
-                                                <ul class="dropdown-menu inner show" role="presentation">
-                                                    <li class="selected active"><a role="option"
-                                                            class="dropdown-item active selected" id="bs-select-1-0"
-                                                            tabindex="0" aria-setsize="7" aria-posinset="1"
-                                                            aria-selected="true"><span class="text">All</span></a></li>
-                                                    <li><a role="option" class="dropdown-item" id="bs-select-1-1"
-                                                            tabindex="0" aria-setsize="7" aria-posinset="2"><span
-                                                                class="text">Pending</span></a></li>
-                                                    <li><a role="option" class="dropdown-item" id="bs-select-1-2"
-                                                            tabindex="0" aria-setsize="7" aria-posinset="3"><span
-                                                                class="text">Delivered</span></a></li>
-                                                    <li><a role="option" class="dropdown-item" id="bs-select-1-3"
-                                                            tabindex="0" aria-setsize="7" aria-posinset="4"><span
-                                                                class="text">Canceled</span></a></li>
-                                                    <li><a role="option" class="dropdown-item" id="bs-select-1-4"
-                                                            tabindex="0"><span class="text">Success</span></a></li>
-                                                    <li><a role="option" class="dropdown-item" id="bs-select-1-5"
-                                                            tabindex="0"><span class="text">Info</span></a></li>
-                                                    <li><a role="option" class="dropdown-item" id="bs-select-1-6"
-                                                            tabindex="0"><span class="text">Danger</span></a></li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
                         </div>
                     </div>
 
@@ -401,11 +240,11 @@
 @section('script')
 @parent
 
-<script>
+{{-- <script>
        $('#kt_datatable_search_user').on('change', function() {
             $('.samples-table-body').search($(this).val().toLowerCase(), 'user_id');
         });
-</script>
+</script> --}}
 
 <script>
 
@@ -413,7 +252,7 @@ function load_data_table(page = '') {
     $.ajax({
         url: '{{url("admin/samples/")}}?page=' + page,
         data: {
-            search: $('#kt_datatable_search_user').val()
+            search: $('#search_input').val()
         },
         type: "get",
         success: function(response) {
@@ -427,10 +266,13 @@ function load_data_table(page = '') {
 
 $(function () {
 
-$('#kt_datatable_search_user').keyup(function(){
+$('#search_input').keyup(function(){
     load_data_table()
 })
 })
+
+
+
 $(document).on('click', '.delete-sample', function() {
     var id = $(this).data('sample-id');
     Swal.fire({

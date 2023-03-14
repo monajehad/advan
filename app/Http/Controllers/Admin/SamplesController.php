@@ -33,7 +33,8 @@ class SamplesController extends Controller
         ->select('unit_constants.name as unit_name','samples.id','samples.sample_id','samples.unit','samples.category_id'
         ,'samples.user_id','samples.quantity_request', 'samples.stock_available_id','samples.date','samples.status')->with(['category','item','sample', 'user', 'stock_available']);
         if($request->search){
-            $samples=$samples->where('user_id','like','%'.$request->search.'%');
+            $samples=$samples->where('user_name','like','%'.$request->search.'%')
+            ->orWhere('category_names','like','%'.$request->search.'%');
         }
         $samples=$samples->orderBy('id','desc')->paginate(self::PAGINATION_NO);
         if ($request->ajax()) {

@@ -1,7 +1,7 @@
 <!--begin::Table-->
 <div
 class="table-responsive datatable datatable-bordered datatable-head-custom datatable-default table-striped table-hover    datatable-primary datatable-loaded">
-<table class="table table-bordered " id="kt-table">
+<table class="table table-bordered " id="table-sample">
     <thead class="datatable-head">
         <tr class="text-center">
             <th>#</th>

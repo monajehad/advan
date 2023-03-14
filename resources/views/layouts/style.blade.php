@@ -16,9 +16,17 @@
             <!--end::Layout Themes-->
     <link href="{{asset('component_assets/css/app.min.css')}}" rel="stylesheet" type="text/css" />
 
+    {{-- <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css" /> --}}
 
     <!--end::Layout Themes-->
 <style>
+    .datatable.datatable-default.datatable-loaded {
+    display: block;
+    overflow-y: hidden;
+}
+div#table-vacation-requests_filter {
+    display: none;
+}
     @media (min-width: 992px){
 .aside-enabled .header.header-fixed{
     right: 265px;
