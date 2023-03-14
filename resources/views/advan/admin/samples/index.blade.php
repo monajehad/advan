@@ -145,16 +145,13 @@
                             <div class="col-md-3 my-2 my-md-0">
                                 <div class="d-flex align-items-center">
                                     <div class="dropdown bootstrap-select form-control">
-                                        <!-- <select class="form-control"
-                                            id="kt_datatable_search_status" tabindex="null">
-                                            <option value="">مندوب</option>
-                                            <option value="1">Pending</option>
-                                            <option value="2">Delivered</option>
-                                            <option value="3">Canceled</option>
-                                            <option value="4">Success</option>
-                                            <option value="5">Info</option>
-                                            <option value="6">Danger</option>
-                                        </select> -->
+                                         <select class="form-control"
+                                            id="kt_datatable_search_user" tabindex="null">
+                                            @foreach($users as $id => $entry)
+
+                                            <option value="{{$id}}">{{$entry}}</option>
+                                           @endforeach
+                                        </select>
                                         <button type="button" tabindex="-1"
                                             class="btn dropdown-toggle btn-light bs-placeholder" data-toggle="dropdown"
                                             role="combobox" aria-owns="bs-select-1" aria-haspopup="listbox"
@@ -173,8 +170,8 @@
                                                 <ul class="dropdown-menu inner show" role="presentation"
                                                     style="margin-top: 0px; margin-bottom: 0px;">
                                                @foreach($users as $id => $entry)
-                                                    <li class="selected active"><a role="option"
-                                                            class="dropdown-item active selected" id="bs-select-1-0"
+                                                    <li class=" "><a role="option"
+                                                            class="dropdown-item  " id="bs-select-1-0"
                                                             tabindex="0" aria-setsize="7" aria-posinset="1"
                                                             aria-selected="true"><span class="text">{{$entry}}</span></a></li>
 
@@ -408,7 +405,7 @@ function load_data_table(page = '') {
     $.ajax({
         url: '{{url("admin/samples/")}}?page=' + page,
         data: {
-            search: $('#search_input').val()
+            search: $('#kt_datatable_search_user').val()
         },
         type: "get",
         success: function(response) {
@@ -419,6 +416,12 @@ function load_data_table(page = '') {
 
     })
 }
+$(function () {
+
+$('#kt_datatable_search_user').keyup(function(){
+    load_data_table()
+})
+})
 $(document).on('click', '.delete-sample', function() {
     var id = $(this).data('sample-id');
     Swal.fire({

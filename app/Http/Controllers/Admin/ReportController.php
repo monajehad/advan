@@ -27,8 +27,7 @@ class ReportController extends Controller
         $reports=Report::select('id','type_id','hits_id','name','status','user_id','client_id','time','date'
         ,'title')->with('user','type','client');
         if($request->search){
-            $reports=$reports->where('name','like','%'.$request->search.'%')
-            ->orWhere('username','like','%'.$request->search.'%');
+            $reports=$reports->where('name','like','%'.$request->search.'%');
         }
         $reports=$reports->orderBy('id','desc')->paginate(self::PAGINATION_NO);
         if ($request->ajax()) {

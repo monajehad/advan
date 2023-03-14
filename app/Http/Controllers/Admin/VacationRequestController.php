@@ -22,8 +22,8 @@ class VacationRequestController extends Controller
         // abort_if(Gate::denies('vacation_request_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $vacationRequests=VacationRequest::with('user')->select('id','user_id','days','start_date','end_date','reason','status');
         if($request->search){
-            $categories=$vacationRequests->where('name','like','%'.$request->search.'%')
-            ->orWhere('username','like','%'.$request->search.'%');
+            $vacationRequests=$vacationRequests->where('name','like','%'.$request->search.'%');
+            // ->orWhere('username','like','%'.$request->search.'%');
         }
         $vacationRequests=$vacationRequests->orderBy('id','desc')->paginate(self::PAGINATION_NO);
         if ($request->ajax()) {

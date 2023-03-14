@@ -55,6 +55,18 @@
             </div>
 
         </div>
+        <div class="mx-5 mb-4 py-4">
+            <div class="col-md-4 col-lg-4 ml-8">
+                <form class="form">
+                    <div class="form-group row">
+                        <label class="col-form-label text-right col-lg-2 col-sm-12">البحث</label>
+                      <div class="col-lg-9 pr-0 col-md-9 col-sm-12">
+                        <input type="text" class="form-control form-control-sm" id="search_input" name="search_input"  placeholder="الاسم"/>
+                      </div>
+                    </div>
+                </form>
+            </div>
+        </div>
         <!--end::Header-->
         <!--begin::Body-->
 
@@ -101,6 +113,12 @@ function load_data_table(page = '') {
 
         })
     }
+    $(function () {
+
+$('#search_input').keyup(function(){
+    load_data_table()
+})
+})
     $(document).on('click','.delete-report',function(){
                 var id = $(this).data('report-id');
                 Swal.fire({

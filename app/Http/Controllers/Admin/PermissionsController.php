@@ -13,15 +13,23 @@ use Symfony\Component\HttpFoundation\Response;
 
 class PermissionsController extends Controller
 {
-    // const PAGINATION_NO=20;
+    const PAGINATION_NO=20;
 
-    public function index()
+    public function index(Request $request)
     {
         // abort_if(Gate::denies('permission_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $permissions = Permission::all();
         // $permissions->orderBy('id','desc')->paginate(self::PAGINATION_NO);
+        // if($request->search){
+        //     $permissions=$permissions->where('name','like','%'.$request->search.'%');
+        // }
+        // $permissions=$permissions->orderBy('id','desc')->paginate(self::PAGINATION_NO);
+        if ($request->ajax()) {
+            $table_data=view('advan.admin.permissions.table-data',compact('permissions'))->render();
+            return response()->json(['permissions'=>$table_data]);
 
+        }
         return view('advan.admin.permissions.index', compact('permissions'));
     }
 

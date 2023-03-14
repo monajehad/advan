@@ -55,12 +55,24 @@
             </div>
 
         </div>
+        {{-- <div class="mx-5 mb-4 py-4">
+            <div class="col-md-4 col-lg-4 ml-8">
+                <form class="form">
+                    <div class="form-group row">
+                        <label class="col-form-label text-right col-lg-2 col-sm-12">البحث</label>
+                      <div class="col-lg-9 pr-0 col-md-9 col-sm-12">
+                        <input type="text" class="form-control form-control-sm" id="search_input" name="search_input"  placeholder="الاسم"/>
+                      </div>
+                    </div>
+                </form>
+            </div>
+        </div> --}}
         <!--end::Header-->
         <!--begin::Body-->
 
         <div class="card-body py-0">
             <!--begin::Table-->
-            <div class="user-table-body">
+            <div class="users-table-body">
 
                 @includeIf('advan.admin.users.table-data')
 
@@ -84,11 +96,31 @@
 @section('script')
 @parent
 <script>
+function load_data_table(page = '') {
+        $.ajax({
+            url: '{{url("admin/users/")}}?page=' + page,
+            data: {
+                search: $('#search_input').val()
+            },
+            type: "get",
+            success: function(response) {
+                $('.users-table-body').html(response.users)
 
+            },
+            error: function(response) {}
+
+        })
+    }
+    $(function () {
+
+$('#search_input').keyup(function(){
+    load_data_table()
+})
+})
 $(document).on('click','.delete-user',function(){
             var id = $(this).data('user-id');
             Swal.fire({
-                title: 'هل أنت متأكد من حذف المنافس؟',
+                title: 'هل أنت متأكد من حذف المندوب؟',
                 showDenyButton: true,
                 confirmButtonText: 'نعم',
                 denyButtonText: `لا`,
@@ -131,60 +163,7 @@ $(document).on('click','.delete-user',function(){
 
         })
 </script>
-<script>
-    Dropzone.options.imageDropzone = {
-        url: '{{ route('admin.users.storeMedia') }}',
-        maxFilesize: 2, // MB
-        acceptedFiles: '.jpeg,.jpg,.png,.gif',
-        maxFiles: 1,
-        addRemoveLinks: true,
-        headers: {
-            'X-CSRF-TOKEN': "{{ csrf_token() }}"
-        },
-        params: {
-            size: 2,
-            width: 4096,
-            height: 4096
-        },
-        success: function (file, response) {
-            $('form').find('input[name="image"]').remove()
-            $('form').append('<input type="hidden" name="image" value="' + response.name + '">')
-        },
-        removedfile: function (file) {
-            file.previewElement.remove()
-            if (file.status !== 'error') {
-                $('form').find('input[name="image"]').remove()
-                this.options.maxFiles = this.options.maxFiles + 1
-            }
-        },
-        init: function () {
-            @if(isset($user) && $user->image)
-            var file = {!! json_encode($user->image) !!}
-            this.options.addedfile.call(this, file)
-            this.options.thumbnail.call(this, file, file.preview)
-            file.previewElement.classList.add('dz-complete')
-            $('form').append('<input type="hidden" name="image" value="' + file.file_name + '">')
-            this.options.maxFiles = this.options.maxFiles - 1
-            @endif
-        },
-        error: function (file, response) {
-            if ($.type(response) === 'string') {
-                var message = response //dropzone sends it's own error messages in string
-            } else {
-                var message = response.errors.file
-            }
-            file.previewElement.classList.add('dz-error')
-            _ref = file.previewElement.querySelectorAll('[data-dz-errormessage]')
-            _results = []
-            for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-                node = _ref[_i]
-                _results.push(node.textContent = message)
-            }
 
-            return _results
-        }
-    }
-</script>
 @endsection
 
 

@@ -17,13 +17,22 @@ use Yajra\DataTables\Facades\DataTables;
 class ReportTypeController extends Controller
 {
     use CsvImportTrait;
+    const PAGINATION_NO=20;
 
     public function index(Request $request)
     {
         // abort_if(Gate::denies('report_type_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $reportTypes = Report::all();
+        if($request->search){
+            $reports=$reportTypes->where('name','like','%'.$request->search.'%');
+        }
+        $reportTypes=$reportTypes->orderBy('id','desc')->paginate(self::PAGINATION_NO);
+        if ($request->ajax()) {
+            $table_data=view('advan.admin.reportTypes.table-data',compact('reportTypes'))->render();
+            return response()->json(['reportTypes'=>$table_data]);
 
+        }
         return view('advan.admin.reportTypes.index', compact('reportTypes'));
 
 

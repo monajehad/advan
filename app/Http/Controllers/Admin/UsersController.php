@@ -35,7 +35,9 @@ class UsersController extends Controller
         'website',
         'category_id',
         'item_id');
-
+        // if($request->search){
+        //     $users=$users->where('name','like','%'.$request->search.'%');
+        // }
             $users=$users->orderBy('id','desc')->paginate(self::PAGINATION_NO);
             if ($request->ajax()) {
                 $table_data=view('advan.admin.users.table-data',compact('users'))->render();

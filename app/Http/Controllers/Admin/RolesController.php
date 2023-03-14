@@ -14,13 +14,23 @@ use Symfony\Component\HttpFoundation\Response;
 
 class RolesController extends Controller
 {
-    public function index()
+    const PAGINATION_NO=20;
+
+    public function index(Request $request )
     {
         // abort_if(Gate::denies('role_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $roles = Role::with(['permissions'])->get();
         $permissions = Permission::pluck('name', 'id');
+        // if($request->search){
+        //     $roles=$roles->where('title','like','%'.$request->search.'%');
+        // }
+        // $roles=$roles->orderBy('id','desc')->paginate(self::PAGINATION_NO);
+        if ($request->ajax()) {
+            $table_data=view('advan.admin.roles.table-data',compact('roles'))->render();
+            return response()->json(['roles'=>$table_data]);
 
+        }
         return view('advan.admin.roles.index', compact('roles','permissions'));
     }
 

@@ -5,6 +5,7 @@
      <thead class="datatable-head">
          <tr class="text-center">
              <th>#</th>
+                <th> اسم التقرير</th>
                 <th> المندوب</th>
                 <th> العميل</th>
                 <th> التاريخ</th>
@@ -30,6 +31,7 @@
         @forelse($reports as $report)
         <tr class="data-row">
             <td class="iteration">{{$loop->iteration}}</td>
+            <td class="name">{{$report->name}}</td>
             <td class="name">{{$report->user->name}}</td>
             <td class="name">{{$report->client->name}}</td>
             <td class="name">{{$report->date}}</td>

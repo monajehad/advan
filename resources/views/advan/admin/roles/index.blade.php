@@ -55,6 +55,7 @@
             </div>
 
         </div>
+
         <!--end::Header-->
         <!--begin::Body-->
 
@@ -102,7 +103,7 @@
                 <div class="d-table-cell py-4 caption">المندوب</div>
                 <div class="d-table-cell py-4 px-5 caption">تاريخ الطلب</div>
               </div>
-              
+
               <div class="d-table-row grid-markup">
                 <div class="sheet-cell d-table-cell py-3 px-5">سليم محمود العرجة</div>
 
@@ -277,6 +278,12 @@
 
         })
     }
+    $(function () {
+
+    $('#search_input').keyup(function(){
+    load_data_table()
+})
+})
     $(document).on('click','.delete-role',function(){
         var id = $(this).data('role-id');
         Swal.fire({
