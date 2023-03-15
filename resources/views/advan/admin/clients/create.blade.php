@@ -192,7 +192,7 @@
                                         </div>
                                         <div class="form-group">
                                             <label class="required" for="specialty_id">التخصص</label>
-                                            <select class="form-control  {{ $errors->has('specialty') ? 'is-invalid' : '' }}" name="specialty_id" id="specialty_id" required>
+                                            <select class="form-control pl-0 pb-0 pt-0 {{ $errors->has('specialty') ? 'is-invalid' : '' }}" name="specialty_id" id="specialty_id" required>
                                                 @foreach($specialties as $id => $entry)
                                                     <option value="{{ $id }}" {{ old('specialty_id') == $id ? 'selected' : '' }}>{{ $entry }}</option>
                                                 @endforeach
@@ -206,7 +206,7 @@
                                         <div class="form-group ">
                                             {{-- <div class="col-md-6 col-lg-6 col-sm-12"> --}}
                                                 <label>التصنيف</label>
-                                                <select class="form-control" id="item" name="item">
+                                                <select class="form-control pl-0 pb-0 pt-0" id="item" name="item">
                                                     <?php    $items=array('A','B','C','D')?>
                                                     <option value="" disabled selected>التصنيف </option>
                                                     @foreach($items as $item)
@@ -374,7 +374,7 @@
                                         <div class="form-group row">
                                             <div class="col-md-6 col-lg-6 col-sm-12">
                                                 <label>المنطقة</label>
-                                                <select class="form-control" id="area_1" name="area_1">
+                                                <select class="form-control pl-0 pb-0 pt-0" id="area_1" name="area_1">
                                                     <option value="" disabled selected> الشمال</option>
                                                     @foreach($data['area_1_select'] as $area_1)
                                                         <option value="{{$area_1->value}}">{{$area_1->name}}</option>
@@ -394,7 +394,7 @@
                                             <div class="form-group row">
                                                 <div class="col-md-6 col-lg-6 col-sm-12">
                                                     <label>المنطقة</label>
-                                                    <select class="form-control" id="area_2" name="area_2">
+                                                    <select class="form-control pl-0 pb-0 pt-0" id="area_2" name="area_2">
                                                         <?php    $areas_2=array('الشمال','الجنوب','الوسطى','غزة')?>
                                                         <option value="" disabled selected>الشمال </option>
                                                         @foreach($areas_2 as $area_2)
@@ -408,7 +408,7 @@
                                                 </div>
                                             <div class="form-group">
                                                 <label for="address_3">العنوان الثالث</label>
-                                                <input class="form-control {{ $errors->has('address_3') ? 'is-invalid' : '' }}" type="text" name="address_3" id="address_3" value="{{ old('address_3', '') }}">
+                                                <input class="form-control pl-0 pb-0 pt-0{{ $errors->has('address_3') ? 'is-invalid' : '' }}" type="text" name="address_3" id="address_3" value="{{ old('address_3', '') }}">
                                                 @if($errors->has('address_3'))
                                                     <div class="invalid-feedback">
                                                         {{ $errors->first('address_3') }}
@@ -419,7 +419,7 @@
                                             <div class="form-group row">
                                                 <div class="col-md-6 col-lg-6 col-sm-12">
                                                     <label>المنطقة</label>
-                                                    <select class="form-control" id="area_3" name="area_3">
+                                                    <select class="form-control pl-0 pb-0 pt-0" id="area_3" name="area_3">
                                                         <?php    $areas_3=array('الشمال','الجنوب','الوسطى','غزة')?>
                                                         <option value="" disabled selected>الشمال </option>
                                                         @foreach($areas_3 as $area_3)
@@ -446,7 +446,7 @@
                                     <!--end: Wizard Step 3-->
                                     <!--begin: Wizard Step 4-->
 
-                                  
+
                                 </form>
                                 <!--end: Wizard Form-->
                             </div>

@@ -70,27 +70,27 @@
             {{-- <td class="name">{{$hit_stock->clinetHits->id}}</td> --}}
 
             {{-- @can('suppliers-status') --}}
-                @if($hit->status==1)
+                {{-- @if($hit->status==1) --}}
                 <td class="status">
-                    <button class="btn btn-sm  btn-shadow btn-success change-status"
+                    <button class="badge badge-pill badge-success "
                     {{-- data-hit-id="{{$hit->id}}" --}}
                          {{-- @cannot('suppliers-status') disabled @endcannot --}}
                          >
-                        مفعل
+                       {{App\Models\Hit::STATUS_SELECT[$hit->status]}}
                     </button>
                 </td>
-                @elseif($hit->status==0)
-                <td class="status">
+                {{-- @elseif($hit->status==0) --}}
+                {{-- <td class="status"> --}}
 
-                    <button class="btn btn-sm  btn-shadow btn-danger change-status"
+                    {{-- <button class="badge badge-pill badge-warning" --}}
                     {{-- data-hit-id="{{$hit->id}}" --}}
                         {{-- @cannot('suppliers-status') disabled @endcannot --}}
 
-                        >
+                        {{-- >
                         غير مفعل
                     </button>
                 </td>
-                @endif
+                @endif --}}
             {{-- @endcan --}}
       {{-- @can('hits-show') --}}
       <td>

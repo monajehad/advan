@@ -87,7 +87,7 @@
         <!--begin::Body-->
 
         <div class="card-body py-0">
-            <div class="card-body py-0">
+
 
                 <div class="mb-7">
                     <div class="row align-items-center">
@@ -96,7 +96,9 @@
 
                                 <div class="col-md-3 my-2 my-md-0">
                                     <div class="d-flex align-items-center">
-                                        <select id="client_search" class=" form-control search_select" name="client_search">
+                                        <select id="client_search" class="pl-0 pb-0 pt-0 form-control search_select" name="client_search">
+                                       <option value="" selected>العميل </option>
+
                                             @foreach($clients as $client)
 
                                             <option  value="{{$client->name}}">{{$client->name}}</option>
@@ -104,17 +106,29 @@
                                         </select>
                                     </div>
                                 </div>
-                                {{-- <div class="col-md-3 my-2 my-md-0">
+                                <div class="col-md-3 my-2 my-md-0">
                                     <div class="d-flex align-items-center">
-                                        <select id="category_search" class=" form-control search_select" name="category_search">
-                                            @foreach($categories as $category)
+                                        <select id="clients_specialty_search" class="pl-0 pb-0 pt-0 form-control search_select" name="category_search">
+                                       <option value="" selected>التخصص </option>
 
-                                            <option  value="{{$category->id}}">{{$category->name}}</option>
+                                            @foreach($clients_specialties as $clients_specialty)
+
+                                            <option  value="{{$clients_specialty->id}}">{{$clients_specialty->name}}</option>
                                             @endforeach
                                         </select>
                                     </div>
-                                </div> --}}
+                                </div>
+                                <div class="col-md-3 my-2 my-md-0">
+                                    <div class="d-flex align-items-center">
+                                        <select id="area_search" class="pl-0 pb-0 pt-0 form-control search_select" name="area_search">
+                                       <option value="" selected>المنطقة </option>
 
+                                            @foreach($data['area_1_select'] as $area_1)
+                                            <option value="{{$area_1->value}}">{{$area_1->name}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
@@ -151,7 +165,8 @@ function load_data_table(page = '') {
         $.ajax({
             url: '{{url("admin/clients/")}}?page=' + page,
             data: {
-                clientSelect: $('#client_search').val()
+                clientSelect: $('#client_search').val(),clientSpecialty: $('#clients_specialty_search').val()
+                ,area: $('#area_search').val()
             },
             type: "get",
             success: function(response) {

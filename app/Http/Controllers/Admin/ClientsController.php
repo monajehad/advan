@@ -42,7 +42,14 @@ class ClientsController extends Controller
             $clients=$clients->where('clients.name',$request->clientSelect)
             ;
         }
-        $clients=$clients->orderBy('id','desc')->paginate(self::PAGINATION_NO);
+        if($request->clientSpecialty){
+            $clients=$clients->where('clients.specialty_id',$request->clientSpecialty)
+            ;
+        }
+        if($request->area){
+            $clients=$clients->where('clients.area_1',$request->area)
+            ;
+        }
 
         $data['clients']=$clients;
         $data['category_select']=$category_select;
@@ -52,6 +59,7 @@ class ClientsController extends Controller
             return response()->json(['clients'=>$table_data]);
 
     }
+    // dd($data['clients']);
     $clients_specialties = ClientsSpecialty::get();
     $specialties = ClientsSpecialty::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 

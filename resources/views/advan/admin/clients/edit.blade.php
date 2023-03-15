@@ -2,17 +2,22 @@
 @section('content')
 
     <div class="card">
-        <div class="card-header">
-            {{ trans('global.edit') }} {{ trans('cruds.client.title_singular') }}
-        </div>
-
+        <div class="card w-50 mr-10">
+            <div class="card-header  d-flex justify-content-between ">
+                <div class="py-5 h3">تعديل الزيارات </div>
+                <div class="form-group text-left  mb-0 py-3">
+                    <a href="{{route("admin.clients.index")}}" class="btn btn-primary " type="submit">
+                        الرجوع
+                    </a>
+                </div>
+            </div>
         <div class="card-body">
             <form method="POST" action="{{ route("admin.clients.update", [$client->id]) }}"
                   enctype="multipart/form-data">
                 @method('PUT')
                 @csrf
                 <div class="form-group">
-                    <label class="required" for="name">{{ trans('cruds.client.fields.name') }}</label>
+                    <label class="required" for="name">الاسم ثلاثي</label>
                     <input class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" type="text" name="name"
                            id="name" value="{{ old('name', $client->name) }}" required>
                     @if($errors->has('name'))
@@ -20,10 +25,10 @@
                             {{ $errors->first('name') }}
                         </div>
                     @endif
-                    <span class="help-block">{{ trans('cruds.client.fields.name_helper') }}</span>
+                    {{-- <span class="help-block">{{ trans('cruds.client.fields.name_helper') }}</span> --}}
                 </div>
                 <div class="form-group">
-                    <label class="" for="qualification">{{ trans('cruds.client.fields.qualification') }}</label>
+                    <label class="" for="qualification">المؤهلات</label>
                     <input class="form-control {{ $errors->has('qualification') ? 'is-invalid' : '' }}" type="text"
                            name="qualification" id="qualification" value="{{ old('qualification', $client->qualification) }}"
                            required
@@ -33,11 +38,11 @@
                             {{ $errors->first('qualification') }}
                         </div>
                     @endif
-                    <span class="help-block">{{ trans('cruds.client.fields.qualification') }}</span>
+                    {{-- <span class="help-block">{{ trans('cruds.client.fields.qualification') }}</span> --}}
                 </div>
                 <div class="form-group">
-                    <label class="required" for="specialty_id">{{ trans('cruds.client.fields.specialty') }}</label>
-                    <select class="form-control select2 {{ $errors->has('specialty') ? 'is-invalid' : '' }}"
+                    <label class="required" for="specialty_id">نوع العميل</label>
+                    <select class="form-control pl-0 pb-0 pt-0 {{ $errors->has('specialty') ? 'is-invalid' : '' }}"
                             name="specialty_id" id="specialty_id" required>
                         @foreach($specialties as $id => $entry)
                             <option
@@ -49,22 +54,11 @@
                             {{ $errors->first('specialty') }}
                         </div>
                     @endif
-                    <span class="help-block">{{ trans('cruds.client.fields.specialty_helper') }}</span>
+                    {{-- <span class="help-block">{{ trans('cruds.client.fields.specialty_helper') }}</span> --}}
                 </div>
+
                 <div class="form-group">
-                    <label for="image">{{ trans('cruds.client.fields.image') }}</label>
-                    <div class="needsclick dropzone {{ $errors->has('image') ? 'is-invalid' : '' }}"
-                         id="image-dropzone">
-                    </div>
-                    @if($errors->has('image'))
-                        <div class="invalid-feedback">
-                            {{ $errors->first('image') }}
-                        </div>
-                    @endif
-                    <span class="help-block">{{ trans('cruds.client.fields.image_helper') }}</span>
-                </div>
-                <div class="form-group">
-                    <label class="" for="email">{{ trans('cruds.client.fields.email') }}</label>
+                    <label class="" for="email">البريد الالكتروني</label>
                     <input class="form-control {{ $errors->has('email') ? 'is-invalid' : '' }}" type="text" name="email"
                            id="email" value="{{ old('email', $client->email) }}" required>
                     @if($errors->has('email'))
@@ -72,10 +66,10 @@
                             {{ $errors->first('email') }}
                         </div>
                     @endif
-                    <span class="help-block">{{ trans('cruds.client.fields.email_helper') }}</span>
+                    {{-- <span class="help-block">{{ trans('cruds.client.fields.email_helper') }}</span> --}}
                 </div>
                 <div class="form-group">
-                    <label class="required" for="phone">{{ trans('cruds.client.fields.phone') }}</label>
+                    <label class="required" for="phone">الهاتف</label>
                     <input class="form-control {{ $errors->has('phone') ? 'is-invalid' : '' }}" type="text" name="phone"
                            id="phone" value="{{ old('phone', $client->phone) }}" required>
                     @if($errors->has('phone'))
@@ -83,10 +77,10 @@
                             {{ $errors->first('phone') }}
                         </div>
                     @endif
-                    <span class="help-block">{{ trans('cruds.client.fields.phone_helper') }}</span>
+                    {{-- <span class="help-block">{{ trans('cruds.client.fields.phone_helper') }}</span> --}}
                 </div>
                 <div class="form-group">
-                    <label for="mobile">{{ trans('cruds.client.fields.mobile') }}</label>
+                    <label for="mobile">الجوال</label>
                     <input class="form-control {{ $errors->has('mobile') ? 'is-invalid' : '' }}" type="text"
                            name="mobile" id="mobile"
                            value="{{ old('mobile', $client->mobile) }}">
@@ -95,12 +89,12 @@
                             {{ $errors->first('mobile') }}
                         </div>
                     @endif
-                    <span class="help-block">{{ trans('cruds.client.fields.mobile_helper') }}</span>
+                    {{-- <span class="help-block">{{ trans('cruds.client.fields.mobile_helper') }}</span> --}}
                 </div>
                 <div class="form-group row">
                     <div class="col-md-6 col-lg-6 col-sm-12">
                         <label>النوع</label>
-                        <select class="form-control" id="category" name="category">
+                        <select class="form-control pl-0 pb-0 pt-0" id="category" name="category">
                             <option value="" disabled selected>التصنيف </option>
                             @foreach($datacat['category_select'] as $category)
                                 <option value="{{$category->value}}"{{ (old('category_id')? old('category_id') : $client->category ?? '') == $category->value ? 'selected' : '' }}>{{$category->name}}		</option>
@@ -114,7 +108,7 @@
                     <div class="form-group row">
                         <div class="col-md-6 col-lg-6 col-sm-12">
                             <label>التصنيف</label>
-                            <select class="form-control" id="item" name="item">
+                            <select class="form-control pl-0 pb-0 pt-0" id="item" name="item">
                                 <?php    $items=array('A','B','C','D')?>
                                 <option value="" disabled selected>التصنيف </option>
                                 @foreach($items as $item1)
@@ -129,8 +123,8 @@
 
                         <div class="form-group row">
                             <div class="col-md-6 col-lg-6 col-sm-12">
-                                <label>المنطقة</label>
-                                <select class="form-control" id="area_1" name="area_1">
+                                <label> المنطقة الاولى</label>
+                                <select class="form-control pl-0 pb-0 pt-0" id="area_1" name="area_1">
                                     <option value="" disabled selected>التصنيف </option>
                                     @foreach($data['area_1_select'] as $area_1)
                                         <option value="{{$area_1->value}}" {{ (old('area_1_id')? old('area_1_id') : $client->area_1 ?? '') == $area_1->value ? 'selected' : '' }}>{{$area_1->name}}	</option>
@@ -142,7 +136,7 @@
                                 <label class="form-text text-muted text-danger" id="unit-error"></label>
                             </div>
                 <div class="form-group">
-                    <label for="address_1">{{ trans('cruds.client.fields.address_1') }}</label>
+                    <label for="address_1">العنوان الاولى</label>
                     <input class="form-control {{ $errors->has('address_1') ? 'is-invalid' : '' }}" type="text"
                            name="address_1" id="address_1" value="{{ old('address_1', $client->address_1) }}">
                     @if($errors->has('address_1'))
@@ -150,10 +144,25 @@
                             {{ $errors->first('address_1') }}
                         </div>
                     @endif
-                    <span class="help-block">{{ trans('cruds.client.fields.address_1_helper') }}</span>
+                    {{-- <span class="help-block">{{ trans('cruds.client.fields.address_1_helper') }}</span> --}}
                 </div>
+                <div class="form-group row">
+                    <div class="col-md-6 col-lg-6 col-sm-12">
+                        <label>المنطقة </label>
+                        <select class="form-control pl-0 pb-0 pt-0" id="area_2" name="area_2">
+                            <?php    $areas_2=array('الشمال','الجنوب','الوسطى','غزة')?>
+                            <option value="" disabled selected>المنطقة الثانية </option>
+                            @foreach($areas_2 as $area_2)
+                                <option value="{{$area_2}}" {{ ($client->area_2 ??'') == $area_2 ? 'selected':'' }}>  {{$area_2 }}	</option>
+
+                            @endforeach
+
+
+                        </select>
+                        <label class="form-text text-muted text-danger" id="unit-error"></label>
+                    </div>
                 <div class="form-group">
-                    <label for="address_2">{{ trans('cruds.client.fields.address_2') }}</label>
+                    <label for="address_2">العنوان الثاني</label>
                     <input class="form-control {{ $errors->has('address_2') ? 'is-invalid' : '' }}" type="text"
                            name="address_2" id="address_2" value="{{ old('address_2', $client->address_2) }}">
                     @if($errors->has('address_2'))
@@ -161,10 +170,25 @@
                             {{ $errors->first('address_2') }}
                         </div>
                     @endif
-                    <span class="help-block">{{ trans('cruds.client.fields.address_2_helper') }}</span>
+                    {{-- <span class="help-block">{{ trans('cruds.client.fields.address_2_helper') }}</span> --}}
                 </div>
+                <div class="form-group row">
+                    <div class="col-md-6 col-lg-6 col-sm-12">
+                        <label>المنطقة </label>
+                        <select class="form-control pl-0 pb-0 pt-0" id="area_2" name="area_2">
+                            <?php    $areas_3=array('الشمال','الجنوب','الوسطى','غزة')?>
+                            <option value="" disabled selected>المنطقة الثانية </option>
+                            @foreach($areas_3 as $area_3)
+                                <option value="{{$area_3}}" {{ ($client->area_3 ??'') == $area_3 ? 'selected':'' }}>  {{$area_3 }}	</option>
+
+                            @endforeach
+
+
+                        </select>
+                        <label class="form-text text-muted text-danger" id="unit-error"></label>
+                    </div>
                 <div class="form-group">
-                    <label for="address_3">{{ trans('cruds.client.fields.address_3') }}</label>
+                    <label for="address_3">العنوان الثالث</label>
                     <input class="form-control {{ $errors->has('address_3') ? 'is-invalid' : '' }}" type="text"
                            name="address_3" id="address_3" value="{{ old('address_3', $client->address_3) }}">
                     @if($errors->has('address_3'))
@@ -172,34 +196,35 @@
                             {{ $errors->first('address_3') }}
                         </div>
                     @endif
-                    <span class="help-block">{{ trans('cruds.client.fields.address_3_helper') }}</span>
+                    {{-- <span class="help-block">{{ trans('cruds.client.fields.address_3_helper') }}</span> --}}
                 </div>
 
                 <div class="form-group">
-                    <label class="required">{{ trans('cruds.client.fields.status') }}</label>
-                    <select class="form-control {{ $errors->has('status') ? 'is-invalid' : '' }}" name="status"
-                            id="status" required>
-                        <option value
-                                disabled {{ old('status', null) === null ? 'selected' : '' }}>{{ trans('global.pleaseSelect') }}</option>
-                        @foreach(App\Models\Client::STATUS_SELECT as $key => $label)
-                            <option
-                                value="{{ $key }}" {{ old('status', $client->status) === (string) $key ? 'selected' : '' }}>{{ $label }}</option>
-                        @endforeach
-                    </select>
-                    @if($errors->has('status'))
-                        <div class="invalid-feedback">
-                            {{ $errors->first('status') }}
-                        </div>
-                    @endif
-                    <span class="help-block">{{ trans('cruds.client.fields.status_helper') }}</span>
+                    <?php if($client->status=='1')
+                    $client->status='on';
+                    ?>
+                <div class="col-md-6 col-lg-6 col-sm-12 status-div">
+                    <label>الحالة</label>
+                    <span class="switch">
+                        <label>
+                            <input type="checkbox"   {{$client->status ? 'checked' : ''}} name="status" id="status">
+                            <span></span>
+                        </label>
+                    </span>
                 </div>
 
+                @if($errors->has('status'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('status') }}
+                    </div>
+                @endif
+            </div>
 
-                <div class="form-group">
-                    <button class="btn btn-danger" type="submit">
-                        {{ trans('global.save') }}
-                    </button>
-                </div>
+            <div class="form-group text-center">
+                <button class="btn btn-primary w-50" type="submit">
+                    حفظ
+                </button>
+            </div>
             </form>
 
         </div>

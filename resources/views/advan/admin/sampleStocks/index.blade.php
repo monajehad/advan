@@ -59,6 +59,44 @@
         <!--begin::Body-->
 
         <div class="card-body py-0">
+            <div class="mb-7">
+                <div class="row align-items-center">
+                    <div class="col-lg-9 col-xl-8">
+                        <div class="row align-items-center">
+
+
+                            <div class="col-md-3 my-2 my-md-0">
+                                <div class="d-flex align-items-center">
+                                    <select id="category_search" class=" form-control search_select" name="category_search">
+                                        <option value="" selected>عائلة الصنف </option>
+
+                                        @foreach($samples_stock as $sample)
+
+                                        <option  value="{{$sample->category->id}}">{{$sample->category->name}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-3 my-2 my-md-0">
+                                <div class="d-flex align-items-center">
+                                    <select id="date_search" class=" form-control search_select" name="date_search">
+                                        <option value="" selected>التاريخ  </option>
+
+                                        @foreach($samples_stock as $sample)
+
+                                        <option  value="{{$sample->date}}">{{$sample->date}}</option>
+
+                                        @endforeach
+
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
             <!--begin::Table-->
             <div class="sample-stocks-table-body">
 
@@ -88,7 +126,7 @@
         $.ajax({
             url: '{{url("admin/sample-stocks/")}}?page=' + page,
             data: {
-                search: $('#search_input').val()
+                user: $('#user_search').val(),category: $('#category_search').val(),date: $('#date_search').val()
             },
             type: "get",
             success: function(response) {
@@ -99,6 +137,13 @@
 
         })
     }
+    $(function () {
+
+$('.search_select').on('change',function() {
+            load_data_table()
+        })
+})
+
     $(document).on('click','.delete-stock',function(){
         var id = $(this).data('stock-id');
         Swal.fire({

@@ -34,7 +34,18 @@ class SampleStockController extends Controller
         })
         ->select('unit_constants.name as unit_name','sample_stocks.id','sample_stocks.item_id','sample_stocks.unit','sample_stocks.category_id'
         ,'sample_stocks.quantity','sample_stocks.status','sample_stocks.received_quantity','sample_stocks.date')->with(['category','item']);
-
+        // if($request->user){
+        //     $samples_stock=$samples_stock->where('samples_stock.user_id',$request->user);
+        //     // ->orWhere('category_names','like','%'.$request->search.'%');
+        // }
+        if($request->category){
+            $samples_stock=$samples_stock->where('samples_stock.category_id',$request->category);
+            // ->orWhere('category_names','like','%'.$request->search.'%');
+        }
+        if($request->date){
+            $samples_stock=$samples_stock->where('samples_stock.date',$request->date);
+            // ->orWhere('category_names','like','%'.$request->search.'%');
+        }
         $samples_stock=$samples_stock->orderBy('id','desc')->paginate(self::PAGINATION_NO);
         if ($request->ajax()) {
             $table_data=view('advan.admin.sampleStocks.table-data',compact('samples_stock'))->render();

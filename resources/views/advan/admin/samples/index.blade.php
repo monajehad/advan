@@ -145,8 +145,10 @@
                             <div class="col-md-3 my-2 my-md-0">
                                 <div class="d-flex align-items-center">
                                     <select id="user_search" class=" form-control search_select" name="user_search">
-                                        @foreach($users as $user)
+                                       <option value="" selected>المندوب </option>
 
+                                        @foreach($users as $user)
+                                        {{-- @if(isset($sample->category)&&isset($sample->category->id)) --}}
                                         <option  value="{{$user->id}}">{{$user->name}}</option>
                                         @endforeach
                                     </select>
@@ -154,15 +156,31 @@
                             </div>
                             <div class="col-md-3 my-2 my-md-0">
                                 <div class="d-flex align-items-center">
-                                    <!-- <select id="category_search" class=" form-control search_select" name="category_search">
-                                        @foreach($categories as $category)
+                                    <select id="category_search" class=" form-control search_select" name="category_search">
+                                        <option value="" selected>عائلة الصنف </option>
 
-                                        <option  value="{{$category->id}}">{{$category->name}}</option>
+                                        @foreach($samples as $sample)
+                                        @if(isset($sample->category)&&isset($sample->category->id))
+                                        <option  value="{{$sample->category->id}}">{{$sample->category->name}}</option>
+                                       @endif
                                         @endforeach
-                                    </select> -->
+                                    </select>
                                 </div>
                             </div>
+                            <div class="col-md-3 my-2 my-md-0">
+                                <div class="d-flex align-items-center">
+                                    <select id="date_search" class=" form-control search_select" name="date_search">
+                                        <option value="" selected>التاريخ  </option>
 
+                                        @foreach($samples as $sample)
+
+                                        <option  value="{{$sample->date}}">{{$sample->date}}</option>
+
+                                        @endforeach
+
+                                    </select>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
@@ -244,7 +262,7 @@ function load_data_table(page = '') {
     $.ajax({
         url: '{{url("admin/samples/")}}?page=' + page,
         data: {
-            user: $('#user_search').val(),category: $('#category_search').val()
+            user: $('#user_search').val(),category: $('#category_search').val(),date: $('#date_search').val()
         },
         type: "get",
         success: function(response) {

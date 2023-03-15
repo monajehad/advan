@@ -32,10 +32,21 @@ class HitsController extends Controller
         $hits=Hit::leftJoin('system_constants as category_constants', function($join) {
             $join->on('category_constants.value', '=', 'hits.category')->where('category_constants.type','category')->whereNull('category_constants.deleted_at');
         })
-        ->select('category_constants.name as category_name','hits.id','hits.date','hits.time','hits.note','hits.category','hits.client_id','hits.user_id','hits.status')
+        ->select('category_constants.name as category_name','hits.id','hits.address','hits.date','hits.time','hits.note','hits.category','hits.client_id','hits.user_id','hits.status')
         ->with(['client','user','samples']);
 
-
+        if($request->user){
+            $hits=$hits->where('hits.user_id',$request->user)
+            ;
+        }
+        if($request->address){
+            $hits=$hits->where('hits.client_id',$request->address)
+            ;
+        }
+        if($request->date){
+            $hits=$hits->where('hits.date',$request->date)
+            ;
+        }
         $hits=$hits->orderBy('id','desc')->paginate(self::PAGINATION_NO);
         if ($request->ajax()) {
             $table_data=view('advan.admin.hits.table-data',compact('hits'))->render();
@@ -205,8 +216,9 @@ class HitsController extends Controller
 
     public function update(UpdateHitRequest $request, Hit $hit)
     {
+        dd($request->all());
         $hit->update($request->all());
-        $hit->categories()->sync($request->input('categories', []));
+        // $hit->categories()->sync($request->input('categories', []));
         // $hit->doctors()->sync($request->input('doctors', []));
 
         return redirect()->route('admin.hits.index');

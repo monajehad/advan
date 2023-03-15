@@ -57,14 +57,9 @@ class UpdateHitRequest extends FormRequest
                 'integer',
             ],
             'categories' => [
-                'array',
+                // 'array',
             ],
-            'doctors.*' => [
-                'integer',
-            ],
-            'doctors' => [
-                'array',
-            ],
+
         ];
     }
 }

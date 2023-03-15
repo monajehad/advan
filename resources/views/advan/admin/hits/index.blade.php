@@ -58,6 +58,53 @@
         <!--begin::Body-->
 
         <div class="card-body py-0">
+
+
+            <div class="mb-7">
+                <div class="row align-items-center">
+                    <div class="col-lg-9 col-xl-8">
+                        <div class="row align-items-center">
+
+                            <div class="col-md-3 my-2 my-md-0">
+                                <div class="d-flex align-items-center">
+                                    <select id="user_search" class=" form-control search_select pl-0 pb-0 pt-0" name="user_search">
+                                   <option value="" selected>المندوب </option>
+
+                                        @foreach($users as $user)
+
+                                        <option  value="{{$user->id}}">{{$user->name}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-3 my-2 my-md-0">
+                                <div class="d-flex align-items-center">
+                                    <select id="address_search" class="pl-0 pb-0 pt-0 form-control search_select" name="address_search">
+                                   <option value="" selected>العنوان </option>
+
+                                        @foreach($clients as $client)
+
+                                        <option  value="{{$client->id}}">{{$client->address_1}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-3 my-2 my-md-0">
+                                <div class="d-flex align-items-center">
+                                    <select id="date_search" class="pl-0 pb-0 pt-0 form-control search_select" name="date_search">
+                                   <option value="" selected>التاريخ </option>
+
+                                        @foreach($hits as $hit)
+                                        <option value="{{$hit->date}}">{{$hit->date}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
             <!--begin::Table-->
             <div class="hit-table-body">
 
@@ -84,7 +131,7 @@ function load_data_table(page = '') {
         $.ajax({
             url: '{{url("admin/hits/")}}?page=' + page,
             data: {
-                search: $('#search_input').val()
+                user: $('#user_search').val(),address: $('#address_search').val(),date: $('#date_search').val()
             },
             type: "get",
             success: function(response) {
@@ -95,6 +142,12 @@ function load_data_table(page = '') {
 
         })
     }
+    $(function () {
+
+$('.search_select').on('change',function() {
+            load_data_table()
+        })
+})
 $(document).on('click','.delete-hit',function(){
             var id = $(this).data('hit-id');
             Swal.fire({

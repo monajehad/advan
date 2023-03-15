@@ -34,11 +34,15 @@ class SamplesController extends Controller
         ,'samples.user_id','samples.quantity_request', 'samples.stock_available_id','samples.date','samples.status')->with(['category','item','sample', 'user', 'stock_available']);
 
         if($request->user){
-            $samples=$samples->where('samples.user_id',$request->user);
+            $samples=$samples->where('samples.sample_id',$request->user);
             // ->orWhere('category_names','like','%'.$request->search.'%');
         }
         if($request->category){
             $samples=$samples->where('samples.category_id',$request->category);
+            // ->orWhere('category_names','like','%'.$request->search.'%');
+        }
+        if($request->date){
+            $samples=$samples->where('samples.date',$request->date);
             // ->orWhere('category_names','like','%'.$request->search.'%');
         }
         $samples=$samples->orderBy('id','desc')->paginate(self::PAGINATION_NO);
@@ -53,10 +57,10 @@ class SamplesController extends Controller
         $unit_select=SystemConstant::select('id','name','value','type')->where([['status',1],['type','unit']])->orderBy('order')->get();
         $data['unit_select']=$unit_select;
 
-        $categories = Category::get('name', 'id');
+        $categories = Category::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
         $sample_stocks = SampleStock::where('status', 1)->get()->pluck('name', 'id','status');
 
-        $users = User::get('name', 'id');
+        $users = User::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
         return view('advan.admin.samples.index', compact('sample_stocks','categories','data','users','samples'));
 
     }

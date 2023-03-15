@@ -114,7 +114,7 @@
  </table>
 </div>
 <div class="paging">
- {!! $data['clients']->links() !!}
+ {{-- {!! $data['clients']->links() !!} --}}
 </div>
 
 
