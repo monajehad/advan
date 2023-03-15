@@ -15,6 +15,7 @@
         <link href="{{ asset("assets/css/aside/light.css")}} " rel="stylesheet" type="text/css" />
             <!--end::Layout Themes-->
     <link href="{{asset('component_assets/css/app.min.css')}}" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css" />
 
     {{-- <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css" /> --}}
 

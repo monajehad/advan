@@ -134,12 +134,6 @@
                 <!--end::Dropdown-->
             </div>
         </div>
-        <select >
-            @foreach($users as $id => $entry)
-
-            <option id="kt_datatable_search_user" value="{{$id}}">{{$entry}}</option>
-            @endforeach
-        </select>
 
         <div class="card-body py-0">
 
@@ -148,21 +142,24 @@
                     <div class="col-lg-9 col-xl-8">
                         <div class="row align-items-center">
 
-                            <div class="col-md-4 my-2 my-md-0">
+                            <div class="col-md-3 my-2 my-md-0">
                                 <div class="d-flex align-items-center">
-                                    <form class="form">
-                                        <div class="form-group row">
-                                            <label class="col-form-label text-right col-lg-2 col-sm-12">البحث</label>
-                                          <div class="col-lg-9 pr-0 col-md-9 col-sm-12">
-                                            <input type="text" class="form-control form-control-sm" id="search_input" name="search_input"  placeholder="الاسم"/>
-                                          </div>
-                                        </div>
-                                    </form>
+                                    <select id="user_search" class=" form-control search_select" name="user_search">
+                                        @foreach($users as $user)
+
+                                        <option  value="{{$user->id}}">{{$user->name}}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
                             </div>
-                            <div class="col-md-4 my-2 my-md-0">
+                            <div class="col-md-3 my-2 my-md-0">
                                 <div class="d-flex align-items-center">
+                                    <select id="category_search" class=" form-control search_select" name="category_search">
+                                        @foreach($categories as $category)
 
+                                        <option  value="{{$category->id}}">{{$category->name}}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
                             </div>
 
@@ -240,11 +237,6 @@
 @section('script')
 @parent
 
-{{-- <script>
-       $('#kt_datatable_search_user').on('change', function() {
-            $('.samples-table-body').search($(this).val().toLowerCase(), 'user_id');
-        });
-</script> --}}
 
 <script>
 
@@ -252,7 +244,7 @@ function load_data_table(page = '') {
     $.ajax({
         url: '{{url("admin/samples/")}}?page=' + page,
         data: {
-            search: $('#search_input').val()
+            user: $('#user_search').val(),category: $('#category_search').val()
         },
         type: "get",
         success: function(response) {
@@ -266,9 +258,9 @@ function load_data_table(page = '') {
 
 $(function () {
 
-$('#search_input').keyup(function(){
-    load_data_table()
-})
+$('.search_select').on('change',function() {
+            load_data_table()
+        })
 })
 
 
