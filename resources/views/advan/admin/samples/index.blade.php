@@ -154,12 +154,12 @@
                             </div>
                             <div class="col-md-3 my-2 my-md-0">
                                 <div class="d-flex align-items-center">
-                                    <select id="category_search" class=" form-control search_select" name="category_search">
+                                    <!-- <select id="category_search" class=" form-control search_select" name="category_search">
                                         @foreach($categories as $category)
 
                                         <option  value="{{$category->id}}">{{$category->name}}</option>
                                         @endforeach
-                                    </select>
+                                    </select> -->
                                 </div>
                             </div>
 
