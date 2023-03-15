@@ -38,8 +38,8 @@ class ClientsController extends Controller
         })
         ->select('category_constants.name as category_name','area_1_constants.name as area_1_name','clients.id','clients.specialty_id','clients.category','clients.name','clients.item','clients.area_1','clients.status')
         ->with(['specialty','clientHits']);
-        if($request->select){
-            $clients=$clients->where('name','like','%'.$request->select.'%')
+        if($request->clientSelect){
+            $clients=$clients->where('clients.name',$request->clientSelect)
             ;
         }
         $clients=$clients->orderBy('id','desc')->paginate(self::PAGINATION_NO);

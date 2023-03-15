@@ -82,16 +82,45 @@
             </div>
 
         </div>
-        <select>
-            @foreach ($clients as $client )
-            <option value="">{{$client->name}}</option>
 
-            @endforeach
-        </select>
         <!--end::Header-->
         <!--begin::Body-->
 
         <div class="card-body py-0">
+            <div class="card-body py-0">
+
+                <div class="mb-7">
+                    <div class="row align-items-center">
+                        <div class="col-lg-9 col-xl-8">
+                            <div class="row align-items-center">
+
+                                <div class="col-md-3 my-2 my-md-0">
+                                    <div class="d-flex align-items-center">
+                                        <select id="client_search" class=" form-control search_select" name="client_search">
+                                            @foreach($clients as $client)
+
+                                            <option  value="{{$client->name}}">{{$client->name}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                                {{-- <div class="col-md-3 my-2 my-md-0">
+                                    <div class="d-flex align-items-center">
+                                        <select id="category_search" class=" form-control search_select" name="category_search">
+                                            @foreach($categories as $category)
+
+                                            <option  value="{{$category->id}}">{{$category->name}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div> --}}
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
             <!--begin::Table-->
             <div class="client-table-body">
 
@@ -122,7 +151,7 @@ function load_data_table(page = '') {
         $.ajax({
             url: '{{url("admin/clients/")}}?page=' + page,
             data: {
-                search: $('#search_input').val()
+                clientSelect: $('#client_search').val()
             },
             type: "get",
             success: function(response) {
@@ -133,6 +162,12 @@ function load_data_table(page = '') {
 
         })
     }
+    $(function () {
+
+$('.search_select').on('change',function() {
+            load_data_table()
+        })
+})
 $(document).on('click','.delete-client',function(){
             var id = $(this).data('client-id');
             Swal.fire({
