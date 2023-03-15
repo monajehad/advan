@@ -170,6 +170,7 @@ legend {
                 <div class="col-md-4 col-lg-4">
                     <div class="form-group">
                         <select class="form-control select2 search_select" name="client_search" id="client_search" multiple="multiple">
+                            
                         </select>
                     </div>
                 </div>
