@@ -110,7 +110,7 @@
                         <!--begin::Body-->
                         <div class="card-body">
                             @if(count($chats)==0)
-                            <p>There is no chat yet.</p>
+                            <p>لاتوجد رسائل حتى اللحظة, سيتم عرض الرسائل المستقبلة والمرسلة هنا, قم بالتواصل مع الأشخاص الآخرين في الشركة</p>
                            @endif
 
                             <!--begin::Scroll-->
@@ -176,7 +176,7 @@
                                 <div>
                                     <form action="" method="POST">
                                         @csrf
-                                    <button type="submit" class="btn btn-primary btn-md text-uppercase font-weight-bold chat-send py-2 px-6">Send</button>
+                                    <button type="submit" class="btn btn-primary btn-md text-uppercase font-weight-bold chat-send py-2 px-6">إرسال</button>
                                 </div>
                             </div>
                             <!--begin::Compose-->
@@ -288,11 +288,11 @@
     <form action="" method="POST">
         @csrf
         <div class="form-group">
-            <label>Message</label>
+            <label>الرسالة</label>
             <input type="text" name="message" class="form-control">
         </div>
         <div class="form-group">
-            <button type="submit" class="btn btn-primary">SEND MESSAGE</button>
+            <button type="submit" class="btn btn-primary">إرسال</button>
         </div>
     </form>
 </div>
