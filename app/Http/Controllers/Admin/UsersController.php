@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 namespace App\Http\Controllers\Admin;
 
+use Illuminate\Support\Str;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Traits\MediaUploadingTrait;
 use App\Http\Requests\MassDestroyUserRequest;
@@ -70,6 +71,7 @@ class UsersController extends Controller
         $user = User::create($request->all());
         // $user->roles()->sync($request->input('roles', []));
         $user->user_type = $request->input('roles');
+        $user->fcm_token = Str::random(60);
         $user->save();
         // $user->save();
 

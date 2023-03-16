@@ -98,5 +98,5 @@ Route::group(['prefix' => 'api', 'as' => 'api.'], function () {
 });
 
 
-Route::post('/save-token', [FCMController::class,'index']);
+// Route::post('/save-token', [FCMController::class,'index']);
 Route::post('/notification/save-token', [NotificationController::class,'index'])->name('notification.save-token');

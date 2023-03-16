@@ -30,7 +30,7 @@
 
                  الرسائل
 
-            </h2> 
+            </h2>
 
         </div>
         <!--end::Header-->
@@ -65,7 +65,7 @@
                             </div>
                             <!--end:Search-->
                             <!--begin:Users-->
-                            <div class="mt-7 scroll scroll-pull ps ps--active-y" style="height: auto; overflow: hidden;">
+                            <div class="mt-7 users scroll scroll-pull ps ps--active-y" style="height: auto; overflow: hidden;">
                             @foreach ( $users as $user)
                                 <!--begin:User-->
                                 <div class="d-flex align-items-center justify-content-between mb-5">
@@ -137,7 +137,7 @@
                                     <!--end::Message In-->
                                     <!--begin::Message Out-->
                                     @else
-                                    <div class="d-flex flex-column mb-5 align-items-end">
+                                    <div class="d-flex flex-column mb-5 ">
                                         <div class="d-flex align-items-center">
                                             <div>
                                                 <span class="text-muted font-size-sm">3 minutes</span>
@@ -162,8 +162,11 @@
                         <!--end::Body-->
                         <!--begin::Footer-->
                         <div class="card-footer align-items-center">
-                            <!--begin::Compose-->
-                            <textarea class="form-control border-0 p-2" rows="2" placeholder="الرسالة"></textarea>
+
+                     <form action="" method="POST">
+                                        @csrf
+                                         <!--begin::Compose-->
+                            <textarea class="form-control border-0 p-2" rows="2" name="message" placeholder="الرسالة"></textarea>
                             <div class="d-flex align-items-center justify-content-between mt-5">
                                 <div class="mr-3">
                                     <a href="#" class="btn btn-clean btn-icon btn-md mr-1">
@@ -174,8 +177,6 @@
                                     </a>
                                 </div>
                                 <div>
-                                    <form action="" method="POST">
-                                        @csrf
                                     <button type="submit" class="btn btn-primary btn-md text-uppercase font-weight-bold chat-send py-2 px-6">إرسال</button>
                                 </div>
                             </div>
@@ -353,7 +354,7 @@
             const user_id = '{{auth()->user()->id}}';
         //    console.log('token retrieved',fcm_token);
 
-        axios.post('/api/save-token', {
+        axios.post('/message', {
             fcm_token,user_id
          }).then(res=>{
         console.log(res);

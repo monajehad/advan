@@ -53,14 +53,15 @@ class SamplesController extends Controller
     }
 
         // $sample_stocks = SampleStock::where('status' , 1)->get();
-        // $users         = User::where('status' , 1)->get();
+        $users         = User::get('id','name');
+        // dd($users);
         $unit_select=SystemConstant::select('id','name','value','type')->where([['status',1],['type','unit']])->orderBy('order')->get();
         $data['unit_select']=$unit_select;
 
         $categories = Category::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
         $sample_stocks = SampleStock::where('status', 1)->get()->pluck('name', 'id','status');
 
-        $users = User::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        // $users = User::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
         return view('advan.admin.samples.index', compact('sample_stocks','categories','data','users','samples'));
 
     }

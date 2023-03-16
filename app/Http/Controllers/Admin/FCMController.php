@@ -15,8 +15,8 @@ class FCMController extends Controller
 {
     //
       //
-      public function index(Request $req){
-        $input = $req->all();
+      public function index(Request $res){
+        $input = $res->all();
         $fcm_token = $input['fcm_token'];
         $user_id = $input['user_id'];
 
@@ -25,25 +25,26 @@ class FCMController extends Controller
         $user->fcm_token = $fcm_token;
         $user->save();
 
-        return response()->json([
-            'success'=>true,
-            'message'=>'User token updated successfully.'
-       ]);
+    //     return response()->json([
+    //         'success'=>true,
+    //         'message'=>'User token updated successfully.'
+    //    ]);
+       return view('advan.admin.fcm.index');
      }
-     public function get(Request $req){
-        $chats=Chat::all();
-        $users=User::all();
-        $userName=User::all();
-        if($req->search){
-            $userName=$userName->where('name','like','%'.$req->search.'%');
-        }
-       return view('advan.admin.fcm.index',[
-        'chats' =>$chats,
-        'users'=>$users,
-        'userName'=>$userName,
+    //  public function get(Request $req){
+    //     $chats=Chat::all();
+    //     $users=User::all();
+    //     $userName=User::all();
+    //     if($req->search){
+    //         $userName=$userName->where('name','like','%'.$req->search.'%');
+    //     }
+    //    return view('advan.admin.fcm.index',[
+    //     'chats' =>$chats,
+    //     'users'=>$users,
+    //     'userName'=>$userName,
 
-       ]);
-     }
+    //    ]);
+    //  }
 
 
      public function createChat(Request $request)
@@ -55,7 +56,9 @@ class FCMController extends Controller
         'sender_name' => auth()->user()->name,
         'message' => $message
       ]);
-      $this->broadcastMessage(auth()->user()->name,$message);
+      $users=User::all();
+
+      $this->broadcastMessage(auth()->user()->name,$message,$users);
       $chat->save();
       return redirect()->back();
 }
@@ -68,12 +71,12 @@ private function broadcastMessage($senderName, $message)
     $notificationBuilder = new PayloadNotificationBuilder('New message from : ' . $senderName);
     $notificationBuilder->setBody($message)
         ->setSound('default')
-        ->setClickAction('http://localhost:8000/massage');
+        ->setClickAction('http://localhost:8000/message');
 
     $dataBuilder = new PayloadDataBuilder();
     $dataBuilder->addData([
         'sender_name' => $senderName,
-        'mesage' => $message
+        'message' => $message
     ]);
 
     $option = $optionBuilder->build();

@@ -142,14 +142,28 @@
                     <div class="col-lg-9 col-xl-8">
                         <div class="row align-items-center">
 
-                            <div class="col-md-3 my-2 my-md-0">
+                            {{-- <div class="col-md-3 my-2 my-md-0">
                                 <div class="d-flex align-items-center">
                                     <select id="user_search" class=" form-control search_select" name="user_search">
                                        <option value="" selected>المندوب </option>
 
-                                        @foreach($users as $user)
-                                        {{-- @if(isset($sample->category)&&isset($sample->category->id)) --}}
-                                        <option  value="{{$user->id}}">{{$user->name}}</option>
+                                        @foreach($users as $user) --}}
+                                        {{-- @if(is_object($user)&&property_exists($user,'id') &&property_exists($user,'name')) --}}
+                                        {{-- <option  value="{{$user->id ?? 'No user'}}">{{$user->name ?? 'No user' }}</option> --}}
+                                       {{-- @endif --}}
+                                        {{-- @endforeach
+                                    </select>
+                                </div>
+                            </div> --}}
+                            <div class="col-md-3 my-2 my-md-0">
+                                <div class="d-flex align-items-center">
+                                    <select id="user_search" class=" form-control search_select" name="user_search">
+                                        <option value="" selected>المندوب  </option>
+
+                                        @foreach($samples as $sample)
+                                        @if(isset($sample->user)&&isset($sample->user->id))
+                                        <option  value="{{$sample->user->id}}">{{$sample->user->name}}</option>
+                                       @endif
                                         @endforeach
                                     </select>
                                 </div>

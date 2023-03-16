@@ -1,10 +1,10 @@
 @extends('layouts.cpanel.app')
 @section('content')
 
-    <div class="card">
+    {{-- <div class="card"> --}}
         <div class="card w-50 mr-10">
             <div class="card-header  d-flex justify-content-between ">
-                <div class="py-5 h3">تعديل الزيارات </div>
+                <div class="py-5 h3">تعديل العميل </div>
                 <div class="form-group text-left  mb-0 py-3">
                     <a href="{{route("admin.clients.index")}}" class="btn btn-primary " type="submit">
                         الرجوع

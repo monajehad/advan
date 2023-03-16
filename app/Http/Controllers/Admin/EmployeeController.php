@@ -48,7 +48,7 @@ class EmployeeController extends Controller
             return response()->json(['status' => false , 'error' => 'اسم المستخدم يجب أن يحتوي على حروف انجليزية و يمكن إضافة أرقام']);
         }
 
-        $request->status= (isset($request->status))? 1: 0;
+        // $request->status= (isset($request->status))? 1: 0;
         // $request->tender_alert= (isset($request->tender_alert))? 1: 0;
 
         $password=Hash::make($request->password);
@@ -64,7 +64,7 @@ class EmployeeController extends Controller
             'username'=>$request->username,
             'email'=>$request->email,
             'mobile'=>$request->mobile,
-            'status'=>$request->status,
+            // 'status'=>$request->status,
 
             'password'=>$request->password,
 
