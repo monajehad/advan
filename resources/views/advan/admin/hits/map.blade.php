@@ -15,12 +15,15 @@
         .datepicker.dropdown-menu {
             right:auto
         }
+        .background-white{
+            background-color:#ffffff !important;
+        }
     </style>
     <div class="card">
-        <div class="card-header">
+        <div class="card-header background-white">
             {{ trans('global.show') }} {{ trans('cruds.hit.title') }}
 
-            <form method="get">
+            <form method="get" style="width: 70vw;">
                 <div class="row">
                     <div class="col-12 form-group">
                         <label class="control-label" for="m">المندوب</label>
@@ -58,7 +61,7 @@
             <div class="form-group">
                 <div class="form-group">
                     <a class="btn btn-default" href="{{ route('admin.hits.index') }}">
-                        {{ trans('global.back_to_list') }}
+                        العودة للقائمة
                     </a>
                 </div>
                 <div style="background-color: #f8d576;height: 42px;">
@@ -68,7 +71,7 @@
                 <div id="map_canvas" style="width:100%; height:450px; border: 2px solid #3872ac;"></div>
                 <div class="form-group">
                     <a class="btn btn-default" href="{{ route('admin.hits.index') }}">
-                        {{ trans('global.back_to_list') }}
+                        العودة للقائمة
                     </a>
                 </div>
             </div>
@@ -118,8 +121,8 @@
 
             map = new google.maps.Map(
                 document.getElementById("map_canvas"), {
-                    center: new google.maps.LatLng(31.5016934,34.4489271),
-                    zoom: 2,
+                    center: new google.maps.LatLng(31.4582807,34.327475),
+                    zoom: 10,
                     mapTypeId: google.maps.MapTypeId.ROADMAP
                 });
             geocoder = new google.maps.Geocoder();

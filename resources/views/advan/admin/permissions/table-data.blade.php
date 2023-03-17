@@ -3,7 +3,7 @@
 class="table-responsive datatable datatable-bordered datatable-head-custom datatable-default table-striped table-hover    datatable-primary datatable-loaded">
 <table class="table table-bordered " id="kt-table">
     <thead class="datatable-head">
-        <tr class="text-center">
+        <tr class="text-center fw-bold fs-6 text-gray-800">
             <th>#</th>
             <th>اسم الصلاحية</th>
 

@@ -1,7 +1,7 @@
 <div class="col-md-12 col-lg-12 col-sm-12 scrollable-table">
     <table class="table table-bordered items-pricing-table text-center">
         <thead>
-            <tr>
+            <tr class="text-center fw-bold fs-6 text-gray-800">
                 
                 <th>#</th>
                 <th>اسم الصنف</th>

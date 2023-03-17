@@ -27,10 +27,14 @@
     <div class="card card-custom gutter-b">
         <!--begin::Header-->
         <div class="card-header border-1 py-4 mx-5 mb-4">
-            <h2 class="card-title align-items-start flex-column">
+            <div class="card-header bg-white">
 
-                  انواع التقارير
-            </h2>
+        <div class="title title-color purple">
+            <h3 class="pr-6">
+                أنواع التقارير
+            </h3>
+        </div>
+    </div>
             <div class="card-toolbar">
                 {{-- @can('report-types-add') --}}
                 <a id="add_button" data-toggle="modal" data-target="#add_button" class="btn btn-primary font-size-sm ml-3"  >

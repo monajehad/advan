@@ -27,10 +27,14 @@
     <div class="card card-custom gutter-b">
         <!--begin::Header-->
         <div class="card-header border-1 py-4 mx-5 mb-4">
-            <h2 class="card-title align-items-start flex-column">
+            <div class="card-header bg-white">
 
-                  الاشعارات
-            </h2>
+        <div class="title title-color orange">
+            <h3 class="pr-6">
+                الإشعارات
+            </h3>
+        </div>
+    </div>
             <div class="card-toolbar">
                 {{-- @can('hits-add') --}}
                 <button data-toggle="modal" data-target="#add_button" class="btn btn-primary font-size-sm ml-3" >

@@ -8,11 +8,14 @@
     <div class="card card-custom gutter-b">
         <!--begin::Header-->
         <div class="card-header border-1 py-4">
-            <h3 class="card-title align-items-start flex-column">
-                <span class="card-label font-weight-bolder text-dark">
-               المسجات
-                </span>
+            <div class="card-header bg-white">
+
+        <div class="title title-color purple">
+            <h3 class="pr-6">
+                الرسائل النصية
             </h3>
+        </div>
+    </div>
             <div class="card-toolbar">
      {{-- @can('sms_message_create') --}}
    <div style="margin-bottom: 10px;" class="row">

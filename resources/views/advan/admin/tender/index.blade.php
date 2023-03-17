@@ -5,9 +5,32 @@
 @endsection
 @section('style')
 <style>
-
-
-    /* Form styles */
+    .form-control {
+    display: block;
+    width: 100%;
+    height: 44px;
+    padding: 12px 12px !important; 
+    font-size: 0.9375rem;
+    font-weight: 600;
+    line-height: 1.6;
+    color: inherit;
+    background-color: #F4F4F4;
+    background-clip: padding-box;
+    border: 0 solid #ced4da;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    border-radius: 12px;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+.select2-container--default .select2-selection--multiple .select2-selection__rendered {
+    color: #3F4254;
+    padding: 0.37rem 1rem;
+    line-height: 1.5;
+    background-color: #f4f4f4 !important;
+    border-radius: 8px !important;
+}
+/* Form styles */
 #tender_form {
 	width: 100%;
 	position: relative;
@@ -143,14 +166,25 @@ legend {
     <div class="card card-custom gutter-b">
         <!--begin::Header-->
         <div class="card-header border-1 py-4">
-            <h3 class="card-title align-items-start flex-column">
-                <span class="card-label font-weight-bolder text-dark">
-                المناقصات
-                </span>
+            <div class="card-header bg-white">
+
+        <div class="title title-color green">
+            <h3 class="pr-6">
+                إدارة المناقصات
             </h3>
+        </div>
+    </div>
             <div class="card-toolbar">
                 {{-- @can('tenders-add') --}}
-                    <button  class="btn btn-danger font-size-sm" id="add-button"> <i class="fa fa-plus font-weight-bolder"></i> إضافة مناقصة</button>
+                    <button  class="btn btn-primary font-size-sm" id="add-button"> 
+                    <span class="svg-icon svg-icon-light svg-icon-2x"><!--begin::Svg Icon | path:C:\wamp64\www\keenthemes\legacy\metronic\theme\html\demo1\dist/../src/media/svg/icons\Code\Plus.svg--><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <rect x="0" y="0" width="24" height="24"/>
+        <circle fill="#000000" opacity="0.3" cx="12" cy="12" r="10"/>
+        <path d="M11,11 L11,7 C11,6.44771525 11.4477153,6 12,6 C12.5522847,6 13,6.44771525 13,7 L13,11 L17,11 C17.5522847,11 18,11.4477153 18,12 C18,12.5522847 17.5522847,13 17,13 L13,13 L13,17 C13,17.5522847 12.5522847,18 12,18 C11.4477153,18 11,17.5522847 11,17 L11,13 L7,13 C6.44771525,13 6,12.5522847 6,12 C6,11.4477153 6.44771525,11 7,11 L11,11 Z" fill="#000000"/>
+    </g>
+</svg><!--end::Svg Icon--></span>    
+                    إضافة مناقصة</button>
                 {{-- @endcan --}}
             </div>
         </div>
@@ -158,23 +192,24 @@ legend {
         <!--begin::Body-->
 
         <div class="card-body py-0">
-            <div class="row my-4 border p-4">
+
+            <div class="row my-2 border p-2">
                 <div class="col-md-12 col-lg-12 mb-3 mt-1">
                     <h4 class="font-weight-bolder">البحث</h4>
                 </div>
-                <div class="col-md-4 col-lg-4">
+                <div class="col-md-3 col-lg-3">
                     <div class="form-group">
                         <input type="text" class="form-control form-control-sm search_input" id="tender_no_search" name="tender_no_search" placeholder="رقم المناقصة"/>
                     </div>
                 </div>
-                <div class="col-md-4 col-lg-4">
+                <div class="col-md-3 col-lg-3">
                     <div class="form-group">
-                        <select class="form-control select2 search_select" name="client_search" id="client_search" multiple="multiple">
+                        <select class="form-control form-control-sm select2 search_select" name="client_search" id="client_search" multiple="multiple">
                             
                         </select>
                     </div>
                 </div>
-                <div class="col-md-4 col-lg-4">
+                <div class="col-md-2 col-lg-2">
                     <div class="form-group">
                         <select class="form-control search_select" name="branch_search" id="branch_search">
                             <option value="" selected>اختر فرع الشركة</option>
@@ -184,7 +219,7 @@ legend {
                         </select>
                     </div>
                 </div>
-                <div class="col-md-4 col-lg-4">
+                <div class="col-md-2 col-lg-2">
                     <div class="form-group">
                         <select class="form-control search_select" name="guarantee_type_search" id="guarantee_type_search">
                             <option value="" selected>اختر نوع الكفالة</option>
@@ -194,7 +229,7 @@ legend {
                         </select>
                     </div>
                 </div>
-                <div class="col-md-4 col-lg-4">
+                <div class="col-md-2 col-lg-2">
                     <div class="form-group">
                         <select class="form-control search_select" name="tax_search" id="tax_search">
                             <option value="" selected>اختر الضريبة</option>
@@ -204,7 +239,8 @@ legend {
                         </select>
                     </div>
                 </div>
-                <div class="col-md-4 col-lg-4">
+                <!--
+                    <div class="col-md-4 col-lg-4">
                     <div class="input-group">
 						<div class="input-group-prepend">
 							<span class="input-group-text">من</span>
@@ -228,11 +264,11 @@ legend {
                         <input type="text" class="form-control datepicker search_date" name="created_date_to_search" id="created_date_to_search" readonly="readonly" placeholder="اختر تاريخ إنشاء المناقصة">
 					</div>
                 </div>
-
+            -->
 
             </div>
                     <div class="row pb-4">
-                        <div class="col-md-4 col-lg-4">
+                        <div class="col-md-3 col-lg-3">
                             <div class="form-group">
                             <select class="form-control" name="order_type" id="order_type">
                                 <option value="" selected>اختر طريقة ترتيب المناقصات</option>
@@ -242,7 +278,7 @@ legend {
                             </select>
                             </div>
                         </div>
-                        <div class="col-md-2 col-lg-2">
+                        <div class="col-md-3 col-lg-3">
                             <div class="form-group">
                             <select class="form-control" name="order" id="order">
                                 <option value="" selected>اختر نوع الترتيب</option>
@@ -252,9 +288,20 @@ legend {
                             </select>
                             </div>
                         </div>
-                        <div class="col-md-2 col-lg-2">
+                        <div class="col-md-3 col-lg-3">
                             <button id="order_tender_btn" class="btn btn-primary">
-                                <span class="font-weight-bolder">ترتيب</span>
+                                <span class="font-weight-bolder">
+                                    <span class="svg-icon svg-icon-light svg-icon-2x">
+                                        <!--begin::Svg Icon | path:C:\wamp64\www\keenthemes\legacy\metronic\theme\html\demo1\dist/../src/media/svg/icons\Shopping\Sort1.svg-->
+                                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                            <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                                <rect x="0" y="0" width="24" height="24"/>
+                                                <rect fill="#000000" x="4" y="5" width="16" height="3" rx="1.5"/>
+                                                <path d="M7.5,11 L16.5,11 C17.3284271,11 18,11.6715729 18,12.5 C18,13.3284271 17.3284271,14 16.5,14 L7.5,14 C6.67157288,14 6,13.3284271 6,12.5 C6,11.6715729 6.67157288,11 7.5,11 Z M10.5,17 L13.5,17 C14.3284271,17 15,17.6715729 15,18.5 C15,19.3284271 14.3284271,20 13.5,20 L10.5,20 C9.67157288,20 9,19.3284271 9,18.5 C9,17.6715729 9.67157288,17 10.5,17 Z" fill="#000000" opacity="0.3"/>
+                                            </g>
+                                        </svg><!--end::Svg Icon-->
+                                    </span>
+                                </span>
                             </button>
                         </div>
                     </div>
@@ -262,7 +309,23 @@ legend {
                         <div class="row pb-4">
                             <div class="col-md-2 col-lg-2">
                                 <button id="order_delet_btn" class="btn btn-danger">
-                                    <span class="font-weight-bolder"> حذف المحدد </span>
+                                    <span class="font-weight-bolder"> 
+                                        <span class="svg-icon svg-icon-light svg-icon-md">
+                                            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                            <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                                <rect x="0" y="0" width="24" height="24"></rect>
+                                                <path
+                                                    d="M6,8 L6,20.5 C6,21.3284271 6.67157288,22 7.5,22 L16.5,22 C17.3284271,22 18,21.3284271 18,20.5 L18,8 L6,8 Z"
+                                                    fill="#000000" fill-rule="nonzero"></path>
+                                                <path
+                                                    d="M14,4.5 L14,4 C14,3.44771525 13.5522847,3 13,3 L11,3 C10.4477153,3 10,3.44771525 10,4 L10,4.5 L5.5,4.5 C5.22385763,4.5 5,4.72385763 5,5 L5,5.5 C5,5.77614237 5.22385763,6 5.5,6 L18.5,6 C18.7761424,6 19,5.77614237 19,5.5 L19,5 C19,4.72385763 18.7761424,4.5 18.5,4.5 L14,4.5 Z"
+                                                    fill="#000000" opacity="0.3"></path>
+                                            </g>
+                                        </svg>
+                                        </span>
+                                         حذف المحدد
+                                        
+                                        </span>
                                 </button>
                             </div>
                         </div>
@@ -395,7 +458,7 @@ legend {
             ajax: {
             url:"{{route('admin.tenders.clients')}}",
             dataType: 'json',
-            delay: 250,
+            delay: 50,
             processResults: function (data) {
                 return {
                     results: $.map(data, function (item) {
@@ -429,7 +492,7 @@ legend {
             ajax: {
             url:"{{route('admin.tenders.clients')}}",
             dataType: 'json',
-            delay: 250,
+            delay: 50,
             processResults: function (data) {
                 return {
                     results: $.map(data, function (item) {

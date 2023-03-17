@@ -1,11 +1,23 @@
 
 <style>
+    .modal {
+    position: fixed;
+    top: 0;
+    left: -122px;
+    z-index: 1055;
+    display: none;
+    width: 100%;
+    height: 100vh;
+    overflow-x: hidden;
+    overflow-y: auto;
+    outline: 0;
+}
     .modal-content {
     position: relative;
     display: flex;
     flex-direction: column;
     width: 480px !important;
-
+    height: 100vh;
     top: -20px;
     pointer-events: auto;
     background-color: #fafafa;
@@ -22,19 +34,6 @@
     border-radius: 0.42rem;
     background-repeat: no-repeat;
     background-size: cover;
-}
-
-.modal {
-    position: fixed;
-    top: 0;
-    left: -122px;
-    z-index: 1055;
-    display: none;
-    width: 100%;
-    height: 100%;
-    overflow-x: hidden;
-    overflow-y: auto;
-    outline: 0;
 }
 </style>
 

@@ -26,10 +26,14 @@
     <div class="card card-custom gutter-b">
         <!--begin::Header-->
         <div class="card-header border-1 py-4 mx-5 mb-4">
-            <h2 class="card-title align-items-start flex-column">
+            <div class="card-header bg-white">
 
-                جدول الزيارات
-            </h2>
+        <div class="title title-color green">
+            <h3 class="pr-6">
+                إدارة الزيارات
+            </h3>
+        </div>
+    </div>
             <div class="card-toolbar">
                 {{-- @can('hits-add') --}}
                 {{-- <a id="add_button" class="btn btn-primary font-size-sm ml-3" href="{{ route('admin.hits.create') }}">

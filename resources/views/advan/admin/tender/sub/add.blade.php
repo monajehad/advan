@@ -1,28 +1,36 @@
 <style>
-.modal {
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 1055;
-    display: none;
-    width: 100vw;
-    height: 90vh;
-    overflow-x: hidden;
-    overflow-y: auto;
-    outline: 0;
-}
-
 .modal-content {
     position: relative;
     display: flex;
     flex-direction: column;
-    width: 100%;
+    width: 90vw !important;
+    height: 90vh !important;
+    top: 3%;
+    /* right: 3%; */
+    left: 5%;
     pointer-events: auto;
-    background-color: white;
+    background-color: #ffffff !important;
     background-clip: padding-box;
     border: 1px solid rgba(0, 0, 0, 0.2);
-    border-radius: 8px;
+    border-radius: 12px !important;
     outline: 0;
+}
+.select2-dropdown {
+    background-color: white;
+    border: 1px solid #aaa;
+    border-radius: 4px;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    display: block;
+    position: absolute;
+    left: -100000px;
+    width: 100%;
+    z-index: 999999999;
+}
+.select2-results {
+    display: block;
+    position: relative;
+    z-index: 5000;
 }
 .buttons{
     text-align:center;
@@ -83,12 +91,18 @@ legend {
 
 <div class="modal fade" id="add-tender" data-backdrop="static" tabindex="-1" role="dialog"
     aria-labelledby="staticBackdrop" aria-hidden="true">
-    <div class="modal-dialog modal-xl" role="document">
-        <div class="modal-content">
+    <div class="modal-dialog modal-xxl" role="document">
+        <div class="modal-content" style="width:80vw;">
             <div class="modal-header">
                 <h5 class="modal-title">إضافة مناقصة</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <i aria-hidden="true" class="fa fa-close"></i>
+                    <span class="svg-icon svg-icon-light svg-icon-md"><!--begin::Svg Icon | path:C:\wamp64\www\keenthemes\legacy\metronic\theme\html\demo1\dist/../src/media/svg/icons\Code\Plus.svg--><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <rect x="0" y="0" width="24" height="24"/>
+        <circle fill="#000000" opacity="0.3" cx="12" cy="12" r="10"/>
+        <path d="M11,11 L11,7 C11,6.44771525 11.4477153,6 12,6 C12.5522847,6 13,6.44771525 13,7 L13,11 L17,11 C17.5522847,11 18,11.4477153 18,12 C18,12.5522847 17.5522847,13 17,13 L13,13 L13,17 C13,17.5522847 12.5522847,18 12,18 C11.4477153,18 11,17.5522847 11,17 L11,13 L7,13 C6.44771525,13 6,12.5522847 6,12 C6,11.4477153 6.44771525,11 7,11 L11,11 Z" fill="#000000"/>
+    </g>
+</svg><!--end::Svg Icon--></span>
                 </button>
             </div>
             <!-- <form class="form" action="" id="tender-form"> -->
@@ -357,7 +371,7 @@ legend {
                                 </div>
                                 <div class="form-group row mx-6">
 
-                                    <div class="col-md-4 col-lg-4">
+                                    <div class="col-md-6 col-lg-6">
                                         <label class="font-weight-bolder">ملف المناقصة معبأة بالأسعار</label>
                                         <div class="input-group">
                                             <input type="file" name="tender_file" id="tender_file"
@@ -366,7 +380,7 @@ legend {
                                         </div>
                                     </div>
 
-                                    <div class="col-md-4 col-lg-4">
+                                    <div class="col-md-6 col-lg-6">
                                         <label class="font-weight-bolder">ملف الاحالة / الترسية </label>
                                         <div class="input-group">
                                             <input type="file" name="referral_file" id="referral_file"
@@ -384,13 +398,12 @@ legend {
                                             <option value="2">تم الترسية </option>
                                         </select>
                                     </div>
-                                </div>
-                                <div class="form-group row mx-6">
+
+                                    <div class="form-group row mx-6">
                                     <div class="col-md-4 col-lg-4">
                                         <label class="font-weight-bolder"> مستخدمين المناقصة</label>
-                                        <select class="form-control select2" name="users[]" id="users"
-                                            multiple="multiple">
-                                            <option value="" disabled>اختر المستخدمين</option>
+                                        <select class="form-control select2" name="users[]" id="users" multiple="multiple" style="width:240px">
+                                            <option value="" enabled>اختر المستخدمين</option>
                                             @foreach($data['users'] as $user)
                                             <option value="{{$user->id}}">{{$user->name}}</option>
                                             @endforeach
@@ -398,6 +411,8 @@ legend {
                                     </div>
 
                                 </div>
+                                </div>
+                                
                                 <div class="form-group row mx-6">
                                     <div class="col-md-12 col-lg-12 buttons">
                                         <button type="button" id="save_data" name="save_data"
@@ -415,8 +430,14 @@ legend {
                                 <div class="row my-3">
                                     <div class="col-md-2 col-lg-2 col-sm-2 text-right p-0">
                                         <!-- <button type="button" id="add_item" name="add_item" class="btn btn-success btn-sm">إضافة  <i class="fa fa-plus"></i></button> -->
-                                        <button type="button" id="add_item" name="add_item" class="btn btn-success">
-                                            <i class="fa fa-plus font13"></i>إضافة
+                                        <button type="button" id="add_item" name="add_item" class="btn btn-light">
+                                            <span class="svg-icon svg-icon-primary svg-icon-2x"><!--begin::Svg Icon | path:C:\wamp64\www\keenthemes\legacy\metronic\theme\html\demo1\dist/../src/media/svg/icons\Code\Plus.svg--><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <rect x="0" y="0" width="24" height="24"/>
+        <circle fill="#000000" opacity="0.3" cx="12" cy="12" r="10"/>
+        <path d="M11,11 L11,7 C11,6.44771525 11.4477153,6 12,6 C12.5522847,6 13,6.44771525 13,7 L13,11 L17,11 C17.5522847,11 18,11.4477153 18,12 C18,12.5522847 17.5522847,13 17,13 L13,13 L13,17 C13,17.5522847 12.5522847,18 12,18 C11.4477153,18 11,17.5522847 11,17 L11,13 L7,13 C6.44771525,13 6,12.5522847 6,12 C6,11.4477153 6.44771525,11 7,11 L11,11 Z" fill="#000000"/>
+    </g>
+</svg><!--end::Svg Icon--></span>
                                         </button>
                                     </div>
                                     <div class="col-md-4 col-lg-4 col-sm-10">
@@ -475,7 +496,13 @@ legend {
                                         <!-- <button type="button" id="add_item" name="add_item" class="btn btn-success btn-sm">إضافة  <i class="fa fa-plus"></i></button> -->
                                         <button type="button" id="add_tender_item" name="add_tender_item"
                                             class="btn btn-success">
-                                            <i class="fa fa-plus font13"></i>إضافة
+                                            <span class="svg-icon svg-icon-primary svg-icon-2x"><!--begin::Svg Icon | path:C:\wamp64\www\keenthemes\legacy\metronic\theme\html\demo1\dist/../src/media/svg/icons\Code\Plus.svg--><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <rect x="0" y="0" width="24" height="24"/>
+        <circle fill="#000000" opacity="0.3" cx="12" cy="12" r="10"/>
+        <path d="M11,11 L11,7 C11,6.44771525 11.4477153,6 12,6 C12.5522847,6 13,6.44771525 13,7 L13,11 L17,11 C17.5522847,11 18,11.4477153 18,12 C18,12.5522847 17.5522847,13 17,13 L13,13 L13,17 C13,17.5522847 12.5522847,18 12,18 C11.4477153,18 11,17.5522847 11,17 L11,13 L7,13 C6.44771525,13 6,12.5522847 6,12 C6,11.4477153 6.44771525,11 7,11 L11,11 Z" fill="#000000"/>
+    </g>
+</svg><!--end::Svg Icon--></span>
                                         </button>
                                     </div>
                                     <div class="col-md-6 col-lg-6 col-sm-5">
@@ -494,7 +521,13 @@ legend {
                                                 class="form-control" placeholder="رفع ملف عروض الاسعار">
                                             <div class="input-group-append">
                                                 <span class="input-group-text tender_suppliers_prices">
-                                                    <i class="fa fa-upload"></i>
+                                                    <span class="svg-icon svg-icon-primary svg-icon-2x"><!--begin::Svg Icon | path:C:\wamp64\www\keenthemes\legacy\metronic\theme\html\demo1\dist/../src/media/svg/icons\Files\Uploaded-file.svg--><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <polygon points="0 0 24 0 24 24 0 24"/>
+        <path d="M5.85714286,2 L13.7364114,2 C14.0910962,2 14.4343066,2.12568431 14.7051108,2.35473959 L19.4686994,6.3839416 C19.8056532,6.66894833 20,7.08787823 20,7.52920201 L20,20.0833333 C20,21.8738751 19.9795521,22 18.1428571,22 L5.85714286,22 C4.02044787,22 4,21.8738751 4,20.0833333 L4,3.91666667 C4,2.12612489 4.02044787,2 5.85714286,2 Z" fill="#000000" fill-rule="nonzero" opacity="0.3"/>
+        <path d="M8.95128003,13.8153448 L10.9077535,13.8153448 L10.9077535,15.8230161 C10.9077535,16.0991584 11.1316112,16.3230161 11.4077535,16.3230161 L12.4310522,16.3230161 C12.7071946,16.3230161 12.9310522,16.0991584 12.9310522,15.8230161 L12.9310522,13.8153448 L14.8875257,13.8153448 C15.1636681,13.8153448 15.3875257,13.5914871 15.3875257,13.3153448 C15.3875257,13.1970331 15.345572,13.0825545 15.2691225,12.9922598 L12.3009997,9.48659872 C12.1225648,9.27584861 11.8070681,9.24965194 11.596318,9.42808682 C11.5752308,9.44594059 11.5556598,9.46551156 11.5378061,9.48659872 L8.56968321,12.9922598 C8.39124833,13.2030099 8.417445,13.5185067 8.62819511,13.6969416 C8.71848979,13.773391 8.8329684,13.8153448 8.95128003,13.8153448 Z" fill="#000000"/>
+    </g>
+</svg><!--end::Svg Icon--></span>
                                                 </span>
                                             </div>
                                         </div>
@@ -623,7 +656,13 @@ legend {
                                                 id="receipt_date" readonly="readonly">
                                             <div class="input-group-append">
                                                 <span class="input-group-text">
-                                                    <i class="fa fa-calendar"></i>
+                                                    <span class="svg-icon svg-icon-primary svg-icon-2x"><!--begin::Svg Icon | path:C:\wamp64\www\keenthemes\legacy\metronic\theme\html\demo1\dist/../src/media/svg/icons\Layout\Layout-arrange.svg--><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <rect x="0" y="0" width="24" height="24"/>
+        <path d="M5.5,4 L9.5,4 C10.3284271,4 11,4.67157288 11,5.5 L11,6.5 C11,7.32842712 10.3284271,8 9.5,8 L5.5,8 C4.67157288,8 4,7.32842712 4,6.5 L4,5.5 C4,4.67157288 4.67157288,4 5.5,4 Z M14.5,16 L18.5,16 C19.3284271,16 20,16.6715729 20,17.5 L20,18.5 C20,19.3284271 19.3284271,20 18.5,20 L14.5,20 C13.6715729,20 13,19.3284271 13,18.5 L13,17.5 C13,16.6715729 13.6715729,16 14.5,16 Z" fill="#000000"/>
+        <path d="M5.5,10 L9.5,10 C10.3284271,10 11,10.6715729 11,11.5 L11,18.5 C11,19.3284271 10.3284271,20 9.5,20 L5.5,20 C4.67157288,20 4,19.3284271 4,18.5 L4,11.5 C4,10.6715729 4.67157288,10 5.5,10 Z M14.5,4 L18.5,4 C19.3284271,4 20,4.67157288 20,5.5 L20,12.5 C20,13.3284271 19.3284271,14 18.5,14 L14.5,14 C13.6715729,14 13,13.3284271 13,12.5 L13,5.5 C13,4.67157288 13.6715729,4 14.5,4 Z" fill="#000000" opacity="0.3"/>
+    </g>
+</svg><!--end::Svg Icon--></span>
                                                 </span>
                                             </div>
                                         </div>
@@ -788,7 +827,14 @@ legend {
 {{-- <div class="modal-header">
                 <h5 class="modal-title">إضافة المناقصة لفرع آخر</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <i aria-hidden="true" class="fa fa-close"></i>
+                    <span class="svg-icon svg-icon-primary svg-icon-2x"><!--begin::Svg Icon | path:C:\wamp64\www\keenthemes\legacy\metronic\theme\html\demo1\dist/../src/media/svg/icons\Navigation\Close.svg--><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g transform="translate(12.000000, 12.000000) rotate(-45.000000) translate(-12.000000, -12.000000) translate(4.000000, 4.000000)" fill="#000000">
+            <rect x="0" y="7" width="16" height="2" rx="1"/>
+            <rect opacity="0.3" transform="translate(8.000000, 8.000000) rotate(-270.000000) translate(-8.000000, -8.000000) " x="0" y="7" width="16" height="2" rx="1"/>
+        </g>
+    </g>
+</svg><!--end::Svg Icon--></span>
                 </button>
             </div> --}}
 {{-- <div class="row my-2">
@@ -830,7 +876,14 @@ legend {
             <div class="modal-header">
                 <h5 class="modal-title">إضافة اسم تجاري</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <i aria-hidden="true" class="fa fa-close"></i>
+                    <span class="svg-icon svg-icon-primary svg-icon-2x"><!--begin::Svg Icon | path:C:\wamp64\www\keenthemes\legacy\metronic\theme\html\demo1\dist/../src/media/svg/icons\Navigation\Close.svg--><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g transform="translate(12.000000, 12.000000) rotate(-45.000000) translate(-12.000000, -12.000000) translate(4.000000, 4.000000)" fill="#000000">
+            <rect x="0" y="7" width="16" height="2" rx="1"/>
+            <rect opacity="0.3" transform="translate(8.000000, 8.000000) rotate(-270.000000) translate(-8.000000, -8.000000) " x="0" y="7" width="16" height="2" rx="1"/>
+        </g>
+    </g>
+</svg><!--end::Svg Icon--></span>
                 </button>
             </div>
 
@@ -864,7 +917,14 @@ legend {
             <div class="modal-header">
                 <h5 class="modal-title">إنشاء ملف PDF</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <i aria-hidden="true" class="fa fa-close"></i>
+                    <span class="svg-icon svg-icon-primary svg-icon-2x"><!--begin::Svg Icon | path:C:\wamp64\www\keenthemes\legacy\metronic\theme\html\demo1\dist/../src/media/svg/icons\Navigation\Close.svg--><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g transform="translate(12.000000, 12.000000) rotate(-45.000000) translate(-12.000000, -12.000000) translate(4.000000, 4.000000)" fill="#000000">
+            <rect x="0" y="7" width="16" height="2" rx="1"/>
+            <rect opacity="0.3" transform="translate(8.000000, 8.000000) rotate(-270.000000) translate(-8.000000, -8.000000) " x="0" y="7" width="16" height="2" rx="1"/>
+        </g>
+    </g>
+</svg><!--end::Svg Icon--></span>
                 </button>
             </div>
             <form class="form" action="" id="generate-tender-pdf-form" method="post">

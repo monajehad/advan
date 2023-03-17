@@ -95,7 +95,7 @@ class AttendanceController extends Controller
         {
             $hit = Hit::query()->where('status', '1')->where('user_id' , $attendance->user_id)->whereDate('date_time' , $attendance->date)->get();
         }else{
-            $hit = Hit::query()->where('user_id' , $attendance->user_id)->whereDate('date_time' , $attendance->date)->get();
+            $hit = Hit::query()->where('user_id' , $attendance->user_id)->whereDate('date' , $attendance->date)->get();
         }
 
         $attendance->load('user');
