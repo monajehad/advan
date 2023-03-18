@@ -28,6 +28,7 @@
 
              </tr>
          </thead>
+
          <tbody class="text-center font-size-sm">
              @forelse($data['clients'] as $client)
              <tr class="data-row">

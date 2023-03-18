@@ -53,9 +53,9 @@ class StoreSampleStockRequest extends FormRequest
                 // 'required',
                 'integer',
             ],
-            'status' => [
-                'required',
-            ],
+            // 'status' => [
+            //     'required',
+            // ],
         ];
     }
 }

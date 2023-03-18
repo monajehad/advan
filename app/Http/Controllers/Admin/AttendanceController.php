@@ -127,4 +127,56 @@ class AttendanceController extends Controller
 
         return response(null, Response::HTTP_NO_CONTENT);
     }
+
+    public function export_excel()
+    {
+        $attendances=Attendance::select('id','user_id','date','start_time','end_time')
+        ->orderBy('id','desc')->get();
+        @ob_start();
+        echo  chr(239) . chr(187) . chr(191);
+        $table="
+            <table border='1' class='table table-bordered text-center'>
+            <thead>
+            <tr>
+            <th>#</th>
+            <th>الاسم </th>
+            <th>التاريخ</th>
+            <th>بداية الوقت </th>
+            <th>انتهاء الوقت</th>
+            </tr>
+            </thead>
+            <tbody style='text-align:center;'>
+            ";
+        if (count($attendances)>0) {
+            foreach ($attendances as $key=>$attendance) {
+                $i=$key+1;
+                $table.="
+                    <tr>
+                        <td>". $i  ."</td>
+                        <td>".  $attendance->user->name."</td>
+                        <td>".  $attendance->date."</td>
+                        <td>".  $attendance->start_time."</td>
+                        <td>".  $attendance->end_time." </td>
+
+                    ";
+                }
+            }else{
+                     $table.="
+                     <tr>
+                         <td style='text-align:center;font-weight:bold;' colspan=\"8\">لا يوجد حضور</td>
+                     </tr>
+                     ";
+            }
+            $table.="
+            </tbody>
+            </table>
+            ";
+            echo $table;
+            $filename="الحضور";
+            header("Content-Type: application/xls");
+            header("Content-Disposition: attachment; filename=".$filename.".xls");
+            header("Pragma: no-cache");
+            header("Expires: 0");
+
+    }
 }

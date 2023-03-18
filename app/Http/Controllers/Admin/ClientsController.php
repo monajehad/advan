@@ -25,7 +25,6 @@ class ClientsController extends Controller
 
     public function index(Request $request)
     {
-        // abort_if(Gate::denies('client_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $data=[];
         $category_select=SystemConstant::select('id','name','value','type')->where([['type','category']])->orderBy('order')->get();
         $area_1_select=SystemConstant::select('id','name','value','type')->where([['type','area_1']])->orderBy('order')->get();
@@ -38,18 +37,20 @@ class ClientsController extends Controller
         })
         ->select('category_constants.name as category_name','area_1_constants.name as area_1_name','clients.id','clients.specialty_id','clients.category','clients.name','clients.item','clients.area_1','clients.status')
         ->with(['specialty','clientHits']);
+
         if($request->clientSelect){
-            $clients=$clients->where('clients.name',$request->clientSelect)
-            ;
-        }
-        if($request->clientSpecialty){
-            $clients=$clients->where('clients.specialty_id',$request->clientSpecialty)
-            ;
-        }
-        if($request->area){
-            $clients=$clients->where('clients.area_1',$request->area)
-            ;
-        }
+                    $clients=$clients->where('clients.name',$request->clientSelect)
+                    ;
+                }
+                if($request->clientSpecialty){
+                    $clients=$clients->where('clients.specialty_id',$request->clientSpecialty)
+                    ;
+                }
+                if($request->area){
+                    $clients=$clients->where('clients.area_1',$request->area)
+                    ;
+                }
+        $clients=$clients->orderBy('id','desc')->paginate(self::PAGINATION_NO);
 
         $data['clients']=$clients;
         $data['category_select']=$category_select;
@@ -59,11 +60,51 @@ class ClientsController extends Controller
             return response()->json(['clients'=>$table_data]);
 
     }
-    // dd($data['clients']);
     $clients_specialties = ClientsSpecialty::get();
     $specialties = ClientsSpecialty::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-    return view('advan.admin.clients.index', compact('clients_specialties','data','specialties','clients'));
+    return view('advan.admin.clients.index', compact('clients_specialties','data','specialties'));
+
+
+        // abort_if(Gate::denies('client_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        // $data=[];
+    //     $category_select=SystemConstant::select('id','name','value','type')->where([['type','category']])->orderBy('order')->get();
+    //     $area_1_select=SystemConstant::select('id','name','value','type')->where([['type','area_1']])->orderBy('order')->get();
+
+    //     $clients=Client::
+    //     leftJoin('system_constants as category_constants', function($join) {
+    //         $join->on('category_constants.value', '=', 'clients.category')->where('category_constants.type','category');
+    //     })->leftJoin('system_constants as area_1_constants', function($join) {
+    //         $join->on('area_1_constants.value', '=', 'clients.area_1')->where('area_1_constants.type','area_1');
+    //     })
+    //     ->select('category_constants.name as category_name','area_1_constants.name as area_1_name','clients.id','clients.specialty_id','clients.category','clients.name','clients.item','clients.area_1','clients.status')
+    //     ->with(['specialty','clientHits']);
+    //     if($request->clientSelect){
+    //         $clients=$clients->where('clients.name',$request->clientSelect)
+    //         ;
+    //     }
+    //     if($request->clientSpecialty){
+    //         $clients=$clients->where('clients.specialty_id',$request->clientSpecialty)
+    //         ;
+    //     }
+    //     if($request->area){
+    //         $clients=$clients->where('clients.area_1',$request->area)
+    //         ;
+    //     }
+
+    //     $data['clients']=$clients;
+    //     $data['category_select']=$category_select;
+    //     $data['area_1_select']=$area_1_select;
+    //     if ($request->ajax()) {
+    //         $table_data=view('advan.admin.clients.table-data',compact('data'))->render();
+    //         return response()->json(['clients'=>$table_data]);
+
+    // }
+    // // dd($data['clients']);
+    // $clients_specialties = ClientsSpecialty::get();
+    // $specialties = ClientsSpecialty::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+
+    // return view('advan.admin.clients.index', compact('clients_specialties','data','specialties','clients'));
 
 
 
@@ -85,6 +126,12 @@ class ClientsController extends Controller
 
     public function store(StoreClientRequest $request)
     {
+        if($request->status == 'on' ){
+            $request['status']='1';
+      }
+      else{
+        $request['status']='0';
+      }
         $client = Client::create($request->all());
 
         if ($request->input('image', false)) {
@@ -116,6 +163,11 @@ class ClientsController extends Controller
 
     public function update(UpdateClientRequest $request, Client $client)
     {
+        if($request->status == 'on' ){
+            $request['status']='1';
+      }else{
+        $request['status']='0';
+      }
         $client->update($request->all());
 
         if ($request->input('image', false)) {
@@ -175,5 +227,74 @@ class ClientsController extends Controller
         $media         = $model->addMediaFromRequest('upload')->toMediaCollection('ck-media');
 
         return response()->json(['id' => $media->id, 'url' => $media->getUrl()], Response::HTTP_CREATED);
+    }
+
+
+    public function export_excel()
+    {
+        $clients=Client::
+        leftJoin('system_constants as category_constants', function($join) {
+            $join->on('category_constants.value', '=', 'clients.category')->where('category_constants.type','category')->whereNull('category_constants.deleted_at');
+        })->leftJoin('system_constants as area_1_constants', function($join) {
+            $join->on('area_1_constants.value', '=', 'clients.area_1')->where('area_1_constants.type','area_1')->whereNull('area_1_constants.deleted_at');
+        })
+        ->select('category_constants.name as category_name','area_1_constants.name as area_1_name','clients.id','clients.specialty_id','clients.category','clients.name','clients.item','clients.area_1','clients.status')
+        ->with(['specialty','clientHits'])
+        ->orderBy('id','desc')->get();
+        $data['clients']=$clients;
+        @ob_start();
+        echo  chr(239) . chr(187) . chr(191);
+        $table="
+            <table border='1' class='table table-bordered text-center'>
+            <thead>
+            <tr>
+            <th>#</th>
+            <th>اسم العميل</th>
+            <th> النوع</th>
+            <th> التخصص</th>
+            <th> التصنيف</th>
+            <th> المنطقة</th>
+            <th> الزيارات</th>
+            <th> العينات</th>
+
+
+            </tr>
+            </thead>
+            <tbody style='text-align:center;'>
+            ";
+        if (count($clients)>0) {
+            foreach ($clients as $key=>$client) {
+                $i=$key+1;
+                $table.="
+                    <tr>
+                        <td>". $i  ."</td>
+                        <td >". $client->name  ."</td>
+                        <td >". $client->category_name ."</td>
+                        <td >". $client->specialty->name  ." </td>
+                        <td >". $client->item ."</td>
+                        <td >". $client->area_1_name ."</td>
+                        <td >". $client->clientHits()->count() ."</td>
+                        <td >". $client->clientHits()->get()->sum('number_samples') ."</td>
+
+                    ";
+                }
+            }else{
+                     $table.="
+                     <tr>
+                         <td style='text-align:center;font-weight:bold;' colspan=\"8\">لا يوجد عملاء</td>
+                     </tr>
+                     ";
+            }
+            $table.="
+            </tbody>
+            </table>
+            ";
+            echo $table;
+            $filename="العملاء";
+            header("Content-Type: application/xls");
+            header("Content-Disposition: attachment; filename=".$filename.".xls");
+            header("Pragma: no-cache");
+            header("Expires: 0");
+
     }
 }

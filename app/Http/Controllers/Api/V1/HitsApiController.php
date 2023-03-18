@@ -21,11 +21,11 @@ class HitsApiController extends Controller
 {
     public function index(Request $request)
     {
-        $hit = Hit::with(['client', 'visit_type', 'user', 'sms', 'categories'])
+        $hit = Hit::with(['client', 'visit_type', 'user', 'categories'])
             ;
             // ->where('user_id', Auth::id())
         if ($request->date) {
-            $hit = $hit->where('date_time', 'LIKE', $request->date . '%');
+            $hit = $hit->where('date', 'LIKE', $request->date . '%');
         }
         if ($request->type) {
             $hit = $hit->where('type', $request->type);
@@ -33,7 +33,7 @@ class HitsApiController extends Controller
         if ($request->status) {
             $hit = $hit->where('status', $request->status);
         }
-        $hit = $hit->orderByDesc('status')->orderByDesc('date_time')->get();
+        $hit = $hit->orderByDesc('status')->orderByDesc('date')->get();
         $data = HitResource::collection($hit);
         return apiResponse($data);
     }
@@ -44,7 +44,8 @@ class HitsApiController extends Controller
         $validator = Validator::make($request->all(), [
             'client_id' => 'required|exists:clients,id',
             'user_id' => 'required|exists:clients,id',
-            'date_time' => '',
+            'date' => '',
+            'time'=>'',
             'visit_type_id' => 'nullable|exists:hits_types,id',
             'duration_visit' => '',
             'number_samples' => '',
@@ -105,7 +106,7 @@ class HitsApiController extends Controller
 //            }
 //        }
 
-        $request->request->add(['user_id' => Auth::id(), 'sms_id' => $request->kinds_of_occasions]);
+        // $request->request->add(['user_id' => Auth::id(), 'sms_id' => $request->kinds_of_occasions]);
 
         $hit = Hit::create($request->all());
 
@@ -124,10 +125,10 @@ class HitsApiController extends Controller
 //            }
 //        }
 
-        if ($request->categories) {
-            $categories = explode(",", $request->categories);
-            $hit->categories()->sync($categories);
-        }
+        // if ($request->categories) {
+        //     $categories = explode(",", $request->categories);
+        //     $hit->categories()->sync($categories);
+        // }
 
 
         if ($request->samples) {
@@ -152,7 +153,7 @@ class HitsApiController extends Controller
 
     public function show(Hit $hit)
     {
-        $data = new HitResource($hit->load(['client', 'visit_type', 'user', 'sms']));
+        $data = new HitResource($hit->load(['client', 'visit_type', 'user']));
         return apiResponse($data);
     }
 

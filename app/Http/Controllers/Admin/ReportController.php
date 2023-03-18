@@ -153,4 +153,65 @@ class ReportController extends Controller
 
         return response(null, Response::HTTP_NO_CONTENT);
     }
+
+    public function export_excel()
+    {
+        $reports=Report::select('id','type_id','hits_id','name','status','user_id','client_id','time','date'
+        ,'title')->with('user','type','client')
+        ->orderBy('id','desc')->get();
+        @ob_start();
+        echo  chr(239) . chr(187) . chr(191);
+        $table="
+            <table border='1' class='table table-bordered text-center'>
+            <thead>
+            <tr>
+            <th>#</th>
+            <th>اسم الثلاثي</th>
+            <th> اسم التقرير</th>
+            <th> المندوب</th>
+            <th> العميل</th>
+            <th> التاريخ</th>
+            <th> الوقت</th>
+            <th> نوع التقرير</th>
+
+
+            </tr>
+            </thead>
+            <tbody style='text-align:center;'>
+            ";
+        if (count($reports)>0) {
+            foreach ($reports as $report) {
+                // $i=$key+1;
+                $table.="
+                    <tr>
+                        <td>". '1++'  ."</td>
+                        <td>". $report->name  ."</td>
+                        <td>". $report->user->name  ."</td>
+                        <td>". $report->client->name  ."</td>
+                        <td>". $report->date  ."</td>
+                        <td>". $report->time  ."</td>
+                        <td>". $report->type ? $report->type->name  : ''  ."</td>
+
+
+                    ";
+                }
+            }else{
+                     $table.="
+                     <tr>
+                         <td style='text-align:center;font-weight:bold;' colspan=\"8\">لا يوجد تقارير</td>
+                     </tr>
+                     ";
+            }
+            $table.="
+            </tbody>
+            </table>
+            ";
+            echo $table;
+            $filename="التقرير";
+            header("Content-Type: application/xls");
+            header("Content-Disposition: attachment; filename=".$filename.".xls");
+            header("Pragma: no-cache");
+            header("Expires: 0");
+
+    }
 }

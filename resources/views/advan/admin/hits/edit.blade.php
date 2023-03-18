@@ -38,7 +38,7 @@
                     </div>
                 @endif
             </div>
-            {{-- <div class="form-group">
+            <div class="form-group">
                 <label for="time">الوقت</label>
                 <input class="form-control timepiker {{ $errors->has('time') ? 'is-invalid' : '' }}" type="text" name="time" id="kt_timepicker_2" value="{{ old('time', $hit->time) }}">
                 @if($errors->has('time'))
@@ -46,8 +46,8 @@
                         {{ $errors->first('time') }}
                     </div>
                 @endif
-            </div> --}}
-            {{-- <div class="form-group">
+            </div>
+            <div class="form-group">
                 <label class="required" for="visit_type_id">نوع الزيارة</label>
                 <select class="form-control pb-0 {{ $errors->has('visit_type') ? 'is-invalid' : '' }}" name="visit_type_id" id="visit_type_id" required>
                     @foreach($visit_types as $id => $entry)
@@ -59,8 +59,8 @@
                         {{ $errors->first('visit_type') }}
                     </div>
                 @endif
-            </div> --}}
-            {{-- <div class="form-group">
+            </div>
+            <div class="form-group">
                 <label for="duration_visit">مدة الزيارة</label>
                 <input class="form-control {{ $errors->has('duration_visit') ? 'is-invalid' : '' }}" type="text" name="duration_visit" id="duration_visit" value="{{ old('duration_visit', $hit->duration_visit) }}">
                 @if($errors->has('duration_visit'))
@@ -68,7 +68,7 @@
                         {{ $errors->first('duration_visit') }}
                     </div>
                 @endif
-            </div> --}}
+            </div>
             <div class="form-group">
                 <label for="number_samples">عدد العينات</label>
                 <input class="form-control {{ $errors->has('number_samples') ? 'is-invalid' : '' }}" type="text" name="number_samples" id="number_samples" value="{{ old('number_samples', $hit->number_samples) }}">
@@ -118,7 +118,7 @@
                     </div>
                 @endif
             </div>
-            {{-- <div class="form-group row">
+            <div class="form-group row">
                 <div class="col-md-6 col-lg-6 col-sm-12">
                     <label>التصنيف</label>
                     <select class="form-control pb-0" id="category" name="category">
@@ -131,7 +131,7 @@
 
                     </select>
                     <label class="form-text text-muted text-danger" id="unit-error"></label>
-                </div> --}}
+                </div>
             <div class="form-group">
                 <label for="note">الملاحظة</label>
                 <textarea class="form-control {{ $errors->has('note') ? 'is-invalid' : '' }}" name="note" id="note">{{ old('note', $hit->note) }}</textarea>

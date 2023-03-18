@@ -22,9 +22,9 @@ class UpdateCategoryRequest extends FormRequest
                 'required',
                 'unique:categories,name,' . request()->route('category')->id,
             ],
-            'status' => [
-                'required',
-            ],
+            // 'status' => [
+            //     'required',
+            // ],
         ];
     }
 }

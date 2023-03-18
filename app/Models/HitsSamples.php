@@ -30,14 +30,14 @@ class HitsSamples extends Model
         'deleted_at',
     ];
 
-    // public function hits()
-    // {
-    //     return $this->belongsTo(Hit::class, 'hit_id');
-    // }
+    public function hits()
+    {
+        return $this->belongsTo(Hit::class, 'hit_id');
+    }
 
 
-    // public function samples()
-    // {
-    //     return $this->hasOne(Sample::class , 'id' , 'sample_id');
-    // }
+    public function samples()
+    {
+        return $this->hasOne(Sample::class , 'id' , 'sample_id');
+    }
 }

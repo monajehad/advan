@@ -206,17 +206,17 @@ class HitsController extends Controller
 
         $users = User::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $sms = KindsOfOccasion::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        // $sms = KindsOfOccasion::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
 
         $hit->load('client', 'visit_type', 'user', 'sms');
 
-        return view('advan.admin.hits.edit', compact('clients', 'visit_types', 'users', 'sms', 'data', 'hit'));
+        return view('advan.admin.hits.edit', compact('clients', 'visit_types', 'users', 'data', 'hit'));
     }
 
     public function update(UpdateHitRequest $request, Hit $hit)
     {
-        dd($request->all());
+        // dd($request->all());
         $hit->update($request->all());
         // $hit->categories()->sync($request->input('categories', []));
         // $hit->doctors()->sync($request->input('doctors', []));
@@ -233,11 +233,19 @@ class HitsController extends Controller
         })
         ->select('category_constants.name as category_name','hits.id','hits.date_time','hits.note','hits.category','hits.client_id','hits.user_id','hits.status')
         ->with(['client','user','samples','visit_type','user']);
+        $data=[];
+        $category_select=SystemConstant::select('id','name','value','type')->where([['type','category']])->orderBy('order')->get();
+        $data['category_select']=$category_select;
 
+        $clients = Client::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+
+        $visit_types = HitsType::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+
+        $users = User::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
         // $hit->load('client', 'visit_type', 'user', 'sms');
 
         $sample = HitsSamples::where('hit_id', $hit->id)->get();
-        return view('advan.admin.hits.show', compact('hit' , 'sample'));
+        return view('advan.admin.hits.show', compact('hit' , 'sample','clients', 'visit_types', 'users', 'data', 'hit'));
     }
 
     public function destroy(Request $request)
@@ -264,4 +272,72 @@ class HitsController extends Controller
 
         return response(null, Response::HTTP_NO_CONTENT);
     }
+    public function export_excel()
+{
+    $hits=Hit::leftJoin('system_constants as category_constants', function($join) {
+        $join->on('category_constants.value', '=', 'hits.category')->where('category_constants.type','category')->whereNull('category_constants.deleted_at');
+    })
+    ->select('category_constants.name as category_name','hits.id','hits.address','hits.date','hits.time','hits.note','hits.category','hits.client_id','hits.user_id','hits.status')
+    ->with(['client','user','samples'])
+    ->orderBy('id','desc')->get();
+    @ob_start();
+    echo  chr(239) . chr(187) . chr(191);
+    $table="
+        <table border='1' class='table table-bordered text-center'>
+        <thead>
+        <tr>
+        <th>#</th>
+        <th>اسم العميل</th>
+        <th> النوع</th>
+        <th> المنطقة</th>
+        <th>  المندوب</th>
+        <th>  تاريخ الزيارة</th>
+        <th> الوقت </th>
+        <th> الملاحظات</th>
+        </tr>
+        </thead>
+        <tbody style='text-align:center;'>
+        ";
+    if (count($hits)>0) {
+        foreach ($hits as $key=>$hit) {
+            $i=$key+1;
+            $table.="
+                <tr>
+                    <td>". $i  ."</td>
+                    <td >". $hit->client->name  ."
+            </td>
+            <td >
+            ". $hit->category_name ."
+            </td>
+            <td >
+            ". $hit->client->address_1 ??'none'."
+            </td>
+
+            <td >". $hit->user->name ??'none' ."</td>
+            <td >". $hit->date ??'none' ."</td>
+            <td >". $hit->time ??'none' ."</td>
+            <td >". $hit->note ??'none' ."</td>
+                </tr>
+                ";
+            }
+        }else{
+                 $table.="
+                 <tr>
+                     <td style='text-align:center;font-weight:bold;' colspan=\"6\">لا يوجد زيارات</td>
+                 </tr>
+                 ";
+        }
+        $table.="
+        </tbody>
+        </table>
+        ";
+        echo $table;
+        $filename="الزيارات";
+        header("Content-Type: application/xls");
+        header("Content-Disposition: attachment; filename=".$filename.".xls");
+        header("Pragma: no-cache");
+        header("Expires: 0");
+
 }
+}
+

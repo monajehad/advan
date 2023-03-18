@@ -17,7 +17,7 @@ class UpdateHitRequest extends FormRequest
     public function rules()
     {
         return [
-            'clinic_id' => [
+            'client_id' => [
                 'required',
                 'integer',
             ],
@@ -25,7 +25,7 @@ class UpdateHitRequest extends FormRequest
                 'required',
                 'date_format:' . ('Y-m-d'),
             ],
-            'start_time' => [
+            'time' => [
                 'required',
                 // 'date_format:' . config('panel.time_format'),
             ],
@@ -53,12 +53,12 @@ class UpdateHitRequest extends FormRequest
                 'string',
                 'nullable',
             ],
-            'categories.*' => [
-                'integer',
-            ],
-            'categories' => [
-                // 'array',
-            ],
+            // 'categories.*' => [
+            //     'integer',
+            // ],
+            // 'categories' => [
+            //     // 'array',
+            // ],
 
         ];
     }

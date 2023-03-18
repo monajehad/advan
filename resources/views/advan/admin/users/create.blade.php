@@ -144,7 +144,7 @@
                                     <div class="pb-5" data-wizard-type="step-content" data-wizard-state="current">
                                         <h4 class="mb-10 font-weight-bold text-dark">اضافة بيانات الشخصية</h4>
                                         <div class="image-input image-input-outline image-input-circle align-center" id="kt_image_3">
-                                            <div class="image-input-wrapper" style="background-image: url(assets/media/users/100_3.jpg)">
+                                            <div class="image-input-wrapper" style="background-image: url({{asset('assets/images/user-1.jpg')}})">
                                             </div>
 
                                             <label class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow"
@@ -164,8 +164,8 @@
                                                     </svg>
                                                     <!--end::Svg Icon-->
                                                 </span>
-                                                <input type="file" name="profile_avatar" accept=".png, .jpg, .jpeg" />
-                                                <input type="hidden" name="profile_avatar_remove" />
+                                                <input type="file" name="image" class="form-control {{ $errors->has('image') ? 'is-invalid' : '' }}">
+                                                {{-- <input type="hidden" name="profile_avatar_remove" /> --}}
                                             </label>
 
                                             <span class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow"
@@ -304,7 +304,7 @@
                                             <span class="help-block">{{ trans('cruds.user.fields.password_helper') }}</span>
                                         </div>
 
-                                   
+
                                         <div class="form-group">
                                             <label class="required" for="facebook">فيسبوك</label>
                                             <input class="form-control {{ $errors->has('facebook') ? 'is-invalid' : '' }}" type="text" name="facebook" id="facebook" value="" required>
@@ -399,3 +399,59 @@
 
 
 
+@section('script')
+    <script>
+        Dropzone.options.imageDropzone = {
+            url: '{{ route('admin.users.storeMedia') }}',
+            maxFilesize: 2, // MB
+            acceptedFiles: '.jpeg,.jpg,.png,.gif',
+            maxFiles: 1,
+            addRemoveLinks: true,
+            headers: {
+                'X-CSRF-TOKEN': "{{ csrf_token() }}"
+            },
+            params: {
+                size: 2,
+                width: 4096,
+                height: 4096
+            },
+            success: function (file, response) {
+                $('form').find('input[name="image"]').remove()
+                $('form').append('<input type="hidden" name="image" value="' + response.name + '">')
+            },
+            removedfile: function (file) {
+                file.previewElement.remove()
+                if (file.status !== 'error') {
+                    $('form').find('input[name="image"]').remove()
+                    this.options.maxFiles = this.options.maxFiles + 1
+                }
+            },
+            init: function () {
+                @if(isset($user) && $user->image)
+                var file = {!! json_encode($user->image) !!}
+                this.options.addedfile.call(this, file)
+                this.options.thumbnail.call(this, file, file.preview)
+                file.previewElement.classList.add('dz-complete')
+                $('form').append('<input type="hidden" name="image" value="' + file.file_name + '">')
+                this.options.maxFiles = this.options.maxFiles - 1
+                @endif
+            },
+            error: function (file, response) {
+                if ($.type(response) === 'string') {
+                    var message = response //dropzone sends it's own error messages in string
+                } else {
+                    var message = response.errors.file
+                }
+                file.previewElement.classList.add('dz-error')
+                _ref = file.previewElement.querySelectorAll('[data-dz-errormessage]')
+                _results = []
+                for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+                    node = _ref[_i]
+                    _results.push(node.textContent = message)
+                }
+
+                return _results
+            }
+        }
+    </script>
+@endsection

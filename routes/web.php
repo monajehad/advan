@@ -84,6 +84,7 @@ Route::group([ 'prefix' => 'admin', 'as' => 'admin.']
       Route::post('users/ckmedia', [UsersController::class,'storeCKEditorImages'] )->name('users.storeCKEditorImages');
       Route::resource('users', UsersController::class);
       Route::post('users/delete', [UsersController::class,'destroy'])->name('users.delete');
+      Route::get('users/export/excel', [UsersController::class,'export_excel'])->name('users.export.excel');
 
      // Employees
     Route::prefix('employee')->name('employee.')->group(function(){
@@ -117,6 +118,7 @@ Route::group([ 'prefix' => 'admin', 'as' => 'admin.']
       Route::post('clients/process-csv-import', [ClientsController::class,'processCsvImport'])->name('clients.processCsvImport');
       Route::resource('clients', ClientsController::class);
       Route::post('clients/delete', [ClientsController::class,'destroy'])->name('clients.delete');
+      Route::get('clients/export/excel', [ClientsController::class,'export_excel'])->name('clients.export.excel');
 
       // Report Type
       Route::delete('report-types/destroy', [ReportTypeController::class,'massDestroy'])->name('report-types.massDestroy');
@@ -129,6 +131,7 @@ Route::group([ 'prefix' => 'admin', 'as' => 'admin.']
       Route::delete('reports/destroy', [ReportController::class,'massDestroy'])->name('reports.massDestroy');
       Route::resource('reports', ReportController::class);
       Route::post('reports/delete', [ReportController::class,'destroy'])->name('reports.delete');
+      Route::get('reports/export/excel', [ReportController::class,'export_excel'])->name('reports.export.excel');
 
 
          // Vacation Request
@@ -144,6 +147,7 @@ Route::group([ 'prefix' => 'admin', 'as' => 'admin.']
        Route::resource('attendances', AttendanceController::class);
        Route::get('attendances/{id}/track', [AttendanceController::class,'track'])->name('attendances.track');
        Route::post('attendances/delete', [AttendanceController::class,'destroy'])->name('attendances.delete');
+       Route::get('attendances/export/excel', [AttendanceController::class,'export_excel'])->name('attendances.export.excel');
 
          // Hits Type
        Route::delete('hits-types/destroy', [HitsTypeController::class,'massDestroy'])->name('hits-types.massDestroy');
@@ -159,6 +163,7 @@ Route::group([ 'prefix' => 'admin', 'as' => 'admin.']
       Route::get('note', [HitsController::class,'note'])->name('hits.note');
       Route::post('hits/delete', [HitsController::class,'destroy'])->name('hits.delete');
       Route::get('hits/data/{id}', [HitsController::class,'get_hit'])->name('hits.data');
+      Route::get('hits/export/excel', [HitsController::class,'export_excel'])->name('hits.export.excel');
 
       Route::get('/online_map', function () {
         $users = User::where('user_type' , 2)->where('status' , 1)->get();
@@ -185,11 +190,13 @@ Route::group([ 'prefix' => 'admin', 'as' => 'admin.']
     Route::delete('sample-stocks/destroy', [SampleStockController::class,'massDestroy'])->name('sample-stocks.massDestroy');
     Route::resource('sample-stocks', SampleStockController::class);
     Route::post('sample-stocks/delete', [SampleStockController::class,'destroy'])->name('sample-stocks.delete');
+    Route::get('sample-stocks/export/excel', [SampleStockController::class,'export_excel'])->name('sample-stocks.export.excel');
 
      // Samples
     Route::delete('samples/destroy', [SamplesController::class,'massDestroy'])->name('samples.massDestroy');
     Route::resource('samples', SamplesController::class);
     Route::post('samples/delete', [SamplesController::class,'destroy'])->name('samples.delete');
+    Route::get('samples/export/excel', [SamplesController::class,'export_excel'])->name('samples.export.excel');
 
     //tenders
     Route::prefix('tenders')->name('tenders.')->group(function(){

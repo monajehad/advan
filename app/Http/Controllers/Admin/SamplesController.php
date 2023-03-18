@@ -34,7 +34,7 @@ class SamplesController extends Controller
         ,'samples.user_id','samples.quantity_request', 'samples.stock_available_id','samples.date','samples.status')->with(['category','item','sample', 'user', 'stock_available']);
 
         if($request->user){
-            $samples=$samples->where('samples.sample_id',$request->user);
+            $samples=$samples->where('samples.user_id',$request->user);
             // ->orWhere('category_names','like','%'.$request->search.'%');
         }
         if($request->category){
@@ -53,7 +53,9 @@ class SamplesController extends Controller
     }
 
         // $sample_stocks = SampleStock::where('status' , 1)->get();
-        $users         = User::get('id','name');
+        // $users         = User::get('id','name');
+        $users = User::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+
         // dd($users);
         $unit_select=SystemConstant::select('id','name','value','type')->where([['status',1],['type','unit']])->orderBy('order')->get();
         $data['unit_select']=$unit_select;
@@ -73,12 +75,14 @@ class SamplesController extends Controller
         // return view('advan.admin.samples.create', compact('samples', 'users','data','categories'));
     }
 
-    public function store(StoreSampleRequest $request)
+    public function store(Request $request)
     {
-        if($request->status == 'on'){
+        if($request->status == 'on' ){
             $request['status']='1';
       }
-        dd($request->all());
+      else{
+        $request['status']='0';
+      }
         $sample = Sample::create($request->all());
 
         return redirect()->route('admin.samples.index');
@@ -106,6 +110,8 @@ class SamplesController extends Controller
         if($request->status == 'on'){
             $request['status']='1';
 
+      }else{
+        $request['status']='0';
       }
     //   dd($request);
         $sample->update($request->all());
@@ -175,5 +181,69 @@ class SamplesController extends Controller
         $user = User::find(Sample::find($id)->user_id);
         $type = 'stock';
         return view('admin.report' , compact('sample' , 'user' , 'type'));
+    }
+
+    public function export_excel()
+    {
+        $samples=Sample::
+        leftJoin('system_constants as unit_constants', function($join) {
+            $join->on('unit_constants.value', '=', 'samples.unit')->where('unit_constants.type','unit')->whereNull('unit_constants.deleted_at');
+        })
+        ->select('unit_constants.name as unit_name','samples.id','samples.sample_id','samples.unit','samples.category_id'
+        ,'samples.user_id','samples.quantity_request', 'samples.stock_available_id','samples.date','samples.status')->with(['category','item','sample', 'user', 'stock_available'])
+        ->orderBy('id','desc')->get();
+        @ob_start();
+        echo  chr(239) . chr(187) . chr(191);
+        $table="
+            <table border='1' class='table table-bordered text-center'>
+            <thead>
+            <tr>
+            <th>#</th>
+            <th>اسم الصنف</th>
+            <th> العائلة</th>
+            <th> الوحدة</th>
+            <th>  المندوب</th>
+            <th>  كمية المندوب</th>
+            <th> المخزون </th>
+            <th> شهر/سنة</th>
+            </tr>
+            </thead>
+            <tbody style='text-align:center;'>
+            ";
+        if (count($samples)>0) {
+            foreach ($samples as $key=>$sample) {
+                $i=$key+1;
+                $table.="
+                    <tr>
+                        <td>". $i  ."</td>
+                        <td >". $sample->sample->name  ."</td>
+                        <td >". $sample->category->name  ."</td>
+                        <td >". $sample->unit_name ."</td>
+                        <td >". $sample->user->name  ."</td>
+                        <td >". $sample->quantity_request ."</td>
+                        <td >". $sample->sample->available  ."</td>
+                        <td >". $sample->date  ."</td>
+
+</tr>
+                    ";
+                }
+            }else{
+                     $table.="
+                     <tr>
+                         <td style='text-align:center;font-weight:bold;' colspan=\"8\">لا يوجد عينات</td>
+                     </tr>
+                     ";
+            }
+            $table.="
+            </tbody>
+            </table>
+            ";
+            echo $table;
+            $filename="العينة";
+            header("Content-Type: application/xls");
+            header("Content-Disposition: attachment; filename=".$filename.".xls");
+            header("Pragma: no-cache");
+            header("Expires: 0");
+
     }
 }

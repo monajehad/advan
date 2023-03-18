@@ -53,18 +53,18 @@ class StoreHitRequest extends FormRequest
                 'string',
                 'nullable',
             ],
-            'categories.*' => [
-                'integer',
-            ],
-            'categories' => [
-                'array',
-            ],
-            'doctors.*' => [
-                'integer',
-            ],
-            'doctors' => [
-                'array',
-            ],
+            // 'categories.*' => [
+            //     'integer',
+            // ],
+            // 'categories' => [
+            //     'array',
+            // ],
+            // 'doctors.*' => [
+            //     'integer',
+            // ],
+            // 'doctors' => [
+            //     'array',
+            // ],
         ];
     }
 }

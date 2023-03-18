@@ -15,6 +15,22 @@
             @method('PUT')
             @csrf
             <div class="form-group">
+                <label for="image">الصورة</label>
+                @if($user->image)
+                    <a href="{{ $user->image_url }}" target="_blank">
+                        <img src="{{ $user->image_url }}" width="50px" height="50px">
+                    </a>
+                @endif
+
+                <input type="file" name="image" class="form-control {{ $errors->has('image') ? 'is-invalid' : '' }}">
+                @if($errors->has('image'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('image') }}
+                    </div>
+                @endif
+                {{-- <span class="help-block">{{ trans('cruds.user.fields.image_helper') }}</span> --}}
+            </div>
+            <div class="form-group">
                 <label class="required" for="name">الاسم الثلاثي</label>
                 <input class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" type="text" name="name" id="name" value="{{ old('name', $user->name) }}" required>
                 @if($errors->has('name'))
@@ -137,7 +153,7 @@
 
             <div class="form-group">
                 <label class="required" for="category_id">عائلة الصنف</label>
-                <select class="form-control select {{ $errors->has('category') ? 'is-invalid' : '' }}" name="category_id" id="category_id" required>
+                <select class="form-control pb-0 {{ $errors->has('category') ? 'is-invalid' : '' }}" name="category_id" id="category_id" required>
                     @foreach($categories as $id => $entry)
                         <option value="{{ $id }}" {{ (old('category_id') ? old('category_id') : $user->category->id ?? '') == $id ? 'selected' : '' }}>{{ $entry }}</option>
                     @endforeach
@@ -150,7 +166,7 @@
             </div>
             <div class="form-group">
                 <label class="required" for="item_id">الصنف</label>
-                <select class="form-control select {{ $errors->has('item') ? 'is-invalid' : '' }}" name="item_id" id="item_id" required>
+                <select class="form-control pb-0 {{ $errors->has('item') ? 'is-invalid' : '' }}" name="item_id" id="item_id" required>
                     @foreach($items as $id => $entry)
                         <option value="{{ $id }}" {{ (old('item_id')? old('item_id') : $user->item->id ?? '') == $id ? 'selected' : '' }}>{{ $entry }}</option>
                     @endforeach
@@ -211,7 +227,7 @@
 
 @endsection
 
-@section('scripts')
+@section('scriptس')
 <script>
     Dropzone.options.imageDropzone = {
     url: '{{ route('admin.users.storeMedia') }}',

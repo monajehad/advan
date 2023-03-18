@@ -1,142 +1,5 @@
-@extends('layouts.cpanel.app')
-@section('content')
 
-<div class="card">
-    <div class="card-header">
-        {{ trans('global.show') }} {{ trans('cruds.hit.title') }}
-    </div>
-
-    <div class="card-body">
-        <div class="form-group">
-            <div class="form-group">
-                <a class="btn btn-default" href="{{ route('admin.hits.index') }}">
-                    {{ trans('global.back_to_list') }}
-                </a>
-            </div>
-            <table class="table table-bordered table-striped">
-                <tbody>
-                    <tr>
-                        <th>
-                            {{ trans('cruds.hit.fields.id') }}
-                        </th>
-                        <td>
-                            {{ $hit->id }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
-                            {{ trans('cruds.hit.fields.clinic') }}
-                        </th>
-                        <td>
-                            {{ $hit->client->name ?? '' }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
-                            {{ trans('cruds.hit.fields.date_time') }}
-                        </th>
-                        <td>
-                            {{ $hit->date_time }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
-                            {{ trans('cruds.hit.fields.visit_type') }}
-                        </th>
-                        <td>
-                            {{ $hit->visit_type->name ?? '' }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
-                            {{ trans('cruds.hit.fields.duration_visit') }}
-                        </th>
-                        <td>
-                            {{ $hit->duration_visit }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
-                            {{ trans('cruds.hit.fields.number_samples') }}
-                        </th>
-                        <td>
-                            {{ $hit->number_samples }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
-                            {{ trans('cruds.hit.fields.address') }}
-                        </th>
-                        <td>
-                            {{ $hit->address }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
-                            {{ trans('cruds.hit.fields.report_type') }}
-                        </th>
-                        <td>
-                            {{ $hit->report_type }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
-                            {{ trans('cruds.hit.fields.category') }}
-                        </th>
-                        <td>
-                            {{ $hit->category->name ??'' }}
-                        </td>
-                    </tr>
-                    <tr>
-
-                        <th>
-                            {{ trans('cruds.hit.fields.report_status') }}
-                        </th>
-                        <td>
-                            {{ $hit->report_status }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
-                            {{ trans('cruds.hit.fields.user') }}
-                        </th>
-                        <td>
-                            {{ $hit->user->name ?? '' }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
-                            {{ trans('cruds.hit.fields.note') }}
-                        </th>
-                        <td>
-                            {{ $hit->note }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
-                            {{ trans('cruds.hit.fields.sms') }}
-                        </th>
-                        <td>
-                            {{ $hit->sms->name ?? '' }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
-                            {{ trans('cruds.hit.fields.sms_message') }}
-                        </th>
-                        <td>
-                            {{ $hit->sms_message }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
-                            {{ trans('cruds.hit.fields.type') }}
-                        </th>
-                        <td>
-                            {{ App\Models\Hit::TYPE_SELECT[$hit->type] ?? '' }}
-                        </td>
-                    </tr>
-                    <tr>
+                    {{-- <tr>
                         <th>
                             العينات
                         </th>
@@ -153,35 +16,222 @@
                             </div>
                         </td>
                     </tr>
-                    {{-- <tr>
-                        <th>
-                            {{ trans('cruds.hit.fields.doctors') }}
-                        </th>
-                        <td>
-                            @foreach($hit->doctors as $key => $doctors)
-                                <span class="label label-info">{{ $doctors->doctor_name }}</span>
-                            @endforeach
-                        </td>
-                    </tr> --}}
-                    <tr>
-                        <th>
-                            {{ trans('cruds.hit.fields.status') }}
-                        </th>
-                        <td>
-                            {{ App\Models\Hit::STATUS_SELECT[$hit->status] ?? '' }}
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-            <div class="form-group">
-                <a class="btn btn-default" href="{{ route('admin.hits.index') }}">
-                    {{ trans('global.back_to_list') }}
-                </a>
-            </div>
+                    --}}
+
+@extends('layouts.cpanel.app')
+@section('content')
+
+<div class="card w-50 mr-10">
+    <div class="card-header  d-flex justify-content-between ">
+        <div class="py-5 h3">تفاصيل الزيارة </div>
+        <div class="form-group text-left  mb-0 py-3">
+            <a href="{{route("admin.hits.index")}}" class="btn btn-primary " type="submit">
+                الرجوع
+            </a>
         </div>
+    </div>
+    <div class="card-body">
+        <form method="" action="" enctype="multipart/form-data">
+
+            <div class="form-group">
+                <label class="required" for="client_id">العميل</label>
+                <select disabled="disabled" class="form-control pb-0  {{ $errors->has('client') ? 'is-invalid' : '' }}" name="client_id" id="client_id" required>
+                    @foreach($clients as $id => $entry)
+                        <option  value="{{ $id }}"  {{ (old('client_id') ? old('client_id') : $hit->client->id ?? '') == $id ? 'selected' : '' }}>{{ $entry }}</option>
+                    @endforeach
+                </select>
+                @if($errors->has('client'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('client') }}
+                    </div>
+                @endif
+            </div>
+            <div class="form-group">
+                <label for="date">التاريخ</label>
+                <input disabled="disabled"  class="form-control  {{ $errors->has('date') ? 'is-invalid' : '' }}" type="text" name="date" id="kt_datepicker_1" value="{{ old('date', $hit->date) }}">
+                @if($errors->has('date'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('date') }}
+                    </div>
+                @endif
+            </div>
+            <div class="form-group">
+                <label for="time">الوقت</label>
+                <input disabled="disabled"  class="form-control timepiker {{ $errors->has('time') ? 'is-invalid' : '' }}" type="text" name="time" id="kt_timepicker_2" value="{{ old('time', $hit->time) }}">
+                @if($errors->has('time'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('time') }}
+                    </div>
+                @endif
+            </div>
+            <div class="form-group">
+                <label class="required" for="visit_type_id">نوع الزيارة</label>
+                <select disabled="disabled"  class="form-control pb-0 {{ $errors->has('visit_type') ? 'is-invalid' : '' }}" name="visit_type_id" id="visit_type_id" required>
+                    @foreach($visit_types as $id => $entry)
+                        <option value="{{ $id }}" {{ (old('visit_type_id') ? old('visit_type_id') : $hit->visit_type->id ?? '') == $id ? 'selected' : '' }}>{{ $entry }}</option>
+                    @endforeach
+                </select>
+                @if($errors->has('visit_type'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('visit_type') }}
+                    </div>
+                @endif
+            </div>
+            <div class="form-group">
+                <label for="duration_visit">مدة الزيارة</label>
+                <input disabled="disabled"  class="form-control {{ $errors->has('duration_visit') ? 'is-invalid' : '' }}" type="text" name="duration_visit" id="duration_visit" value="{{ old('duration_visit', $hit->duration_visit) }}">
+                @if($errors->has('duration_visit'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('duration_visit') }}
+                    </div>
+                @endif
+            </div>
+            <div class="form-group">
+                <label for="number_samples">عدد العينات</label>
+                <input disabled="disabled"  class="form-control {{ $errors->has('number_samples') ? 'is-invalid' : '' }}" type="text" name="number_samples" id="number_samples" value="{{ old('number_samples', $hit->number_samples) }}">
+                @if($errors->has('number_samples'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('number_samples') }}
+                    </div>
+                @endif
+            </div>
+            <div class="form-group">
+                <label for="address">العنوان</label>
+                <input disabled="disabled"  class="form-control {{ $errors->has('address') ? 'is-invalid' : '' }}" type="text" name="address" id="address" value="{{ old('address', $hit->address) }}">
+                @if($errors->has('address'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('address') }}
+                    </div>
+                @endif
+            </div>
+            <div class="form-group">
+                <label for="report_type">نوع التقرير</label>
+                <input disabled="disabled"  class="form-control {{ $errors->has('report_type') ? 'is-invalid' : '' }}" type="text" name="report_type" id="report_type" value="{{ old('report_type', $hit->report_type) }}">
+                @if($errors->has('report_type'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('report_type') }}
+                    </div>
+                @endif
+            </div>
+            <div class="form-group">
+                <label for="report_status">حالة التقرير</label>
+                <input disabled="disabled"  class="form-control {{ $errors->has('report_status') ? 'is-invalid' : '' }}" type="text" name="report_status" id="report_status" value="{{ old('report_status', $hit->report_status) }}">
+                @if($errors->has('report_status'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('report_status') }}
+                    </div>
+                @endif
+            </div>
+            <div class="form-group">
+                <label for="user_id">المندوب</label>
+                <select disabled="disabled"  class="form-control pb-0 {{ $errors->has('user') ? 'is-invalid' : '' }}" name="user_id" id="user_id">
+                    @foreach($users as $id => $entry)
+                        <option value="{{ $id }}" {{ (old('user_id') ? old('user_id') : $hit->user->id ?? '') == $id ? 'selected' : '' }}>{{ $entry }}</option>
+                    @endforeach
+                </select>
+                @if($errors->has('user'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('user') }}
+                    </div>
+                @endif
+            </div>
+            <div class="form-group row">
+                <div class="col-md-6 col-lg-6 col-sm-12">
+                    <label>التصنيف</label>
+                    <select disabled="disabled"  class="form-control pb-0" id="category" name="category">
+                        <option value="" disabled selected>التصنيف </option>
+                        @foreach($data['category_select'] as $category)
+                            <option value="{{$category->value}}"{{ (old('category_id')? old('category_id') : $hit->category ?? '') == $category->value ? 'selected' : '' }}>{{$category->name}}		</option>
+
+                        @endforeach
+
+
+                    </select>
+                    <label class="form-text text-muted text-danger" id="unit-error"></label>
+                </div>
+            <div class="form-group">
+                <label for="note">الملاحظة</label>
+                <textarea disabled="disabled"  class="form-control {{ $errors->has('note') ? 'is-invalid' : '' }}" name="note" id="note">{{ old('note', $hit->note) }}</textarea>
+                @if($errors->has('note'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('note') }}
+                    </div>
+                @endif
+            </div>
+            {{-- <div class="form-group">
+                <label for="sms_id">{{ trans('cruds.hit.fields.sms') }}</label>
+                <select class="form-control select2 {{ $errors->has('sms') ? 'is-invalid' : '' }}" name="sms_id" id="sms_id">
+                    @foreach($sms as $id => $entry)
+                        <option value="{{ $id }}" {{ (old('sms_id') ? old('sms_id') : $hit->sms->id ?? '') == $id ? 'selected' : '' }}>{{ $entry }}</option>
+                    @endforeach
+                </select>
+                @if($errors->has('sms'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('sms') }}
+                    </div>
+                @endif
+            </div> --}}
+            {{-- <div class="form-group">
+                <label for="sms_message">{{ trans('cruds.hit.fields.sms_message') }}</label>
+                <textarea class="form-control {{ $errors->has('sms_message') ? 'is-invalid' : '' }}" name="sms_message" id="sms_message">{{ old('sms_message', $hit->sms_message) }}</textarea>
+                @if($errors->has('sms_message'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('sms_message') }}
+                    </div>
+                @endif
+                <span class="help-block">{{ trans('cruds.hit.fields.sms_message_helper') }}</span>
+            </div> --}}
+            <div class="form-group">
+                <label>نوع الزيارة</label>
+                <select disabled="disabled"  class="form-control pb-0 {{ $errors->has('type') ? 'is-invalid' : '' }}" name="type" id="type">
+                    <option value disabled {{ old('type', null) === null ? 'selected' : '' }}>النوع</option>
+                    @foreach(App\Models\Hit::TYPE_SELECT as $key => $label)
+                        <option value="{{ $key }}" {{ old('type', $hit->type) === (string) $key ? 'selected' : '' }}>{{ $label }}</option>
+                    @endforeach
+                </select>
+                @if($errors->has('type'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('type') }}
+                    </div>
+                @endif
+            </div>
+          <div class="form-group">
+            <label> العينات</label>
+            <div class="row w-100">
+                @foreach($sample as $key => $s)
+                    <div class="col">
+
+                        <div class="card border-info mx-sm-1 p-3">
+                            <div class=" col bg-light-dark rounded-xl text-dark text-center mt-3">العينة<h4>{{ $s->samples->sample->name}}</h4></div>
+                            <div class="col bg-light-dark rounded-xl text-dark text-center mt-2">الكمية<h1>{{ $s->quantity }}</h1></div>
+                        </div>
+                    </div>
+                @endforeach
+                </div>
+          </div>
+
+<div class="form-group">
+    <label>الحالة</label>
+    <select disabled="disabled"  class="form-control pb-0 {{ $errors->has('status') ? 'is-invalid' : '' }}" name="status" id="status">
+        <option value disabled {{ old('status', null) === null ? 'selected' : '' }}>{{ trans('global.pleaseSelect') }}</option>
+        @foreach(App\Models\Hit::STATUS_SELECT as $key => $label)
+            <option value="{{ $key }}" {{ old('status', $hit->status) === (string) $key ? 'selected' : '' }}>{{ $label }}</option>
+        @endforeach
+    </select>
+    @if($errors->has('status'))
+        <div class="invalid-feedback">
+            {{ $errors->first('status') }}
+        </div>
+    @endif
+    {{-- <span class="help-block">{{ trans('cruds.hit.fields.status_helper') }}</span> --}}
+</div>
+            </div>
+
+        </form>
     </div>
 </div>
 
 
 
 @endsection
+

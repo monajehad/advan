@@ -22,9 +22,9 @@ class StoreCategoryRequest extends FormRequest
                 'required',
                 'unique:categories',
             ],
-            'status' => [
-                'required',
-            ],
+            // 'status' => [
+            //     'required',
+            // ],
         ];
     }
 }

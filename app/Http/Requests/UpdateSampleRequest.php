@@ -49,9 +49,9 @@ class UpdateSampleRequest extends FormRequest
             //     'date_format:' . config('panel.date_format'),
             //     'nullable',
             // ],
-            'status' => [
-                'required',
-            ],
+            // 'status' => [
+            //     'required',
+            // ],
         ];
     }
 }

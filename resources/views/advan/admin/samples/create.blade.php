@@ -74,6 +74,7 @@
                     <div class="form-group">
                         <label class="required" for="sample_id">الاصناف</label>
                         <select class="form-control  {{ $errors->has('sample') ? 'is-invalid' : '' }}" name="sample_id" id="sample_id" required>
+                           <option>الاصناف</option>
                             @foreach($sample_stocks as $id => $entry)
                                 <option value="{{ $id }}" {{ old('sample_id') == $id ? 'selected' : '' }}>{{ $entry }}</option>
                             @endforeach
@@ -86,7 +87,7 @@
                     </div>
                     <div class="form-group">
                         <label for="date">التاريخ</label>
-                        <input type="text" class="form-control" readonly  value="01-2023" id="kt_datepicker_3"/>
+                        <input type="text" class="form-control" name="date" readonly  value="التاريخ" id="kt_datepicker_3"/>
                         {{-- <input class="form-control {{ $errors->has('date') ? 'is-invalid' : '' }}" type="text" name="date" id="date" value="{{ old('date') }}" placeholder="تاريخ"> --}}
                         @if($errors->has('date'))
                             <div class="invalid-feedback">

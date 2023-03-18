@@ -63,79 +63,29 @@
 
                 {{-- @endcan --}}
                 <!--begin::Dropdown-->
-                <div class="dropdown dropdown-inline mr-2 show">
-                    <button type="button" class="btn btn-light-primary font-weight-bolder dropdown-toggle"
-                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                        <span class="svg-icon svg-icon-md">
-                            <!--begin::Svg Icon | path:assets/media/svg/icons/Design/PenAndRuller.svg-->
-                            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
-                                width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
-                                <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                                    <rect x="0" y="0" width="24" height="24"></rect>
-                                    <path
-                                        d="M3,16 L5,16 C5.55228475,16 6,15.5522847 6,15 C6,14.4477153 5.55228475,14 5,14 L3,14 L3,12 L5,12 C5.55228475,12 6,11.5522847 6,11 C6,10.4477153 5.55228475,10 5,10 L3,10 L3,8 L5,8 C5.55228475,8 6,7.55228475 6,7 C6,6.44771525 5.55228475,6 5,6 L3,6 L3,4 C3,3.44771525 3.44771525,3 4,3 L10,3 C10.5522847,3 11,3.44771525 11,4 L11,19 C11,19.5522847 10.5522847,20 10,20 L4,20 C3.44771525,20 3,19.5522847 3,19 L3,16 Z"
-                                        fill="#000000" opacity="0.3"></path>
-                                    <path
-                                        d="M16,3 L19,3 C20.1045695,3 21,3.8954305 21,5 L21,15.2485298 C21,15.7329761 20.8241635,16.200956 20.5051534,16.565539 L17.8762883,19.5699562 C17.6944473,19.7777745 17.378566,19.7988332 17.1707477,19.6169922 C17.1540423,19.602375 17.1383289,19.5866616 17.1237117,19.5699562 L14.4948466,16.565539 C14.1758365,16.200956 14,15.7329761 14,15.2485298 L14,5 C14,3.8954305 14.8954305,3 16,3 Z"
-                                        fill="#000000"></path>
-                                </g>
-                            </svg>
-                            <!--end::Svg Icon-->
-                        </span>تصدير</button>
-                    <!--begin::Dropdown Menu-->
-                    <div class="dropdown-menu dropdown-menu-sm dropdown-menu-right"
-                        style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(-62px, 39px, 0px);"
-                        x-placement="bottom-end">
-                        <!--begin::Navigation-->
-                        <ul class="navi flex-column navi-hover py-2">
-                            <li class="navi-header font-weight-bolder text-uppercase font-size-sm text-primary pb-2">
-                                تصدير كـ:</li>
-                            <li class="navi-item">
-                                <a href="#" class="navi-link">
-                                    <span class="navi-icon">
-                                        <i class="la la-print"></i>
-                                    </span>
-                                    <span class="navi-text">طباعة</span>
-                                </a>
-                            </li>
-                            <li class="navi-item">
-                                <a href="#" class="navi-link">
-                                    <span class="navi-icon">
-                                        <i class="la la-copy"></i>
-                                    </span>
-                                    <span class="navi-text">نسخ</span>
-                                </a>
-                            </li>
-                            <li class="navi-item">
-                                <a href="#" class="navi-link">
-                                    <span class="navi-icon">
-                                        <i class="la la-file-excel-o"></i>
-                                    </span>
-                                    <span class="navi-text">إكسل</span>
-                                </a>
-                            </li>
-                            <li class="navi-item">
-                                <a href="#" class="navi-link">
-                                    <span class="navi-icon">
-                                        <i class="la la-file-text-o"></i>
-                                    </span>
-                                    <span class="navi-text">CSV</span>
-                                </a>
-                            </li>
-                            <li class="navi-item">
-                                <a href="#" class="navi-link">
-                                    <span class="navi-icon">
-                                        <i class="la la-file-pdf-o"></i>
-                                    </span>
-                                    <span class="navi-text">PDF</span>
-                                </a>
-                            </li>
-                        </ul>
-                        <!--end::Navigation-->
-                    </div>
-                    <!--end::Dropdown Menu-->
-                </div>
-                <!--end::Dropdown-->
+                <a href="{{route('admin.samples.export.excel')}}" class="btn btn-info mx-1 font-size-sm"
+                id="export-button">
+                <span class="svg-icon svg-icon-md svg-icon-2x">
+                    <!--begin::Svg Icon | path:C:\wamp64\www\keenthemes\legacy\metronic\theme\html\demo1\dist/../src/media/svg/icons\Files\Export.svg--><svg
+                        xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px"
+                        height="24px" viewBox="0 0 24 24" version="1.1">
+                        <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                            <rect x="0" y="0" width="24" height="24" />
+                            <path
+                                d="M17,8 C16.4477153,8 16,7.55228475 16,7 C16,6.44771525 16.4477153,6 17,6 L18,6 C20.209139,6 22,7.790861 22,10 L22,18 C22,20.209139 20.209139,22 18,22 L6,22 C3.790861,22 2,20.209139 2,18 L2,9.99305689 C2,7.7839179 3.790861,5.99305689 6,5.99305689 L7.00000482,5.99305689 C7.55228957,5.99305689 8.00000482,6.44077214 8.00000482,6.99305689 C8.00000482,7.54534164 7.55228957,7.99305689 7.00000482,7.99305689 L6,7.99305689 C4.8954305,7.99305689 4,8.88848739 4,9.99305689 L4,18 C4,19.1045695 4.8954305,20 6,20 L18,20 C19.1045695,20 20,19.1045695 20,18 L20,10 C20,8.8954305 19.1045695,8 18,8 L17,8 Z"
+                                fill="#000000" fill-rule="nonzero" opacity="0.3" />
+                            <rect fill="#000000" opacity="0.3"
+                                transform="translate(12.000000, 8.000000) scale(1, -1) rotate(-180.000000) translate(-12.000000, -8.000000) "
+                                x="11" y="2" width="2" height="12" rx="1" />
+                            <path
+                                d="M12,2.58578644 L14.2928932,0.292893219 C14.6834175,-0.0976310729 15.3165825,-0.0976310729 15.7071068,0.292893219 C16.0976311,0.683417511 16.0976311,1.31658249 15.7071068,1.70710678 L12.7071068,4.70710678 C12.3165825,5.09763107 11.6834175,5.09763107 11.2928932,4.70710678 L8.29289322,1.70710678 C7.90236893,1.31658249 7.90236893,0.683417511 8.29289322,0.292893219 C8.68341751,-0.0976310729 9.31658249,-0.0976310729 9.70710678,0.292893219 L12,2.58578644 Z"
+                                fill="#000000" fill-rule="nonzero"
+                                transform="translate(12.000000, 2.500000) scale(1, -1) translate(-12.000000, -2.500000) " />
+                        </g>
+                    </svg>
+                    <!--end::Svg Icon-->
+                </span>
+                تصدير إكسل</a>
             </div>
         </div>
 
@@ -161,33 +111,36 @@
                             </div> --}}
                             <div class="col-md-3 my-2 my-md-0">
                                 <div class="d-flex align-items-center">
-                                    <select id="user_search" class=" form-control search_select" name="user_search">
+                                    <select id="user_search" class="pb-0 form-control search_select" name="user_search">
                                         <option value="" selected>المندوب  </option>
 
-                                        @foreach($samples as $sample)
+                                        {{-- @foreach($samples as $sample)
                                         @if(isset($sample->user)&&isset($sample->user->id))
                                         <option  value="{{$sample->user->id}}">{{$sample->user->name}}</option>
                                        @endif
-                                        @endforeach
+                                        @endforeach --}}
+                                        @foreach($users as $id => $entry)
+                                        <option value="{{ $id }}" >{{ $entry }}</option>
+                                    @endforeach
                                     </select>
                                 </div>
                             </div>
                             <div class="col-md-3 my-2 my-md-0">
                                 <div class="d-flex align-items-center">
-                                    <select id="category_search" class=" form-control search_select" name="category_search">
+                                    <select id="category_search" class="pb-0 form-control search_select" name="category_search">
                                         <option value="" selected>عائلة الصنف </option>
 
-                                        @foreach($samples as $sample)
-                                        @if(isset($sample->category)&&isset($sample->category->id))
-                                        <option  value="{{$sample->category->id}}">{{$sample->category->name}}</option>
-                                       @endif
+                                        {{-- @foreach($samples as $sample) --}}
+                                        @foreach($categories as $id => $entry)
+                                        <option value="{{ $id }}">{{ $entry }}</option>
                                         @endforeach
+                                        {{-- @endforeach --}}
                                     </select>
                                 </div>
                             </div>
                             <div class="col-md-3 my-2 my-md-0">
                                 <div class="d-flex align-items-center">
-                                    <select id="date_search" class=" form-control search_select" name="date_search">
+                                    <select id="date_search" class="pb-0 form-control search_select" name="date_search">
                                         <option value="" selected>التاريخ  </option>
 
                                         @foreach($samples as $sample)

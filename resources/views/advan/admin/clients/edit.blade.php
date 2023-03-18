@@ -177,7 +177,7 @@
                         <label>المنطقة </label>
                         <select class="form-control pl-0 pb-0 pt-0" id="area_2" name="area_2">
                             <?php    $areas_3=array('الشمال','الجنوب','الوسطى','غزة')?>
-                            <option value="" disabled selected>المنطقة الثانية </option>
+                            <option value="" disabled selected>المنطقة الثالثة </option>
                             @foreach($areas_3 as $area_3)
                                 <option value="{{$area_3}}" {{ ($client->area_3 ??'') == $area_3 ? 'selected':'' }}>  {{$area_3 }}	</option>
 

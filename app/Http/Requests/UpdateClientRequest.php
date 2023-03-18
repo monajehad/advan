@@ -94,9 +94,9 @@ class UpdateClientRequest extends FormRequest
                 'nullable',
             ],
 
-            'status' => [
-                'required',
-            ],
+            // 'status' => [
+            //     'required',
+            // ],
         ];
     }
 }

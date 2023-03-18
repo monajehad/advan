@@ -156,4 +156,61 @@ class UsersController extends Controller
 
         return response()->json(['id' => $media->id, 'url' => $media->getUrl()], Response::HTTP_CREATED);
     }
+    public function export_excel()
+    {
+        $users= User::with(['category','item','userHits','roles'])->select('id','name','email','mobile'
+        ,'home_address','jobId',
+        )
+        ->orderBy('id','desc')->get();
+        @ob_start();
+        echo  chr(239) . chr(187) . chr(191);
+        $table="
+            <table border='1' class='table table-bordered text-center'>
+            <thead>
+            <tr>
+            <th>#</th>
+            <th>اسم الثلاثي</th>
+                <th> البريد الالكتروني</th>
+                <th> الجوال</th>
+                <th> السكن</th>
+                <th> الرقم الوظيفي</th>
+                <th> الزيارات</th>
+            </tr>
+            </thead>
+            <tbody style='text-align:center;'>
+            ";
+        if (count($users)>0) {
+            foreach ($users as $key=>$user) {
+                $i=$key+1;
+                $table.="
+                    <tr>
+                        <td>". $i  ."</td>
+                        <td >". $user->name  ."</td>
+                        <td >". $user->email ."</td>
+                        <td >". $user->mobile ."</td>
+                        <td >". $user->home_address  ."</td>
+                        <td >". $user->jobId ."</td>
+                        <td >". $user->userHits()->count()  ."</td>
+
+                    ";
+                }
+            }else{
+                     $table.="
+                     <tr>
+                         <td style='text-align:center;font-weight:bold;' colspan=\"8\">لا يوجد مستخدمين</td>
+                     </tr>
+                     ";
+            }
+            $table.="
+            </tbody>
+            </table>
+            ";
+            echo $table;
+            $filename="المندوب";
+            header("Content-Type: application/xls");
+            header("Content-Disposition: attachment; filename=".$filename.".xls");
+            header("Pragma: no-cache");
+            header("Expires: 0");
+
+    }
 }

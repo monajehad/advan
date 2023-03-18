@@ -38,15 +38,9 @@ class="table-responsive datatable datatable-bordered datatable-head-custom datat
                     </td>
                     <td class="unit">
 
-                   {{-- @foreach ($items as $item) --}}
-
-
-                        {{-- @if ($item->id == $item->id) --}}
 
                            {{$sample->unit_name}}
 
-                        {{-- @endif --}}
-                     {{-- @endforeach --}}
                     </td>
 
                     <td class="name">{{$sample->user->name}}</td>

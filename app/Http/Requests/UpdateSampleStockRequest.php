@@ -49,9 +49,9 @@ class UpdateSampleStockRequest extends FormRequest
                 // 'required',
                 'integer',
             ],
-            'status' => [
-                'required',
-            ],
+            // 'status' => [
+            //     'required',
+            // ],
         ];
     }
 }

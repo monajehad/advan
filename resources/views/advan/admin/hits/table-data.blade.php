@@ -38,33 +38,15 @@
                 {{$hit->client->name}}
             </td>
             <td class="category">
-
                 {{$hit->category_name}}
-
             </td>
             <td class="unit">
-
-           {{-- @foreach ($items as $item) --}}
-
-
-                {{-- @if ($item->id == $item->id) --}}
-
                    {{$hit->client->address_1 ??''}}
-
-                {{-- @endif --}}
-             {{-- @endforeach --}}
             </td>
 
             <td class="name">{{$hit->user->name ??''}}</td>
             <td class="name">{{$hit->date}}</td>
             <td class="name">{{$hit->time}}</td>
-
-
-
-
-            {{-- <td class="name">{{$hit->sample->sample->name}}</td> --}}
-
-
             <td class="name">{{$hit->note}}</td>
 
             {{-- <td class="name">{{$hit_stock->clinetHits->id}}</td> --}}

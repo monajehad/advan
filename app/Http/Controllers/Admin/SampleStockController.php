@@ -39,11 +39,11 @@ class SampleStockController extends Controller
         //     // ->orWhere('category_names','like','%'.$request->search.'%');
         // }
         if($request->category){
-            $samples_stock=$samples_stock->where('samples_stock.category_id',$request->category);
+            $samples_stock=$samples_stock->where('sample_stocks.category_id',$request->category);
             // ->orWhere('category_names','like','%'.$request->search.'%');
         }
         if($request->date){
-            $samples_stock=$samples_stock->where('samples_stock.date',$request->date);
+            $samples_stock=$samples_stock->where('sample_stocks.date',$request->date);
             // ->orWhere('category_names','like','%'.$request->search.'%');
         }
         $samples_stock=$samples_stock->orderBy('id','desc')->paginate(self::PAGINATION_NO);
@@ -79,9 +79,12 @@ class SampleStockController extends Controller
     }
 
     public function store(StoreSampleStockRequest $request) {
+
         if($request->status == 'on'){
             $request['status']='1';
 
+      }else{
+        $request['status']='0';
       }
 
         $request['available']=$request->quantity - $request->received_quantity;
@@ -111,9 +114,11 @@ class SampleStockController extends Controller
     public function update(UpdateSampleStockRequest $request, SampleStock $sampleStock)
     {
         if($request->status == 'on'){
-            $request->status='1';
+            $request['status']='1';
+      }else{
+        $request['status']='0';
       }
-      $request['status']='1';
+
 
         $sampleStock->update($request->all());
 
@@ -155,5 +160,70 @@ class SampleStockController extends Controller
         SampleStock::whereIn('id', request('ids'))->delete();
 
         return response(null, Response::HTTP_NO_CONTENT);
+    }
+
+    public function export_excel()
+    {
+        $samples_stock=SampleStock::
+        leftJoin('system_constants as unit_constants', function($join) {
+            $join->on('unit_constants.value', '=', 'sample_stocks.unit')->where('unit_constants.type','unit')->whereNull('unit_constants.deleted_at');
+        })
+        ->select('unit_constants.name as unit_name','sample_stocks.id','sample_stocks.item_id','sample_stocks.unit','sample_stocks.category_id'
+        ,'sample_stocks.quantity','sample_stocks.status','sample_stocks.received_quantity','sample_stocks.date')->with(['category','item'])
+        ->orderBy('id','desc')->get();
+        @ob_start();
+        echo  chr(239) . chr(187) . chr(191);
+        $table="
+            <table border='1' class='table table-bordered text-center'>
+            <thead>
+            <tr>
+            <th>#</th>
+            <th>اسم الصنف</th>
+            <th> العائلة</th>
+            <th> الوحدة</th>
+            <th> كمية المخزون</th>
+            <th> الكمية الموزعة</th>
+            <th> الكمية المتبقية</th>
+            <th> شهر/سنة</th>
+
+            </tr>
+            </thead>
+            <tbody style='text-align:center;'>
+            ";
+            if (count($samples_stock)>0) {
+                foreach ($samples_stock as $key=>$sample_stock) {
+                    $i=$key+1;
+                    $table.="
+                        <tr>
+                            <td>". $i  ."</td>
+                            <td >". $sample_stock->item ? $sample_stock->item->name : ''  ."</td>
+                            <td >". $sample_stock->category->name ??''  ."</td>
+                            <td >". $sample_stock->unit_name ."</td>
+                            <td >". $sample_stock->quantity  ."</td>
+                            <td >". $sample_stock->received_quantity ."</td>
+                            <td >". $sample_stock->quantity - $sample_stock->received_quantity   ."</td>
+                            <td >".  $sample_stock->date   ."</td>
+
+        </tr>
+                        ";
+                    }
+            }else{
+                     $table.="
+                     <tr>
+                         <td style='text-align:center;font-weight:bold;' colspan=\"8\">لا يوجد مخزون العينات</td>
+                     </tr>
+                     ";
+            }
+            $table.="
+            </tbody>
+            </table>
+            ";
+            echo $table;
+            $filename="مخزون العينة";
+            header("Content-Type: application/xls");
+            header("Content-Disposition: attachment; filename=".$filename.".xls");
+            header("Pragma: no-cache");
+            header("Expires: 0");
+
     }
 }
