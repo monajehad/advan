@@ -156,6 +156,13 @@
                     </div>
 
                 </div>
+                <div class="mt-5 mb-5  ml-9" id="">
+                    <div class="d-flex align-items-center">
+
+                        <button class="btn btn-sm btn-danger mr-2 delete_all" type="button" data-url="{{ url('admin/samples/destroy') }}" >Delete All</button>
+
+                    </div>
+            </div>
             </div>
 
             <!--begin::Table-->
@@ -253,6 +260,48 @@ $('.search_select').on('change',function() {
 })
 
 
+
+$(document).on('click','.delete_all',function(){
+
+// $('.delete_all').on('click', function(e) {
+            var allVals = [];
+            $(".sub_chk:checked").each(function() {
+                allVals.push($(this).attr('data-id'));
+            });
+            if(allVals.length <=0)
+            {
+                alert("من فضلك اختار العينة");
+            }  else {
+                var check = confirm("هل تريد حذف العينات؟");
+                if(check == true){
+                    var join_selected_values = allVals.join(",");
+                    $.ajax({
+                        url: $(this).data('url'),
+                        type: 'DELETE',
+                        headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                        data: 'ids='+join_selected_values,
+                        success: function (data) {
+                            if (data['success']) {
+                                $(".sub_chk:checked").each(function() {
+                                    $(this).parents("tr").remove();
+                                });
+                                alert(data['success']);
+                            } else if (data['error']) {
+                                alert(data['error']);
+                            } else {
+                                alert('حدث خطأ');
+                            }
+                        },
+                        error: function (data) {
+                            alert(data.responseText);
+                        }
+                    });
+                  $.each(allVals, function( index, value ) {
+                      $('table tr').filter("[data-row-id='" + value + "']").remove();
+                  });
+                }
+            }
+        });
 
 $(document).on('click', '.delete-sample', function() {
     var id = $(this).data('sample-id');

@@ -186,6 +186,7 @@ return [
         Maatwebsite\Excel\ExcelServiceProvider::class,
         Elibyy\TCPDF\ServiceProvider::class,
         LaravelFCM\FCMServiceProvider::class,
+        Mccarlosen\LaravelMpdf\LaravelMpdfServiceProvider::class,
         /*
          * Package Service Providers...
          */
@@ -251,6 +252,7 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         'Excel' => Maatwebsite\Excel\Facades\Excel::class,
         'TCPDF' => Elibyy\TCPDF\Facades\TCPDF::class,
+        'PDF' => Mccarlosen\LaravelMpdf\Facades\LaravelMpdf::class,
 
 	    'FCM'      => LaravelFCM\Facades\FCM::class,
 	    // 'FCMGroup' => LaravelFCM\Facades\FCMGroup::class,

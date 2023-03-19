@@ -393,7 +393,7 @@
 
 </div>
 @endsection
-<!-- 
+<!--
 @section('script')
 	<script>
 var data = {

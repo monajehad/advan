@@ -83,7 +83,7 @@ Route::apiResource('hits-types', HitsTypeApiController::class);
  Route::apiResource('clients', ClientsApiController::class);
 
   // Report
-  Route::apiResource('reports', ReportApiController::class);
+  Route::apiResource('report', ReportApiController::class);
   Route::post('reports/{id}/update',[ReportApiController::class,'update'] );
 
  // Sms Message

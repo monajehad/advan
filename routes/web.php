@@ -14,6 +14,7 @@ use App\Http\Controllers\Admin\LoginController;
 use App\Http\Controllers\Admin\NotificationController;
 use App\Http\Controllers\Admin\PermissionsController;
 use App\Http\Controllers\Admin\ReportController;
+use App\Http\Controllers\admin\ReporttendController;
 use App\Http\Controllers\Admin\ReportTypeController;
 use App\Http\Controllers\Admin\RolesController;
 use App\Http\Controllers\Admin\SamplesController;
@@ -111,7 +112,7 @@ Route::group([ 'prefix' => 'admin', 'as' => 'admin.']
       Route::post('clients-specialties/delete', [ClientsSpecialtiesController::class,'destroy'])->name('clients-specialties.delete');
 
       // Clients
-      Route::delete('clients/destroy', [ClientsController::class,'classmassDestroy'])->name('clients.massDestroy');
+      Route::delete('clients/destroy', [ClientsController::class,'massDestroy'])->name('clients.massDestroy');
       Route::post('clients/media', [ClientsController::class,'storeMedia'])->name('clients.storeMedia');
       Route::post('clients/ckmedia', [ClientsController::class,'storeCKEditorImages'])->name('clients.storeCKEditorImages');
       Route::post('clients/parse-csv-import', [ClientsController::class,'parseCsvImport'])->name('clients.parseCsvImport');
@@ -119,6 +120,7 @@ Route::group([ 'prefix' => 'admin', 'as' => 'admin.']
       Route::resource('clients', ClientsController::class);
       Route::post('clients/delete', [ClientsController::class,'destroy'])->name('clients.delete');
       Route::get('clients/export/excel', [ClientsController::class,'export_excel'])->name('clients.export.excel');
+      Route::get('clients/export/pdf', [ClientsController::class,'pdf'])->name('clients.export.pdf');
 
       // Report Type
       Route::delete('report-types/destroy', [ReportTypeController::class,'massDestroy'])->name('report-types.massDestroy');
@@ -272,8 +274,15 @@ Route::group([ 'prefix' => 'admin', 'as' => 'admin.']
 
 
 });
+// middleware('can:reports')->
+Route::prefix('reports')->name('reports.')->group(function(){
+    Route::get('/',[ReporttendController::class,'index'] )->name('index');
+    Route::get('/export/excel',[ReporttendController::class,'exportExcel'] )->name('excel');
+    Route::get('/clients',[ReporttendController::class,'get_clients'] )->name('clients');
+    Route::get('/tenders',[ReporttendController::class,'get_tenders'] )->name('tenders');
+    Route::get('/items',[ReporttendController::class,'get_items'] )->name('items');
 
-
+});
 
 Route::get('/clear', function () {
 

@@ -29,7 +29,7 @@ class="table-responsive datatable datatable-bordered datatable-head-custom datat
     <tbody class="text-center font-size-sm">
         @forelse($samples as $sample)
                 <tr class="data-row">
-                    <td class="iteration">{{$loop->iteration}}</td>
+                    <td class="checkbox--solid"> <input type="checkbox" class="sub_chk" data-id="{{$sample->id}}"></td>
                     <td class="name">
                         {{$sample->sample->name}}
                     </td>

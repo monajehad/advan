@@ -125,7 +125,7 @@
                             <div class="col-md-6 col-lg-6 col-sm-12">
                                 <label> المنطقة الاولى</label>
                                 <select class="form-control pl-0 pb-0 pt-0" id="area_1" name="area_1">
-                                    <option value="" disabled selected>التصنيف </option>
+                                    <option value="" disabled selected>المنطقة </option>
                                     @foreach($data['area_1_select'] as $area_1)
                                         <option value="{{$area_1->value}}" {{ (old('area_1_id')? old('area_1_id') : $client->area_1 ?? '') == $area_1->value ? 'selected' : '' }}>{{$area_1->name}}	</option>
 

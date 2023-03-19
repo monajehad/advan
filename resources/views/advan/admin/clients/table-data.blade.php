@@ -32,8 +32,8 @@
          <tbody class="text-center font-size-sm">
              @forelse($data['clients'] as $client)
              <tr class="data-row">
-                 <td class="iteration">{{$loop->iteration}}</td>
-                 <td class="name">{{$client->name}}</td>
+                <td class="checkbox--solid"> <input type="checkbox" class="sub_chk" data-id="{{$client->id}}"></td>
+                <td class="name">{{$client->name}}</td>
                  <td class="name">{{$client->category_name}}</td>
                  <td class="name">{{$client->specialty->name}}</td>
                  <td class="name">{{$client->item}}</td>
@@ -112,3 +112,4 @@
  <div class="paging">
      {{-- {!! $data['clients']->links() !!} --}}
  </div>
+

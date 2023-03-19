@@ -16,6 +16,23 @@
     font-weight: bold !important;
 }
 </style>
+<style>
+	::before {
+
+    right: 0 !important;
+
+}
+.stock-icon.ic2.p-3.rounded-circle.d-inline-block.mb-4 {
+	background-color:  rgba(255, 165, 0, 0.15) !important;
+}
+
+.title.title-color.red.title-custom::before {
+	width: 10px !important;
+    height: 10px !important;
+    border-radius: 50% !important;
+	background-color:rgba(42, 133, 255, 0.85) !important;
+}
+</style>
 @endsection
 
 
@@ -325,6 +342,115 @@
 
         </div>
         <!--end::Body-->
+        <div class="card mb-2" dir="rtl">
+            <div
+                class="card-head d-flex align-items-start align-items-sm-center justify-content-between flex-column flex-sm-row p-4 p-sm-5">
+                <div class="title title-color purple me-5 mb-4 mb-sm-0 d-flex">
+                    <h3 class="section-title ml-7" style="margin-right: 20px; margin-left:20px"> طلبات </h3>
+                    <div class="nav row gx-4 ms-sm-auto flex-nowrap d-flex mb-4 mb-sm-0 align-self-stretch">
+                        <div class="btn-tab btn-small col  active" data-bs-target="#tab-products" data-bs-toggle="tab">
+                            <h4>العملاء</h4>
+                        </div>
+
+                    </div>
+                    <select class="select select-small tabs select-wide select-fill ms-auto d-md-none">
+                        <option value="#tab-products">العميل</option>
+
+                    </select>
+                </div>
+                <div class=" d-flex ">
+                    <div class="card-toolbar">
+                        <a href="{{route("admin.clients.index")}}" class="btn btn-sm btn-light"> مشاهدة
+                            الكل</a>
+                    </div>
+
+                </div>
+            </div>
+            <div class="card-body products tab-content">
+                <div class="row g-0 pb-5 tab-pane fade active show" id="tab-products" role="tabpanel">
+                    <div class="sheet-table d-table ">
+                        <div class="d-table-row">
+                            <div class="d-table-cell py-4 px-5 caption">العميل</div>
+                            <div class="d-none d-md-table-cell py-4 ps-5 caption">التخصص</div>
+                            <div class="d-none d-md-table-cell py-4 ps-5 caption">المنطقة</div>
+                            <div class="d-table-cell py-4 caption">الزيارات</div>
+                            {{-- <div class="d-table-cell py-4 px-5 caption">تاريخ الطلب</div>pp --}}
+                        </div>
+                       @foreach($data['clients'] as $client)
+
+                        <div class="d-table-row grid-markup">
+                            <div class="sheet-cell d-table-cell py-3 px-5">{{$client->name}} </div>
+
+                            <div class="sheet-cell d-table-cell py-3">{{$client->specialty->name}}</div>
+                            <div class="sheet-cell d-table-cell py-3">{{$client->area_1_name}}</div>
+                            <div class="sheet-cell d-table-cell py-3">{{$client->clientHits()->count()}}</div>
+                        </div>
+
+
+                        @endforeach
+
+                </div>
+
+                    </div>
+              </div>
+
+        </div>
+        <div class="card mb-2" dir="rtl">
+            <div
+                class="card-head d-flex align-items-start align-items-sm-center justify-content-between flex-column flex-sm-row p-4 p-sm-5">
+                <div class="title title-color purple me-5 mb-4 mb-sm-0 d-flex">
+                    <h3 class="section-title ml-7" style="margin-right: 20px; margin-left:20px"> طلبات </h3>
+                    <div class="nav row gx-4 ms-sm-auto flex-nowrap d-flex mb-4 mb-sm-0 align-self-stretch">
+
+                        <div class="btn-tab btn-small col active" data-bs-target="#tab-traffic" data-bs-toggle="tab">
+                            <h4>العينات</h4>
+                        </div>
+                    </div>
+                    <select class="select select-small tabs select-wide select-fill ms-auto d-md-none">
+                        <option value="#tab-traffic">الزيارات </option>
+                    </select>
+                </div>
+                <div class=" d-flex ">
+                    <div class="card-toolbar">
+                        <a href="{{route("admin.hits.index")}}" class="btn btn-sm btn-light"> مشاهدة
+                            الكل</a>
+                    </div>
+
+                </div>
+            </div>
+            <div class="card-body products tab-content">
+                <div class="row g-0 pb-5">
+                    <div class="sheet-table d-table d-table ">
+                        <div class="d-table-row">
+                            <div class="d-table-cell py-4 px-5 caption">العميل</div>
+                            <div class="d-none d-md-table-cell py-4 ps-5 caption">التخصص</div>
+                            <div class="d-none d-md-table-cell py-4 ps-5 caption">المنطقة</div>
+                            <div class="d-table-cell py-4 caption">المندوب</div>
+                            <div class="d-table-cell py-4 px-5 caption">تاريخ الطلب</div>
+                        </div>
+                        @foreach($hits as $hit)
+
+                        <div class="d-table-row grid-markup">
+                            <div class="sheet-cell d-table-cell py-3 px-5">{{$hit->client->name}} </div>
+
+                            <div class="sheet-cell d-table-cell py-3">{{$hit->category_name}}</div>
+                            <div class="sheet-cell d-table-cell py-3"> {{$hit->area_1_name ??''}}</div>
+                            <div class="sheet-cell d-table-cell py-3">{{$hit->user->name ??''}}</div>
+                            <div class="sheet-cell d-table-cell py-3">{{$hit->date}}</div>
+
+                        </div>
+
+
+                        @endforeach
+
+                </div>
+
+                    </div>
+                </div>
+
+                </div>
+            </div>
+        </div>
     </div>
 
 

@@ -11,8 +11,9 @@ use App\Http\Requests\UpdateClientRequest;
 use App\Models\Client;
 use App\Models\ClientsSpecialty;
 use App\Models\SystemConstant;
-use Gate;
+use Mccarlosen\LaravelMpdf\Facades\LaravelMpdfuse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Symfony\Component\HttpFoundation\Response;
 use Yajra\DataTables\Facades\DataTables;
@@ -210,11 +211,11 @@ class ClientsController extends Controller
 
     }
 
-    public function massDestroy(MassDestroyClientRequest $request)
+    public function massDestroy(Request $request)
     {
-        Client::whereIn('id', request('ids'))->delete();
-
-        return response(null, Response::HTTP_NO_CONTENT);
+        $ids = $request->ids;
+        DB::table("clients")->whereIn('id',explode(",",$ids))->delete();
+        return response()->json(['success'=>"تم حذف العميل؟ ."]);
     }
 
     public function storeCKEditorImages(Request $request)
@@ -297,4 +298,55 @@ class ClientsController extends Controller
             header("Expires: 0");
 
     }
+
+
+    public function pdf()
+    {
+        $clients=Client::
+        leftJoin('system_constants as category_constants', function($join) {
+            $join->on('category_constants.value', '=', 'clients.category')->where('category_constants.type','category')->whereNull('category_constants.deleted_at');
+        })->leftJoin('system_constants as area_1_constants', function($join) {
+            $join->on('area_1_constants.value', '=', 'clients.area_1')->where('area_1_constants.type','area_1')->whereNull('area_1_constants.deleted_at');
+        })
+        ->select('category_constants.name as category_name','area_1_constants.name as area_1_name','clients.id','clients.specialty_id','clients.category','clients.name','clients.item','clients.area_1','clients.status')
+        ->with(['specialty','clientHits']);
+
+
+        $pdf = LaravelMpdfuse::loadView('advan.admin.clients.table-data', $clients,
+        [
+            'mode'                       => '',
+            'format'                     => 'A4',
+            'default_font_size'          => '12',
+            'default_font'               => 'sans-serif',
+            'margin_left'                => 10,
+            'margin_right'               => 10,
+            'margin_top'                 => 10,
+            'margin_bottom'              => 10,
+            'margin_header'              => 0,
+            'margin_footer'              => 0,
+            'orientation'                => 'P',
+            'title'                      => 'Laravel mPDF',
+            'author'                     => '',
+            'watermark'                  => '',
+            'show_watermark'             => false,
+            'show_watermark_image'       => false,
+            'watermark_font'             => 'sans-serif',
+            'display_mode'               => 'fullpage',
+            'watermark_text_alpha'       => 0.1,
+            'watermark_image_path'       => '',
+            'watermark_image_alpha'      => 0.2,
+            'watermark_image_size'       => 'D',
+            'watermark_image_position'   => 'P',
+            'custom_font_dir'            => '',
+            'custom_font_data'           => [],
+            'auto_language_detection'    => false,
+            'temp_dir'                   => storage_path('app'),
+            'pdfa'                       => false,
+            'pdfaauto'                   => false,
+            'use_active_forms'           => false,
+        ]);
+
+        return $pdf->stream('clients.pdf');
+    }
+
 }

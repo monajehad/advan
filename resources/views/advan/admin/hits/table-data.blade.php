@@ -33,7 +33,7 @@
      <tbody class="text-center font-size-sm">
         @forelse($hits as $hit)
         <tr class="data-row">
-            <td class="iteration">{{$loop->iteration}}</td>
+            <td class="checkbox--solid"> <input type="checkbox" class="sub_chk" data-id="{{$hit->id}}"></td>
             <td class="name">
                 {{$hit->client->name}}
             </td>
@@ -41,7 +41,7 @@
                 {{$hit->category_name}}
             </td>
             <td class="unit">
-                   {{$hit->client->address_1 ??''}}
+                   {{$hit->area_1_name ??''}}
             </td>
 
             <td class="name">{{$hit->user->name ??''}}</td>

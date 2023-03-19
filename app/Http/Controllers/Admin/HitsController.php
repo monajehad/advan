@@ -18,6 +18,7 @@ use App\Models\User;
 use Carbon\Carbon;
 use Gate;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Symfony\Component\HttpFoundation\Response;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -28,11 +29,14 @@ class HitsController extends Controller
 
     public function index(Request $request)
     {
+        $area_1_select=SystemConstant::select('id','name','value','type')->where([['type','area_1']])->orderBy('order')->get();
 
         $hits=Hit::leftJoin('system_constants as category_constants', function($join) {
             $join->on('category_constants.value', '=', 'hits.category')->where('category_constants.type','category')->whereNull('category_constants.deleted_at');
+        })->leftJoin('system_constants as area_1_constants', function($join) {
+            $join->on('area_1_constants.value', '=', 'hits.area_1')->where('area_1_constants.type','area_1')->whereNull('area_1_constants.deleted_at');
         })
-        ->select('category_constants.name as category_name','hits.id','hits.address','hits.date','hits.time','hits.note','hits.category','hits.client_id','hits.user_id','hits.status')
+        ->select('category_constants.name as category_name','area_1_constants.name as area_1_name','hits.id','hits.area_1','hits.address','hits.date','hits.time','hits.note','hits.category','hits.client_id','hits.user_id','hits.status')
         ->with(['client','user','samples']);
 
         if($request->user){
@@ -40,7 +44,7 @@ class HitsController extends Controller
             ;
         }
         if($request->address){
-            $hits=$hits->where('hits.client_id',$request->address)
+            $hits=$hits->where('hits.area_1',$request->address)
             ;
         }
         if($request->date){
@@ -55,7 +59,7 @@ class HitsController extends Controller
         }
         $clients            = Client::get();
         $users              = User::get();
-        return view('advan.admin.hits.index',compact('hits','clients','users'));
+        return view('advan.admin.hits.index',compact('hits','clients','users','area_1_select'));
 
                 // $d = explode(' ', $row->date_time);
                 // if (count($d) > 1) {
@@ -197,6 +201,8 @@ class HitsController extends Controller
     {
         // abort_if(Gate::denies('hit_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $data=[];
+        $area_1_select=SystemConstant::select('id','name','value','type')->where([['type','area_1']])->orderBy('order')->get();
+
         $category_select=SystemConstant::select('id','name','value','type')->where([['type','category']])->orderBy('order')->get();
         $data['category_select']=$category_select;
 
@@ -211,7 +217,7 @@ class HitsController extends Controller
 
         $hit->load('client', 'visit_type', 'user', 'sms');
 
-        return view('advan.admin.hits.edit', compact('clients', 'visit_types', 'users', 'data', 'hit'));
+        return view('advan.admin.hits.edit', compact('clients', 'visit_types', 'users', 'data', 'hit','area_1_select'));
     }
 
     public function update(UpdateHitRequest $request, Hit $hit)
@@ -266,11 +272,14 @@ class HitsController extends Controller
 
     }
 
-    public function massDestroy(MassDestroyHitRequest $request)
+    public function massDestroy(Request $request)
     {
-        Hit::whereIn('id', request('ids'))->delete();
 
-        return response(null, Response::HTTP_NO_CONTENT);
+            $ids = $request->ids;
+            DB::table("hits")->whereIn('id',explode(",",$ids))->delete();
+            return response()->json(['success'=>"تم حذف الزيارة ."]);
+
+
     }
     public function export_excel()
 {

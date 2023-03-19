@@ -15,6 +15,7 @@ use App\Models\User;
 use Carbon\Carbon;
 use Gate;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Symfony\Component\HttpFoundation\Response;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -145,11 +146,11 @@ class SamplesController extends Controller
 
 
     }
-    public function massDestroy(MassDestroySampleRequest $request)
+    public function massDestroy(Request $request)
     {
-        Sample::whereIn('id', request('ids'))->delete();
-
-        return response(null, Response::HTTP_NO_CONTENT);
+        $ids = $request->ids;
+        DB::table("samples")->whereIn('id',explode(",",$ids))->delete();
+        return response()->json(['success'=>"تم حذف العينة ."]);
     }
 
 

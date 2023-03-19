@@ -15,6 +15,7 @@ use App\Models\SampleStock;
 use App\Models\SystemConstant;
 use Gate;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Symfony\Component\HttpFoundation\Response;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -155,11 +156,11 @@ class SampleStockController extends Controller
 
 
     }
-    public function massDestroy(MassDestroySampleStockRequest $request)
+    public function massDestroy(Request $request)
     {
-        SampleStock::whereIn('id', request('ids'))->delete();
-
-        return response(null, Response::HTTP_NO_CONTENT);
+        $ids = $request->ids;
+        DB::table("sample_stocks")->whereIn('id',explode(",",$ids))->delete();
+        return response()->json(['success'=>"تم حذف مخزون العينة ."]);
     }
 
     public function export_excel()

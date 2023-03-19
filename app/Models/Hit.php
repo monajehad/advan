@@ -37,6 +37,7 @@ class Hit extends Model
         'client_id',
         'date',
         'time',
+        'area_1',
         'visit_type_id',
         'duration_visit',
         'number_samples',
