@@ -11,6 +11,9 @@ use App\Http\Requests\UpdateClientRequest;
 use App\Models\Client;
 use App\Models\ClientsSpecialty;
 use App\Models\SystemConstant;
+use Elibyy\TCPDF\Facades\TCPDF;
+use Illuminate\Support\Facades\View;
+
 use Barryvdh\DomPDF\Facade\Pdf as FacadePdf;
 // use Mccarlosen\LaravelMpdf\Facades\LaravelMpdfuse;
 use PDF;
@@ -302,27 +305,71 @@ class ClientsController extends Controller
     }
 
 
-    public function pdf()
-    {
-        $data=[];
-        $clients=Client::
-        leftJoin('system_constants as category_constants', function($join) {
-            $join->on('category_constants.value', '=', 'clients.category')->where('category_constants.type','category')->whereNull('category_constants.deleted_at');
-        })->leftJoin('system_constants as area_1_constants', function($join) {
-            $join->on('area_1_constants.value', '=', 'clients.area_1')->where('area_1_constants.type','area_1')->whereNull('area_1_constants.deleted_at');
-        })
-        ->select('category_constants.name as category_name','area_1_constants.name as area_1_name','clients.id','clients.specialty_id','clients.category','clients.name','clients.item','clients.area_1','clients.status')
-        ->with(['specialty','clientHits']);
-        $data['clients']=$clients;
+    // public function pdf()
+    // {
+        // $data=[];
+        // $clients=Client::
+        // leftJoin('system_constants as category_constants', function($join) {
+        //     $join->on('category_constants.value', '=', 'clients.category')->where('category_constants.type','category')->whereNull('category_constants.deleted_at');
+        // })->leftJoin('system_constants as area_1_constants', function($join) {
+        //     $join->on('area_1_constants.value', '=', 'clients.area_1')->where('area_1_constants.type','area_1')->whereNull('area_1_constants.deleted_at');
+        // })
+        // ->select('category_constants.name as category_name','area_1_constants.name as area_1_name','clients.id','clients.specialty_id','clients.category','clients.name','clients.item','clients.area_1','clients.status')
+        // ->with(['specialty','clientHits']);
+        // $data['clients']=$clients;
 
-        // view()->share('client',$data);
-        view()->share('client',$clients);
-        $pdf = FacadePdf::loadView('advan.admin.clients.table-client',['clients'=>$clients])
-        ->setPaper('a4', 'landscape')->setOption(['dpi' => 150, 'defaultFont' => 'cairo'])
-        ->setWarnings(false)
-    ;
+        // $view = View::make('advan/admin/clients/table-client', compact('clients'));
+        // $html_content = $view->render();
+        // $lg = Array();
 
-        return $pdf->stream('client.pdf');
-    }
+        //         $lg['a_meta_charset'] = 'UTF-8';
+
+        //         $lg['a_meta_dir'] = 'rtl';
+
+        //         $lg['a_meta_language'] = 'ar';
+
+        //         $lg['w_page'] = 'page';
+
+                // TCPDF::setLanguageArray($lg);
+
+                // TCPDF::SetFont('cairo', '', 14);
+
+                // TCPDF::SetAutoPageBreak(true, 12);
+                // TCPDF::SetMargins(5, 25, 5, 5);
+                // // TCPDF::SetTitle('تقرير أسعار المناقصة');
+
+                // // PDF::SetMargins(5,5,5,5);
+                // TCPDF::AddPage('P','A4');
+                // TCPDF::writeHTML($html_content, true, false, true, false, '');
+
+                // // TCPDF::SetTitle('تقرير أسعار المناقصة');
+
+                // TCPDF::setRTL(true);
+
+                // TCPDF::Output('client.pdf');
+    //     view()->share('client',$data);
+    //     view()->share('client',$clients);
+    //     $pdf = FacadePdf::View('advan.admin.clients.table-client',['clients'=>$clients])
+    //     ->setPaper('a4', 'landscape')->setOption(['dpi' => 150, 'defaultFont' => 'cairo'])
+    //     ->setWarnings(false)
+    // ;
+
+    //     return $pdf->stream('client.pdf');
+
+//         $html = view('advan.admin.clients.table-client',['clients'=>$clients]);
+
+// $pdf = FacadePdf::loadHTML($html)->output();
+
+// $headers = array(
+//     "Content-type" => "application/pdf",
+// );
+
+// // Create a stream response as a file download
+// return response()->streamDownload(
+//     fn () => print($pdf), // add the content to the stream
+//     "client.pdf", // the name of the file/stream
+//     $headers
+// );
+    // }
 
 }

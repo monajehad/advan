@@ -57,6 +57,7 @@ class User extends Authenticatable
         'password',
         'mobile',
         'jobId',
+        'area_1',
         'home_address',
         'whatsapp_phone',
         'facebook',
@@ -83,6 +84,11 @@ class User extends Authenticatable
     public function userHits()
     {
         return $this->hasMany(Hit::class, 'user_id', 'id');
+    }
+
+    public function userNotifications()
+    {
+        return $this->hasMany(Notification::class, 'user_id', 'id');
     }
     protected function user_type(): Attribute
     {

@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Http\Controllers\Admin;
-namespace App\Http\Controllers\Admin;
 
 use Illuminate\Support\Str;
 use App\Http\Controllers\Controller;
@@ -12,6 +11,7 @@ use App\Http\Requests\UpdateUserRequest;
 use App\Models\Category;
 use App\Models\Item;
 use App\Models\Role;
+use App\Models\SystemConstant;
 use App\Models\User;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Http\Request;
@@ -26,16 +26,20 @@ class UsersController extends Controller
     public function index(Request $request)
     {
         // abort_if(Gate::denies('user_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        $users = User::leftJoin('system_constants as area_1_constants', function($join) {
+        $join->on('area_1_constants.value', '=', 'clients.area_1')->where('area_1_constants.type','area_1')->whereNull('area_1_constants.deleted_at');
+    })
 
-        $users = User::with(['category','item','userHits','roles'])->select('id','name','email','mobile','home_address','jobId','status',
-        'mobile',
-        'home_address',
-        'whatsapp_phone',
-        'facebook',
-        'instagram',
-        'website',
-        'category_id',
-        'item_id');
+       ->select('area_1_constants.name as area_1_name','users.area_1','users.id','users.name','users.email','users.mobile','users.home_address','users.jobId','users.status',
+        'users.mobile',
+        'users.home_address',
+        'users.whatsapp_phone',
+        'users.facebook',
+        'users.instagram',
+        'users.website',
+        'users.category_id',
+        'users.item_id')
+        -> with(['category','item','userHits','roles']);
 
 
             $users=$users->orderBy('id','desc')->paginate(self::PAGINATION_NO);
@@ -87,6 +91,8 @@ class UsersController extends Controller
     {
         // abort_if(Gate::denies('user_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
+        $area_1_select=SystemConstant::select('id','name','value','type')->where([['type','area_1']])->orderBy('order')->get();
+
         $roles = Role::pluck('title', 'id');
 
         $categories = Category::pluck('name', 'id');
@@ -94,7 +100,7 @@ class UsersController extends Controller
 
         $user->load('item', 'category');
 
-        return view('advan.admin.users.edit', compact('items', 'categories','roles', 'user'));
+        return view('advan.admin.users.edit', compact('items', 'categories','roles', 'user','area_1_select'));
     }
 
     public function update(UpdateUserRequest $request, User $user)
@@ -116,10 +122,14 @@ class UsersController extends Controller
     public function show(User $user)
     {
         // abort_if(Gate::denies('user_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        $roles = Role::pluck('title', 'id');
+        $area_1_select=SystemConstant::select('id','name','value','type')->where([['type','area_1']])->orderBy('order')->get();
 
-        $user->load('roles', 'categories', 'userUserAlerts');
+        $categories = Category::pluck('name', 'id');
+        $items = Item::pluck('name', 'id');
+        $user->load('roles','item', 'category', 'userUserAlerts');
 
-        return view('advan.admin.users.show', compact('user'));
+        return view('advan.admin.users.show', compact('user','items', 'categories','roles','area_1_select'));
     }
 
     public function destroy(Request $request)

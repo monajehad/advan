@@ -108,7 +108,7 @@ public function sendNotification(Request $request)
      'user_id' => $user_id
    ]);
 
-   $notification->save();
+
 
    return redirect('/notification')->with('message', 'Notification sent!');
 }

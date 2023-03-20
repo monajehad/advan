@@ -103,7 +103,7 @@
                         <!--end::Svg Icon-->
                     </span>
                     تصدير إكسل</a>
-                    <a href="{{route('admin.clients.export.pdf')}}" class="btn btn-info mx-1 font-size-sm"
+                    {{-- <a href="{{route('admin.clients.export.pdf')}}" class="btn btn-info mx-1 font-size-sm"
                     id="export-button">
                     <span class="svg-icon svg-icon-md svg-icon-2x">
                         <!--begin::Svg Icon | path:C:\wamp64\www\keenthemes\legacy\metronic\theme\html\demo1\dist/../src/media/svg/icons\Files\Export.svg--><svg
@@ -125,7 +125,7 @@
                         </svg>
                         <!--end::Svg Icon-->
                     </span>
-                    PDF </a>
+                    PDF </a> --}}
                 {{-- @endcan --}}
             </div>
 
