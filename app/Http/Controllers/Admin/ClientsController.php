@@ -11,7 +11,9 @@ use App\Http\Requests\UpdateClientRequest;
 use App\Models\Client;
 use App\Models\ClientsSpecialty;
 use App\Models\SystemConstant;
-use Mccarlosen\LaravelMpdf\Facades\LaravelMpdfuse;
+use Barryvdh\DomPDF\Facade\Pdf as FacadePdf;
+// use Mccarlosen\LaravelMpdf\Facades\LaravelMpdfuse;
+use PDF;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
@@ -302,6 +304,7 @@ class ClientsController extends Controller
 
     public function pdf()
     {
+        $data=[];
         $clients=Client::
         leftJoin('system_constants as category_constants', function($join) {
             $join->on('category_constants.value', '=', 'clients.category')->where('category_constants.type','category')->whereNull('category_constants.deleted_at');
@@ -310,43 +313,16 @@ class ClientsController extends Controller
         })
         ->select('category_constants.name as category_name','area_1_constants.name as area_1_name','clients.id','clients.specialty_id','clients.category','clients.name','clients.item','clients.area_1','clients.status')
         ->with(['specialty','clientHits']);
+        $data['clients']=$clients;
 
+        // view()->share('client',$data);
+        view()->share('client',$clients);
+        $pdf = FacadePdf::loadView('advan.admin.clients.table-client',['clients'=>$clients])
+        ->setPaper('a4', 'landscape')->setOption(['dpi' => 150, 'defaultFont' => 'cairo'])
+        ->setWarnings(false)
+    ;
 
-        $pdf = LaravelMpdfuse::loadView('advan.admin.clients.table-data', $clients,
-        [
-            'mode'                       => '',
-            'format'                     => 'A4',
-            'default_font_size'          => '12',
-            'default_font'               => 'sans-serif',
-            'margin_left'                => 10,
-            'margin_right'               => 10,
-            'margin_top'                 => 10,
-            'margin_bottom'              => 10,
-            'margin_header'              => 0,
-            'margin_footer'              => 0,
-            'orientation'                => 'P',
-            'title'                      => 'Laravel mPDF',
-            'author'                     => '',
-            'watermark'                  => '',
-            'show_watermark'             => false,
-            'show_watermark_image'       => false,
-            'watermark_font'             => 'sans-serif',
-            'display_mode'               => 'fullpage',
-            'watermark_text_alpha'       => 0.1,
-            'watermark_image_path'       => '',
-            'watermark_image_alpha'      => 0.2,
-            'watermark_image_size'       => 'D',
-            'watermark_image_position'   => 'P',
-            'custom_font_dir'            => '',
-            'custom_font_data'           => [],
-            'auto_language_detection'    => false,
-            'temp_dir'                   => storage_path('app'),
-            'pdfa'                       => false,
-            'pdfaauto'                   => false,
-            'use_active_forms'           => false,
-        ]);
-
-        return $pdf->stream('clients.pdf');
+        return $pdf->stream('client.pdf');
     }
 
 }
