@@ -11,6 +11,8 @@ use Illuminate\Http\Request;
 class NotificationController extends Controller
 {
     //
+    const PAGINATION_NO=20;
+
       //
       public function index(Request $req){
         $input = $req->all();
@@ -27,12 +29,34 @@ class NotificationController extends Controller
             'message'=>'User token updated successfully.'
         ]);
      }
-       public function get(){
-        $notifications=Notification::with('user')->select('id','title','body','user_id');
+       public function get(Request $request){
+        $notifications=Notification::with('user')->get();
         // dd($notifications);
         $users = User::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        // $notifications=$notifications->orderBy('id','desc')->paginate(self::PAGINATION_NO);
+        if ($request->ajax()) {
+            $table_data=view('advan.admin.notifications.table-data',compact('notifications'))->render();
+            return response()->json(['notifications'=>$table_data]);
 
+        }
         return view('advan.admin.notifications.index',compact('users','notifications'));
+
+     }
+     public function destroy(Request $request)
+     {
+         if(!$request->id)
+         return response()->json(['status'=>false,'error'=>'لم يتم تحديد الاشعار']);
+         $notification=Notification::where('id',$request->id)->first();
+        if(!$notification)
+         return response()->json(['status'=>false,'error'=>'الاشعار غير موجود']);
+        $delete=$notification->delete();
+        if(!$delete)
+         return response()->json(['status'=>false,'error'=>'لم يتم حذف الاشعار']);
+        return response()->json(['status'=>true,'success'=>'تم حذف الاشعار بنجاح']);
+
+
+        return redirect()->route('notifications');
+
 
      }
 
@@ -109,6 +133,7 @@ public function sendNotification(Request $request)
    ]);
 
 
+       $notification->save();
 
    return redirect('/notification')->with('message', 'Notification sent!');
 }

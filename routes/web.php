@@ -61,6 +61,8 @@ Route::get('/', function () {
     Route::post('/message',[FCMController::class,'createChat'])->name('createChat')->middleware('auth');
     Route::get('/notification',[NotificationController::class,'get'] )->name('notification');
     Route::patch('/fcm-token', [HomeController::class, 'updateToken'])->name('notification.fcmToken');
+    Route::post('notification/delete', [NotificationController::class,'destroy'])->name('notification.delete');
+
     Route::post('/send_notification',[NotificationController::class,'sendNotification'] )->name('send.notification');
     // Route::post('/save_notification',[NotificationController::class,'createNotification'])->name('createNotificatio')->middleware('auth');
 

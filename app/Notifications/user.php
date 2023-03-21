@@ -10,15 +10,19 @@ use Illuminate\Notifications\Notification;
 class user extends Notification
 {
     use Queueable;
+    // private $data;
+    private $user;
 
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($user)
     {
         //
+        $this->user = $user;
+        // $this->data = $data;
     }
 
     /**
@@ -56,6 +60,8 @@ class user extends Notification
     {
         return [
             //
+            'title'  => $this->user->title,
+            'body' => $this->user->body,
         ];
     }
 }

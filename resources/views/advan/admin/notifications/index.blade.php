@@ -65,7 +65,7 @@
 
         <div class="card-body py-0">
             <!--begin::Table-->
-            <div class="hittype-table-body">
+            <div class="not-table-body">
 
                  @includeIf('advan.admin.notifications.table-data')
 
@@ -85,16 +85,16 @@
 
     @section('script')
     @parent
-    {{-- <script>
+    <script>
 function load_data_table(page = '') {
         $.ajax({
-            url: '{{url("admin/hits-types/")}}?page=' + page,
+            url: '{{url("notification/")}}?page=' + page,
             data: {
                 search: $('#search_input').val()
             },
             type: "get",
             success: function(response) {
-                $('.hittype-table-body').html(response.hits_type)
+                $('.not-table-body').html(response.notifications)
 
             },
             error: function(response) {}
@@ -102,9 +102,9 @@ function load_data_table(page = '') {
         })
     }
     $(document).on('click','.delete-type',function(){
-                var id = $(this).data('type-id');
+                var id = $(this).data('notification-id');
                 Swal.fire({
-                    title: 'هل أنت متأكد من حذف نوع الزيارة',
+                    title: 'هل أنت متأكد من حذف  الاشعار',
                     showDenyButton: true,
                     confirmButtonText: 'نعم',
                     denyButtonText: `لا`,
@@ -116,7 +116,7 @@ function load_data_table(page = '') {
                             }
                         });
                         $.ajax({
-                            url: '{{route("admin.hits-types.delete")}}' ,
+                            url: '{{route("notification.delete")}}' ,
                             type: "POST",
                             data: {id:id},
                             success: function( response ) {
@@ -147,7 +147,7 @@ function load_data_table(page = '') {
 
             })
 
-    </script> --}}
+    </script>
 
     //firebase notification
 <script src="https://www.gstatic.com/firebasejs/9.17.1/firebase-app.js"></script>

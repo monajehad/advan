@@ -221,14 +221,14 @@
             </button>
             <div class="toggle-body">
               <div class="top d-flex align-items-center justify-content-between mb-3">
-                <div class="toggle-title ms-3">Notification</div>
+                <div class="toggle-title ms-3">الاشعارات</div>
                 <div class="action-item">
                   <button class="action-head action-btn">
                     <svg class="icon icon-more-horizontal">
                       <use xlink:href="#icon-more-horizontal"></use>
                     </svg>
                   </button>
-                  <div class="action-body p-3">
+                  {{-- <div class="action-body p-3">
                     <button class="action-item">
                       <svg class="icon icon-check">
                         <use xlink:href="#icon-check"></use>
@@ -239,95 +239,32 @@
                         <use xlink:href="#icon-trash"></use>
                       </svg>Delete message
                     </button>
-                  </div>
+                  </div> --}}
                 </div>
               </div>
               <div class="list-notifications mb-4"><a class="item d-flex align-items-center p-3 position-relative new" href="/notification.html">
-                  <div class="userpic flex-shrink-0 me-3 position-relative">
-                    <div class="notify-icon d-flex align-items-center justify-content-center end-0 bottom-0 position-absolute blue">
-                      <svg class="icon icon-messages-fill">
-                        <use xlink:href="#icon-messages-fill"></use>
-                      </svg>
-                    </div><img class="w-100" src="img/content/user-2.jpg">
-                  </div>
+
+                  {{-- @if(\Auth::user()) --}}
+                  <?php
+                  $notifications=App\Models\Notification::where('user_id',Auth::user()->id)->get();
+                  ?>
+                  @foreach ($notifications as $notification)
+
                   <div class="content w-100">
                     <div class="item-title d-flex align-items-center justify-content-between">
-                      <div class="name me-1">Domenica</div>
-                      <div class="login me-auto">@domenica</div>
-                      <div class="time me-6">1H</div>
+                      <div class="name me-1">{{$notification->title}}</div>
+                      {{-- <div class="login me-auto">@domenica</div> --}}
+                      {{-- <div class="time me-6">1H</div> --}}
                     </div>
-                    <div class="message text-truncate">Comment on <b>Smiles – 3D icons</b>
+                    <div class="message text-truncate"><b>{{$notification->body}}</b>
                     </div>
                   </div></a><a class="item d-flex align-items-center p-3 position-relative new" href="/notification.html">
-                  <div class="userpic flex-shrink-0 me-3 position-relative">
-                    <div class="notify-icon d-flex align-items-center justify-content-center end-0 bottom-0 position-absolute red">
-                      <svg class="icon icon-heart-fill">
-                        <use xlink:href="#icon-heart-fill"></use>
-                      </svg>
-                    </div><img class="w-100" src="img/content/user-3.jpg">
-                  </div>
-                  <div class="content w-100">
-                    <div class="item-title d-flex align-items-center justify-content-between">
-                      <div class="name me-1">Janice</div>
-                      <div class="login me-auto">@ethel</div>
-                      <div class="time me-6">2H</div>
-                    </div>
-                    <div class="message text-truncate">Likes <b>Smiles – 3D icons</b>
-                    </div>
-                  </div></a><a class="item d-flex align-items-center p-3 position-relative new" href="/notification.html">
-                  <div class="userpic flex-shrink-0 me-3 position-relative">
-                    <div class="notify-icon d-flex align-items-center justify-content-center end-0 bottom-0 position-absolute green">
-                      <svg class="icon icon-shopping-bag-fill">
-                        <use xlink:href="#icon-shopping-bag-fill"></use>
-                      </svg>
-                    </div><img class="w-100" src="img/content/user-4.jpg">
-                  </div>
-                  <div class="content w-100">
-                    <div class="item-title d-flex align-items-center justify-content-between">
-                      <div class="name me-1">Janice</div>
-                      <div class="login me-auto">@ethel</div>
-                      <div class="time me-6">4H</div>
-                    </div>
-                    <div class="message text-truncate">Purchased <b>Smiles – 3D icons</b>
-                    </div>
-                  </div></a><a class="item d-flex align-items-center p-3 position-relative new" href="/notification.html">
-                  <div class="userpic flex-shrink-0 me-3 position-relative">
-                    <div class="notify-icon d-flex align-items-center justify-content-center end-0 bottom-0 position-absolute purple">
-                      <svg class="icon icon-star-fill">
-                        <use xlink:href="#icon-star-fill"></use>
-                      </svg>
-                    </div><img class="w-100" src="img/content/user-5.jpg">
-                  </div>
-                  <div class="content w-100">
-                    <div class="item-title d-flex align-items-center justify-content-between">
-                      <div class="name me-1">Danial</div>
-                      <div class="login me-auto">@ethel</div>
-                      <div class="time me-6">6H</div>
-                    </div>
-                    <div class="message text-truncate">
-                       Rate
-                      <svg class="icon icon-star-fill icon-small fill-yellow">
-                        <use xlink:href="#icon-star-fill"></use>
-                      </svg> <b>5</b> for <b>Smiles – 3D icons</b>
-                    </div>
-                  </div></a><a class="item d-flex align-items-center p-3 position-relative new" href="/notification.html">
-                  <div class="userpic flex-shrink-0 me-3 position-relative">
-                    <div class="notify-icon d-flex align-items-center justify-content-center end-0 bottom-0 position-absolute blue">
-                      <svg class="icon icon-messages-fill">
-                        <use xlink:href="#icon-messages-fill"></use>
-                      </svg>
-                    </div><img class="w-100" src="img/content/user-6.jpg">
-                  </div>
-                  <div class="content w-100">
-                    <div class="item-title d-flex align-items-center justify-content-between">
-                      <div class="name me-1">Esmeralda</div>
-                      <div class="login me-auto">@ethel</div>
-                      <div class="time me-6">8H</div>
-                    </div>
-                    <div class="message text-truncate">Comment on <b>Smiles – 3D icons</b>
-                    </div>
-                  </div></a>
-              </div><a class="btn d-flex mx-3" href="/notification.html">See all notifications</a>
+
+
+                  @endforeach
+                  {{-- @endif --}}
+
+              </div>
             </div>
           </div>
           <div class="nav-item user-item toggle-item">
