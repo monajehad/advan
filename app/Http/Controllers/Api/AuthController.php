@@ -29,14 +29,14 @@ class AuthController extends Controller
             $message = api('required all');
             return errorResponse($validator->errors()->first(), $message);
         }
-        $user = User::where('user_name' , $request->user_name)->first();
+        $user = User::where('email' , $request->email)->first();
         if ($user && $user->status != 1) {
 
             $message = api('user_not_active');
             return errorResponse($message);
         }
 
-        $credentials = request(['user_name', 'password']);
+        $credentials = request(['email', 'password']);
         if (!Auth::attempt($credentials)) {
             $message = api('error login');
             return errorResponse(null, $message, UNAUTHORIZED);
@@ -64,7 +64,7 @@ class AuthController extends Controller
     private function Loginvalidator(Request $request)
     {
         return Validator::make($request->all(), [
-            'user_name' => 'required|string',
+            'email' => 'required|string',
             'password' => 'required|string',
             'remember_me' => 'boolean',
         ]);
@@ -96,10 +96,10 @@ class AuthController extends Controller
 
         $user = $this->genarateAndSaveCode($user);
         $data = [
-            'code' => $user->code,
+            'email' => $user->email,
             'name' => $user->name,
-            'user_name' => $user->user_name,
-            'phone' => $user->phone,
+            // 'user_name' => $user->user_name,
+            'mobile' => $user->mobile,
         ];
 
         $userAlert = UserAlert::create([
@@ -116,10 +116,10 @@ class AuthController extends Controller
     {
         return Validator::make($request->all(), [
             'email' => 'required|string|email|unique:users|max:255',
-            'phone' => 'required|string|unique:users',
-            'user_name' => 'required|string|unique:users',
+            'mobile' => 'required|string|unique:users',
+            // 'user_name' => 'required|string|unique:users',
             'name' => 'required|string',
-            'password' => 'required|string|confirmed',
+            'password' => 'required|string',
         ]);
     }
 
@@ -127,9 +127,9 @@ class AuthController extends Controller
     {
         $user = new User([
             'name' => $request->name,
-            'user_name' => $request->user_name,
+            // 'user_name' => $request->user_name,
             'email' => $request->email,
-            'phone' => $request->phone,
+            'mobile' => $request->mobile,
             'password' => $request->password,
             'user_type' => '2',
             'status_id' => '1'
@@ -157,11 +157,11 @@ class AuthController extends Controller
 
     public function user(Request $request)
     {
-        $user = $request->user();
-        if(!$user)
-            return successResponse(false);
+        // $user = $request->id;
+        // if(!$user)
+        //     return successResponse(false);
 
-        return apiResponse(new UserResource($user));
+        return apiResponse(new UserResource($request));
 
 
     }

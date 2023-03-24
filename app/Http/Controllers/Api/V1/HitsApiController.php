@@ -21,9 +21,9 @@ class HitsApiController extends Controller
 {
     public function index(Request $request)
     {
-        $hit = Hit::with(['client', 'visit_type', 'user', 'categories'])
-            ;
-            // ->where('user_id', Auth::id())
+        $hit = Hit::with(['client', 'visit_type', 'user'])
+
+            ->where('user_id', Auth::id());
         if ($request->date) {
             $hit = $hit->where('date', 'LIKE', $request->date . '%');
         }
@@ -33,7 +33,7 @@ class HitsApiController extends Controller
         if ($request->status) {
             $hit = $hit->where('status', $request->status);
         }
-        $hit = $hit->orderByDesc('status')->orderByDesc('date')->get();
+        $hit = $hit->orderByDesc('status')->get();
         $data = HitResource::collection($hit);
         return apiResponse($data);
     }

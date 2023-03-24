@@ -16,10 +16,13 @@ class UserResource extends JsonResource
             // 'user_name' => $this->user_name,
             'email' => $this->email,
             'phone' => $this->phone,
+            'mobile' => $this->mobile,
             'description' => $this->description,
             'image' => $this->image_url,
+            'category_id'=> $this->category_id,
+           'item_id'=> $this->item_id,
             // 'logo' => $this->image_url,
-            'categores' => CategoryResource::collection($this->categories),
+            // 'categores' => CategoryResource::collection($this->categories),
         ];
     }
 }

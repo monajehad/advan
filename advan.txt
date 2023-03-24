@@ -1,0 +1,5 @@
+FTP Username: advapbln
+FTP server: ftp.advancedco.pw
+FTP & explicit FTPS port:  21
+Password
+owsF5jS6jo1A‏
