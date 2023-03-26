@@ -246,7 +246,9 @@
 
                   {{-- @if(\Auth::user()) --}}
                   <?php
-                  $notifications=App\Models\Notification::where('user_id',Auth::user()->id)->get();
+                  $notifications=App\Models\Notification::
+                //   where('user_id',Auth::user()->id)
+                  get();
                   ?>
                   @foreach ($notifications as $notification)
 

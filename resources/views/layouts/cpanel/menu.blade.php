@@ -326,13 +326,13 @@
 
                     </a>
                 </li>
-                <li class="menu-item" aria-haspopup="true">
+                {{-- <li class="menu-item" aria-haspopup="true">
                     <a href="{{route('admin.hits.note')}}" class="menu-link">
 
                         <span class="menu-text"> ملاحظات الزيارات</span>
 
                     </a>
-                </li>
+                </li> --}}
                 <li class="menu-item" aria-haspopup="true">
                     <a href="{{route('admin.hits.hitsMap')}}" class="menu-link">
 

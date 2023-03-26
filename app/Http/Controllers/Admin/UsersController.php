@@ -27,7 +27,7 @@ class UsersController extends Controller
     {
         // abort_if(Gate::denies('user_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $users = User::leftJoin('system_constants as area_1_constants', function($join) {
-        $join->on('area_1_constants.value', '=', 'clients.area_1')->where('area_1_constants.type','area_1')->whereNull('area_1_constants.deleted_at');
+        $join->on('area_1_constants.value', '=', 'users.area_1')->where('area_1_constants.type','area_1')->whereNull('area_1_constants.deleted_at');
     })
 
        ->select('area_1_constants.name as area_1_name','users.area_1','users.id','users.name','users.email','users.mobile','users.home_address','users.jobId','users.status',
@@ -41,6 +41,7 @@ class UsersController extends Controller
         'users.item_id')
         -> with(['category','item','userHits','roles']);
 
+        $area_1_select=SystemConstant::select('id','name','value','type')->where([['type','area_1']])->orderBy('order')->get();
 
             $users=$users->orderBy('id','desc')->paginate(self::PAGINATION_NO);
             if ($request->ajax()) {
@@ -52,7 +53,7 @@ class UsersController extends Controller
              $items = Item::pluck('name', 'id');
         $roles = Role::pluck('title', 'id');
 
-        return view('advan.admin.users.index', compact('users','items', 'categories','roles'));
+        return view('advan.admin.users.index', compact('users','items', 'categories','roles','area_1_select'));
     }
 
 
