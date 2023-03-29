@@ -1,5 +1,7 @@
 <?php
 
+use Illuminate\Support\Facades\File;
+use Intervention\Image\Facades\Image;
 define('DIR_UPLOAD', 'uploads');
 
 function assetUpload($dir)
@@ -20,8 +22,8 @@ function getSetting($settingname = 'sitename')
 function saveOriginalImage($image, $direction)
 {
     $dir = DIR_UPLOAD . '/' . $direction;
-    \File::exists(myPublic() . $dir) or \File::makeDirectory(myPublic() . $dir, 755, true);
-    $img = \Image::make($image);
+    File::exists(myPublic() . $dir) or File::makeDirectory(myPublic() . $dir, 755, true);
+    $img = Image::make($image);
     $mime = explode('/', $img->mime)[1];
     $file_name = rand(100, 9999999) . '.' . $mime;
     $img->save(myPublic() . $dir . '/' . $file_name);

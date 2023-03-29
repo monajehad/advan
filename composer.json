@@ -12,6 +12,7 @@
         "code-lts/laravel-fcm": "^1.8",
         "elibyy/tcpdf-laravel": "^10.0",
         "guzzlehttp/guzzle": "^7.2",
+        "intervention/image": "^2.7",
         "laravel/framework": "^9.19.0",
         "laravel/passport": "^11.5",
         "laravel/sanctum": "^3.0",

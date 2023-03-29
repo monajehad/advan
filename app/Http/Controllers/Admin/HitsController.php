@@ -75,10 +75,10 @@ class HitsController extends Controller
     {
         // abort_if(Gate::denies('hit_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-//         if ($request->ajax()) {
-//             $hits = Hit::with(['client',  'user', 'date_time'])->where('note' , '!=' , null);
-//             $hits=$hits->orderBy('id','desc')->paginate(self::PAGINATION_NO);
-//         }
+        if ($request->ajax()) {
+            $hits = Hit::with(['client',  'user', 'date'])->where('note' , '!=' , null);
+            $hits=$hits->orderBy('id','desc')->paginate(self::PAGINATION_NO);
+        }
 // //             if ($request->y&& $request->m) {
 //                 $from = Carbon::parse(sprintf(
 //                     '%s-%s-01',

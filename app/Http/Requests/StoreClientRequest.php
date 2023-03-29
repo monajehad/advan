@@ -96,9 +96,9 @@ class StoreClientRequest extends FormRequest
                 'nullable',
             ],
 
-            'status' => [
-                'required',
-            ],
+            // 'status' => [
+            //     'required',
+            // ],
         ];
     }
 }

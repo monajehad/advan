@@ -72,47 +72,6 @@ class ClientsController extends Controller
     return view('advan.admin.clients.index', compact('clients_specialties','data','specialties'));
 
 
-        // abort_if(Gate::denies('client_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        // $data=[];
-    //     $category_select=SystemConstant::select('id','name','value','type')->where([['type','category']])->orderBy('order')->get();
-    //     $area_1_select=SystemConstant::select('id','name','value','type')->where([['type','area_1']])->orderBy('order')->get();
-
-    //     $clients=Client::
-    //     leftJoin('system_constants as category_constants', function($join) {
-    //         $join->on('category_constants.value', '=', 'clients.category')->where('category_constants.type','category');
-    //     })->leftJoin('system_constants as area_1_constants', function($join) {
-    //         $join->on('area_1_constants.value', '=', 'clients.area_1')->where('area_1_constants.type','area_1');
-    //     })
-    //     ->select('category_constants.name as category_name','area_1_constants.name as area_1_name','clients.id','clients.specialty_id','clients.category','clients.name','clients.item','clients.area_1','clients.status')
-    //     ->with(['specialty','clientHits']);
-    //     if($request->clientSelect){
-    //         $clients=$clients->where('clients.name',$request->clientSelect)
-    //         ;
-    //     }
-    //     if($request->clientSpecialty){
-    //         $clients=$clients->where('clients.specialty_id',$request->clientSpecialty)
-    //         ;
-    //     }
-    //     if($request->area){
-    //         $clients=$clients->where('clients.area_1',$request->area)
-    //         ;
-    //     }
-
-    //     $data['clients']=$clients;
-    //     $data['category_select']=$category_select;
-    //     $data['area_1_select']=$area_1_select;
-    //     if ($request->ajax()) {
-    //         $table_data=view('advan.admin.clients.table-data',compact('data'))->render();
-    //         return response()->json(['clients'=>$table_data]);
-
-    // }
-    // // dd($data['clients']);
-    // $clients_specialties = ClientsSpecialty::get();
-    // $specialties = ClientsSpecialty::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
-
-    // return view('advan.admin.clients.index', compact('clients_specialties','data','specialties','clients'));
-
-
 
 
     }
