@@ -9,6 +9,7 @@ use App\Http\Controllers\Api\V1\ClientsApiController;
 use App\Http\Controllers\Api\V1\ClientsSpecialtiesApiController;
 use App\Http\Controllers\Api\V1\HitsApiController;
 use App\Http\Controllers\Api\V1\HitsTypeApiController;
+use App\Http\Controllers\Api\V1\HomeController;
 use App\Http\Controllers\Api\V1\KindsOfOccasionsApiController;
 use App\Http\Controllers\Api\V1\ReportApiController;
 use App\Http\Controllers\Api\V1\ReportTypeApiController;
@@ -48,7 +49,12 @@ Route::post('/login', [AuthController::class,'login']);
 
     // Attendance
 Route::apiResource('/attendances', AttendanceApiController::class);
-Route::get('/user', [AuthController::class,'user']);
+Route::get('/user', [AuthController::class,'userGet']);
+
+//home
+Route::apiResource('/home', HomeController::class);
+Route::get('/gethit', [HomeController::class,'getHit']);
+
 
  // Vacation Request
  Route::apiResource('vacation-requests', VacationRequestApiController::class);

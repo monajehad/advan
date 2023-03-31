@@ -155,11 +155,11 @@ class AuthController extends Controller
         return successResponse(true,'تم تسجيل الخروج بنجاح');
     }
 
-    public function user(Request $request)
+    public function userGet(Request $request)
     {
-        // $user = $request->id;
-        // if(!$user)
-        //     return successResponse(false);
+        $user = $request->user();
+        if(!$user)
+            return successResponse(false);
 
         return apiResponse(new UserResource($request));
 
