@@ -10,28 +10,60 @@ use App\Http\Resources\ClientResource;
 use App\Http\Resources\KindsOfOccasionResource;
 use App\Models\Attendance;
 use App\Models\Client;
+use App\Models\Hit;
 use App\Models\KindsOfOccasion;
+use App\Models\Sample;
 use Gate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Symfony\Component\HttpFoundation\Response;
 use App\Models\UserAlert;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 
 class ClientsApiController extends Controller
 {
     use MediaUploadingTrait;
 
-    public function index(Request $request)
+    public function index(Request $request,$clientId)
     {
 
         $search = $request->search ? $request->search : "";
 
         $data = ClientResource::collection(Client::with(['specialty'])->where('status', 1)->Search($search)->get());
-        return apiResponse($data);
+
+
+
+        return apiResponse($data );
     }
 
+    public function show($clientId)
+{
+    $data = ClientResource::collection(Client::with(['specialty'])->where('status', 1)->where('id' , $clientId)->get());
+//current Month Visits
+    $currentMonthVisits = DB::table('hits')
+    ->where('client_id', $clientId)
+    ->whereMonth('date', Carbon::now()->month)
+    ->count();
+// samples to client
+$total_samples = DB::table('hits')
+->where('client_id', $clientId)
+->sum('number_samples');
 
+// average hits
+    $visits =
+        DB::table('hits')
+            ->select('client_id',  DB::raw('AVG(id) as avg_visits'))
+            ->where('client_id', $clientId)
+            ->groupBy('client_id')
+            ->get();
+    return apiResponse([$data,'زيارات الشهر الحالي'=>$currentMonthVisits,
+    'اجمالي العينات المستلمة'=>$total_samples,
+    'متوسط الزيارات الشهرية'=>$visits
+]);
+
+}
     public function store(Request $request)
     {
         $request->request->add(['status' => 0]);

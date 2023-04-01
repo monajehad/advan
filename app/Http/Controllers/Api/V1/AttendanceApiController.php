@@ -14,15 +14,16 @@ class AttendanceApiController extends Controller
 
     public function index()
     {
-        $data = AttendanceResource::collection(Attendance::all());
-        // where('user_id', Auth::id())->with(['user'])->get()
+        $data = AttendanceResource::collection(Attendance::all())->
+        where('user_id', Auth::id())->with(['user'])->get();
+
         return apiResponse($data);
     }
 
     public function store(Request $request)
     {
         // return $request;
-        // $request->request->add(['user_id' => Auth::id()]);
+        $request->request->add(['user_id' => Auth::id()]);
 
         $validator = Validator::make($request->all(), [
             'date' => 'required',

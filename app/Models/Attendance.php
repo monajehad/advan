@@ -25,6 +25,7 @@ class Attendance extends Model
     protected $fillable = [
         'user_id',
         'date',
+        'day',
         'start_time',
         'end_time',
         'tracking_array',

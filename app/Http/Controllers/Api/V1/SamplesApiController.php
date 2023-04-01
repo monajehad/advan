@@ -22,14 +22,13 @@ class SamplesApiController extends Controller
 {
     public function index(Request $request)
     {
-        if (isset($request->status)) {
-            $data = SampleResource::collection(Sample::all());
-            // with(['sample', 'user', 'stock_available'])->where('user_id', Auth::id())->where('status', $request->status)->get()
-        } else {
-            $data = SampleResource::collection(Sample::all());
-            // with(['sample', 'user', 'stock_available'])->where('user_id', Auth::id())->get()
-        }
 
+
+        if (isset($request->status)) {
+            $data = SampleResource::collection(Sample::with(['sample', 'user', 'stock_available'])->where('user_id', Auth::id())->where('status', $request->status)->get());
+        } else {
+            $data = SampleResource::collection(Sample::with(['sample', 'user', 'stock_available'])->where('user_id', Auth::id())->get());
+        }
         return apiResponse([
             'data' => $data,
             'sample_received' => (int)Sample::where('user_id', Auth::id())->where('status', 2)->sum('quantity'),

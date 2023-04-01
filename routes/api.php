@@ -87,7 +87,7 @@ Route::apiResource('hits-types', HitsTypeApiController::class);
 
  // Clinics
  Route::post('clients/media', [ClientsApiController::class,'storeMedia'])->name('clients.storeMedia');
- Route::apiResource('clients', ClientsApiController::class);
+ Route::apiResource('clients/', ClientsApiController::class);
 
   // Report
   Route::apiResource('report', ReportApiController::class);
