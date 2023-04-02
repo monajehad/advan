@@ -11,13 +11,13 @@ class NotificationResource extends JsonResource
 {
     public function toArray($request)
     {
-        $data = json_decode($this->data);
+        // $data = json_decode($this->data);
         return [
-//            'id' => $this->id,
-            'title' => $data->title,
-            'body' => $data->body,
-//            'type' => isset($data->type) ? $data->type : '',
-//            'status' => isset($data->status) ? $data->status : '',
+           'id' => $this->id,
+            'title' => $this->title,
+            'body' => $this->body,
+//            'type' => isset($this->type) ? $this->type : '',
+//            'status' => isset($this->status) ? $this->status : '',
             'created_at' => Carbon::parse($this->created_at)->diffForHumans(),
             'read' => $this->read_at != null ? true : false,
 

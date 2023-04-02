@@ -11,6 +11,7 @@ use App\Http\Controllers\Api\V1\HitsApiController;
 use App\Http\Controllers\Api\V1\HitsTypeApiController;
 use App\Http\Controllers\Api\V1\HomeController;
 use App\Http\Controllers\Api\V1\KindsOfOccasionsApiController;
+use App\Http\Controllers\Api\V1\NotificationController as V1NotificationController;
 use App\Http\Controllers\Api\V1\ReportApiController;
 use App\Http\Controllers\Api\V1\ReportTypeApiController;
 use App\Http\Controllers\Api\V1\SamplesApiController;
@@ -74,6 +75,10 @@ Route::apiResource('clients-specialties', ClientsSpecialtiesApiController::class
 
     // Kinds Of Occasions
 Route::apiResource('kinds-of-occasions', KindsOfOccasionsApiController::class);
+
+// Notification
+Route::apiResource('notification', V1NotificationController::class);
+
 
 // Report Type
 Route::apiResource('report-types', ReportTypeApiController::class);

@@ -31,10 +31,10 @@ class="table-responsive datatable datatable-bordered datatable-head-custom datat
                 <tr class="data-row">
                     <td class="checkbox--solid"> <input type="checkbox" class="sub_chk" data-id="{{$sample->id}}"></td>
                     <td class="name">
-                        {{$sample->sample->name}}
+                        {{$sample->sample->name ??''}}
                     </td>
                     <td class="name">
-                        {{$sample->category->name }}
+                        {{$sample->category->name ??''}}
                     </td>
                     <td class="unit">
 
@@ -45,7 +45,7 @@ class="table-responsive datatable datatable-bordered datatable-head-custom datat
 
                     <td class="name">{{$sample->user->name}}</td>
                     <td class="name">{{$sample->quantity_request}}</td>
-                    <td class="name">{{$sample->sample->available}}</td>
+                    <td class="name">{{$sample->sample->available ??''}}</td>
                     <td class="name">{{$sample->date}}</td>
 
                     {{-- <td class="name">{{$sample_stock->clinetHits->id}}</td> --}}

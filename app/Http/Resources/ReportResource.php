@@ -17,7 +17,7 @@ class ReportResource extends JsonResource
             'name' => $this->name,
             'date' => $this->date,
             'time' => $this->time,
-            'clinic' => new ClinicResource($this->clinic),
+            'client' => new ClientResource($this->client),
         ];
     }
 }
